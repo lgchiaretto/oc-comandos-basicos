@@ -22,7 +22,6 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 oc get pods
 
 # Listar pods em todos os namespaces
-oc get pods --all-namespaces
 oc get pods -A
 
 # Listar pods com mais detalhes

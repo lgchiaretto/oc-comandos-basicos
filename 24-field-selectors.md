@@ -182,7 +182,7 @@ oc get pods -l app=myapp,version=v2 --field-selector=status.phase=Running,metada
 oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 
 # Pods rodando em node específico
-oc get pods --all-namespaces --field-selector=spec.nodeName=worker-1
+oc get pods -A --field-selector=spec.nodeName=worker-1
 
 # Eventos de warning em namespace específico
 oc get events --field-selector=type=Warning,involvedObject.namespace=default

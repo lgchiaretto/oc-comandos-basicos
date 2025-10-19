@@ -239,26 +239,6 @@ oc get events --field-selector type=Warning
 
 ## 💡 Dicas Gerais
 
-### Aliases Úteis
-```bash
-# Adicione ao ~/.bashrc ou ~/.zshrc
-alias k='oc'
-alias kgp='oc get pods'
-alias kgs='oc get svc'
-alias kgd='oc get deployments'
-alias kdp='oc describe pod'
-alias kl='oc logs'
-alias klf='oc logs -f'
-alias kex='oc exec -it'
-alias kco='oc get clusteroperators'
-```
-
-### Variáveis de Ambiente Úteis
-```bash
-export KUBECONFIG=/path/to/kubeconfig
-export OC_EDITOR=vim
-```
-
 ### Watch Commands
 ```bash
 # Ver pods em tempo real
@@ -273,23 +253,18 @@ oc get events --watch
 ## 📚 Recursos Adicionais
 
 - **Documentação Oficial**: https://docs.redhat.com/en/documentation/openshift_container_platform/
-- **OpenShift Blog**: https://www.redhat.com/en/blog/channel/red-hat-openshift
-- **Comunidade**: https://www.redhat.com/en/technologies/cloud-computing/openshift
-- **YouTube**: Red Hat OpenShift Channel
 
 ---
 
 ## ⚠️ Importante
 
-> **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes de desenvolvimento antes de executar em produção.
-
-> **Permissões**: Muitos comandos, especialmente os de administração, requerem permissões apropriadas. Contate seu administrador de cluster se encontrar erros de permissão.
-
+> **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
+> 
 ---
 
 ## 📝 Contribuindo
 
-Este guia é baseado em experiência prática e comandos reais de produção. Se você tiver sugestões ou novos comandos úteis, sinta-se à vontade para contribuir!
+Este guia é baseado em experiência prática e comandos reais. Se você tiver sugestões ou novos comandos úteis, sinta-se à vontade para contribuir!
 
 ---
 
@@ -301,4 +276,4 @@ Este guia é baseado em experiência prática e comandos reais de produção. Se
 ---
 
 **Última atualização**: Outubro 2025
-**Versão do OpenShift**: 4.x
+**Versão do OpenShift**: 4.19

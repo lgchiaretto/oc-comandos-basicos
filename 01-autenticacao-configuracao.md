@@ -87,8 +87,6 @@ oc config view --raw
 # Ver arquivo de configuração
 cat ~/.kube/config
 
-# Definir editor padrão
-export OC_EDITOR=vim
 ```
 
 ### Namespace Padrão

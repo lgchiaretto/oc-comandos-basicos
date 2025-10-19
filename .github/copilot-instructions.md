@@ -12,6 +12,14 @@ This repository is a **comprehensive Portuguese-language reference guide** for O
 - **INICIO-RAPIDO.md**: Quick-start guide with the top 20 most-used commands
 - **comandos-openshift-ORIGINAL-COMPLETO.md**: Original monolithic reference (kept for historical purposes)
 
+### Test Infrastructure (NEW!)
+- **tests/**: Modular test suite for validating all documented commands
+  - **tests/lib/common.sh**: Shared functions library for all test modules
+  - **tests/01-...-30-*/**: Individual test modules (one per documentation file)
+  - **tests/README.md**: Complete testing documentation
+- **test-commands.sh**: Main test orchestrator script
+- **generate-test-modules.py**: Python script to auto-generate test modules
+
 ### Content Categories
 1. **Essential Commands (01-03)**: Authentication, projects, applications
 2. **Resources & Workloads (04-06)**: Pods, deployments, services, routes
@@ -110,3 +118,63 @@ When assisting users:
 3. **Cross-reference appropriately** - mention related documents when commands span multiple topics
 4. **Real-world context** - commands in this guide are production-tested; preserve practical examples
 5. **Modular mindset** - avoid creating massive single files; distribute content across the 30-document structure
+6. **Test-driven updates** - when adding/modifying commands in documentation, also update the corresponding test module
+
+## Test Suite Workflow
+
+### When Adding New Commands
+1. Add the command to the appropriate markdown file (01-30)
+2. Update the corresponding test script in `tests/XX-topic/test.sh`
+3. Run the specific test module: `./test-commands.sh --module XX`
+4. Fix any issues and run full suite: `./test-commands.sh`
+
+### When Modifying Commands
+1. Update the markdown documentation
+2. Update the test script with the new command syntax
+3. Test the specific module first
+4. Run full validation suite
+
+### Test Script Structure
+Each test module (`tests/XX-topic/test.sh`) follows this pattern:
+```bash
+#!/bin/bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../lib/common.sh"
+
+section_header "XX - TOPIC NAME"
+
+run_test "Test description" \
+    "oc command to execute"
+```
+
+### Regenerating All Test Modules
+If you make bulk changes to commands:
+```bash
+python3 generate-test-modules.py
+```
+
+### Running Tests
+- All tests: `./test-commands.sh`
+- Specific module: `./test-commands.sh --module 05`
+- Verbose mode: `./test-commands.sh --verbose`
+- Stop on first error: `./test-commands.sh --stop-on-error`
+
+## Critical Maintenance Rules
+
+1. **Documentation + Tests = One Change**
+   - Never update docs without updating tests
+   - Never update tests without validating against cluster
+   
+2. **Validation Before Commit**
+   - Always run `./test-commands.sh` before committing
+   - Target success rate: >95%
+   
+3. **Modular Organization**
+   - Keep tests in their respective module directories
+   - Use `tests/lib/common.sh` for shared functions
+   - Don't create monolithic test files
+
+4. **Error Handling**
+   - Use `|| true` for commands that may legitimately fail
+   - Use `2>/dev/null` to suppress expected errors
+   - Document why certain tests are skipped
