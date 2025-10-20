@@ -34,7 +34,7 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 
 # Watch operators
-oc get co -w
+oc get co
 ```
 
 ### Status Detalhado
@@ -86,7 +86,7 @@ oc annotate co/<nome> --overwrite operator.openshift.io/refresh="$(date +%s)"
 oc delete pod -n <namespace-do-operator> <pod-name>
 
 # Ver progresso
-oc get co/<nome> -w
+oc get co/<nome>
 ```
 
 ### Must-Gather de Operadores
@@ -268,7 +268,7 @@ spec:
 EOF
 
 # Ver progresso da instalação
-oc get csv -n <namespace> -w
+oc get csv -n <namespace>
 ```
 
 ### Troubleshoot Operadores OLM

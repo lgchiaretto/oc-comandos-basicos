@@ -48,7 +48,7 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 oc adm upgrade
 
 # Watch do update
-oc get clusterversion -w
+oc get clusterversion
 ```
 
 ---

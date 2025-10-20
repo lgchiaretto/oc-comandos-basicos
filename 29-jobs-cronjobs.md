@@ -100,7 +100,7 @@ spec:
 EOF
 
 # Monitorar
-oc get job parallel-job -w
+oc get job parallel-job
 oc get pods -l job-name=parallel-job
 ```
 

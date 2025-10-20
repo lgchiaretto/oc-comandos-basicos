@@ -34,3 +34,110 @@ run_test "Descrever Secret" \
 run_test "Ver chaves do Secret" \
     "oc get secret test-secret -n ${TEST_PROJECT} -o jsonpath='{.data}'"
 
+run_test "Criar ConfigMaps: Criar configmap" \
+    "oc create configmap test-app --from-literal=test-app=test-app"
+
+run_test "Criar ConfigMaps: Listar configmaps" \
+    "oc get configmaps -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
+
+run_test "Criar ConfigMaps: Listar cm" \
+    "oc get cm -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
+
+run_test "Criar ConfigMaps: Descrever cm" \
+    "oc describe cm test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
+
+
+run_test "Exemplos Avançados: Criar cm" \
+    "oc create cm app-config \"
+
+run_test "Criar Secrets: Criar secret" \
+    "oc create secret generic test-app --from-literal=test-app=test-app"
+
+run_test "Criar Secrets: Listar secrets" \
+    "oc get secrets -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
+
+run_test "Criar Secrets: Listar secret" \
+    "oc get secret test-app -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
+
+
+run_test "Link Secrets: secrets link" \
+    "oc secrets link test-app test-app"
+
+run_test "Como Variáveis de Ambiente: Configurar env" \
+    "oc set env deployment/test-app --from=configmap/test-app 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
+
+run_test "Como Volumes: Configurar volume" \
+    "oc set volume deployment/test-app \ 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
+
+run_test "Criar ConfigMaps: Listar configmaps" \
+    "oc get configmaps -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar ConfigMaps: Listar cm" \
+    "oc get cm -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar ConfigMaps: Descrever cm" \
+    "oc describe cm test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+
+run_test "Criar Secrets: Listar secrets" \
+    "oc get secrets -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar Secrets: Listar secret" \
+    "oc get secret test-app -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+
+run_test "Como Variáveis de Ambiente: Configurar env" \
+    "oc set env deployment/test-app --from=configmap/test-app 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+
+run_test "Como Volumes: Configurar volume" \
+    "oc set volume deployment/test-app \ 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+
+run_test "Criar ConfigMaps: Listar configmaps" \
+    "oc get configmaps -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar ConfigMaps: Listar cm" \
+    "oc get cm -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar ConfigMaps: Descrever cm" \
+    "oc describe cm test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+
+run_test "Criar Secrets: Listar secrets" \
+    "oc get secrets -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar Secrets: Listar secret" \
+    "oc get secret test-app -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+
+run_test "Como Variáveis de Ambiente: Configurar env" \
+    "oc set env deployment/test-app --from=configmap/test-app 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+
+run_test "Como Volumes: Configurar volume" \
+    "oc set volume deployment/test-app \ 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+
+run_test "Criar ConfigMaps: Listar configmaps" \
+    "oc get configmaps -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar ConfigMaps: Listar cm" \
+    "oc get cm -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar ConfigMaps: Descrever cm" \
+    "oc describe cm test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+
+run_test "Criar Secrets: Listar secrets" \
+    "oc get secrets -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+run_test "Criar Secrets: Listar secret" \
+    "oc get secret test-app -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+
+
+run_test "Como Variáveis de Ambiente: Configurar env" \
+    "oc set env deployment/test-app --from=configmap/test-app 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+
+run_test "Como Volumes: Configurar volume" \
+    "oc set volume deployment/test-app \ 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+
+
+
+

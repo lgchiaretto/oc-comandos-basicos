@@ -162,7 +162,7 @@ spec:
 EOF
 
 # Aguardar instalação
-oc get csv -n openshift-adp -w
+oc get csv -n openshift-adp
 
 # Configurar DataProtectionApplication
 cat <<EOF | oc apply -f -
@@ -355,7 +355,7 @@ oc apply -f configmaps.yaml
 oc apply -f persistentvolumeclaims.yaml
 
 # 5. Aguardar PVCs bound
-oc get pvc -w
+oc get pvc
 
 # 6. Restore de service accounts e RBAC
 oc apply -f serviceaccounts.yaml

@@ -84,7 +84,7 @@ oc get events --field-selector type=Warning
 oc get events --field-selector involvedObject.kind=Pod --sort-by='.lastTimestamp' | tail -20
 
 # Watch events em tempo real
-oc get events -w
+oc get events
 ```
 
 ---

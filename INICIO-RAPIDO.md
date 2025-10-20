@@ -242,7 +242,6 @@ oc get nodes
 ```bash
 # Instalar
 sudo dnf install jq  # RHEL/Fedora
-sudo apt install jq  # Ubuntu/Debian
 
 # Exemplo de uso
 oc get pods -o json | jq '.items[].metadata.name'

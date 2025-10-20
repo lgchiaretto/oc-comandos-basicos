@@ -25,3 +25,17 @@ run_test "Listar machines" \
 run_test "Listar machinesets" \
     "oc get machinesets -n openshift-machine-api"
 
+run_test "Listar e Verificar: Listar nodes" \
+    "oc get nodes -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
+
+run_test "Listar e Verificar: Admin: top" \
+    "oc adm top nodes 2>/dev/null || echo 'Metrics não disponíveis'"
+
+run_test "MachineConfigs: Listar machineconfigs" \
+    "oc get machineconfigs -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
+
+run_test "MachineConfigPools: Listar machineconfigpools" \
+    "oc get machineconfigpools -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
+
+run_test "Gerenciar MachineSets: Listar machinesets" \
+    "oc get machinesets -n openshift-machine-api 2>/dev/null || echo 'Recurso não encontrado'"

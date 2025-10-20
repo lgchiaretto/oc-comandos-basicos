@@ -89,21 +89,6 @@ oc cp /local/dir <nome-do-pod>:/container/dir
 oc cp ./config.json mypod:/etc/config/config.json
 ```
 
-### Port Forwarding
-```bash
-# Port-forward para acessar pod localmente
-oc port-forward <nome-do-pod> <porta-local>:<porta-do-pod>
-
-# Exemplo
-oc port-forward mypod 8080:80
-
-# Port-forward em background
-oc port-forward mypod 8080:80 &
-
-# Port-forward para service
-oc port-forward service/<nome-do-service> 8080:80
-```
-
 ---
 
 ## 🔧 Gerenciamento de Pods

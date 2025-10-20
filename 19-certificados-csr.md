@@ -60,7 +60,7 @@ oc delete csr <csr-name>
 ### Monitorar CSRs
 ```bash
 # Watch CSRs
-oc get csr -w
+oc get csr
 
 # Ver CSRs criados nas últimas horas
 oc get csr --sort-by='.metadata.creationTimestamp'
@@ -180,7 +180,7 @@ oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 oc delete secret <secret-name> -n <namespace>
 
 # Aguardar recreação
-oc get secret <secret-name> -n <namespace> -w
+oc get secret <secret-name> -n <namespace>
 
 # Verificar novo certificado
 oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout

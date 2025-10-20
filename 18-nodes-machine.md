@@ -142,7 +142,7 @@ oc get mcp worker
 oc describe mcp <pool-name>
 
 # Ver progresso de update
-oc get mcp -w
+oc get mcp
 
 # Ver qual MC está sendo aplicado
 oc get mcp <pool-name> -o jsonpath='{.status.configuration.name}'
@@ -238,7 +238,7 @@ oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.y
 oc apply -f new-machineset.yaml
 
 # Verificar
-oc get machines -n openshift-machine-api -w
+oc get machines -n openshift-machine-api
 ```
 
 ### Deletar Machines
@@ -247,7 +247,7 @@ oc get machines -n openshift-machine-api -w
 oc delete machine <machine-name> -n openshift-machine-api
 
 # Ver processo
-oc get machines -n openshift-machine-api -w
+oc get machines -n openshift-machine-api
 
 # Ver nodes
 oc get nodes
@@ -269,7 +269,7 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 # Node vai reiniciar automaticamente se MachineConfig mudou
 
 # 4. Aguardar node voltar
-oc get nodes -w
+oc get nodes
 
 # 5. Uncordon
 oc adm uncordon <node-name>
@@ -283,7 +283,7 @@ chroot /host
 systemctl reboot
 
 # Aguardar
-oc get nodes -w
+oc get nodes
 ```
 
 ### Remover Node

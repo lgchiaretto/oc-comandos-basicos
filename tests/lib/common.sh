@@ -64,7 +64,8 @@ run_test() {
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
     save_state
     
-    if [ "$should_skip" -eq 1 ]; then
+    # Verificar se should_skip é um número antes de comparar
+    if [[ "$should_skip" =~ ^[0-9]+$ ]] && [ "$should_skip" -eq 1 ]; then
         log_skip "$description"
         SKIPPED_TESTS=$((SKIPPED_TESTS + 1))
         save_state

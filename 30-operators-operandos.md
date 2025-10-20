@@ -120,8 +120,8 @@ spec:
 EOF
 
 # 6. Verificar instalação
-oc get csv -n <operator-namespace> -w
-oc get pods -n <operator-namespace> -w
+oc get csv -n <operator-namespace>
+oc get pods -n <operator-namespace>
 ```
 
 ### Exemplo: Elasticsearch Operator
@@ -292,7 +292,7 @@ oc get <cr-type> <name> -o jsonpath='{.status.conditions}'
 oc get elasticsearch <name> -o jsonpath='{.status.cluster.status}'
 
 # Watch status
-oc get <cr-type> <name> -w
+oc get <cr-type> <name>
 ```
 
 ---
