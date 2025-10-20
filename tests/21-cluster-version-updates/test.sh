@@ -10,10 +10,10 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 section_header "21 - CLUSTER VERSION E UPDATES"
 
-run_test "Ver versão do cluster" \
+run_test "Versão do cluster" \
     "oc get clusterversion"
 
-run_test "Ver histórico de updates" \
+run_test "Status geral" \
     "oc get clusterversion version -o jsonpath='{.status.history}' | head -200 || true"
 
 run_test "Ver Versão Atual: Listar clusterversion" \
@@ -34,7 +34,7 @@ run_test "Update Prerequisites: Listar mcp" \
 run_test "Verificar progresso de update nos nodes" \
     "oc get mcp -o custom-columns=NAME:.metadata.name,UPDATED:.status.updatedMachineCount,TOTAL:.status.machineCount 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Descrever ClusterVersion" \
+run_test "Detalhes da versão" \
     "oc describe clusterversion version"
 
 run_test "Status do Cluster: Admin: upgrade" \

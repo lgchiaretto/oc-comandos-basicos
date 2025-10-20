@@ -13,7 +13,7 @@ section_header "04 - PODS E CONTAINERS"
 run_test "Listar todos os pods" \
     "oc get pods -n ${TEST_PROJECT}"
 
-run_test "Listar pods com mais informações" \
+run_test "Listar pods com mais detalhes" \
     "oc get pods -o wide -n ${TEST_PROJECT}"
 
 run_test "Listar pods em todos os namespaces" \

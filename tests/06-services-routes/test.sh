@@ -39,7 +39,7 @@ run_test "Descrever service" \
 run_test "Descrever route" \
     "oc describe route test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Route não encontrado'"
 
-run_test "Descrever endpoints" \
+run_test "Exemplo prático" \
     "oc describe endpoints test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Endpoints não encontrados'"
 
 run_test "Criar service para deployment" \

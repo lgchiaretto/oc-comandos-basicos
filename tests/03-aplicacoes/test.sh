@@ -9,7 +9,7 @@ section_header "03 - APLICAÇÕES"
 
 # Criar aplicação usando httpd que é mais estável
 
-run_test "Criar aplicação de teste [httpd]" \
+run_test "Exemplo com httpd" \
     "oc new-app httpd:latest --name=test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'App já existe'"
 
 run_test "Listar todas as aplicações" \
@@ -39,19 +39,19 @@ run_test "Expor service como route" \
 run_test "Ver status da aplicação" \
     "oc status -n ${TEST_PROJECT} 2>/dev/null || echo 'Status não disponível'"
 
-run_test "Descrever deployment" \
+run_test "Exemplo prático" \
     "oc describe deployment test-app -n ${TEST_PROJECT} 2>/dev/null | head -20 || true"
 
-run_test "Atualizar imagem do deployment" \
+run_test "Exemplo prático" \
     "oc set image deployment/test-app httpd=httpd:2.4 -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment não encontrado'"
 
 run_test "Patch no deployment para adicionar label app=test-app nos pods" \
     "oc patch deployment test-app -n ${TEST_PROJECT} --type=merge -p '{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"app\":\"test-app\"}}}}}' 2>/dev/null || echo 'Patch já aplicado'"
 
-run_test "Verificar se pode criar app" \
+run_test "Verificar se pode criar deployments" \
     "oc auth can-i create deployments -n ${TEST_PROJECT}"
 
-run_test "Aguardar pods iniciarem" \
+run_test "Exemplo prático" \
     "oc wait --for=condition=available --timeout=60s deployment/test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment ainda processando'"
 
 run_test "Aguardar deployment ser criado" \

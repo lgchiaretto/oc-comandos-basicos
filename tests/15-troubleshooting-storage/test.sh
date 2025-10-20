@@ -8,10 +8,10 @@ section_header "$MODULE_NUM - $(basename "$(dirname "$0")" | cut -d'-' -f2- | tr
 run_test "Listar PVCs no projeto de teste" \
     "oc get pvc -n ${TEST_PROJECT}"
 
-run_test "Listar PVs do cluster" \
+run_test "Listar PVs" \
     "oc get pv | head -10"
 
-run_test "Verificar storage classes disponíveis" \
+run_test "Verificar StorageClass" \
     "oc get sc"
 
 run_test "Ver eventos relacionados a storage" \

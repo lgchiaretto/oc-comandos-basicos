@@ -16,7 +16,7 @@ run_test "Exportar recursos do projeto" \
 run_test "Backup de Manifests por Namespace: Listar namespace" \
     "oc get namespace test-app -o yaml > /tmp/test-app-namespace.yaml 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Backup de Todo o Cluster [Manifests]: Listar namespaces" \
+run_test "Cluster-scoped resources" \
     "oc get namespaces -o yaml > /tmp/cluster-namespaces.yaml 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Backup de Todo o Cluster [Manifests]: Listar nodes" \
@@ -25,7 +25,7 @@ run_test "Backup de Todo o Cluster [Manifests]: Listar nodes" \
 run_test "Backup de Todo o Cluster [Manifests]: Listar clusterroles" \
     "oc get clusterroles -o yaml > /tmp/cluster-clusterroles.yaml 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Velero - Backup Tool: Listar csv" \
+run_test "Aguardar instalação" \
     "oc get csv -n openshift-adp 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Backup de PVCs: Listar volumesnapshot" \

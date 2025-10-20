@@ -34,7 +34,7 @@ run_test "Filtrar projetos com label" \
 run_test "Ver recursos do projeto" \
     "oc get all -n ${TEST_PROJECT}"
 
-run_test "Listar projetos com labels visíveis" \
+run_test "Listar com labels" \
     "oc get projects --show-labels | head -10"
 
 run_test "Ver annotations do projeto" \

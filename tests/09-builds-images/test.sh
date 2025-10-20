@@ -33,7 +33,7 @@ run_test "Descrever buildconfig" \
 run_test "Descrever imagestream" \
     "oc describe is -n ${TEST_PROJECT} 2>/dev/null || echo 'Nenhum imagestream encontrado'"
 
-run_test "Criar buildconfig de teste (do zero)" \
+run_test "Exemplo prático" \
     "oc new-build --name=test-build --binary -n ${TEST_PROJECT} 2>/dev/null || echo 'Buildconfig já existe'"
 
 run_test "Deletar buildconfig de teste" \

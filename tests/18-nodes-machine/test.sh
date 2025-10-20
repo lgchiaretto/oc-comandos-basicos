@@ -13,16 +13,16 @@ section_header "18 - NODES E MACHINE"
 run_test "Listar nodes" \
     "oc get nodes"
 
-run_test "Listar nodes com detalhes" \
+run_test "Wide output" \
     "oc get nodes -o wide"
 
 run_test "Descrever primeiro node" \
     "oc get nodes -o name | head -1 | xargs oc describe"
 
-run_test "Listar machines" \
+run_test "Ver Machines" \
     "oc get machines -n openshift-machine-api"
 
-run_test "Listar machinesets" \
+run_test "Listar MachineSets" \
     "oc get machinesets -n openshift-machine-api"
 
 run_test "Listar e Verificar: Listar nodes" \
@@ -34,7 +34,7 @@ run_test "MachineConfigs: Listar machineconfigs" \
 run_test "MachineConfigPools: Listar machineconfigpools" \
     "oc get machineconfigpools -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Gerenciar MachineSets: Listar machinesets" \
+run_test "Listar MachineSets" \
     "oc get machinesets -n openshift-machine-api 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Listar e Verificar: Admin: top" \

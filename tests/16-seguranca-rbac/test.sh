@@ -27,16 +27,16 @@ run_test "Listar roles" \
 run_test "Listar rolebindings" \
     "oc get rolebindings -n ${TEST_PROJECT}"
 
-run_test "Listar clusterroles" \
+run_test "Listar ClusterRoles" \
     "oc get clusterroles | head -20"
 
-run_test "Listar clusterrolebindings" \
+run_test "Listar ClusterRoleBindings" \
     "oc get clusterrolebindings | head -20"
 
 run_test "Listar service accounts" \
     "oc get sa -n ${TEST_PROJECT}"
 
-run_test "Listar SCC (Security Context Constraints)" \
+run_test "Listar SCCs" \
     "oc get scc | head -15"
 
 run_test "Ver quem pode usar SCC anyuid" \

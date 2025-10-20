@@ -16,7 +16,7 @@ run_test "Verificar comando must-gather (sem executar)" \
 run_test "Inspecionar Recursos: Admin: inspect" \
     "oc adm inspect ns/test-app --dest-dir=/tmp/inspect"
 
-run_test "Coletar Dados do Cluster: Listar pods" \
+run_test "Ver pods do must-gather" \
     "oc get pods -n openshift-must-gather-* 2>/dev/null || echo "Recurso não encontrado"
 
 run_test "Verificações Básicas: Listar clusteroperators" \
@@ -28,7 +28,7 @@ run_test "Verificações Básicas: Listar nodes" \
 run_test "Verificações Básicas: Listar clusterversion" \
     "oc get clusterversion -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
-run_test "Verificações Básicas: Listar events" \
+run_test "Ver últimos eventos de erro" \
     "oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20 -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
 run_test "Coleta Rápida: Listar co" \

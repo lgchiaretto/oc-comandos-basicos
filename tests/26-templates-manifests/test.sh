@@ -10,7 +10,7 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 section_header "26 - TEMPLATES E MANIFESTS"
 
-run_test "Listar templates" \
+run_test "Templates do openshift namespace" \
     "oc get templates -n openshift | head -10 || true"
 
 run_test "Exportar deployment como YAML" \

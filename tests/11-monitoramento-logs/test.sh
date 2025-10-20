@@ -27,7 +27,7 @@ run_test "Ver logs com timestamp" \
 run_test "Monitorar uso de recursos dos pods" \
     "oc adm top pods -n ${TEST_PROJECT} 2>/dev/null || echo 'Metrics não disponíveis'"
 
-run_test "Monitorar uso de recursos dos nodes" \
+run_test "Top nodes (CPU e memória)" \
     "oc adm top nodes | head -5 2>/dev/null || echo 'Metrics não disponíveis'"
 
 run_test "Ver logs do sistema (audit)" \
@@ -48,7 +48,7 @@ run_test "Verificar pods com problemas" \
 run_test "Listar todos os eventos do cluster (últimos)" \
     "oc get events -A --sort-by='.lastTimestamp' | tail -20"
 
-run_test "Verificar prometheus" \
+run_test "Ver pods do monitoring" \
     "oc get pods -n openshift-monitoring | grep prometheus"
 
 run_test "Ver status geral do projeto" \

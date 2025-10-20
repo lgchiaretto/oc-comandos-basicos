@@ -16,19 +16,19 @@ run_test "Verificar token de acesso" \
 run_test "Verificar contexto atual" \
     "oc whoami --show-context"
 
-run_test "Verificar URL da console" \
+run_test "Verificar a URL da console" \
     "oc whoami --show-console"
 
 run_test "Verificar servidor conectado" \
     "oc whoami --show-server"
 
-run_test "Status de Conexão: whoami 2>/dev/null" \
+run_test "Verificar se está conectado" \
     "oc whoami 2>/dev/null && echo "Conectado" || echo "Não conectado"
 
 run_test "Ver endpoints da API" \
     "oc api-resources 2>/dev/null | head -20 || true"
 
-run_test "Status de Conexão: api-resources " \
+run_test "Listar todos os recursos da API disponíveis" \
     "oc api-resources"
 
 run_test "Verificar versão do oc" \
@@ -37,13 +37,13 @@ run_test "Verificar versão do oc" \
 run_test "Ver versões da API" \
     "oc api-versions 2>/dev/null | head -20 || true"
 
-run_test "Status de Conexão: api-versions " \
+run_test "Listar todas as versões da API disponíveis" \
     "oc api-versions"
 
 run_test "Verificar informações do cluster" \
     "oc cluster-info"
 
-run_test "Versão e Informações: cluster-info dump" \
+run_test "Ver informações do servidor" \
     "oc cluster-info dump"
 
 run_test "Exibir configuração atual" \

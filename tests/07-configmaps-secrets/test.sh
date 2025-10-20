@@ -37,10 +37,10 @@ run_test "Criar ConfigMap de teste" \
 run_test "Criar Secret genérico" \
     "oc create secret generic test-secret --from-literal=password=mypassword -n ${TEST_PROJECT} 2>/dev/null || echo 'Secret já existe'"
 
-run_test "Descrever ConfigMap" \
+run_test "Exemplo prático" \
     "oc describe configmap test-config -n ${TEST_PROJECT}"
 
-run_test "Descrever Secret" \
+run_test "Exemplo prático" \
     "oc describe secret test-secret -n ${TEST_PROJECT}"
 
 run_test "Link secret a service account" \

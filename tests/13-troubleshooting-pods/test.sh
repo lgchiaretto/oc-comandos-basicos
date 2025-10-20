@@ -40,5 +40,5 @@ run_test "Volumes e Mounts: Listar pvc" \
 run_test "ConfigMaps e Secrets: Listar cm" \
     "oc get cm -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Pending [Não Agendado]: Descrever nodes" \
+run_test "Ver taints nos nodes" \
     "oc describe nodes | grep Taints 2>/dev/null || echo 'Recurso não encontrado'"

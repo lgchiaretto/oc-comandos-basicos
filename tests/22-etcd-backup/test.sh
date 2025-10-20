@@ -10,7 +10,7 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 section_header "22 - ETCD BACKUP"
 
-run_test "Verificar pods do etcd" \
+run_test "Pods do etcd" \
     "oc get pods -n openshift-etcd | grep -E etcd"
 
 run_test "Listar pods com uso de recursos customizado" \
@@ -19,19 +19,19 @@ run_test "Listar pods com uso de recursos customizado" \
 run_test "Extrair imagens dos pods" \
     "oc get pods -n ${TEST_PROJECT} -o json | jq -r '.items[].spec.containers[].image' | head -5 || true"
 
-run_test "Verificar Etcd: Listar pods" \
+run_test "Pods do etcd" \
     "oc get pods -n openshift-etcd 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Verificar Etcd: Listar clusteroperator" \
     "oc get clusteroperator etcd -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Backup Programado [CronJob]: Listar cronjob" \
+run_test "Verificar CronJob" \
     "oc get cronjob -n etcd-backup 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Backup de Recursos do Cluster: Listar namespaces" \
+run_test "Namespaces" \
     "oc get namespaces -o yaml > /tmp/cluster-resources-backup-namespaces.yaml 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Backup de Recursos do Cluster: Listar clusterroles" \
+run_test "Cluster roles" \
     "oc get clusterroles -o yaml > /tmp/cluster-resources-backup-clusterroles.yaml 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Restore do Etcd: Listar nodes" \

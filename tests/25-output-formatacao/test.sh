@@ -28,7 +28,7 @@ run_test "Básico: Listar nome do primeiro pod" \
 run_test "Filtros e Condições: Listar nodes Ready" \
     "oc get nodes -o jsonpath='{.items[?(@.status.conditions[?(@.type==\"Ready\")].status==\"True\")].metadata.name}' 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Exemplos Práticos com JQ: Listar CO degradados" \
+run_test "Cluster Operators degraded" \
     "oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type==\"Degraded\" and .status==\"True\")) | .metadata.name' 2>/dev/null || echo 'Nenhum CO degradado'"
 
 run_test "JSONPath: Extrair IPs dos pods" \

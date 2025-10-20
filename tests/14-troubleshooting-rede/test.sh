@@ -19,7 +19,7 @@ run_test "Listar endpoints" \
 run_test "Listar routes" \
     "oc get routes -n ${TEST_PROJECT}"
 
-run_test "Verificar DNS (pods dns)" \
+run_test "Pods do CoreDNS/DNS" \
     "oc get pods -n openshift-dns | head -5 || true"
 
 run_test "Verificar Services: Listar svc" \
@@ -34,8 +34,8 @@ run_test "Troubleshoot Routes: Listar routes" \
 run_test "Troubleshoot Routes: Listar route" \
     "oc get route test-app -o jsonpath='{.spec.host}' -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Ingress Controller: Listar ingresscontroller" \
+run_test "IngressController config" \
     "oc get ingresscontroller -n openshift-ingress-operator 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Ingress Controller: Descrever ingresscontroller" \
+run_test "Descrever IngressController" \
     "oc describe ingresscontroller default -n openshift-ingress-operator 2>/dev/null || echo 'Recurso não encontrado'"

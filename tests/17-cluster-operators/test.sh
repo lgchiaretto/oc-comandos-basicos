@@ -10,7 +10,7 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 section_header "17 - CLUSTER OPERATORS"
 
-run_test "Listar Cluster Operators" \
+run_test "Watch operators" \
     "oc get co"
 
 run_test "Descrever primeiro CO" \
@@ -22,16 +22,16 @@ run_test "Status Geral: Listar clusteroperators" \
 run_test "Diagnosticar Problemas: Listar deploy" \
     "oc get deploy -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Authentication Operator: Listar pods" \
+run_test "Pods" \
     "oc get pods -n openshift-authentication 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Ingress Operator: Listar ingresscontroller" \
+run_test "IngressControllers" \
     "oc get ingresscontroller -n openshift-ingress-operator 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "Network Operator: Listar network.config.openshift.io" \
+run_test "Configuração de rede" \
     "oc get network.config.openshift.io cluster -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
-run_test "DNS Operator: Listar dns.operator/default" \
+run_test "Configuração DNS" \
     "oc get dns.operator/default -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Status Detalhado: Descrever co" \
