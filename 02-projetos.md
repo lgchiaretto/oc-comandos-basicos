@@ -54,18 +54,14 @@ oc get projects --show-labels
 oc new-project <nome-do-projeto>
 ```
 
-```bash
+```bash (ignore)
 # Criar projeto com descrição
-oc new-project <nome-do-projeto> \
-  --description="Minha descrição" \
-  --display-name="Nome de Exibição"
+oc new-project <nome-do-projeto> --description="Minha descrição" --display-name="Nome de Exibição"
 ```
 
 ```bash
 # Exemplo completo
-oc new-project producao \
-  --description="Ambiente de produção" \
-  --display-name="Produção"
+oc new-project producao --description="Ambiente de produção" --display-name="Produção"
 ```
 
 ### Trocar entre Projetos
@@ -76,7 +72,7 @@ oc project <nome-do-projeto>
 
 ```bash
 # Exemplo
-oc project development
+oc project producao
 ```
 
 ```bash
@@ -337,11 +333,6 @@ oc status
 ```
 
 ```bash
-# Status detalhado
-oc status -v
-```
-
-```bash
 # Status sugerindo ações
 oc status --suggest
 ```
@@ -424,6 +415,61 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 
 ---
 
+## 🎓 Exemplos Práticos
+
+### Criar Ambiente Completo
+```bash (ignore)
+# 1. Criar projeto
+oc new-project meu-app-dev \
+  --description="Ambiente de desenvolvimento" \
+  --display-name="Meu App - DEV"
+```
+
+```bash (ignore)
+# 2. Adicionar labels
+oc label project meu-app-dev env=dev tier=backend team=devops
+```
+
+```bash (ignore)
+# 3. Configurar quota
+cat <<EOF | oc create -f -
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: dev-quota
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    pods: "20"
+EOF
+```
+
+```bash (ignore)
+# 4. Verificar
+oc describe project meu-app-dev
+oc get quota
+```
+
+### Migração entre Projetos
+```bash (ignore)
+# 1. Exportar recursos do projeto origem
+oc get all -n projeto-origem -o yaml > recursos.yaml
+```
+
+```bash (ignore)
+# 2. Criar projeto destino
+oc new-project projeto-destino
+```
+
+```bash (ignore)
+# 3. Importar recursos (após ajustar namespace no YAML)
+sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
+```
+
+---
+
+
 ## 💡 Boas Práticas
 
 ### Nomenclatura
@@ -443,60 +489,6 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 - ✅ Use RBAC para controlar acesso
 - ✅ Revise permissões regularmente
 - ✅ Delete projetos não utilizados
-
----
-
-## 🎓 Exemplos Práticos
-
-### Criar Ambiente Completo
-```bash
-# 1. Criar projeto
-oc new-project meu-app-dev \
-  --description="Ambiente de desenvolvimento" \
-  --display-name="Meu App - DEV"
-```
-
-```bash
-# 2. Adicionar labels
-oc label project meu-app-dev env=dev tier=backend team=devops
-```
-
-```bash
-# 3. Configurar quota
-cat <<EOF | oc create -f -
-apiVersion: v1
-kind: ResourceQuota
-metadata:
-  name: dev-quota
-spec:
-  hard:
-    requests.cpu: "4"
-    requests.memory: 8Gi
-    pods: "20"
-EOF
-```
-
-```bash
-# 4. Verificar
-oc describe project meu-app-dev
-oc get quota
-```
-
-### Migração entre Projetos
-```bash
-# 1. Exportar recursos do projeto origem
-oc get all -n projeto-origem -o yaml > recursos.yaml
-```
-
-```bash
-# 2. Criar projeto destino
-oc new-project projeto-destino
-```
-
-```bash
-# 3. Importar recursos (após ajustar namespace no YAML)
-sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
-```
 
 ---
 

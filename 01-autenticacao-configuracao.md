@@ -63,12 +63,12 @@ oc whoami --show-server
 ```
 
 ### Logout
-```bash
+```bash (ignore)
 # Fazer logout
 oc logout
 ```
 
-```bash
+```bash (ignore)
 # Fazer logout e limpar contexto
 oc logout && rm -f ~/.kube/config
 ```

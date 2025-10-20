@@ -5,6 +5,12 @@ Gerador Automático de Testes para OpenShift Commands Reference
 Este script lê todos os arquivos markdown (01-30) e gera automaticamente
 os arquivos test.sh correspondentes com base nos comandos documentados.
 
+Funcionalidades:
+- Extrai comandos de blocos ```bash
+- Ignora blocos marcados com ```bash (ignore)
+- Filtra comandos com placeholders ou padrões inválidos
+- Gera testes automaticamente com tratamento de erros
+
 Uso:
     python3 generate-all-tests.py
 """
@@ -51,10 +57,20 @@ class TestGenerator:
         commands = []
         content = md_file.read_text(encoding='utf-8')
         
-        # Regex para encontrar blocos de código bash
-        code_blocks = re.finditer(r'```bash\n(.*?)```', content, re.DOTALL)
+        # Regex para encontrar blocos de código bash (mas não os marcados com (ignore))
+        # Primeiro remove blocos marcados como (ignore)
+        code_blocks = re.finditer(r'```bash(?:\s*\(ignore\))?\n(.*?)```', content, re.DOTALL)
         
+        # Filtra apenas os blocos que não têm (ignore)
+        valid_blocks = []
         for block in code_blocks:
+            # Pega o texto completo do match incluindo o marcador bash
+            full_match = block.group(0)
+            # Verifica se contém (ignore) no marcador de abertura
+            if '(ignore)' not in full_match.split('\n')[0]:
+                valid_blocks.append(block)
+        
+        for block in valid_blocks:
             code_content = block.group(1)
             lines = code_content.strip().split('\n')
             

@@ -150,8 +150,23 @@ run_test "Test description" \
 ### Regenerating All Test Modules
 If you make bulk changes to commands:
 ```bash
-python3 generate-test-modules.py
+python3 generate-all-tests.py
 ```
+
+**Ignoring Commands in Documentation:**
+To exclude specific code blocks from test generation, use the `(ignore)` marker:
+````markdown
+```bash (ignore)
+# This command will NOT be included in generated tests
+oc logout
+```
+````
+
+This is useful for:
+- Example commands with placeholders that shouldn't be tested
+- Commands that require manual intervention (like `oc edit`)
+- Destructive operations that shouldn't run automatically
+- Login/logout commands that affect test session state
 
 ### Running Tests
 - All tests: `./test-commands.sh`
