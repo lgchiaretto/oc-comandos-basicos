@@ -36,10 +36,8 @@ Adicionar funcionalidade de debug detalhado e melhorar a legibilidade dos testes
 ```bash
 run_test "Verificar usuário atual (whoami)" \
     "oc whoami"
-
 run_test "Verificar token de acesso" \
     "oc whoami -t"
-
 run_test "Verificar contexto atual" \
     "oc whoami --show-context"
 ```

@@ -78,10 +78,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/../lib/common.sh"
 
 section_header "01 - AUTENTICAÇÃO E CONFIGURAÇÃO"
-
 run_test "Descrição do teste" \
     "comando-oc a executar"
-
 run_test "Outro teste" \
     "outro comando" \
     1  # 1 = skip este teste (opcional)
