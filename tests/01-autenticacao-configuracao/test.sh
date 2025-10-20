@@ -22,23 +22,23 @@ run_test "Verificar a URL da console" \
 run_test "Verificar servidor conectado" \
     "oc whoami --show-server"
 
-run_test "Verificar se está conectado" \
-    "oc whoami 2>/dev/null && echo "Conectado" || echo "Não conectado"
-
-run_test "Ver endpoints da API" \
-    "oc api-resources 2>/dev/null | head -20 || true"
-
 run_test "Listar todos os recursos da API disponíveis" \
     "oc api-resources"
 
-run_test "Verificar versão do oc" \
-    "oc version"
+run_test "Filtrar por verbo" \
+    "oc api-resources --verbs=list,get"
 
-run_test "Ver versões da API" \
-    "oc api-versions 2>/dev/null | head -20 || true"
+run_test "Filtrar por grupo de API" \
+    "oc api-resources --api-group=apps"
+
+run_test "Ver recursos com alias" \
+    "oc api-resources | grep -E '^(NAME|pod|deploy|svc)'"
 
 run_test "Listar todas as versões da API disponíveis" \
     "oc api-versions"
+
+run_test "Verificar versão do oc" \
+    "oc version"
 
 run_test "Verificar informações do cluster" \
     "oc cluster-info"
@@ -48,6 +48,12 @@ run_test "Ver informações do servidor" \
 
 run_test "Exibir configuração atual" \
     "oc config view"
+
+run_test "Exibir configuração com credenciais (cuidado!)" \
+    "oc config view --raw"
+
+run_test "Ver arquivo de configuração ~/.kube/config" \
+    "cat ~/.kube/config"
 
 run_test "Listar todos os contextos" \
     "oc config get-contexts"

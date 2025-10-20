@@ -128,17 +128,17 @@ oc delete project projeto1 projeto2 projeto3
 ### Criar Projeto com Node Selector (requer permissões admin)
 ```bash
 # Criar projeto com node selector para ambiente
-oc adm new-project <nome> --node-selector='env=prd'
+oc new-project <nome> --node-selector='env=prd'
 
 # Criar projeto sem node selector (permite qualquer node)
-oc adm new-project <nome> --node-selector=""
+oc new-project <nome> --node-selector=""
 
 # Criar projeto com node selector específico por hostname
-oc adm new-project <nome> \
+oc new-project <nome> \
   --node-selector="kubernetes.io/hostname=<hostname>"
 
 # Exemplo prático
-oc adm new-project producao --node-selector='env=production'
+oc new-project producao --node-selector='env=production'
 ```
 
 ### Modificar Node Selector Existente

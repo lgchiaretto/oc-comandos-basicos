@@ -19,8 +19,11 @@ run_test "Ver projeto atual" \
 run_test "Listar projetos (formato detalhado)" \
     "oc get projects"
 
-run_test "Ver projeto em YAML" \
-    "oc get project ${TEST_PROJECT} -o yaml"
+run_test "Listar com labels" \
+    "oc get projects --show-labels"
+
+run_test "Criar novo projeto de teste" \
+    "oc new-project ${TEST_PROJECT} --description='Projeto de teste' --display-name='Test Validation' 2>/dev/null || echo 'Projeto já existe'"
 
 run_test "Verificar quotas do projeto" \
     "oc get quota -n ${TEST_PROJECT}"
@@ -45,9 +48,6 @@ run_test "Listar network policies do projeto" \
 
 run_test "Ver service accounts do projeto" \
     "oc get sa -n ${TEST_PROJECT}"
-
-run_test "Criar novo projeto de teste" \
-    "oc new-project ${TEST_PROJECT} --description='Projeto de teste' --display-name='Test Validation' 2>/dev/null || echo 'Projeto já existe'"
 
 run_test "Descrever projeto" \
     "oc describe project ${TEST_PROJECT}"
