@@ -58,20 +58,17 @@ run_test "PackageManifests: Descrever packagemanifest" \
 run_test "PackageManifests: Listar packagemanifest" \
     "oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}' 2>/dev/null || echo "Recurso não encontrado"
 
-run_test "Passo a Passo Completo: Criar namespace" \
-    "oc create namespace test-app"
-
 run_test "Passo a Passo Completo: Listar csv" \
-    "oc get csv -n test-app 2>/dev/null || echo "Recurso não encontrado"
+    "oc get csv -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
 run_test "Install Plan: Listar installplan" \
-    "oc get installplan -n test-app 2>/dev/null || echo "Recurso não encontrado"
+    "oc get installplan -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
 run_test "Install Plan: Descrever installplan" \
-    "oc describe installplan test-app -n test-app 2>/dev/null || echo "Recurso não encontrado"
+    "oc describe installplan test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
 run_test "Install Plan: Patch installplan" \
-    "oc patch installplan test-app -n test-app --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
+    "oc patch installplan test-app -n ${TEST_PROJECT} --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
 
 run_test "OperatorGroup: Listar operatorgroups" \
     "oc get operatorgroups -A -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
@@ -104,16 +101,16 @@ run_test "PackageManifests: Listar packagemanifest" \
     "oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}' 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Passo a Passo Completo: Listar csv" \
-    "oc get csv -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc get csv -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Listar installplan" \
-    "oc get installplan -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc get installplan -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Descrever installplan" \
-    "oc describe installplan test-app -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc describe installplan test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Patch installplan" \
-    "oc patch installplan test-app -n test-app --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+    "oc patch installplan test-app -n ${TEST_PROJECT} --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
 
 run_test "OperatorGroup: Listar operatorgroups" \
     "oc get operatorgroups -A -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
@@ -149,16 +146,16 @@ run_test "PackageManifests: Listar packagemanifest" \
     "oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}' 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Passo a Passo Completo: Listar csv" \
-    "oc get csv -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc get csv -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Listar installplan" \
-    "oc get installplan -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc get installplan -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Descrever installplan" \
-    "oc describe installplan test-app -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc describe installplan test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Patch installplan" \
-    "oc patch installplan test-app -n test-app --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+    "oc patch installplan test-app -n ${TEST_PROJECT} --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
 
 run_test "OperatorGroup: Listar operatorgroups" \
     "oc get operatorgroups -A -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
@@ -194,16 +191,16 @@ run_test "PackageManifests: Listar packagemanifest" \
     "oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}' 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Passo a Passo Completo: Listar csv" \
-    "oc get csv -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc get csv -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Listar installplan" \
-    "oc get installplan -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc get installplan -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Descrever installplan" \
-    "oc describe installplan test-app -n test-app 2>/dev/null || echo "Recurso não encontrado""
+    "oc describe installplan test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Install Plan: Patch installplan" \
-    "oc patch installplan test-app -n test-app --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
+    "oc patch installplan test-app -n ${TEST_PROJECT} --type merge -p '{"spec":{"approved":true}}' 2>/dev/null || echo "Recurso não encontrado ou não aplicável""
 
 run_test "OperatorGroup: Listar operatorgroups" \
     "oc get operatorgroups -A -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""

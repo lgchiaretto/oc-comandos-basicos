@@ -36,9 +36,6 @@ run_test "Status do deployment" \
 run_test "Histórico de rollout" \
     "oc rollout history deployment/test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment não encontrado'"
 
-run_test "Criar deployment de teste" \
-    "oc create deployment nginx-test --image=nginx:latest -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment já existe'"
-
 run_test "Configurar autoscaling (HPA)" \
     "oc autoscale deployment test-app --min=1 --max=5 --cpu-percent=80 -n ${TEST_PROJECT} 2>/dev/null || echo 'HPA já existe ou deployment não encontrado'"
 

@@ -26,6 +26,7 @@ NC='\033[0m' # No Color
 VERBOSE=0
 STOP_ON_ERROR=0
 SKIP_DESTRUCTIVE=1  # Default: skip destructive commands
+SKIP_CLEANUP=0      # Default: Do not skip cleanup
 SPECIFIC_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
 LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
@@ -57,6 +58,14 @@ while [[ $# -gt 0 ]]; do
             SKIP_DESTRUCTIVE=0
             shift
             ;;
+        --skip-cleanup)
+            SKIP_CLEANUP=1
+            shift
+            ;;
+        --cleanup)
+            SKIP_CLEANUP=1
+            shift
+            ;;
         --module)
             SPECIFIC_MODULE="$2"
             shift 2
@@ -68,6 +77,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --verbose          Mostra saída detalhada"
             echo "  --stop-on-error    Para no primeiro erro"
             echo "  --skip-destructive Pula comandos destrutivos"
+            echo "  --skip-cleanup     Pula limpeza após os testes"    
             echo "  --module <num>     Executa apenas módulo específico (ex: 01)"
             exit 0
             ;;
@@ -127,6 +137,11 @@ check_prerequisites() {
 
 # Função de limpeza
 cleanup() {
+    # Verificar se deve pular a limpeza
+    if [ "$SKIP_CLEANUP" -eq 1 ]; then
+        log_info "Limpeza pulada (--skip-cleanup ativado)"
+        return 0
+    fi    
     log_info "Executando limpeza..."
     
     # Deletar projetos de teste

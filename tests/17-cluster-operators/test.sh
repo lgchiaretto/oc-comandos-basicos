@@ -23,7 +23,7 @@ run_test "Status Detalhado: Descrever co" \
     "oc describe co test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Diagnosticar Problemas: Listar deploy" \
-    "oc get deploy -n test-app 2>/dev/null || echo 'Recurso não encontrado'"
+    "oc get deploy -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 
 run_test "Must-Gather de Operadores: Admin: must-gather" \
     "echo 'Comando must-gather não executado em teste'"

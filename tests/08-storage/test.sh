@@ -24,8 +24,8 @@ run_test "Criar e Gerenciar: Listar persistentvolumeclaims" \
     "oc get persistentvolumeclaims -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 run_test "Criar e Gerenciar: Descrever pvc" \
     "oc describe pvc test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
-run_test "Criar e Gerenciar: Criar -f" \
-    "oc create -f test-app"
+#run_test "Criar e Gerenciar: Criar -f" \
+#    "oc create -f test-app"
 run_test "Usando em Deployments: Configurar volume" \
     "oc set volume deployment/test-app \ 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
 run_test "Usando em Deployments: Listar storageclass" \

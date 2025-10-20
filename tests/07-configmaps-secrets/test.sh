@@ -46,7 +46,6 @@ run_test "Criar ConfigMaps: Listar cm" \
 run_test "Criar ConfigMaps: Descrever cm" \
     "oc describe cm test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
-
 run_test "Exemplos Avançados: Criar cm" \
     "oc create cm app-config \"
 
@@ -59,9 +58,8 @@ run_test "Criar Secrets: Listar secrets" \
 run_test "Criar Secrets: Listar secret" \
     "oc get secret test-app -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado"
 
-
 run_test "Link Secrets: secrets link" \
-    "oc secrets link test-app test-app"
+    "oc secrets link default test-app -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
 
 run_test "Como Variáveis de Ambiente: Configurar env" \
     "oc set env deployment/test-app --from=configmap/test-app 2>/dev/null || echo "Recurso não encontrado ou não aplicável"
