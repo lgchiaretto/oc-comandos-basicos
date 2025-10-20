@@ -19,22 +19,34 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 # Listar ConfigMaps
 oc get configmaps
 oc get cm
+```
 
+```bash
 # De literal
 oc create configmap <nome> --from-literal=<chave>=<valor>
+```
 
+```bash
 # De arquivo
 oc create configmap <nome> --from-file=<arquivo>
+```
 
+```bash
 # De diretório
 oc create configmap <nome> --from-file=<diretorio>/
+```
 
+```bash
 # Ver conteúdo
 oc get cm <nome> -o yaml
+```
 
+```bash
 # Editar ConfigMap
 oc edit cm <nome>
+```
 
+```bash
 # Deletar ConfigMap
 oc delete cm <nome>
 ```
@@ -43,10 +55,14 @@ oc delete cm <nome>
 ```bash
 # Ver detalhes de um ConfigMap
 oc describe configmap <nome>
+```
 
+```bash
 # Em namespace específico
 oc describe configmap <nome> -n <nome-do-projeto>
+```
 
+```bash
 # Exemplo prático
 oc describe configmap test-config -n meu-projeto
 ```
@@ -57,7 +73,9 @@ oc describe configmap test-config -n meu-projeto
 oc create cm app-config \
   --from-literal=database.host=db.example.com \
   --from-literal=database.port=5432
+```
 
+```bash
 # Ver apenas as chaves
 oc get cm <nome> -o jsonpath='{.data}'
 ```
@@ -70,32 +88,48 @@ oc get cm <nome> -o jsonpath='{.data}'
 ```bash
 # Secret genérico
 oc create secret generic <nome> --from-literal=<chave>=<valor>
+```
 
+```bash
 # De arquivo
 oc create secret generic <nome> --from-file=<arquivo>
+```
 
+```bash
 # Secret para Docker Registry
 oc create secret docker-registry <nome> \
   --docker-server=<registry> \
   --docker-username=<user> \
   --docker-password=<pass> \
   --docker-email=<email>
+```
 
+```bash
 # Secret TLS
 oc create secret tls <nome> --cert=<cert-file> --key=<key-file>
+```
 
+```bash
 # Listar secrets
 oc get secrets
+```
 
+```bash
 # Ver secret (dados base64)
 oc get secret <nome> -o yaml
+```
 
+```bash
 # Decodificar secret
 oc get secret <nome> -o jsonpath='{.data.<chave>}' | base64 -d
+```
 
+```bash
 # Editar secret
 oc edit secret <nome>
+```
 
+```bash
 # Deletar secret
 oc delete secret <nome>
 ```
@@ -104,10 +138,14 @@ oc delete secret <nome>
 ```bash
 # Ver detalhes de um Secret
 oc describe secret <nome>
+```
 
+```bash
 # Em namespace específico
 oc describe secret <nome> -n <nome-do-projeto>
+```
 
+```bash
 # Exemplo prático
 oc describe secret test-secret -n meu-projeto
 ```
@@ -116,10 +154,14 @@ oc describe secret test-secret -n meu-projeto
 ```bash
 # Linkar secret à service account
 oc secrets link <service-account> <nome-do-secret>
+```
 
+```bash
 # Linkar para pull de imagens
 oc secrets link default <pull-secret> --for=pull
+```
 
+```bash
 # Linkar para mount
 oc secrets link <service-account> <nome-do-secret> --for=mount
 ```
@@ -132,10 +174,14 @@ oc secrets link <service-account> <nome-do-secret> --for=mount
 ```bash
 # ConfigMap
 oc set env deployment/<nome> --from=configmap/<nome-cm>
+```
 
+```bash
 # Secret
 oc set env deployment/<nome> --from=secret/<nome-secret>
+```
 
+```bash
 # Chave específica
 oc set env deployment/<nome> CHAVE=valor --from=configmap/<nome-cm>
 ```
@@ -148,7 +194,9 @@ oc set volume deployment/<nome> \
   --type=configmap \
   --configmap-name=<nome-cm> \
   --mount-path=/etc/config
+```
 
+```bash
 # Montar Secret
 oc set volume deployment/<nome> \
   --add --name=secret-vol \

@@ -19,13 +19,19 @@ Este documento contém comandos essenciais para autenticação e configuração 
 ```bash
 # Login no cluster OpenShift
 oc login <url-do-cluster>
+```
 
+```bash
 # Login com usuário e senha
 oc login <url-do-cluster> -u <usuario> -p <senha>
+```
 
+```bash
 # Login com token
 oc login --token=<token> --server=<url-do-cluster>
+```
 
+```bash
 # Exemplo prático
 oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```
@@ -34,16 +40,24 @@ oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```bash
 # Verificar usuário atual
 oc whoami
+```
 
+```bash
 # Verificar token de acesso
 oc whoami -t
+```
 
+```bash
 # Verificar contexto atual
 oc whoami --show-context
+```
 
+```bash
 # Verificar a URL da console
 oc whoami --show-console
+```
 
+```bash
 # Verificar servidor conectado
 oc whoami --show-server
 ```
@@ -52,7 +66,9 @@ oc whoami --show-server
 ```bash
 # Fazer logout
 oc logout
+```
 
+```bash
 # Fazer logout e limpar contexto
 oc logout && rm -f ~/.kube/config
 ```
@@ -66,13 +82,19 @@ oc logout && rm -f ~/.kube/config
 ```bash
 # Listar todos os recursos da API disponíveis
 oc api-resources
+```
 
+```bash
 # Filtrar por verbo
 oc api-resources --verbs=list,get
+```
 
+```bash
 # Filtrar por grupo de API
 oc api-resources --api-group=apps
+```
 
+```bash
 # Ver recursos com alias
 oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 ```
@@ -81,10 +103,14 @@ oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 ```bash
 # Listar todas as versões da API disponíveis
 oc api-versions
+```
 
+```bash
 # Ver versões específicas do grupo
 oc api-versions | grep apps
+```
 
+```bash
 # Ver versões do core
 oc api-versions | grep -v "/"
 ```
@@ -95,10 +121,14 @@ oc api-versions | grep -v "/"
 ```bash
 # Verificar versão do oc
 oc version
+```
 
+```bash
 # Verificar informações do cluster
 oc cluster-info
+```
 
+```bash
 # Ver informações do servidor
 oc cluster-info dump
 ```
@@ -107,20 +137,25 @@ oc cluster-info dump
 ```bash
 # Exibir configuração atual
 oc config view
+```
 
+```bash
 # Exibir configuração com credenciais (cuidado!)
 oc config view --raw
+```
 
+```bash
 # Ver arquivo de configuração ~/.kube/config
 cat ~/.kube/config
-
 ```
 
 ### Namespace Padrão
 ```bash
 # Definir namespace padrão para o contexto atual
 oc config set-context --current --namespace=<nome-do-projeto>
+```
 
+```bash
 # Exemplo
 oc config set-context --current --namespace=production
 ```
@@ -133,16 +168,24 @@ oc config set-context --current --namespace=production
 ```bash
 # Listar todos os contextos
 oc config get-contexts
+```
 
+```bash
 # Ver contexto atual
 oc config current-context
+```
 
+```bash
 # Trocar de contexto
 oc config use-context <nome-do-contexto>
+```
 
+```bash
 # Renomear contexto
 oc config rename-context <nome-antigo> <nome-novo>
+```
 
+```bash
 # Deletar contexto
 oc config delete-context <nome-do-contexto>
 ```
@@ -154,7 +197,9 @@ oc config set-context <nome-do-contexto> \
   --cluster=<cluster> \
   --user=<usuario> \
   --namespace=<namespace>
+```
 
+```bash
 # Exemplo
 oc config set-context dev-context \
   --cluster=dev-cluster \
@@ -170,11 +215,15 @@ oc config set-context dev-context \
 oc config set-cluster <nome-cluster> \
   --server=<url> \
   --certificate-authority=<ca-file>
+```
 
+```bash
 # Adicionar usuário
 oc config set-credentials <nome-usuario> \
   --token=<token>
+```
 
+```bash
 # Criar contexto para o cluster
 oc config set-context <contexto> \
   --cluster=<cluster> \
@@ -185,7 +234,9 @@ oc config set-context <contexto> \
 ```bash
 # Definir KUBECONFIG customizado
 export KUBECONFIG=/path/to/kubeconfig
+```
 
+```bash
 # Múltiplos kubeconfigs
 export KUBECONFIG=/path/to/config1:/path/to/config2
 ```

@@ -19,16 +19,24 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 ```bash
 # Templates do projeto atual
 oc get templates
+```
 
+```bash
 # Templates do openshift namespace
 oc get templates -n openshift
+```
 
+```bash
 # Descrever template
 oc describe template <template-name> -n openshift
+```
 
+```bash
 # Ver YAML do template
 oc get template <template-name> -n openshift -o yaml
+```
 
+```bash
 # Buscar templates disponíveis
 oc get templates -n openshift | grep <keyword>
 ```
@@ -198,16 +206,24 @@ EOF
 ```bash
 # Process e display (não cria recursos)
 oc process <template-name>
+```
 
+```bash
 # Com parâmetros
 oc process <template-name> -p APP_NAME=myapp -p REPLICAS=3
+```
 
+```bash
 # Process e create
 oc process <template-name> -p APP_NAME=myapp | oc create -f -
+```
 
+```bash
 # De um template no openshift namespace
 oc process -n openshift <template-name> -p PARAM=value | oc create -f -
+```
 
+```bash
 # De arquivo local
 oc process -f template.yaml -p APP_NAME=myapp | oc create -f -
 ```
@@ -216,10 +232,14 @@ oc process -f template.yaml -p APP_NAME=myapp | oc create -f -
 ```bash
 # Listar parâmetros de um template
 oc process <template-name> --parameters
+```
 
+```bash
 # De template no openshift namespace
 oc process -n openshift <template-name> --parameters
+```
 
+```bash
 # Formato mais legível
 oc process -n openshift <template-name> --parameters | column -t
 ```
@@ -234,10 +254,14 @@ REPLICAS=3
 DB_HOST=mongodb.database.svc
 DB_NAME=production
 EOF
+```
 
+```bash
 # Usar com template
 oc process <template-name> --param-file=params.env | oc create -f -
+```
 
+```bash
 # Ou combinar arquivo + override
 oc process <template-name> --param-file=params.env -p REPLICAS=5 | oc create -f -
 ```
@@ -252,12 +276,16 @@ oc process <template-name> --param-file=params.env -p REPLICAS=5 | oc create -f 
 parameters:
 - name: APP_NAME
   required: true
+```
 
+```bash
 # Com valor default
 parameters:
 - name: REPLICAS
   value: "1"
+```
 
+```bash
 # Com generate (senha aleatória, por exemplo)
 parameters:
 - name: DATABASE_PASSWORD
@@ -265,7 +293,9 @@ parameters:
   description: "Password for the database"
   generate: expression
   from: "[a-zA-Z0-9]{16}"
+```
 
+```bash
 # Com validation regex
 parameters:
 - name: APP_NAME
@@ -281,11 +311,15 @@ parameters:
 - name: SECRET_KEY
   generate: expression
   from: "[a-zA-Z0-9]{32}"
+```
 
+```bash
 - name: DATABASE_USER
   generate: expression
   from: "user[0-9]{4}"
+```
 
+```bash
 - name: API_KEY
   generate: expression
   from: "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
@@ -301,19 +335,29 @@ parameters:
 oc get pod <nome> -o yaml --export > pod.yaml
 # Nota: --export está deprecated, use:
 oc get pod <nome> -o yaml > pod.yaml
+```
 
+```bash
 # Limpar metadata desnecessário com yq
 oc get pod <nome> -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
+```
 
+```bash
 # Export deployment
 oc get deployment <nome> -o yaml > deployment.yaml
+```
 
+```bash
 # Export service
 oc get svc <nome> -o yaml > service.yaml
+```
 
+```bash
 # Export route
 oc get route <nome> -o yaml > route.yaml
+```
 
+```bash
 # Export todos os recursos de um tipo
 oc get deployments -o yaml > all-deployments.yaml
 ```
@@ -323,7 +367,9 @@ oc get deployments -o yaml > all-deployments.yaml
 # Export como template
 oc get deployment,svc,route -l app=myapp -o yaml | \
 oc create template myapp-template --dry-run=client -o yaml > myapp-template.yaml
+```
 
+```bash
 # Ou manualmente
 cat > app-template.yaml << 'EOF'
 apiVersion: template.openshift.io/v1
@@ -332,12 +378,16 @@ metadata:
   name: myapp-template
 objects:
 EOF
+```
 
+```bash
 # Adicionar recursos exportados
 oc get deployment myapp -o yaml | sed 's/^/  /' >> app-template.yaml
 echo "---" >> app-template.yaml
 oc get svc myapp -o yaml | sed 's/^/  /' >> app-template.yaml
+```
 
+```bash
 # Depois substituir valores fixos por parâmetros
 # Ex: replicas: 2 -> replicas: ${REPLICAS}
 ```
@@ -346,7 +396,9 @@ oc get svc myapp -o yaml | sed 's/^/  /' >> app-template.yaml
 ```bash
 # Estrutura Kustomize
 mkdir -p app/{base,overlays/{dev,prod}}
+```
 
+```bash
 # Base
 cat > app/base/kustomization.yaml << EOF
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -356,7 +408,9 @@ resources:
 - service.yaml
 - route.yaml
 EOF
+```
 
+```bash
 # Overlay dev
 cat > app/overlays/dev/kustomization.yaml << EOF
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -368,7 +422,9 @@ replicas:
 - name: myapp
   count: 1
 EOF
+```
 
+```bash
 # Aplicar
 oc apply -k app/overlays/dev/
 ```
@@ -380,21 +436,29 @@ cat > /tmp/backup-project.sh << 'EOF'
 #!/bin/bash
 PROJECT=$1
 BACKUP_DIR="project-backup-${PROJECT}-$(date +%Y%m%d)"
+```
 
+```bash
 mkdir -p ${BACKUP_DIR}
+```
 
+```bash
 # Export de cada tipo de recurso
 for resource in dc deployment statefulset daemonset job cronjob \
                 svc route pvc cm secret sa role rolebinding; do
   echo "Exporting ${resource}..."
   oc get ${resource} -n ${PROJECT} -o yaml > ${BACKUP_DIR}/${resource}.yaml 2>/dev/null
 done
+```
 
+```bash
 # Compress
 tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
 echo "Backup saved to ${BACKUP_DIR}.tar.gz"
 EOF
+```
 
+```bash
 chmod +x /tmp/backup-project.sh
 /tmp/backup-project.sh <project-name>
 ```

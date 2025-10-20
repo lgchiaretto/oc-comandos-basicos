@@ -20,23 +20,35 @@ Este documento contém comandos para gerenciar builds e imagens no OpenShift.
 # Listar BuildConfigs
 oc get buildconfig
 oc get bc
+```
 
+```bash
 # Descrever BuildConfig
 oc describe bc <nome-do-bc>
+```
 
+```bash
 # Criar build a partir de código Git
 oc new-build <url-do-git>
+```
 
+```bash
 # Com estratégia específica
 oc new-build <url-do-git> --strategy=docker
 oc new-build <url-do-git> --strategy=source
+```
 
+```bash
 # Editar BuildConfig
 oc edit bc <nome-do-bc>
+```
 
+```bash
 # Deletar BuildConfig
 oc delete bc <nome-do-bc>
+```
 
+```bash
 # Ver logs do último build
 oc logs -f bc/<nome-do-bc>
 ```
@@ -46,10 +58,14 @@ oc logs -f bc/<nome-do-bc>
 # Adicionar webhook trigger
 oc set triggers bc/<nome> --from-github
 oc set triggers bc/<nome> --from-webhook
+```
 
+```bash
 # Remover triggers
 oc set triggers bc/<nome> --remove-all
+```
 
+```bash
 # Ver triggers
 oc describe bc <nome> | grep Triggered
 ```
@@ -62,29 +78,45 @@ oc describe bc <nome> | grep Triggered
 ```bash
 # Iniciar novo build
 oc start-build <nome-do-bc>
+```
 
+```bash
 # Build de diretório local
 oc start-build <nome-do-bc> --from-dir=.
+```
 
+```bash
 # Build de arquivo local
 oc start-build <nome-do-bc> --from-file=Dockerfile
+```
 
+```bash
 # Listar builds
 oc get builds
+```
 
+```bash
 # Ver status de build específico
 oc get build <nome-do-build>
+```
 
+```bash
 # Ver logs do build
 oc logs build/<nome-do-build>
 oc logs -f build/<nome-do-build>
+```
 
+```bash
 # Cancelar build em execução
 oc cancel-build <nome-do-build>
+```
 
+```bash
 # Deletar build
 oc delete build <nome-do-build>
+```
 
+```bash
 # Ver histórico de builds
 oc get builds --sort-by=.metadata.creationTimestamp
 ```
@@ -97,10 +129,14 @@ oc get builds --sort-by=.metadata.creationTimestamp
 ```bash
 # Criar BuildConfig binário
 oc new-build --name=<nome> --binary
+```
 
+```bash
 # Em namespace específico
 oc new-build --name=<nome> --binary -n <nome-do-projeto>
+```
 
+```bash
 # Exemplo prático
 oc new-build --name=test-build --binary -n meu-projeto
 ```
@@ -108,10 +144,14 @@ oc new-build --name=test-build --binary -n meu-projeto
 ```bash
 # Cancelar build em execução
 oc cancel-build <nome-do-build>
+```
 
+```bash
 # Em namespace específico
 oc cancel-build <nome> -n <nome-do-projeto>
+```
 
+```bash
 # Exemplo prático
 oc cancel-build test-app-1 -n meu-projeto
 ```
@@ -120,13 +160,19 @@ oc cancel-build test-app-1 -n meu-projeto
 ```bash
 # Ver logs de builds por label buildconfig
 oc logs -l buildconfig=<nome>
+```
 
+```bash
 # Com limite de linhas
 oc logs -l buildconfig=<nome> --tail=20
+```
 
+```bash
 # Em namespace específico
 oc logs -n <nome-do-projeto> -l buildconfig=<nome> --tail=20
+```
 
+```bash
 # Exemplo prático
 oc logs -n meu-projeto -l buildconfig=test-app --tail=20
 ```
@@ -136,10 +182,14 @@ oc logs -n meu-projeto -l buildconfig=test-app --tail=20
 ```bash
 # Ver por que build falhou
 oc describe build <nome-do-build>
+```
 
+```bash
 # Ver eventos relacionados ao build
 oc get events --field-selector involvedObject.name=<nome-do-build>
+```
 
+```bash
 # Tentar build novamente
 oc start-build --from-build=<nome-do-build>
 ```
@@ -153,22 +203,34 @@ oc start-build --from-build=<nome-do-build>
 # Listar ImageStreams
 oc get imagestream
 oc get is
+```
 
+```bash
 # Descrever ImageStream
 oc describe is <nome-do-is>
+```
 
+```bash
 # Ver tags disponíveis
 oc get is <nome-do-is> -o jsonpath='{.spec.tags[*].name}'
+```
 
+```bash
 # Criar ImageStream
 oc create imagestream <nome>
+```
 
+```bash
 # Importar imagem externa
 oc import-image <nome> --from=<registry>/<image>:<tag> --confirm
+```
 
+```bash
 # Deletar ImageStream
 oc delete is <nome-do-is>
+```
 
+```bash
 # Ver SHA da imagem
 oc get is <nome> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 ```
@@ -178,16 +240,24 @@ oc get is <nome> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 # Listar tags
 oc get imagestreamtag
 oc get istag
+```
 
+```bash
 # Ver detalhes de tag específica
 oc describe istag <nome-do-is>:<tag>
+```
 
+```bash
 # Criar tag
 oc tag <source-is>:<source-tag> <dest-is>:<dest-tag>
+```
 
+```bash
 # Tag de imagem externa
 oc tag <external-image> <is>:<tag>
+```
 
+```bash
 # Deletar tag
 oc delete istag <nome-do-is>:<tag>
 ```

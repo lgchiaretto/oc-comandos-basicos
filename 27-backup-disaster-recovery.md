@@ -31,11 +31,15 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 # - Etcd backup
 # - Application manifests
 # - Secrets/ConfigMaps
+```
 
+```bash
 # Semanal:
 # - Full PV backup
 # - Registry images backup
+```
 
+```bash
 # Antes de:
 # - Cluster updates
 # - Major changes
@@ -52,18 +56,26 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 cat > /tmp/backup-namespace.sh << 'EOF'
 #!/bin/bash
 set -e
+```
 
+```bash
 NAMESPACE=$1
 BACKUP_DIR="namespace-backup-${NAMESPACE}-$(date +%Y%m%d-%H%M%S)"
+```
 
+```bash
 if [ -z "$NAMESPACE" ]; then
   echo "Usage: $0 <namespace>"
   exit 1
 fi
+```
 
+```bash
 echo "=== Backing up namespace: ${NAMESPACE} ==="
 mkdir -p ${BACKUP_DIR}
+```
 
+```bash
 # Resources to backup
 RESOURCES=(
   "deployments"
@@ -83,25 +95,37 @@ RESOURCES=(
   "buildconfigs"
   "deploymentconfigs"
 )
+```
 
+```bash
 for resource in "${RESOURCES[@]}"; do
   echo "Backing up ${resource}..."
   oc get ${resource} -n ${NAMESPACE} -o yaml > ${BACKUP_DIR}/${resource}.yaml 2>/dev/null || true
 done
+```
 
+```bash
 # Backup namespace itself
 oc get namespace ${NAMESPACE} -o yaml > ${BACKUP_DIR}/namespace.yaml
+```
 
+```bash
 # Compress
 tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
 rm -rf ${BACKUP_DIR}
+```
 
+```bash
 echo "✅ Backup completed: ${BACKUP_DIR}.tar.gz"
 ls -lh ${BACKUP_DIR}.tar.gz
 EOF
+```
 
+```bash
 chmod +x /tmp/backup-namespace.sh
+```
 
+```bash
 # Usar
 /tmp/backup-namespace.sh myproject
 ```
@@ -112,13 +136,19 @@ chmod +x /tmp/backup-namespace.sh
 cat > /tmp/backup-all-namespaces.sh << 'EOF'
 #!/bin/bash
 set -e
+```
 
+```bash
 BACKUP_DIR="cluster-backup-$(date +%Y%m%d-%H%M%S)"
 mkdir -p ${BACKUP_DIR}
+```
 
+```bash
 echo "=== Cluster-wide resources ==="
 mkdir -p ${BACKUP_DIR}/cluster
+```
 
+```bash
 # Cluster-scoped resources
 oc get namespaces -o yaml > ${BACKUP_DIR}/cluster/namespaces.yaml
 oc get nodes -o yaml > ${BACKUP_DIR}/cluster/nodes.yaml
@@ -127,21 +157,29 @@ oc get clusterrolebindings -o yaml > ${BACKUP_DIR}/cluster/clusterrolebindings.y
 oc get storageclasses -o yaml > ${BACKUP_DIR}/cluster/storageclasses.yaml
 oc get persistentvolumes -o yaml > ${BACKUP_DIR}/cluster/persistentvolumes.yaml
 oc get customresourcedefinitions -o yaml > ${BACKUP_DIR}/cluster/crds.yaml
+```
 
+```bash
 echo "=== Backing up user namespaces ==="
 for ns in $(oc get ns -o jsonpath='{.items[?(@.metadata.name!~"^(openshift|kube|default).*")].metadata.name}'); do
   echo "Namespace: $ns"
   /tmp/backup-namespace.sh $ns
   mv namespace-backup-${ns}-*.tar.gz ${BACKUP_DIR}/
 done
+```
 
+```bash
 # Compress everything
 tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
 rm -rf ${BACKUP_DIR}
+```
 
+```bash
 echo "✅ Full cluster backup: ${BACKUP_DIR}.tar.gz"
 EOF
+```
 
+```bash
 chmod +x /tmp/backup-all-namespaces.sh
 ```
 
@@ -160,10 +198,14 @@ spec:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 EOF
+```
 
+```bash
 # Aguardar instalação
 oc get csv -n openshift-adp
+```
 
+```bash
 # Configurar DataProtectionApplication
 cat <<EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
@@ -194,13 +236,19 @@ spec:
         bucket: my-backup-bucket
         prefix: velero
 EOF
+```
 
+```bash
 # Criar backup com Velero
 velero backup create my-backup --include-namespaces myproject
+```
 
+```bash
 # Listar backups
 velero backup get
+```
 
+```bash
 # Restore
 velero restore create --from-backup my-backup
 ```
@@ -222,10 +270,14 @@ spec:
   source:
     persistentVolumeClaimName: <pvc-name>
 EOF
+```
 
+```bash
 # Verificar snapshot
 oc get volumesnapshot
+```
 
+```bash
 # Restore de snapshot
 cat <<EOF | oc apply -f -
 apiVersion: v1
@@ -266,16 +318,24 @@ spec:
     persistentVolumeClaim:
       claimName: <pvc-name>
 EOF
+```
 
+```bash
 # Aguardar pod ficar ready
 oc wait --for=condition=ready pod/backup-pod
+```
 
+```bash
 # Tar dos dados
 oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
+```
 
+```bash
 # Copiar backup
 oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
+```
 
+```bash
 # Limpeza
 oc delete pod backup-pod
 ```
@@ -284,13 +344,19 @@ oc delete pod backup-pod
 ```bash
 # MySQL/MariaDB
 oc exec <mysql-pod> -- mysqldump -u root -p<password> --all-databases > mysql-backup.sql
+```
 
+```bash
 # PostgreSQL
 oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
+```
 
+```bash
 # MongoDB
 oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
+```
 
+```bash
 # Restore (exemplos)
 oc exec -i <mysql-pod> -- mysql -u root -p<password> < mysql-backup.sql
 oc exec -i <postgres-pod> -- psql -U postgres < postgres-backup.sql
@@ -306,7 +372,9 @@ oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 # Checklist de preparação
 cat > /tmp/dr-checklist.md << 'EOF'
 # Disaster Recovery Checklist
+```
 
+```bash
 ## Backups Configurados
 - [ ] Etcd backup diário
 - [ ] Application manifests backup
@@ -314,27 +382,35 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] Database backups
 - [ ] Registry images backup
 - [ ] Cluster configuration backup
+```
 
+```bash
 ## Documentação
 - [ ] Procedimentos de restore documentados
 - [ ] Lista de contatos de emergência
 - [ ] Diagrama de arquitetura atualizado
 - [ ] Inventário de aplicações críticas
 - [ ] RTO/RPO definidos por aplicação
+```
 
+```bash
 ## Testes
 - [ ] Teste de restore de etcd
 - [ ] Teste de restore de aplicações
 - [ ] Teste de restore de dados
 - [ ] DR drill completo (anual)
+```
 
+```bash
 ## Armazenamento
 - [ ] Backups em localização offsite
 - [ ] Backups encriptados
 - [ ] Retenção de backups configurada
 - [ ] Verificação de integridade automática
 EOF
+```
 
+```bash
 cat /tmp/dr-checklist.md
 ```
 
@@ -343,31 +419,45 @@ cat /tmp/dr-checklist.md
 # 1. Restore de namespace
 tar xzf namespace-backup-myproject-*.tar.gz
 cd namespace-backup-myproject-*/
+```
 
+```bash
 # 2. Criar namespace
 oc apply -f namespace.yaml
+```
 
+```bash
 # 3. Restore de secrets e configmaps primeiro
 oc apply -f secrets.yaml
 oc apply -f configmaps.yaml
+```
 
+```bash
 # 4. Restore de PVCs
 oc apply -f persistentvolumeclaims.yaml
+```
 
+```bash
 # 5. Aguardar PVCs bound
 oc get pvc
+```
 
+```bash
 # 6. Restore de service accounts e RBAC
 oc apply -f serviceaccounts.yaml
 oc apply -f roles.yaml
 oc apply -f rolebindings.yaml
+```
 
+```bash
 # 7. Restore de applications
 oc apply -f deployments.yaml
 oc apply -f statefulsets.yaml
 oc apply -f services.yaml
 oc apply -f routes.yaml
+```
 
+```bash
 # 8. Verificar
 oc get all
 ```
@@ -375,26 +465,38 @@ oc get all
 ### DR em Ambiente Secundário
 ```bash
 # Failover para cluster secundário
+```
 
+```bash
 # 1. Confirmar cluster primário está down
 oc get clusterversion # timeout se cluster está down
+```
 
+```bash
 # 2. No cluster secundário, restore do etcd backup
 # (ver 22-etcd-backup.md)
+```
 
+```bash
 # 3. Restore de aplicações
 for backup in namespace-backup-*.tar.gz; do
   tar xzf $backup
   # Aplicar manifests...
 done
+```
 
+```bash
 # 4. Atualizar DNS para apontar para novo cluster
 # (fora do escopo do OpenShift)
+```
 
+```bash
 # 5. Verificar aplicações
 oc get pods -A
 oc get routes -A
+```
 
+```bash
 # 6. Testar aplicações críticas
 ```
 
@@ -403,11 +505,15 @@ oc get routes -A
 # Recovery Point Objective (RPO)
 # = Quanto de dados você pode perder
 # Exemplo: Backup a cada 1h = RPO de 1h
+```
 
+```bash
 # Recovery Time Objective (RTO)
 # = Quanto tempo para recuperar
 # Exemplo: Restore em 30min = RTO de 30min
+```
 
+```bash
 # Medir RPO real
 LAST_BACKUP=$(ls -t cluster-backup-*.tar.gz | head -1)
 BACKUP_TIME=$(stat -c %Y $LAST_BACKUP)

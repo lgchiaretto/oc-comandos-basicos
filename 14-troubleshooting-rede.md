@@ -20,20 +20,30 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ```bash
 # IP do pod
 oc get pod <nome-do-pod> -o jsonpath='{.status.podIP}'
+```
 
+```bash
 # Testar conectividade entre pods
 oc exec <pod-origem> -- ping <ip-pod-destino>
 oc exec <pod-origem> -- curl <ip-pod-destino>:<porta>
+```
 
+```bash
 # Testar service por nome
 oc exec <pod-origem> -- curl <nome-service>:<porta>
+```
 
+```bash
 # Testar DNS
 oc exec <pod-origem> -- nslookup <nome-service>
+```
 
+```bash
 # Verificar rotas de rede
 oc exec <pod-origem> -- ip route
+```
 
+```bash
 # Interfaces de rede
 oc exec <pod-origem> -- ip addr
 ```
@@ -42,16 +52,24 @@ oc exec <pod-origem> -- ip addr
 ```bash
 # Listar network policies
 oc get networkpolicy
+```
 
+```bash
 # Descrever policy
 oc describe networkpolicy <nome>
+```
 
+```bash
 # Ver todas as policies do namespace
 oc get networkpolicy -o yaml
+```
 
+```bash
 # Deletar temporariamente para testar
 oc delete networkpolicy <nome>
+```
 
+```bash
 # Verificar se policy está bloqueando
 oc describe pod <nome> | grep -i network
 ```
@@ -64,16 +82,24 @@ oc describe pod <nome> | grep -i network
 ```bash
 # Listar services
 oc get svc
+```
 
+```bash
 # Detalhes do service
 oc describe svc <nome-do-service>
+```
 
+```bash
 # Ver ClusterIP
 oc get svc <nome> -o jsonpath='{.spec.clusterIP}'
+```
 
+```bash
 # Ver portas
 oc get svc <nome> -o jsonpath='{.spec.ports}'
+```
 
+```bash
 # Testar service de dentro do cluster
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <service-name>:<port>
 ```
@@ -82,17 +108,25 @@ oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <service-na
 ```bash
 # Listar endpoints
 oc get endpoints
+```
 
+```bash
 # Endpoints de service específico
 oc get endpoints <nome-do-service>
+```
 
+```bash
 # Verificar se endpoints estão vazios
 oc get endpoints <nome-do-service> -o jsonpath='{.subsets[*].addresses[*].ip}'
+```
 
+```bash
 # Comparar labels do service com pods
 oc get svc <nome> -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
+```
 
+```bash
 # Se não há endpoints, verificar labels
 oc describe svc <nome> | grep Selector
 oc get pods --show-labels
@@ -106,22 +140,34 @@ oc get pods --show-labels
 ```bash
 # Listar routes
 oc get routes
+```
 
+```bash
 # Detalhes da route
 oc describe route <nome-da-route>
+```
 
+```bash
 # Ver hostname da route
 oc get route <nome> -o jsonpath='{.spec.host}'
+```
 
+```bash
 # Testar route externamente
 curl -v https://<hostname-da-route>
+```
 
+```bash
 # Ver TLS da route
 oc get route <nome> -o jsonpath='{.spec.tls}'
+```
 
+```bash
 # Verificar se route aponta para service correto
 oc get route <nome> -o jsonpath='{.spec.to.name}'
+```
 
+```bash
 # Ver se service existe
 oc get svc <service-name>
 ```
@@ -130,16 +176,24 @@ oc get svc <service-name>
 ```bash
 # Status do router
 oc get pods -n openshift-ingress
+```
 
+```bash
 # Logs do router
 oc logs -n openshift-ingress -l app=router
+```
 
+```bash
 # Verificar domínio padrão
 oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
+```
 
+```bash
 # IngressController config
 oc get ingresscontroller -n openshift-ingress-operator
+```
 
+```bash
 # Descrever IngressController
 oc describe ingresscontroller default -n openshift-ingress-operator
 ```
@@ -152,18 +206,26 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 ```bash
 # Ver tipo de rede (SDN ou OVN)
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
+```
 
+```bash
 # Ver network config
 oc get network.config.openshift.io cluster -o yaml
+```
 
+```bash
 # Pods de rede
 oc get pods -n openshift-sdn
 # ou para OVN:
 oc get pods -n openshift-ovn-kubernetes
+```
 
+```bash
 # Logs de rede (SDN)
 oc logs -n openshift-sdn <sdn-pod-name>
+```
 
+```bash
 # Logs de rede (OVN)
 oc logs -n openshift-ovn-kubernetes <ovn-pod-name>
 ```
@@ -172,13 +234,19 @@ oc logs -n openshift-ovn-kubernetes <ovn-pod-name>
 ```bash
 # Ver flows OVN
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-ofctl dump-flows br-int
+```
 
+```bash
 # Ver interfaces
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-vsctl show
+```
 
+```bash
 # Trace de pacote
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-appctl ofproto/trace br-int <flow>
+```
 
+```bash
 # Ver tabelas OVN
 oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-nbctl show
 oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-sbctl show
@@ -188,10 +256,14 @@ oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-sbctl show
 ```bash
 # Listar NetworkAttachmentDefinitions
 oc get network-attachment-definitions
+```
 
+```bash
 # Ver CNI configs
 oc get pods -n openshift-multus
+```
 
+```bash
 # Logs do Multus
 oc logs -n openshift-multus <multus-pod>
 ```
@@ -204,21 +276,31 @@ oc logs -n openshift-multus <multus-pod>
 ```bash
 # Pods do CoreDNS/DNS
 oc get pods -n openshift-dns
+```
 
+```bash
 # Logs do DNS
 oc logs -n openshift-dns <dns-pod-name>
+```
 
+```bash
 # Testar DNS de dentro do pod
 oc exec <pod-name> -- nslookup kubernetes.default
 oc exec <pod-name> -- nslookup <service-name>
 oc exec <pod-name> -- nslookup <service-name>.<namespace>.svc.cluster.local
+```
 
+```bash
 # Ver configuração DNS do pod
 oc exec <pod-name> -- cat /etc/resolv.conf
+```
 
+```bash
 # Verificar DNS operator
 oc get clusteroperator dns
+```
 
+```bash
 # Configuração DNS
 oc get dns.operator/default -o yaml
 ```
@@ -227,16 +309,24 @@ oc get dns.operator/default -o yaml
 ```bash
 # Verificar se DNS pods estão rodando
 oc get pods -n openshift-dns
+```
 
+```bash
 # Restart DNS pods se necessário
 oc delete pod -n openshift-dns --all
+```
 
+```bash
 # Verificar se service do DNS existe
 oc get svc -n openshift-dns
+```
 
+```bash
 # Testar resolução externa
 oc exec <pod> -- nslookup google.com
+```
 
+```bash
 # Testar resolução interna
 oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
 ```
@@ -249,10 +339,14 @@ oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
 ```bash
 # Criar pod com ferramentas de rede
 oc run netshoot --rm -i --tty --image nicolaka/netshoot -- /bin/bash
+```
 
+```bash
 # Ou usando imagem Red Hat
 oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bin/bash
+```
 
+```bash
 # Dentro do pod, testar:
 # - curl, wget
 # - ping, traceroute
@@ -265,14 +359,20 @@ oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bi
 ```bash
 # Debug node e captura de pacotes
 oc debug node/<node-name>
+```
 
+```bash
 # No node (chroot):
 chroot /host
+```
 
+```bash
 # Capturar tráfego
 tcpdump -i any -n host <ip-do-pod>
 tcpdump -i any -n port <porta>
+```
 
+```bash
 # Salvar captura
 tcpdump -i any -w /tmp/capture.pcap
 ```

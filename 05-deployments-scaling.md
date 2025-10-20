@@ -21,19 +21,29 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 # Listar deployments
 oc get deployments
 oc get deploy
+```
 
+```bash
 # Descrever deployment
 oc describe deployment <nome-do-deployment>
+```
 
+```bash
 # Ver deployment em YAML
 oc get deployment <nome-do-deployment> -o yaml
+```
 
+```bash
 # Criar deployment
 oc create deployment <nome> --image=<imagem>
+```
 
+```bash
 # Editar deployment
 oc edit deployment <nome-do-deployment>
+```
 
+```bash
 # Deletar deployment
 oc delete deployment <nome-do-deployment>
 ```
@@ -46,10 +56,14 @@ oc delete deployment <nome-do-deployment>
 ```bash
 # Escalar deployment manualmente
 oc scale deployment <nome-do-deployment> --replicas=<numero>
+```
 
+```bash
 # Escalar deployment config
 oc scale dc <nome-do-dc> --replicas=<numero>
+```
 
+```bash
 # Exemplo
 oc scale deployment nginx --replicas=5
 ```
@@ -58,16 +72,24 @@ oc scale deployment nginx --replicas=5
 ```bash
 # Criar Horizontal Pod Autoscaler
 oc autoscale deployment <nome> --min=2 --max=10 --cpu-percent=80
+```
 
+```bash
 # Ver autoscalers
 oc get hpa
+```
 
+```bash
 # Descrever HPA
 oc describe hpa <nome>
+```
 
+```bash
 # Deletar autoscaler
 oc delete hpa <nome>
+```
 
+```bash
 # Exemplo completo
 oc autoscale deployment myapp --min=3 --max=20 --cpu-percent=75
 ```
@@ -80,13 +102,19 @@ oc autoscale deployment myapp --min=3 --max=20 --cpu-percent=75
 ```bash
 # Atualizar imagem do deployment
 oc set image deployment/<nome-do-deployment> <container>=<nova-imagem>
+```
 
+```bash
 # Exemplo
 oc set image deployment/nginx nginx=nginx:1.21
+```
 
+```bash
 # Ver histórico de rollouts
 oc rollout history deployment/<nome-do-deployment>
+```
 
+```bash
 # Ver status do rollout
 oc rollout status deployment/<nome-do-deployment>
 ```
@@ -95,10 +123,14 @@ oc rollout status deployment/<nome-do-deployment>
 ```bash
 # Pausar rollout
 oc rollout pause deployment/<nome-do-deployment>
+```
 
+```bash
 # Retomar rollout
 oc rollout resume deployment/<nome-do-deployment>
+```
 
+```bash
 # Reiniciar deployment (recrear pods)
 oc rollout restart deployment/<nome-do-deployment>
 ```
@@ -107,10 +139,14 @@ oc rollout restart deployment/<nome-do-deployment>
 ```bash
 # Fazer rollback para revisão anterior
 oc rollout undo deployment/<nome-do-deployment>
+```
 
+```bash
 # Fazer rollback para revisão específica
 oc rollout undo deployment/<nome-do-deployment> --to-revision=<numero>
+```
 
+```bash
 # Ver detalhes de uma revisão
 oc rollout history deployment/<nome> --revision=2
 ```
@@ -123,13 +159,19 @@ oc rollout history deployment/<nome> --revision=2
 # Listar replicasets
 oc get replicasets
 oc get rs
+```
 
+```bash
 # Descrever replicaset
 oc describe rs <nome-do-rs>
+```
 
+```bash
 # Ver replica sets de um deployment
 oc get rs -l app=<nome-da-app>
+```
 
+```bash
 # Deletar replicaset
 oc delete rs <nome-do-rs>
 ```

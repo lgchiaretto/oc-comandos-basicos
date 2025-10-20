@@ -22,15 +22,21 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 oc adm policy who-can <verbo> <recurso>
 oc adm policy who-can get pods
 oc adm policy who-can delete projects
+```
 
+```bash
 # Verificar minhas permissões
 oc auth can-i <verbo> <recurso>
 oc auth can-i create pods
 oc auth can-i delete projects
+```
 
+```bash
 # Como outro usuário
 oc auth can-i get pods --as=<usuario>
+```
 
+```bash
 # Listar minhas permissões
 oc auth can-i --list
 ```
@@ -39,16 +45,24 @@ oc auth can-i --list
 ```bash
 # Listar usuários
 oc get users
+```
 
+```bash
 # Listar grupos
 oc get groups
+```
 
+```bash
 # Ver identidades
 oc get identities
+```
 
+```bash
 # Descrever usuário
 oc describe user <username>
+```
 
+```bash
 # Ver grupos de um usuário
 oc describe user <username> | grep Groups
 ```
@@ -61,15 +75,21 @@ oc describe user <username> | grep Groups
 ```bash
 # Listar ClusterRoles
 oc get clusterroles
+```
 
+```bash
 # Roles importantes
 oc get clusterrole admin -o yaml
 oc get clusterrole edit -o yaml
 oc get clusterrole view -o yaml
+```
 
+```bash
 # Descrever ClusterRole
 oc describe clusterrole <nome-da-role>
+```
 
+```bash
 # Ver permissões de uma ClusterRole
 oc describe clusterrole admin | grep -A 50 PolicyRule
 ```
@@ -78,16 +98,24 @@ oc describe clusterrole admin | grep -A 50 PolicyRule
 ```bash
 # Listar Roles no namespace
 oc get roles
+```
 
+```bash
 # Criar Role customizada
 oc create role <nome> --verb=<verbos> --resource=<recursos>
+```
 
+```bash
 # Exemplo
 oc create role pod-reader --verb=get,list,watch --resource=pods
+```
 
+```bash
 # Editar Role
 oc edit role <nome>
+```
 
+```bash
 # Deletar Role
 oc delete role <nome>
 ```
@@ -96,16 +124,24 @@ oc delete role <nome>
 ```bash
 # Listar ClusterRoleBindings
 oc get clusterrolebindings
+```
 
+```bash
 # Ver quem tem role cluster-admin
 oc get clusterrolebinding -o json | jq -r '.items[] | select(.roleRef.name=="cluster-admin") | .metadata.name'
+```
 
+```bash
 # Adicionar usuário como cluster-admin
 oc adm policy add-cluster-role-to-user cluster-admin <username>
+```
 
+```bash
 # Remover cluster-admin
 oc adm policy remove-cluster-role-from-user cluster-admin <username>
+```
 
+```bash
 # Adicionar grupo
 oc adm policy add-cluster-role-to-group cluster-admin <groupname>
 ```
@@ -114,19 +150,27 @@ oc adm policy add-cluster-role-to-group cluster-admin <groupname>
 ```bash
 # Listar RoleBindings
 oc get rolebindings
+```
 
+```bash
 # Adicionar role a usuário no namespace
 oc adm policy add-role-to-user <role> <username>
 oc adm policy add-role-to-user admin <username>
 oc adm policy add-role-to-user edit <username>
 oc adm policy add-role-to-user view <username>
+```
 
+```bash
 # Adicionar role a grupo
 oc adm policy add-role-to-group <role> <groupname>
+```
 
+```bash
 # Remover role
 oc adm policy remove-role-from-user <role> <username>
+```
 
+```bash
 # Ver RoleBinding específico
 oc describe rolebinding <nome>
 ```
@@ -140,19 +184,29 @@ oc describe rolebinding <nome>
 # Listar Service Accounts
 oc get serviceaccounts
 oc get sa
+```
 
+```bash
 # Criar Service Account
 oc create serviceaccount <nome>
+```
 
+```bash
 # Descrever Service Account
 oc describe sa <nome>
+```
 
+```bash
 # Ver token da SA
 oc sa get-token <nome>
+```
 
+```bash
 # Ver secrets da SA
 oc get sa <nome> -o jsonpath='{.secrets[*].name}'
+```
 
+```bash
 # Deletar Service Account
 oc delete sa <nome>
 ```
@@ -161,16 +215,24 @@ oc delete sa <nome>
 ```bash
 # Adicionar role a Service Account
 oc adm policy add-role-to-user <role> system:serviceaccount:<namespace>:<sa-name>
+```
 
+```bash
 # Exemplo: dar role edit
 oc adm policy add-role-to-user edit system:serviceaccount:myproject:mysa
+```
 
+```bash
 # ClusterRole para SA
 oc adm policy add-cluster-role-to-user <role> system:serviceaccount:<namespace>:<sa-name>
+```
 
+```bash
 # Usar SA em deployment
 oc set serviceaccount deployment/<nome> <sa-name>
+```
 
+```bash
 # Ver qual SA o pod está usando
 oc get pod <nome> -o jsonpath='{.spec.serviceAccountName}'
 ```
@@ -183,18 +245,26 @@ oc get pod <nome> -o jsonpath='{.spec.serviceAccountName}'
 ```bash
 # Listar SCCs
 oc get scc
+```
 
+```bash
 # SCCs principais
 oc get scc restricted -o yaml
 oc get scc privileged -o yaml
 oc get scc anyuid -o yaml
+```
 
+```bash
 # Descrever SCC
 oc describe scc <nome>
+```
 
+```bash
 # Ver qual SCC o pod está usando
 oc get pod <nome> -o yaml | grep scc
+```
 
+```bash
 # Ver usuários/SAs em uma SCC
 oc describe scc <nome> | grep Users
 ```
@@ -203,17 +273,25 @@ oc describe scc <nome> | grep Users
 ```bash
 # Adicionar SA a uma SCC
 oc adm policy add-scc-to-user <scc-name> system:serviceaccount:<namespace>:<sa-name>
+```
 
+```bash
 # Exemplos comuns
 oc adm policy add-scc-to-user anyuid system:serviceaccount:myproject:mysa
 oc adm policy add-scc-to-user privileged system:serviceaccount:myproject:mysa
+```
 
+```bash
 # Adicionar grupo
 oc adm policy add-scc-to-group <scc-name> <group-name>
+```
 
+```bash
 # Remover de SCC
 oc adm policy remove-scc-from-user <scc-name> system:serviceaccount:<namespace>:<sa-name>
+```
 
+```bash
 # Ver quem pode usar SCC
 oc describe scc <scc-name>
 ```
@@ -222,10 +300,14 @@ oc describe scc <scc-name>
 ```bash
 # Ver por que pod não está rodando devido a SCC
 oc describe pod <nome> | grep -i scc
+```
 
+```bash
 # Ver eventos relacionados a SCC
 oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
+```
 
+```bash
 # Verificar capabilities do container
 oc get pod <nome> -o yaml | grep -A 10 securityContext
 ```
@@ -242,7 +324,9 @@ chroot /host
 cat /var/log/oauth-apiserver/audit.log
 cat /var/log/openshift-apiserver/audit.log
 cat /var/log/kube-apiserver/audit.log
+```
 
+```bash
 # Buscar ações de usuário específico
 grep <username> /var/log/openshift-apiserver/audit.log
 ```
@@ -251,13 +335,19 @@ grep <username> /var/log/openshift-apiserver/audit.log
 ```bash
 # Ver OAuth config
 oc get oauth cluster -o yaml
+```
 
+```bash
 # Ver identity providers
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
+```
 
+```bash
 # Ver pods do OAuth
 oc get pods -n openshift-authentication
+```
 
+```bash
 # Logs do OAuth
 oc logs -n openshift-authentication <oauth-pod>
 ```
@@ -266,13 +356,19 @@ oc logs -n openshift-authentication <oauth-pod>
 ```bash
 # Listar secrets TLS
 oc get secrets --field-selector type=kubernetes.io/tls
+```
 
+```bash
 # Ver certificado
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
+```
 
+```bash
 # Verificar validade
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
+```
 
+```bash
 # Criar secret TLS
 oc create secret tls <nome> --cert=<cert-file> --key=<key-file>
 ```

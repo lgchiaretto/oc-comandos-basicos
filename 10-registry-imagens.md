@@ -19,13 +19,19 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 ```bash
 # Ver URL do registry interno
 oc get route -n openshift-image-registry
+```
 
+```bash
 # Login no registry interno
 oc registry login
+```
 
+```bash
 # Ver info do registry
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
+```
 
+```bash
 # Ver status do registry
 oc get clusteroperator image-registry
 ```
@@ -34,10 +40,14 @@ oc get clusteroperator image-registry
 ```bash
 # Expor registry externamente
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"defaultRoute":true}}'
+```
 
+```bash
 # Ver route criada
 oc get route -n openshift-image-registry
+```
 
+```bash
 # Configurar storage para registry
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"storage":{"pvc":{"claim":""}}}}'
 ```
@@ -50,19 +60,27 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 ```bash
 # Tag para registry interno
 docker tag <imagem-local> <registry-interno>/<projeto>/<nome>:<tag>
+```
 
+```bash
 # Push para registry interno
 docker push <registry-interno>/<projeto>/<nome>:<tag>
+```
 
+```bash
 # Usando Podman
 podman push <imagem> <registry-interno>/<projeto>/<nome>:<tag>
+```
 
+```bash
 # Criar secret para registry externo
 oc create secret docker-registry <secret-name> \
   --docker-server=<registry-url> \
   --docker-username=<user> \
   --docker-password=<pass>
+```
 
+```bash
 # Linkar secret para pull
 oc secrets link default <secret-name> --for=pull
 ```
@@ -71,10 +89,14 @@ oc secrets link default <secret-name> --for=pull
 ```bash
 # Pull de registry interno
 docker pull <registry-interno>/<projeto>/<nome>:<tag>
+```
 
+```bash
 # Ver imagens disponíveis em ImageStream
 oc get is <nome> -o yaml
+```
 
+```bash
 # Importar imagem externa
 oc import-image <nome>:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 ```
@@ -87,7 +109,9 @@ oc import-image <nome>:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 ```bash
 # Ver ImageContentSourcePolicy
 oc get imagecontentsourcepolicy
+```
 
+```bash
 # Criar ICSP para mirror
 cat <<EOF | oc apply -f -
 apiVersion: operator.openshift.io/v1alpha1
@@ -100,7 +124,9 @@ spec:
     - <mirror-registry>/<repo>
     source: <original-registry>/<repo>
 EOF
+```
 
+```bash
 # Ver configuração de mirror
 oc get imagecontentsourcepolicy -o yaml
 ```
@@ -109,7 +135,9 @@ oc get imagecontentsourcepolicy -o yaml
 ```bash
 # Mirror de operator catalogs
 oc mirror --config=imageset-config.yaml docker://<mirror-registry>
+```
 
+```bash
 # Ver resultados do mirror
 oc mirror list operators --catalog=<catalog-image>
 ```
@@ -122,19 +150,29 @@ oc mirror list operators --catalog=<catalog-image>
 ```bash
 # Executar image pruner manual
 oc adm prune images --confirm
+```
 
+```bash
 # Dry-run (sem deletar)
 oc adm prune images
+```
 
+```bash
 # Prune de imagens antigas
 oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
+```
 
+```bash
 # Ver configuração de pruner automático
 oc get imagepruner/cluster -o yaml
+```
 
+```bash
 # Configurar pruner automático
 oc patch imagepruners.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"schedule":"0 0 * * *","suspend":false,"keepTagRevisions":3}}'
+```
 
+```bash
 # Ver jobs de pruning
 oc get jobs -n openshift-image-registry
 ```
@@ -143,10 +181,14 @@ oc get jobs -n openshift-image-registry
 ```bash
 # Prune de builds antigos
 oc adm prune builds --confirm
+```
 
+```bash
 # Manter apenas N builds
 oc adm prune builds --keep-complete=5 --keep-failed=1 --confirm
+```
 
+```bash
 # Prune por idade
 oc adm prune builds --keep-younger-than=48h --confirm
 ```

@@ -20,19 +20,29 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 ```bash
 # Ver configuração de rede do cluster
 oc get network.config.openshift.io cluster -o yaml
+```
 
+```bash
 # Tipo de rede (SDN ou OVN)
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
+```
 
+```bash
 # Ver cluster network
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork}'
+```
 
+```bash
 # Ver service network
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
+```
 
+```bash
 # Ver network operator
 oc get clusteroperator network
+```
 
+```bash
 # Network operator config
 oc get network.operator.openshift.io cluster -o yaml
 ```
@@ -41,16 +51,24 @@ oc get network.operator.openshift.io cluster -o yaml
 ```bash
 # Ver CIDR dos pods
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*].cidr}'
+```
 
+```bash
 # Ver CIDR dos services
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]}'
+```
 
+```bash
 # Ver IP de um pod
 oc get pod <pod-name> -o jsonpath='{.status.podIP}'
+```
 
+```bash
 # Ver IPs de todos os pods
 oc get pods -o wide -A
+```
 
+```bash
 # Verificar range de IPs usado
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 ```
@@ -62,7 +80,9 @@ oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 ```bash
 # Listar IngressControllers
 oc get ingresscontroller -n openshift-ingress-operator
+```
 
+```bash
 # Ver detalhes
 oc describe ingresscontroller -n openshift-ingress-operator default
 ```
@@ -71,7 +91,9 @@ oc describe ingresscontroller -n openshift-ingress-operator default
 ```bash
 # Escalar número de réplicas do IngressController
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
+```
 
+```bash
 # Exemplo prático
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ```
@@ -85,10 +107,14 @@ oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 # Listar network policies
 oc get networkpolicy
 oc get netpol
+```
 
+```bash
 # Descrever policy
 oc describe networkpolicy <nome>
+```
 
+```bash
 # Deny all por padrão
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
@@ -101,7 +127,9 @@ spec:
   - Ingress
   - Egress
 EOF
+```
 
+```bash
 # Allow específico
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
@@ -116,7 +144,9 @@ spec:
   - from:
     - podSelector: {}
 EOF
+```
 
+```bash
 # Allow de namespace específico
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
@@ -141,13 +171,19 @@ EOF
 ```bash
 # Antes de aplicar policy, testar conectividade
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
+```
 
+```bash
 # Aplicar policy
 oc apply -f networkpolicy.yaml
+```
 
+```bash
 # Testar novamente
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
+```
 
+```bash
 # Verificar logs/eventos
 oc get events | grep -i network
 ```
@@ -156,13 +192,19 @@ oc get events | grep -i network
 ```bash
 # Ver todas as policies do namespace
 oc get networkpolicy -o yaml
+```
 
+```bash
 # Ver labels dos pods
 oc get pods --show-labels
+```
 
+```bash
 # Ver se policy está afetando pod
 oc describe networkpolicy <nome>
+```
 
+```bash
 # Deletar temporariamente para testar
 oc delete networkpolicy <nome>
 ```
@@ -177,7 +219,9 @@ oc delete networkpolicy <nome>
 ```bash
 # NetworkAttachmentDefinitions
 oc get network-attachment-definitions
+```
 
+```bash
 # Criar NAD
 cat <<EOF | oc apply -f -
 apiVersion: k8s.cni.cncf.io/v1
@@ -199,7 +243,9 @@ spec:
     }
   }'
 EOF
+```
 
+```bash
 # Usar em pod
 # annotations:
 #   k8s.v1.cni.cncf.io/networks: macvlan-conf
@@ -209,7 +255,9 @@ EOF
 ```bash
 # Ver MTU configurado
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'
+```
 
+```bash
 # Verificar MTU em pod
 oc exec <pod-name> -- ip link show eth0
 ```
@@ -218,7 +266,9 @@ oc exec <pod-name> -- ip link show eth0
 ```bash
 # Verificar conectividade entre nodes
 oc get nodes -o wide
+```
 
+```bash
 # Criar DaemonSet de teste
 cat <<EOF | oc apply -f -
 apiVersion: apps/v1
@@ -239,7 +289,9 @@ spec:
         image: nicolaka/netshoot
         command: ["sleep", "infinity"]
 EOF
+```
 
+```bash
 # Testar de cada node
 for pod in $(oc get pods -l app=network-test -o name); do
   echo "=== Testing from $pod ==="

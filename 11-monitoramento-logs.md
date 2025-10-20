@@ -19,27 +19,41 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 ```bash
 # Ver logs de pod
 oc logs <nome-do-pod>
+```
 
+```bash
 # Seguir logs em tempo real
 oc logs -f <nome-do-pod>
+```
 
+```bash
 # Logs de container específico
 oc logs <nome-do-pod> -c <nome-do-container>
+```
 
+```bash
 # Últimas N linhas
 oc logs <nome-do-pod> --tail=100
+```
 
+```bash
 # Logs desde tempo específico
 oc logs <nome-do-pod> --since=1h
 oc logs <nome-do-pod> --since-time=2024-01-01T00:00:00Z
+```
 
+```bash
 # Logs anteriores (pod crashado)
 oc logs <nome-do-pod> --previous
 oc logs <nome-do-pod> -p
+```
 
+```bash
 # Todos os pods de um deployment
 oc logs deployment/<nome-do-deployment>
+```
 
+```bash
 # Logs com timestamps
 oc logs <nome-do-pod> --timestamps
 ```
@@ -48,10 +62,14 @@ oc logs <nome-do-pod> --timestamps
 ```bash
 # Logs de node específico
 oc adm node-logs <nome-do-node>
+```
 
+```bash
 # Logs do journal
 oc adm node-logs <nome-do-node> -u kubelet
+```
 
+```bash
 # Logs do CRI-O
 oc adm node-logs <nome-do-node> -u crio
 ```
@@ -64,25 +82,39 @@ oc adm node-logs <nome-do-node> -u crio
 ```bash
 # Todos os eventos
 oc get events
+```
 
+```bash
 # Eventos ordenados por tempo
 oc get events --sort-by='.lastTimestamp'
+```
 
+```bash
 # Eventos de um namespace específico
 oc get events -n <namespace>
+```
 
+```bash
 # Todos os namespaces
 oc get events -A
+```
 
+```bash
 # Eventos de um recurso específico
 oc get events --field-selector involvedObject.name=<nome-do-pod>
+```
 
+```bash
 # Eventos de warnings
 oc get events --field-selector type=Warning
+```
 
+```bash
 # Eventos recentes (última hora)
 oc get events --field-selector involvedObject.kind=Pod --sort-by='.lastTimestamp' | tail -20
+```
 
+```bash
 # Watch events em tempo real
 oc get events
 ```
@@ -95,25 +127,39 @@ oc get events
 ```bash
 # Top nodes (CPU e memória)
 oc adm top nodes
+```
 
+```bash
 # Top nodes com labels
 oc adm top nodes --selector=<label>
+```
 
+```bash
 # Top pods
 oc adm top pods
+```
 
+```bash
 # Top pods de todos namespaces
 oc adm top pods -A
+```
 
+```bash
 # Top pods com containers
 oc adm top pods --containers
+```
 
+```bash
 # Ordenar por CPU
 oc adm top pods --sort-by=cpu
+```
 
+```bash
 # Ordenar por memória
 oc adm top pods --sort-by=memory
+```
 
+```bash
 # Top de um pod específico
 oc adm top pod <nome-do-pod>
 ```
@@ -122,7 +168,9 @@ oc adm top pod <nome-do-pod>
 ```bash
 # Ver uso atual vs requests/limits
 oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
+```
 
+```bash
 # Ver uso de todos os pods
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.containers[0].resources.requests.cpu) MEM:\(.spec.containers[0].resources.requests.memory)"'
 ```
@@ -135,13 +183,19 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.container
 ```bash
 # Ver route do Prometheus
 oc get route -n openshift-monitoring
+```
 
+```bash
 # Ver alertas ativos
 oc get prometheusrule -A
+```
 
+```bash
 # Ver configuração do Prometheus
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
+```
 
+```bash
 # Ver pods do monitoring
 oc get pods -n openshift-monitoring
 ```
@@ -159,7 +213,9 @@ data:
   config.yaml: |
     enableUserWorkload: true
 EOF
+```
 
+```bash
 # Ver status do monitoring
 oc get clusteroperator monitoring
 ```
@@ -168,7 +224,9 @@ oc get clusteroperator monitoring
 ```bash
 # Listar ServiceMonitors
 oc get servicemonitor -A
+```
 
+```bash
 # Criar ServiceMonitor para app
 cat <<EOF | oc apply -f -
 apiVersion: monitoring.coreos.com/v1

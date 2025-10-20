@@ -19,16 +19,24 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 ```bash
 # Must-gather padrão (coleta completa)
 oc adm must-gather
+```
 
+```bash
 # Salvar em diretório específico
 oc adm must-gather --dest-dir=/tmp/must-gather
+```
 
+```bash
 # Ver progresso
 oc adm must-gather --dest-dir=/tmp/must-gather -v=4
+```
 
+```bash
 # Must-gather em background
 oc adm must-gather --dest-dir=/tmp/must-gather &
+```
 
+```bash
 # Ver pods do must-gather
 oc get pods -n openshift-must-gather-*
 ```
@@ -37,7 +45,9 @@ oc get pods -n openshift-must-gather-*
 ```bash
 # Coletar logs das últimas 2 horas
 oc adm must-gather -- /usr/bin/gather --since 2h
+```
 
+```bash
 # Coletar apenas logs específicos
 oc adm must-gather --node-name=<node-name>
 ```
@@ -50,16 +60,24 @@ oc adm must-gather --node-name=<node-name>
 ```bash
 # Must-gather de rede (SDN/OVN)
 oc adm must-gather --image=quay.io/openshift/origin-must-gather -- /usr/bin/gather_network
+```
 
+```bash
 # Must-gather de storage
 oc adm must-gather --image=registry.redhat.io/odf4/ocs-must-gather-rhel8:latest
+```
 
+```bash
 # Must-gather de logging
 oc adm must-gather --image=registry.redhat.io/openshift-logging/cluster-logging-rhel8-operator:latest
+```
 
+```bash
 # Must-gather de Service Mesh
 oc adm must-gather --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8:latest
+```
 
+```bash
 # Must-gather de operadores
 oc adm must-gather --image=registry.redhat.io/openshift4/ose-must-gather:latest -- /usr/bin/gather_audit_logs
 ```
@@ -80,13 +98,19 @@ oc adm must-gather \
 ```bash
 # Explorar estrutura
 tree /tmp/must-gather
+```
 
+```bash
 # Ver logs de namespace específico
 cd /tmp/must-gather/namespaces/<namespace>/
+```
 
+```bash
 # Ver logs de pods
 cat /tmp/must-gather/namespaces/<namespace>/pods/<pod>/logs/current.log
+```
 
+```bash
 # Ver eventos
 cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml
 ```
@@ -95,16 +119,24 @@ cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml
 ```bash
 # Buscar erros
 grep -r "error" /tmp/must-gather/
+```
 
+```bash
 # Buscar warnings
 grep -r "warning" /tmp/must-gather/
+```
 
+```bash
 # Buscar crashes
 grep -r "crash\|panic\|fatal" /tmp/must-gather/
+```
 
+```bash
 # Buscar OOMKilled
 grep -r "OOMKilled" /tmp/must-gather/
+```
 
+```bash
 # Ver todos os eventos de erro
 cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml | grep -i error
 ```
@@ -117,16 +149,24 @@ cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml | grep -i error
 ```bash
 # Inspect de namespace completo
 oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
+```
 
+```bash
 # Inspect de tipo de recurso
 oc adm inspect clusteroperators --dest-dir=/tmp/inspect
+```
 
+```bash
 # Inspect de nós
 oc adm inspect nodes --dest-dir=/tmp/inspect
+```
 
+```bash
 # Inspect de recurso específico
 oc adm inspect deployment/<nome> --dest-dir=/tmp/inspect
+```
 
+```bash
 # Inspect com logs
 oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 ```
@@ -139,7 +179,9 @@ oc adm inspect \
   nodes \
   clusterversion \
   --dest-dir=/tmp/inspect
+```
 
+```bash
 # Inspect all-namespaces
 oc adm inspect ns --all-namespaces --dest-dir=/tmp/inspect
 ```
@@ -154,16 +196,24 @@ oc adm inspect ns --all-namespaces --dest-dir=/tmp/inspect
 oc get clusteroperators
 oc get nodes
 oc get clusterversion
+```
 
+```bash
 # Pods com problema
 oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
+```
 
+```bash
 # Pods recentemente reiniciados
 oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
+```
 
+```bash
 # Ver últimos eventos de erro
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
+```
 
+```bash
 # Nodes com problemas
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
@@ -184,7 +234,9 @@ oc get pods -A --field-selector=status.phase!=Running
 echo -e "\n=== Recent Warnings ==="
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 EOF
+```
 
+```bash
 chmod +x /tmp/quick-diag.sh
 /tmp/quick-diag.sh > /tmp/cluster-status.txt
 ```

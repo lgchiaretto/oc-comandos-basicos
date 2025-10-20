@@ -25,10 +25,14 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 ```bash
 # Aprovar CSRs pendentes usando awk
 oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
+```
 
+```bash
 # Aprovar CSRs não aprovados
 oc adm certificate approve $(oc get csr | grep -v -E "Approved|NAME" | awk '{print $1}')
+```
 
+```bash
 # Aprovar apenas CSRs específicos
 oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
 ```
@@ -37,19 +41,29 @@ oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
 ```bash
 # Listar status dos cluster operators com awk
 oc get co --no-headers | awk '{print $1,$3,$4,$5}'
+```
 
+```bash
 # Extrair nomes e IPs dos nodes
 oc get nodes -o wide --no-headers | awk '{print $1, $6}'
+```
 
+```bash
 # Listar pods e seus nodes
 oc get pods -o wide --no-headers | awk '{print $1, $7}'
+```
 
+```bash
 # Contar pods por node
 oc get pods -o wide --all-namespaces --no-headers | awk '{print $8}' | sort | uniq -c
+```
 
+```bash
 # Listar pods com uso de CPU (requer metrics-server)
 oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
+```
 
+```bash
 # Encontrar pods com mais memória
 oc adm top pods --no-headers | awk '{print $1, $3}' | sort -k2 -h
 ```
@@ -58,10 +72,14 @@ oc adm top pods --no-headers | awk '{print $1, $3}' | sort -k2 -h
 ```bash
 # Gerar comandos describe para todos os builds
 oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n " $1 " " $2}'
+```
 
+```bash
 # Executar describe em todos os builds e filtrar imagens
 oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:"
+```
 
+```bash
 # Salvar resultado em arquivo
 oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:" | tee /tmp/build-images.txt
 ```
@@ -80,10 +98,14 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 ```bash
 # Ver status detalhado dos cluster operators
 oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.conditions[] | select(.type=="Progressing").status), (.status.conditions[] | select(.type=="Degraded").status), (.status.conditions[] | select(.type=="Degraded").message)] | @tsv'
+```
 
+```bash
 # Listar operators com problemas
 oc get clusteroperator/operator-lifecycle-manager-packageserver -o json | jq
+```
 
+```bash
 # Filtrar operators degradados
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
@@ -92,13 +114,19 @@ oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="
 ```bash
 # Encontrar pods com OOMKilled
 oc get pods -o json | jq '.items[] | select(.status.containerStatuses[]?.lastState.terminated.reason=="OOMKilled") | .metadata.name'
+```
 
+```bash
 # Ver recursos de todos os pods
 oc get pods -o json | jq '.items[] | {name: .metadata.name, cpu: .spec.containers[].resources.requests.cpu, memory: .spec.containers[].resources.requests.memory}'
+```
 
+```bash
 # Listar pods por fase
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
+```
 
+```bash
 # Ver imagens de todos os containers
 oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ```
@@ -107,10 +135,14 @@ oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ```bash
 # Ver status de sync do ArgoCD app
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions}' | jq .
+```
 
+```bash
 # Ver sync policy
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.spec.syncPolicy}' | jq
+```
 
+```bash
 # Listar recursos de uma aplicação
 oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.resources[] | select(.kind == "Pod")'
 ```
@@ -119,7 +151,9 @@ oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.re
 ```bash
 # Ver condições do log forwarder
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
+```
 
+```bash
 # Ver filter conditions
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.filterConditions}' | jq '.'
 ```
@@ -128,7 +162,9 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.f
 ```bash
 # Listar CSRs com status vazio e aprovar
 oc get csr -ojson | jq -r '.items[] | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
+```
 
+```bash
 # Ver detalhes de CSRs pendentes
 oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: .metadata.name, user: .spec.username}'
 ```
@@ -137,7 +173,9 @@ oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: 
 ```bash
 # Extrair CA do secret oauth
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d
+```
 
+```bash
 # Salvar CA bundle em arquivo
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > bundle-ca.crt
 ```
@@ -163,16 +201,24 @@ oc adm must-gather \
 ```bash
 # Pods que não estão Running ou Completed
 oc get pods -A | egrep -v "Running|Completed"
+```
 
+```bash
 # Ver apenas pods com erro
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff"
+```
 
+```bash
 # Cluster operators com problemas
 oc get co | grep -v "True.*False.*False"
+```
 
+```bash
 # Nodes não-Ready
 oc get nodes | grep -v "Ready"
+```
 
+```bash
 # Filtrar eventos importantes
 oc describe pod <pod-name> | grep -A 10 "Events:"
 ```
@@ -181,13 +227,19 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 ```bash
 # Ver limites de recursos
 oc get all -o yaml | grep -A5 limits
+```
 
+```bash
 # Buscar configurações de registry
 oc get all -A | grep redhat-operator
+```
 
+```bash
 # Ver configurações de métricas
 oc get all --all-namespaces | grep metrics
+```
 
+```bash
 # Buscar referências a portas
 oc get all -o yaml | grep 5000
 ```
@@ -202,13 +254,19 @@ oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 3
 ```bash
 # Ver source da aplicação
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
+```
 
+```bash
 # Ver destination
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
+```
 
+```bash
 # Ver sync policy
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A 5 -B 5 sync
+```
 
+```bash
 # Ver mensagens de erro
 oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 5 "message"
 ```
@@ -217,7 +275,9 @@ oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 
 ```bash
 # Ver status do catalog source
 oc get catalogsource certified-operators -n openshift-marketplace -o yaml | grep -A 10 status:
+```
 
+```bash
 # Filtrar catalogs da Red Hat
 oc get catalogsource -n openshift-marketplace | grep redhat
 ```
@@ -230,10 +290,14 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 ```bash
 # Ver API requests com formatação
 oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
+```
 
+```bash
 # Para networking ingresses
 oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
+```
 
+```bash
 # Para roles RBAC
 oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
@@ -248,10 +312,14 @@ oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{ran
 ```bash
 # Exportar applications sem metadados desnecessários
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d'
+```
 
+```bash
 # Exportar e salvar com timestamp
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d' > /tmp/argocd-apps-$(date +'%d%m%y_%H%M%S').yaml
+```
 
+```bash
 # Exportar sem status
 oc get application -A -o yaml | sed '/status:/d'
 ```
@@ -260,10 +328,14 @@ oc get application -A -o yaml | sed '/status:/d'
 ```bash
 # Verificar se aplicação existe
 oc get applications.argoproj.io -n openshift-gitops 2>/dev/null || echo "No applications found"
+```
 
+```bash
 # Verificar health status com fallback
 oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}' 2>/dev/null || echo "Application not found"
+```
 
+```bash
 # Ver erro condition com fallback
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}' 2>/dev/null || echo "No error condition found"
 ```
@@ -279,7 +351,9 @@ for pod in $(oc get pods -o name); do
   echo "=== $pod ===" >> all-logs.txt
   oc logs $pod >> all-logs.txt 2>&1
 done
+```
 
+```bash
 # Coletar logs apenas de pods com erro
 for pod in $(oc get pods --field-selector=status.phase!=Running -o name); do
   echo "=== $pod ===" >> error-logs.txt
@@ -329,10 +403,14 @@ done
 ```bash
 # Ver todos os operators e suas condições
 oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.conditions[] | select(.type=="Available").status), Progressing=\(.status.conditions[] | select(.type=="Progressing").status), Degraded=\(.status.conditions[] | select(.type=="Degraded").status)"'
+```
 
+```bash
 # Operators com problemas detalhados
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'
+```
 
+```bash
 # Ver versões dos operators
 oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[0].version}{"\n"}{end}' | column -t
 ```
@@ -341,10 +419,14 @@ oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[
 ```bash
 # Ver apiservices com problemas
 oc get apiservice | grep -v True
+```
 
+```bash
 # Ver certificados de apiservice
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
+```
 
+```bash
 # Análise completa de apiservice
 oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text
 ```
@@ -357,13 +439,19 @@ oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}
 ```bash
 # Extrair certificado de service
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
+```
 
+```bash
 # Ver expiração do certificado
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -noout -enddate
+```
 
+```bash
 # Verificar certificado de apiservice
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
+```
 
+```bash
 # Extrair bundle CA do OAuth
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > oauth-ca-bundle.crt
 ```
@@ -376,10 +464,14 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 ```bash
 # Ver pods com mais uso de CPU
 oc adm top pods --all-namespaces --no-headers | sort -k3 -nr | head -10
+```
 
+```bash
 # Ver nodes com mais pods
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c | sort -nr
+```
 
+```bash
 # Contar recursos por namespace
 oc get all -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```

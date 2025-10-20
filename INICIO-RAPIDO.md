@@ -181,7 +181,7 @@ oc adm uncordon <node-name>
 ### Deploy de Nova Aplicação
 ```bash
 # 1. Criar projeto
-oc new-project meu-projeto
+oc new-project development
 
 # 2. Criar aplicação
 oc new-app <imagem-ou-git>

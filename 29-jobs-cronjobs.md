@@ -19,7 +19,9 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ```bash
 # Job simples
 oc create job my-job --image=busybox -- echo "Hello World"
+```
 
+```bash
 # De arquivo
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
@@ -36,7 +38,9 @@ spec:
       restartPolicy: Never
   backoffLimit: 4
 EOF
+```
 
+```bash
 # Job com múltiplas tentativas
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
@@ -59,22 +63,34 @@ EOF
 ```bash
 # Listar jobs
 oc get jobs
+```
 
+```bash
 # Descrever job
 oc describe job <job-name>
+```
 
+```bash
 # Ver logs do job
 oc logs job/<job-name>
+```
 
+```bash
 # Ver pods do job
 oc get pods -l job-name=<job-name>
+```
 
+```bash
 # Deletar job
 oc delete job <job-name>
+```
 
+```bash
 # Deletar job e seus pods
 oc delete job <job-name> --cascade=foreground
+```
 
+```bash
 # Manter pods após completar
 # (não deletar automaticamente)
 ```
@@ -98,7 +114,9 @@ spec:
         command: ["sh", "-c", "echo Processing && sleep 5"]
       restartPolicy: Never
 EOF
+```
 
+```bash
 # Monitorar
 oc get job parallel-job
 oc get pods -l job-name=parallel-job
@@ -132,7 +150,9 @@ EOF
 ```bash
 # CronJob simples
 oc create cronjob my-cronjob --image=busybox --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
+```
 
+```bash
 # De arquivo
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
@@ -158,7 +178,9 @@ EOF
 # Formato: "minuto hora dia mês dia-da-semana"
 # * = qualquer valor
 # */N = a cada N
+```
 
+```bash
 # Exemplos:
 "*/5 * * * *"      # A cada 5 minutos
 "0 * * * *"        # A cada hora (no minuto 0)
@@ -176,25 +198,39 @@ EOF
 # Listar cronjobs
 oc get cronjobs
 oc get cj
+```
 
+```bash
 # Descrever cronjob
 oc describe cronjob <name>
+```
 
+```bash
 # Ver jobs criados pelo cronjob
 oc get jobs -l cronjob=<cronjob-name>
+```
 
+```bash
 # Ver último job
 oc get jobs --sort-by=.metadata.creationTimestamp | grep <cronjob-name> | tail -1
+```
 
+```bash
 # Suspender cronjob
 oc patch cronjob <name> -p '{"spec":{"suspend":true}}'
+```
 
+```bash
 # Reativar
 oc patch cronjob <name> -p '{"spec":{"suspend":false}}'
+```
 
+```bash
 # Deletar cronjob
 oc delete cronjob <name>
+```
 
+```bash
 # Deletar cronjob e jobs/pods
 oc delete cronjob <name> --cascade=foreground
 ```
@@ -238,10 +274,14 @@ EOF
 ```bash
 # Allow - Permitir jobs simultâneos (padrão)
 concurrencyPolicy: Allow
+```
 
+```bash
 # Forbid - Não permitir simultâneos (pula se ainda rodando)
 concurrencyPolicy: Forbid
+```
 
+```bash
 # Replace - Cancela job atual e inicia novo
 concurrencyPolicy: Replace
 ```
@@ -254,20 +294,30 @@ concurrencyPolicy: Replace
 ```bash
 # Ver status do job
 oc get job <name> -o yaml
+```
 
+```bash
 # Ver condições
 oc get job <name> -o jsonpath='{.status.conditions}'
+```
 
+```bash
 # Ver por que job falhou
 oc describe job <name>
+```
 
+```bash
 # Logs do pod do job
 POD=$(oc get pods -l job-name=<name> -o jsonpath='{.items[0].metadata.name}')
 oc logs $POD
+```
 
+```bash
 # Logs do pod anterior (se falhou)
 oc logs $POD --previous
+```
 
+```bash
 # Ver eventos
 oc get events --field-selector involvedObject.name=<job-name>
 ```
@@ -276,19 +326,29 @@ oc get events --field-selector involvedObject.name=<job-name>
 ```bash
 # Ver status do cronjob
 oc get cronjob <name> -o yaml
+```
 
+```bash
 # Ver último schedule
 oc get cronjob <name> -o jsonpath='{.status.lastScheduleTime}'
+```
 
+```bash
 # Ver próxima execução (estimada)
 # Não há campo nativo, calcular baseado em schedule
+```
 
+```bash
 # Criar job manual para testar
 oc create job test-job --from=cronjob/<cronjob-name>
+```
 
+```bash
 # Ver histórico de jobs
 oc get jobs --sort-by=.metadata.creationTimestamp -l cronjob=<name>
+```
 
+```bash
 # Logs do último job
 LAST_JOB=$(oc get jobs --sort-by=.metadata.creationTimestamp -l cronjob=<name> -o name | tail -1)
 oc logs $LAST_JOB
@@ -299,13 +359,19 @@ oc logs $LAST_JOB
 # Verificar jobs completados/falhados
 oc get jobs --field-selector status.successful=1
 oc get jobs --field-selector status.failed=1
+```
 
+```bash
 # Ver jobs rodando há muito tempo
 oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadata.name) - \(.metadata.creationTimestamp)"'
+```
 
+```bash
 # Deletar jobs antigos manualmente
 oc get jobs -o json | jq -r '.items[] | select(.status.completionTime != null) | select(.status.completionTime < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete job
+```
 
+```bash
 # Ou com script
 for job in $(oc get jobs -o name); do
   STATUS=$(oc get $job -o jsonpath='{.status.succeeded}')

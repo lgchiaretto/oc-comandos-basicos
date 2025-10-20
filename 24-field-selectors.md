@@ -23,16 +23,24 @@ Este documento contém comandos avançados usando field selectors, label selecto
 ```bash
 # Pods em execução
 oc get pods --field-selector=status.phase=Running
+```
 
+```bash
 # Pods pendentes
 oc get pods --field-selector=status.phase=Pending
+```
 
+```bash
 # Pods falhados
 oc get pods --field-selector=status.phase=Failed
+```
 
+```bash
 # Pods que NÃO estão rodando
 oc get pods --field-selector=status.phase!=Running
+```
 
+```bash
 # Pods com sucesso (Completed)
 oc get pods --field-selector=status.phase=Succeeded
 ```
@@ -41,7 +49,9 @@ oc get pods --field-selector=status.phase=Succeeded
 ```bash
 # Recursos em namespace específico
 oc get pods --field-selector=metadata.namespace=default
+```
 
+```bash
 # Pods em múltiplos namespaces (usando grep)
 oc get pods -A --field-selector=metadata.namespace=default,metadata.namespace=kube-system
 ```
@@ -50,13 +60,19 @@ oc get pods -A --field-selector=metadata.namespace=default,metadata.namespace=ku
 ```bash
 # Eventos de warning
 oc get events --field-selector type=Warning
+```
 
+```bash
 # Eventos normais
 oc get events --field-selector type=Normal
+```
 
+```bash
 # Eventos de um recurso específico
 oc get events --field-selector involvedObject.name=<pod-name>
+```
 
+```bash
 # Eventos de um namespace
 oc get events --field-selector involvedObject.namespace=<namespace>
 ```
@@ -65,7 +81,9 @@ oc get events --field-selector involvedObject.namespace=<namespace>
 ```bash
 # Nodes não agendáveis
 oc get nodes --field-selector spec.unschedulable=true
+```
 
+```bash
 # Nodes agendáveis
 oc get nodes --field-selector spec.unschedulable=false
 ```
@@ -78,10 +96,14 @@ oc get nodes --field-selector spec.unschedulable=false
 ```bash
 # CSRs pendentes
 oc get csr --field-selector status.conditions.type=pending
+```
 
+```bash
 # CSRs aprovados
 oc get csr --field-selector status.conditions.type=Approved
+```
 
+```bash
 # Listar todos os CSRs pendentes (alternativa)
 oc get csr | grep Pending
 ```
@@ -90,10 +112,14 @@ oc get csr | grep Pending
 ```bash
 # Builds não completos
 oc get builds --field-selector status!=Complete
+```
 
+```bash
 # Builds completos
 oc get builds --field-selector status=Complete
+```
 
+```bash
 # Builds falhados
 oc get builds --field-selector status=Failed
 ```
@@ -102,10 +128,14 @@ oc get builds --field-selector status=Failed
 ```bash
 # Services com ClusterIP específico
 oc get svc --field-selector spec.clusterIP=10.x.x.x
+```
 
+```bash
 # Services do tipo LoadBalancer
 oc get svc --field-selector spec.type=LoadBalancer
+```
 
+```bash
 # Services do tipo NodePort
 oc get svc --field-selector spec.type=NodePort
 ```
@@ -118,19 +148,29 @@ oc get svc --field-selector spec.type=NodePort
 ```bash
 # Pods com label específica
 oc get pods -l app=nginx
+```
 
+```bash
 # Pods com múltiplas labels (AND)
 oc get pods -l app=nginx,tier=frontend
+```
 
+```bash
 # Pods com label existente (qualquer valor)
 oc get pods -l app
+```
 
+```bash
 # Pods SEM uma label específica
 oc get pods -l '!app'
+```
 
+```bash
 # Pods com label em conjunto de valores
 oc get pods -l 'env in (dev,qa)'
+```
 
+```bash
 # Pods com label NÃO em conjunto
 oc get pods -l 'env notin (prod)'
 ```
@@ -139,10 +179,14 @@ oc get pods -l 'env notin (prod)'
 ```bash
 # Combinação de labels e operadores
 oc get pods -l 'app=nginx,tier!=frontend'
+```
 
+```bash
 # Labels com operadores de comparação
 oc get pods -l 'version>=2.0'
+```
 
+```bash
 # Labels com regex (usando grep após)
 oc get pods --show-labels | grep "app=nginx"
 ```
@@ -151,13 +195,19 @@ oc get pods --show-labels | grep "app=nginx"
 ```bash
 # Deployments por label
 oc get deployments -l app=myapp
+```
 
+```bash
 # Services por label
 oc get svc -l app=myapp
+```
 
+```bash
 # Todos os recursos com label
 oc get all -l app=myapp
+```
 
+```bash
 # Pods de um deployment específico
 oc get pods -l deployment=<deployment-name>
 ```
@@ -170,10 +220,14 @@ oc get pods -l deployment=<deployment-name>
 ```bash
 # Pods Running com label específica
 oc get pods -l app=nginx --field-selector=status.phase=Running
+```
 
+```bash
 # Pods em namespace com label
 oc get pods -l tier=frontend --field-selector=metadata.namespace=production
+```
 
+```bash
 # Combinação complexa
 oc get pods -l app=myapp,version=v2 --field-selector=status.phase=Running,metadata.namespace=default
 ```
@@ -182,10 +236,14 @@ oc get pods -l app=myapp,version=v2 --field-selector=status.phase=Running,metada
 ```bash
 # Combinar múltiplas condições
 oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
+```
 
+```bash
 # Pods rodando em node específico
 oc get pods -A --field-selector=spec.nodeName=worker-1
+```
 
+```bash
 # Eventos de warning em namespace específico
 oc get events --field-selector=type=Warning,involvedObject.namespace=default
 ```
@@ -198,13 +256,19 @@ oc get events --field-selector=type=Warning,involvedObject.namespace=default
 ```bash
 # Pods com problemas (não Running ou Completed)
 oc get pods -A | egrep -v "Running|Completed"
+```
 
+```bash
 # Pods com estados de erro específicos
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff|ErrImagePull|Pending"
+```
 
+```bash
 # Nodes com problemas
 oc get nodes | grep -v "Ready"
+```
 
+```bash
 # Cluster operators com problemas
 oc get co | grep -v "True.*False.*False"
 ```
@@ -213,10 +277,14 @@ oc get co | grep -v "True.*False.*False"
 ```bash
 # Múltiplos padrões de erro
 oc get pods -A | egrep "Error|Failed|CrashLoop|ImagePull|Pending|Unknown"
+```
 
+```bash
 # Pods em namespaces específicos
 oc get pods -A | egrep "kube-system|openshift-"
+```
 
+```bash
 # Filtrar por múltiplos status
 oc get pods -A | egrep "1/1|2/2|3/3" | egrep -v "Running"
 ```
@@ -225,10 +293,14 @@ oc get pods -A | egrep "1/1|2/2|3/3" | egrep -v "Running"
 ```bash
 # Excluir múltiplos padrões
 oc get pods -A | egrep -v "Running|Completed|Succeeded"
+```
 
+```bash
 # Excluir namespaces do sistema
 oc get pods -A | egrep -v "kube-system|kube-public|openshift-"
+```
 
+```bash
 # Ver apenas pods com problemas
 oc get pods -A | egrep -v "Running|Completed" | egrep -v "NAME"
 ```
@@ -241,13 +313,19 @@ oc get pods -A | egrep -v "Running|Completed" | egrep -v "NAME"
 ```bash
 # Ordenar eventos por timestamp
 oc get events --sort-by='.lastTimestamp'
+```
 
+```bash
 # Ordenar eventos mais recentes primeiro
 oc get events --sort-by='.lastTimestamp' | tac
+```
 
+```bash
 # Ordenar pods por criação
 oc get pods --sort-by='.metadata.creationTimestamp'
+```
 
+```bash
 # Ordenar nodes por nome
 oc get nodes --sort-by='.metadata.name'
 ```
@@ -256,10 +334,14 @@ oc get nodes --sort-by='.metadata.name'
 ```bash
 # Primeiros 10 eventos
 oc get events --sort-by='.lastTimestamp' | head -10
+```
 
+```bash
 # Últimos 10 eventos
 oc get events --sort-by='.lastTimestamp' | tail -10
+```
 
+```bash
 # Paginação customizada
 oc get pods --chunk-size=50
 ```
@@ -268,10 +350,14 @@ oc get pods --chunk-size=50
 ```bash
 # Ordenar pods por uso de CPU
 oc adm top pods --no-headers | sort -k3 -nr
+```
 
+```bash
 # Ordenar pods por uso de memória
 oc adm top pods --no-headers | sort -k4 -hr
+```
 
+```bash
 # Ordenar nodes por uso de CPU
 oc adm top nodes --no-headers | sort -k3 -nr
 ```
@@ -288,7 +374,9 @@ if oc get pods -A | egrep -v "Running|Completed" | grep -v NAME; then
 else
   echo "✅ Todos os pods estão OK"
 fi
+```
 
+```bash
 # Verificar CSRs pendentes
 if oc get csr | grep -q Pending; then
   echo "⚠️  CSRs pendentes encontrados!"
@@ -296,7 +384,9 @@ if oc get csr | grep -q Pending; then
 else
   echo "✅ Nenhum CSR pendente"
 fi
+```
 
+```bash
 # Verificar cluster operators
 if oc get co | grep -v "True.*False.*False" | grep -v NAME; then
   echo "⚠️  Cluster Operators com problemas!"
@@ -310,13 +400,19 @@ fi
 ```bash
 # Contar pods por estado
 oc get pods -A --no-headers | awk '{print $4}' | sort | uniq -c
+```
 
+```bash
 # Contar pods por namespace
 oc get pods -A --no-headers | awk '{print $1}' | sort | uniq -c
+```
 
+```bash
 # Contar pods por node
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c
+```
 
+```bash
 # Contar eventos por tipo
 oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 ```
@@ -325,13 +421,19 @@ oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 ```bash
 # Pods não-Running em namespaces específicos
 oc get pods -A | egrep "my-app|my-service" | egrep -v "Running|Completed"
+```
 
+```bash
 # Eventos de warning dos últimos 10 minutos
 oc get events --field-selector type=Warning | grep "$(date -d '10 minutes ago' +'%Y-%m-%d')"
+```
 
+```bash
 # Nodes com alta utilização
 oc adm top nodes --no-headers | awk '$3 > 80 {print $1, $3}'
+```
 
+```bash
 # Pods usando mais de 80% da memória solicitada
 oc adm top pods --all-namespaces --no-headers | awk '$4 > 80 {print $1, $2, $4}'
 ```
@@ -344,13 +446,19 @@ oc adm top pods --all-namespaces --no-headers | awk '$4 > 80 {print $1, $2, $4}'
 ```bash
 # Pods com restart alto
 oc get pods -A -o wide | awk '$5 > 5 {print $0}'
+```
 
+```bash
 # Pods em CrashLoopBackOff
 oc get pods -A | grep CrashLoopBackOff
+```
 
+```bash
 # Pods em ImagePullBackOff
 oc get pods -A | grep ImagePullBackOff
+```
 
+```bash
 # Pods Pending há muito tempo
 oc get pods -A --field-selector=status.phase=Pending --sort-by='.metadata.creationTimestamp'
 ```
@@ -359,14 +467,18 @@ oc get pods -A --field-selector=status.phase=Pending --sort-by='.metadata.creati
 ```bash
 # PVCs não bound
 oc get pvc -A | grep -v Bound
+```
 
+```bash
 # Services sem endpoints
 for svc in $(oc get svc -o name); do
   if [ -z "$(oc get endpoints ${svc##*/} -o jsonpath='{.subsets[*].addresses[*].ip}')" ]; then
     echo "Service sem endpoints: $svc"
   fi
 done
+```
 
+```bash
 # Routes sem host
 oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E "^[^ ]+ *$"
 ```
