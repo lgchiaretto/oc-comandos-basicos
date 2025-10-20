@@ -28,7 +28,7 @@ STOP_ON_ERROR=0
 SKIP_DESTRUCTIVE=1  # Default: skip destructive commands
 SPECIFIC_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
-LOG_FILE="test-commands-$(date +%Y%m%d-%H%M%S).log"
+LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
 PROJECT_PREFIX="test-validation"
 TEST_PROJECT="${PROJECT_PREFIX}-$(date +%s)"
 

@@ -56,7 +56,7 @@ run_test "Listar projetos com labels visíveis" \
     "oc get projects --show-labels | head -10"
 
 run_test "Adicionar annotation ao projeto" \
-    "oc annotate project ${TEST_PROJECT} maintainer='test-automation' --overwrite"
+    "oc annotate namespace ${TEST_PROJECT} test-maintainer='test-automation' --overwrite"
 
 run_test "Ver annotations do projeto" \
     "oc get project ${TEST_PROJECT} -o jsonpath='{.metadata.annotations}'"

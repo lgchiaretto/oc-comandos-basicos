@@ -9,6 +9,7 @@ section_header "03 - APLICAÇÕES"
 # Criar aplicação usando httpd que é mais estável
 run_test "Criar aplicação de teste [httpd]" \
     "oc new-app httpd:latest --name=test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'App já existe'"
+    
 run_test "Aguardar deployment ser criado" \
     "sleep 5"
 run_test "Aguardar pods iniciarem" \
