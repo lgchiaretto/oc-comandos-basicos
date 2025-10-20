@@ -66,9 +66,6 @@ oc logout && rm -f ~/.kube/config
 # Verificar versão do oc
 oc version
 
-# Verificar versão detalhada
-oc version --short
-
 # Verificar informações do cluster
 oc cluster-info
 

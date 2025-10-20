@@ -32,8 +32,6 @@ run_test "Ver endpoints da API" \
     "oc api-resources 2>/dev/null | head -20 || true"
 run_test "Ver versões da API" \
     "oc api-versions 2>/dev/null | head -20 || true"
-run_test "Versão e Informações: version --short" \
-    "oc version --short"
 run_test "Versão e Informações: cluster-info dump" \
     "oc cluster-info dump"
 run_test "Namespace Padrão: config set-context" \
