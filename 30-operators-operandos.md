@@ -65,16 +65,16 @@ oc get packagemanifests -n openshift-marketplace
 oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 
 # Descrever packagemanifest
-oc describe packagemanifest elasticsearch-operator -n openshift-marketplace
+oc describe packagemanifest local-storage-operator -n openshift-marketplace
 
 # Ver channels disponíveis
-oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
+oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
 
 # Ver versão do channel
-oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
+oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 
 # Ver default channel
-oc get packagemanifest elasticsearch-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
+oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
 ```
 
 ---
@@ -136,11 +136,11 @@ cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: elasticsearch-operator
+  name: local-storage-operator
   namespace: openshift-operators-redhat
 spec:
   channel: stable
-  name: elasticsearch-operator
+  name: local-storage-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
   installPlanApproval: Automatic

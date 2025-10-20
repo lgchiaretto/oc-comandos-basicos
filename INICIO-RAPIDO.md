@@ -259,7 +259,7 @@ watch -n 5 oc get nodes
 ### Bash Completion
 ```bash
 # Habilitar completion
-oc completion bash > /etc/bash_completion.d/oc
+oc completion bash > oc && sudo mv oc /etc/bash_completion.d/oc
 
 # Recarregar shell
 source ~/.bashrc

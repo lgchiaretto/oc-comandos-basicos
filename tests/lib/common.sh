@@ -69,6 +69,7 @@ run_test() {
         log_skip "$description"
         SKIPPED_TESTS=$((SKIPPED_TESTS + 1))
         save_state
+        echo ""
         return 0
     fi
     
@@ -79,22 +80,66 @@ run_test() {
     echo "# Test $TOTAL_TESTS: $description" >> "$LOG_FILE"
     echo "# Command: $command" >> "$LOG_FILE"
     
-    if eval "$command" >> "$LOG_FILE" 2>&1; then
-        log_success "$description"
-        PASSED_TESTS=$((PASSED_TESTS + 1))
-        save_state
-        return 0
-    else
-        log_error "$description"
-        log_error "  Comando: $command"
-        FAILED_TESTS=$((FAILED_TESTS + 1))
-        save_state
+    # Capturar saída do comando para exibir em modo verbose
+    local output
+    local exit_code
+    
+    if [ "$VERBOSE" -eq 1 ]; then
+        # Em modo verbose, captura a saída e exibe com [DEBUG]
+        output=$(eval "$command" 2>&1)
+        exit_code=$?
         
-        if [ "$STOP_ON_ERROR" -eq 1 ]; then
-            log_error "Parando execução devido ao erro (--stop-on-error)"
-            exit 1
+        # Adiciona ao log
+        echo "$output" >> "$LOG_FILE"
+        
+        if [ $exit_code -eq 0 ]; then
+            log_success "$description"
+            if [ -n "$output" ]; then
+                echo -e "${BLUE}[DEBUG]${NC} Saída do comando:" | tee -a "$LOG_FILE"
+                echo "$output" | sed 's/^/  /' | tee -a "$LOG_FILE"
+            fi
+            PASSED_TESTS=$((PASSED_TESTS + 1))
+            save_state
+            echo ""
+            return 0
+        else
+            log_error "$description"
+            log_error "  Comando: $command"
+            if [ -n "$output" ]; then
+                echo -e "${BLUE}[DEBUG]${NC} Saída do comando:" | tee -a "$LOG_FILE"
+                echo "$output" | sed 's/^/  /' | tee -a "$LOG_FILE"
+            fi
+            FAILED_TESTS=$((FAILED_TESTS + 1))
+            save_state
+            
+            if [ "$STOP_ON_ERROR" -eq 1 ]; then
+                log_error "Parando execução devido ao erro (--stop-on-error)"
+                exit 1
+            fi
+            echo ""
+            return 1
         fi
-        return 1
+    else
+        # Modo normal, apenas registra no log
+        if eval "$command" >> "$LOG_FILE" 2>&1; then
+            log_success "$description"
+            PASSED_TESTS=$((PASSED_TESTS + 1))
+            save_state
+            echo ""
+            return 0
+        else
+            log_error "$description"
+            log_error "  Comando: $command"
+            FAILED_TESTS=$((FAILED_TESTS + 1))
+            save_state
+            
+            if [ "$STOP_ON_ERROR" -eq 1 ]; then
+                log_error "Parando execução devido ao erro (--stop-on-error)"
+                exit 1
+            fi
+            echo ""
+            return 1
+        fi
     fi
 }
 

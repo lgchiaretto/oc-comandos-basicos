@@ -40,10 +40,30 @@ tests/
 ./test-commands.sh --help
 
 Opções:
-  --verbose          Mostra saída detalhada de cada comando
+  --verbose          Mostra saída detalhada de cada comando com [DEBUG]
   --stop-on-error    Para no primeiro erro encontrado
   --skip-destructive Pula comandos destrutivos (padrão)
   --module <num>     Executa apenas módulo específico
+```
+
+### Modo Verbose (Debug)
+
+Quando `--verbose` está ativo, além dos status dos testes, você verá:
+- O comando exato sendo executado
+- A saída completa do comando marcada com **[DEBUG]**
+- Maior espaçamento entre os testes para melhor legibilidade
+
+Exemplo:
+```bash
+[INFO] Executando: oc whoami
+[✓] Verificar usuário atual (whoami)
+[DEBUG] Saída do comando:
+  admin
+
+[INFO] Executando: oc whoami -t
+[✓] Verificar token de acesso
+[DEBUG] Saída do comando:
+  sha256~FPLu2dixF_cAeDzu73l0oDG3kI083_4DEh0JwC4VZYw
 ```
 
 ## 📝 Estrutura de um Módulo
@@ -66,6 +86,8 @@ run_test "Outro teste" \
     "outro comando" \
     1  # 1 = skip este teste (opcional)
 ```
+
+**Nota:** Os testes são automaticamente espaçados com uma linha em branco entre cada `run_test` para melhor legibilidade.
 
 ## 🔧 Manutenção
 
@@ -99,12 +121,12 @@ Os logs são salvos em:
 
 ### Teste falhando
 
-1. Execute apenas o módulo específico com `--verbose`:
+1. Execute apenas o módulo específico com `--verbose` para ver a saída completa dos comandos:
    ```bash
    ./test-commands.sh --module XX --verbose
    ```
 
-2. Verifique o log detalhado para ver o comando exato que falhou
+2. Verifique o log detalhado com marcadores **[DEBUG]** para identificar o problema
 
 3. Execute o comando manualmente para debug:
    ```bash
