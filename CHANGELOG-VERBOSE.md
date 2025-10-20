@@ -70,7 +70,7 @@ fi
 
 ### 📝 Arquivos Modificados
 
-1. **`tests/lib/common.sh`**
+1. **`/lib/common.sh`**
    - Função `run_test` expandida para suportar modo verbose
    - Adicionada lógica de captura e formatação de saída
    - Implementado espaçamento automático
