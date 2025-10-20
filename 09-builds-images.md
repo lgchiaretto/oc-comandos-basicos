@@ -89,6 +89,49 @@ oc delete build <nome-do-build>
 oc get builds --sort-by=.metadata.creationTimestamp
 ```
 
+
+## 🔧 Gerenciamento de Builds
+
+
+### Criar BuildConfig
+```bash
+# Criar BuildConfig binário
+oc new-build --name=<nome> --binary
+
+# Em namespace específico
+oc new-build --name=<nome> --binary -n <nome-do-projeto>
+
+# Exemplo prático
+oc new-build --name=test-build --binary -n meu-projeto
+```
+### Cancelar Build
+```bash
+# Cancelar build em execução
+oc cancel-build <nome-do-build>
+
+# Em namespace específico
+oc cancel-build <nome> -n <nome-do-projeto>
+
+# Exemplo prático
+oc cancel-build test-app-1 -n meu-projeto
+```
+
+### Logs de BuildConfig
+```bash
+# Ver logs de builds por label buildconfig
+oc logs -l buildconfig=<nome>
+
+# Com limite de linhas
+oc logs -l buildconfig=<nome> --tail=20
+
+# Em namespace específico
+oc logs -n <nome-do-projeto> -l buildconfig=<nome> --tail=20
+
+# Exemplo prático
+oc logs -n meu-projeto -l buildconfig=test-app --tail=20
+```
+
+
 ### Debug de Builds
 ```bash
 # Ver por que build falhou

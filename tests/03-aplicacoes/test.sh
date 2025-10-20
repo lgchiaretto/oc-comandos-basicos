@@ -13,6 +13,9 @@ run_test "Criar aplicação de teste [httpd]" \
 run_test "Aguardar deployment ser criado" \
     "sleep 5"
 
+run_test "Patch no deployment para adicionar label app=test-app nos pods" \
+    "oc patch deployment test-app -n ${TEST_PROJECT} --type=merge -p '{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"app\":\"test-app\"}}}}}' 2>/dev/null || echo 'Patch já aplicado'"
+
 run_test "Aguardar pods iniciarem" \
     "oc wait --for=condition=available --timeout=60s deployment/test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment ainda processando'"
 
@@ -21,6 +24,9 @@ run_test "Listar todas as aplicações" \
 
 run_test "Listar deployments" \
     "oc get deployment -n ${TEST_PROJECT}"
+
+run_test "Atualizar imagem do deployment" \
+    "oc set image deployment/test-app httpd=httpd:2.4 -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment não encontrado'"
 
 run_test "Listar services" \
     "oc get svc -n ${TEST_PROJECT}"

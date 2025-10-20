@@ -12,6 +12,8 @@ Este documento contém comandos avançados usando field selectors, label selecto
 4. [Combinação de Filtros](#combinação-de-filtros)
 5. [Filtros com GREP e EGREP](#filtros-com-grep-e-egrep)
 6. [Ordenação e Paginação](#ordenação-e-paginação)
+7. [Storage e PVCs](#storage-e-pvcs)
+8. [Permissões](#permissões)
 
 ---
 

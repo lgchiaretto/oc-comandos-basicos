@@ -15,9 +15,6 @@ run_test "Listar todos os projetos" \
 run_test "Listar projetos (formato detalhado)" \
     "oc get projects"
 
-run_test "Listar projetos com mais informações" \
-    "oc get projects -o wide"
-
 run_test "Criar novo projeto de teste" \
     "oc new-project ${TEST_PROJECT} --description='Projeto de teste' --display-name='Test Validation' 2>/dev/null || echo 'Projeto já existe'"
 
@@ -25,7 +22,7 @@ run_test "Ver projeto atual" \
     "oc project"
 
 run_test "Adicionar label ao projeto" \
-    "oc label namespace ${TEST_PROJECT} test-validation=true env=test --overwrite"
+    "oc label namespace ${TEST_PROJECT} test-validation=true env=test  --overwrite"
 
 run_test "Descrever projeto" \
     "oc describe project ${TEST_PROJECT}"
@@ -45,8 +42,8 @@ run_test "Status do projeto" \
 run_test "Filtrar projetos com label" \
     "oc get projects -l test-validation=true"
 
-run_test "Verificar se pode criar projeto" \
-    "oc auth can-i create projects"
+run_test "Verificar se pode criar projetos" \
+    "oc auth can-i create project"
 
 run_test "Ver recursos do projeto" \
     "oc get all -n ${TEST_PROJECT}"

@@ -6,10 +6,16 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 
 ## 📋 Índice
 
-1. [PersistentVolumes (PV)](#persistentvolumes-pv)
-2. [PersistentVolumeClaims (PVC)](#persistentvolumeclaims-pvc)
-3. [StorageClasses](#storageclasses)
-4. [Volumes em Pods](#volumes-em-pods)
+- [💾 Storage e Volumes](#-storage-e-volumes)
+  - [📋 Índice](#-índice)
+  - [🗄️ PersistentVolumes (PV)](#️-persistentvolumes-pv)
+  - [📦 PersistentVolumeClaims (PVC)](#-persistentvolumeclaims-pvc)
+    - [Criar e Gerenciar](#criar-e-gerenciar)
+    - [Usando em Deployments](#usando-em-deployments)
+  - [🏪 StorageClasses](#-storageclasses)
+  - [📁 Volumes em Pods](#-volumes-em-pods)
+    - [Tipos de Volumes](#tipos-de-volumes)
+  - [📖 Navegação](#-navegação)
 
 ---
 
@@ -57,9 +63,6 @@ oc get pvc <nome-do-pvc> -o jsonpath='{.status.phase}'
 
 # Deletar PVC
 oc delete pvc <nome-do-pvc>
-
-# Ver PVCs não utilizados
-oc get pvc -A -o json | jq -r '.items[] | select(.status.phase=="Bound") | select(.spec.volumeName != null) | .metadata.namespace + "/" + .metadata.name'
 ```
 
 ### Usando em Deployments

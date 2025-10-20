@@ -186,6 +186,20 @@ oc logs <nome-do-pod> --since=1h
 oc logs -l app=<nome-da-app>
 ```
 
+## 📋 Monitoramento e Eventos
+
+### Ver Eventos do Pod
+```bash
+# Ver eventos ordenados por timestamp
+oc get events --sort-by='.lastTimestamp'
+
+# Em namespace específico
+oc get events -n <nome-do-projeto> --sort-by='.lastTimestamp'
+
+# Últimos 10 eventos
+oc get events -n <nome-do-projeto> --sort-by='.lastTimestamp' | head -10
+```
+
 ---
 
 ## 📖 Navegação

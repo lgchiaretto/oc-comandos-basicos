@@ -22,8 +22,8 @@ run_test "Descrever storage class padrão" \
 run_test "Listar pods com volumes" \
     "oc get pods -n ${TEST_PROJECT} -o json | grep -i volumemount | head -5 || echo 'Sem pods com volumes'"
 
-run_test "Ver PVCs por status" \
-    "oc get pvc -A --field-selector=status.phase=Bound | head -10"
+run_test "Ver PVCs por status Bound" \
+    "oc get pvc -A -o json | jq -r '.items[] | select(.status.phase==\"Bound\") | [.metadata.namespace, .metadata.name, .status.phase] | @tsv' | head -10 || echo 'Nenhum PVC Bound encontrado'"
 
 run_test "Verificar se pode criar PVC" \
     "oc auth can-i create pvc -n ${TEST_PROJECT}"

@@ -43,8 +43,125 @@ Opções:
   --verbose          Mostra saída detalhada de cada comando com [DEBUG]
   --stop-on-error    Para no primeiro erro encontrado
   --skip-destructive Pula comandos destrutivos (padrão)
+  --skip-cleanup     Mantém projeto de teste após execução
   --module <num>     Executa apenas módulo específico
 ```
+
+## 🔄 Persistência de Projeto de Teste
+
+### Como funciona
+
+O sistema **persiste o projeto de teste** entre execuções usando um arquivo de estado em `/tmp/oc-test-project-state`.
+
+**Benefícios:**
+- ✅ Execute módulos individuais sem recriar o projeto
+- ✅ Reutilize recursos criados em testes anteriores
+- ✅ Economize tempo em execuções sequenciais
+- ✅ Debug mais fácil com projeto persistente
+
+### Fluxo de trabalho recomendado
+
+#### 1️⃣ Primeira execução (criar projeto)
+```bash
+# Executar com --skip-cleanup para manter o projeto
+./test-commands.sh --module 01 --skip-cleanup
+```
+
+#### 2️⃣ Execuções subsequentes (reutilizar projeto)
+```bash
+# Os próximos módulos reutilizarão o projeto automaticamente
+./test-commands.sh --module 02 --skip-cleanup
+./test-commands.sh --module 03 --skip-cleanup
+./test-commands.sh --module 04 --skip-cleanup
+```
+
+#### 3️⃣ Verificar status do projeto
+```bash
+# Ver informações sobre o projeto de teste ativo
+./tests/show-test-project.sh
+```
+
+Saída esperada:
+```
+╔════════════════════════════════════════════════════════════════╗
+║     Status do Projeto de Teste OpenShift                      ║
+╚════════════════════════════════════════════════════════════════╝
+
+[✓] Projeto de teste ativo: test-validation-1729458123
+
+[INFO] Detalhes do projeto:
+NAME                         DISPLAY NAME   STATUS
+test-validation-1729458123                  Active
+
+[INFO] Recursos no projeto:
+NAME                     READY   STATUS    RESTARTS   AGE
+pod/test-app-1-abc123    1/1     Running   0          5m
+
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)
+service/test-app   ClusterIP   172.30.1.123   <none>        8080/TCP
+
+[INFO] Estatísticas:
+  - Deployments: 1
+  - Services: 1
+  - Routes: 1
+  - ConfigMaps: 2
+  - Secrets: 3
+  - PVCs: 0
+```
+
+#### 4️⃣ Limpar quando terminar
+```bash
+# Remover projeto de teste e limpar estado
+./tests/cleanup-test-project.sh
+```
+
+### Scripts utilitários
+
+#### `tests/show-test-project.sh`
+Mostra status detalhado do projeto de teste ativo:
+- Nome do projeto
+- Recursos criados
+- Estatísticas de objetos
+- Localização do arquivo de estado
+
+```bash
+./tests/show-test-project.sh
+```
+
+#### `tests/cleanup-test-project.sh`
+Remove o projeto de teste e limpa arquivos de estado:
+- Deleta o projeto do cluster
+- Remove arquivo de estado `/tmp/oc-test-project-state`
+- Limpa arquivos temporários
+
+```bash
+./tests/cleanup-test-project.sh
+```
+
+### Comportamento automático
+
+| Cenário | Comportamento |
+|---------|---------------|
+| **Primeira execução** | Cria novo projeto `test-validation-TIMESTAMP` |
+| **Projeto existe em estado** | Reutiliza projeto existente |
+| **Projeto foi deletado** | Cria novo projeto automaticamente |
+| **Execução sem `--skip-cleanup`** | Remove projeto e limpa estado ao final |
+| **Execução com `--skip-cleanup`** | Mantém projeto e estado para próxima execução |
+
+### Arquivo de estado
+
+Localização: `/tmp/oc-test-project-state`
+
+Conteúdo:
+```bash
+TEST_PROJECT=test-validation-1729458123
+```
+
+Este arquivo é automaticamente:
+- ✅ Criado quando um projeto é criado/detectado
+- ✅ Lido por todos os módulos de teste
+- ✅ Validado (verifica se projeto ainda existe)
+- ✅ Removido na limpeza completa
 
 ### Modo Verbose (Debug)
 
@@ -135,12 +252,64 @@ Os logs são salvos em:
 
 Verifique se você tem permissões para criar projetos:
 ```bash
-oc auth can-i create projects
+oc auth can-i create pods
+```
+
+### Módulos não reutilizam o mesmo projeto
+
+**Sintoma:** Cada módulo cria um projeto novo mesmo com `--skip-cleanup`
+
+**Solução:**
+```bash
+# Verificar se o arquivo de estado existe
+ls -la /tmp/oc-test-project-state
+
+# Se não existir, criar manualmente ou executar módulo 01
+./test-commands.sh --module 01 --skip-cleanup
+
+# Verificar status
+./tests/show-test-project.sh
+```
+
+### Projeto órfão (estado existe mas projeto não)
+
+**Sintoma:** `show-test-project.sh` mostra que projeto não existe
+
+**Solução:**
+```bash
+# Limpar estado órfão
+./tests/cleanup-test-project.sh
+
+# Ou manualmente
+rm /tmp/oc-test-project-state
+
+# Criar novo projeto
+./test-commands.sh --module 01 --skip-cleanup
+```
+
+### Múltiplos projetos de teste no cluster
+
+**Sintoma:** Vários projetos `test-validation-*` existem
+
+**Solução:**
+```bash
+# Listar todos os projetos de teste
+oc get projects -l test-validation=true
+
+# Deletar todos
+oc delete projects -l test-validation=true
+
+# Limpar estado local
+rm /tmp/oc-test-project-state
 ```
 
 ### Variáveis não são compartilhadas entre módulos
 
-A biblioteca `common.sh` usa um arquivo de estado temporário (`/tmp/oc-test-state-$$`) para compartilhar contadores entre módulos. Se houver problemas, verifique se o arquivo existe durante a execução.
+A biblioteca `common.sh` usa dois arquivos de estado:
+- `/tmp/oc-test-state-$$` - Contadores de testes (por execução)
+- `/tmp/oc-test-project-state` - Projeto de teste (persistente)
+
+Se houver problemas, verifique se os arquivos existem durante a execução.
 
 ## 💡 Boas Práticas
 

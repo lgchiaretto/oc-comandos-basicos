@@ -59,6 +59,36 @@ oc logout && rm -f ~/.kube/config
 
 ---
 
+## 🔍 Informações do Cluster
+
+
+### Listar API Resources
+```bash
+# Listar todos os recursos da API disponíveis
+oc api-resources
+
+# Filtrar por verbo
+oc api-resources --verbs=list,get
+
+# Filtrar por grupo de API
+oc api-resources --api-group=apps
+
+# Ver recursos com alias
+oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
+```
+
+### Listar API Versions
+```bash
+# Listar todas as versões da API disponíveis
+oc api-versions
+
+# Ver versões específicas do grupo
+oc api-versions | grep apps
+
+# Ver versões do core
+oc api-versions | grep -v "/"
+```
+
 ## ⚙️ Configuração do Cliente
 
 ### Versão e Informações

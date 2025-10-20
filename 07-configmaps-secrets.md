@@ -16,6 +16,10 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 
 ### Criar ConfigMaps
 ```bash
+# Listar ConfigMaps
+oc get configmaps
+oc get cm
+
 # De literal
 oc create configmap <nome> --from-literal=<chave>=<valor>
 
@@ -25,12 +29,7 @@ oc create configmap <nome> --from-file=<arquivo>
 # De diretório
 oc create configmap <nome> --from-file=<diretorio>/
 
-# Listar ConfigMaps
-oc get configmaps
-oc get cm
-
 # Ver conteúdo
-oc describe cm <nome>
 oc get cm <nome> -o yaml
 
 # Editar ConfigMap
@@ -38,6 +37,18 @@ oc edit cm <nome>
 
 # Deletar ConfigMap
 oc delete cm <nome>
+```
+
+### Descrever ConfigMap
+```bash
+# Ver detalhes de um ConfigMap
+oc describe configmap <nome>
+
+# Em namespace específico
+oc describe configmap <nome> -n <nome-do-projeto>
+
+# Exemplo prático
+oc describe configmap test-config -n meu-projeto
 ```
 
 ### Exemplos Avançados
@@ -87,6 +98,18 @@ oc edit secret <nome>
 
 # Deletar secret
 oc delete secret <nome>
+```
+
+### Descrever Secret
+```bash
+# Ver detalhes de um Secret
+oc describe secret <nome>
+
+# Em namespace específico
+oc describe secret <nome> -n <nome-do-projeto>
+
+# Exemplo prático
+oc describe secret test-secret -n meu-projeto
 ```
 
 ### Link Secrets
@@ -145,3 +168,4 @@ oc set volume deployment/<nome> \
 ---
 
 **Última atualização**: Outubro 2025
+

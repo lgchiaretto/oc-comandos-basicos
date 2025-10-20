@@ -18,6 +18,9 @@ run_test "Listar Network Policies" \
 run_test "Listar Ingress Controllers" \
     "oc get ingresscontroller -n openshift-ingress-operator"
 
+run_test "Mudar as replicas dos routers" \
+    "oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default 2>/dev/null || echo 'Não foi possível escalar'"
+
 run_test "Visualizar Configuração: Listar network.config.openshift.io" \
     "oc get network.config.openshift.io cluster -o yaml -n ${TEST_PROJECT} 2>/dev/null || echo 'Recurso não encontrado'"
 

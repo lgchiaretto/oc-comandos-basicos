@@ -221,13 +221,13 @@ oc get crd
 oc get crd | grep elasticsearch
 
 # Descrever CRD
-oc describe crd elasticsearches.logging.openshift.io
+oc describe crd ingresscontrollers.operator.openshift.io
 
 # Ver spec do CRD
-oc get crd elasticsearches.logging.openshift.io -o yaml
+oc get crd ingresscontrollers.operator.openshift.io -o yaml
 
 # Ver versões suportadas
-oc get crd elasticsearches.logging.openshift.io -o jsonpath='{.spec.versions[*].name}'
+oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 ```
 
 ### Criar Custom Resources

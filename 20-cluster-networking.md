@@ -7,9 +7,10 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 ## 📋 Índice
 
 1. [Configuração de Rede](#configuração-de-rede)
-2. [Network Policies](#network-policies)
-3. [Egress](#egress)
-4. [Service Mesh](#service-mesh)
+2. [Ingress Controllers](#ingress-controllers)
+3. [Network Policies](#network-policies)
+4. [Egress](#egress)
+5. [Service Mesh](#service-mesh)
 
 ---
 
@@ -52,6 +53,27 @@ oc get pods -o wide -A
 
 # Verificar range de IPs usado
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
+```
+
+## 🌐 Ingress Controllers
+
+
+### Listar Ingress Controllers
+```bash
+# Listar IngressControllers
+oc get ingresscontroller -n openshift-ingress-operator
+
+# Ver detalhes
+oc describe ingresscontroller -n openshift-ingress-operator default
+```
+
+### Escalar Ingress Controller
+```bash
+# Escalar número de réplicas do IngressController
+oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
+
+# Exemplo prático
+oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ```
 
 ---
@@ -147,141 +169,6 @@ oc delete networkpolicy <nome>
 
 ---
 
-## 🚪 Egress
-
-### Egress IP
-```bash
-# Ver EgressIPs
-oc get egressip
-
-# Configurar Egress IP
-cat <<EOF | oc apply -f -
-apiVersion: k8s.ovn.org/v1
-kind: EgressIP
-metadata:
-  name: egressip-prod
-spec:
-  egressIPs:
-  - 192.168.1.100
-  namespaceSelector:
-    matchLabels:
-      env: production
-EOF
-
-# Ver status
-oc describe egressip <nome>
-
-# Verificar em qual node está
-oc get egressip <nome> -o yaml
-```
-
-### Egress Router (Legacy - SDN)
-```bash
-# Criar egress router pod
-oc create -f - <<EOF
-apiVersion: v1
-kind: Pod
-metadata:
-  name: egress-router
-  labels:
-    name: egress-router
-  annotations:
-    pod.network.openshift.io/assign-macvlan: "true"
-spec:
-  initContainers:
-  - name: egress-router-setup
-    image: registry.redhat.io/openshift4/ose-egress-router
-    securityContext:
-      privileged: true
-    env:
-    - name: EGRESS_SOURCE
-      value: "192.168.1.99/24"
-    - name: EGRESS_GATEWAY
-      value: "192.168.1.1"
-    - name: EGRESS_DESTINATION
-      value: "203.0.113.25"
-  containers:
-  - name: egress-router
-    image: registry.redhat.io/openshift4/ose-egress-router
-    securityContext:
-      privileged: true
-EOF
-```
-
-### Egress Firewall (OVN)
-```bash
-# Criar Egress Firewall
-cat <<EOF | oc apply -f -
-apiVersion: k8s.ovn.org/v1
-kind: EgressFirewall
-metadata:
-  name: default
-spec:
-  egress:
-  - type: Allow
-    to:
-      cidrSelector: 1.2.3.0/24
-  - type: Deny
-    to:
-      cidrSelector: 0.0.0.0/0
-EOF
-
-# Ver Egress Firewall
-oc get egressfirewall
-
-# Descrever
-oc describe egressfirewall default
-```
-
----
-
-## 🕸️ Service Mesh
-
-### Istio/Service Mesh
-```bash
-# Verificar Service Mesh operator
-oc get csv -n openshift-operators | grep servicemesh
-
-# ServiceMeshControlPlane
-oc get servicemeshcontrolplane -n istio-system
-
-# ServiceMeshMemberRoll
-oc get servicemeshmemberroll -n istio-system
-
-# Pods do Service Mesh
-oc get pods -n istio-system
-
-# Ver sidecar injection
-oc get deployment <nome> -o yaml | grep sidecar.istio.io/inject
-```
-
-### Habilitar Sidecar Injection
-```bash
-# Annotation no namespace
-oc label namespace <namespace> istio-injection=enabled
-
-# Adicionar ao member roll
-oc patch servicemeshmemberroll default -n istio-system --type='json' -p='[{"op": "add", "path": "/spec/members/-", "value": "<namespace>"}]'
-
-# Verificar
-oc get servicemeshmemberroll default -n istio-system -o yaml
-```
-
-### Traffic Management
-```bash
-# VirtualServices
-oc get virtualservice -n <namespace>
-
-# DestinationRules
-oc get destinationrule -n <namespace>
-
-# Gateways
-oc get gateway -n <namespace>
-
-# Ver configuração Envoy
-oc exec <pod-name> -c istio-proxy -- pilot-agent request GET config_dump
-```
-
 ---
 
 ## 🔧 Configurações Avançadas
@@ -322,9 +209,6 @@ EOF
 ```bash
 # Ver MTU configurado
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'
-
-# Ou para SDN
-oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.openshiftSDNConfig.mtu}'
 
 # Verificar MTU em pod
 oc exec <pod-name> -- ip link show eth0

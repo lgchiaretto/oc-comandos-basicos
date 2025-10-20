@@ -44,9 +44,6 @@ run_test "Listar HPA" \
 run_test "Descrever HPA" \
     "oc describe hpa -n ${TEST_PROJECT} 2>/dev/null || echo 'Nenhum HPA encontrado'"
 
-run_test "Atualizar imagem do deployment" \
-    "oc set image deployment/test-app test-app=httpd:2.4 -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment não encontrado'"
-
 run_test "Pausar rollout" \
     "oc rollout pause deployment/test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment não encontrado'"
 
@@ -59,9 +56,9 @@ run_test "Reiniciar rollout" \
 run_test "Fazer rollback (undo)" \
     "oc rollout undo deployment/test-app -n ${TEST_PROJECT} 2>/dev/null || echo 'Deployment não encontrado'"
 
-run_test "Ver todas as réplicas" \
+run_test "Ver todos os replicasets" \
     "oc get replicasets -n ${TEST_PROJECT}"
 
-run_test "Deletar HPA de teste" \
+run_test "Deletar HPA" \
     "oc delete hpa --all -n ${TEST_PROJECT} 2>/dev/null || echo 'Nenhum HPA para deletar'"
 

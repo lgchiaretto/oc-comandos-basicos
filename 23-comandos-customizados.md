@@ -14,6 +14,8 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 6. [Análise de Cluster Operators](#análise-de-cluster-operators)
 7. [Análise de API Requests](#análise-de-api-requests)
 8. [Extração de Certificados](#extração-de-certificados)
+9. [Storage e PVCs](#storage-e-pvcs)
+10. [Permissões e Validações](#permissões-e-validações)
 
 ---
 

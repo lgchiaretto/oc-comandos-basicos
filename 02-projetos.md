@@ -35,9 +35,6 @@ oc projects
 # Listar projetos (formato detalhado)
 oc get projects
 
-# Listar com mais informações
-oc get projects -o wide
-
 # Ver projeto atual
 oc project
 
@@ -154,6 +151,43 @@ oc patch namespace <nome-do-projeto> -p \
 oc patch namespace <nome-do-projeto> -p \
   '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
 ```
+
+## 🔧 Gerenciamento de Projetos
+
+
+### Labels em Namespaces
+```bash
+# Adicionar labels ao namespace
+oc label namespace <nome-do-projeto> <key>=<value>
+
+# Adicionar múltiplas labels
+oc label namespace <nome-do-projeto> env=test validation=true --overwrite
+
+# Exemplo prático
+oc label namespace meu-projeto test-validation=true env=test --overwrite
+```
+
+### Annotations em Namespaces
+```bash
+# Adicionar annotation ao namespace
+oc annotate namespace <nome-do-projeto> <key>='<value>'
+
+# Sobrescrever annotation existente
+oc annotate namespace <nome-do-projeto> maintainer='admin-team' --overwrite
+
+# Exemplo prático
+oc annotate namespace meu-projeto test-maintainer='test-automation' --overwrite
+```
+
+### Listar Service Accounts
+```bash
+# Listar service accounts do projeto
+oc get sa
+
+# Em projeto específico
+oc get sa -n <nome-do-projeto>
+```
+
 
 ---
 

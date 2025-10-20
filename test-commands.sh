@@ -13,6 +13,9 @@
 #   --module <num>     Executa apenas o módulo especificado (ex: --module 01)
 ##############################################################################
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/tests/lib/common.sh"
+
 set -o pipefail
 
 # Cores para output
@@ -31,13 +34,44 @@ SPECIFIC_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
 LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
 PROJECT_PREFIX="test-validation"
-TEST_PROJECT="${PROJECT_PREFIX}-$(date +%s)"
+PROJECT_STATE_FILE="/tmp/oc-test-project-state"
+TIMING_FILE="/tmp/oc-test-timing-$$"
+
+# Função para obter ou criar projeto de teste
+get_or_create_test_project() {
+    # Tentar carregar projeto existente se --skip-cleanup foi usado anteriormente
+    if [ -f "$PROJECT_STATE_FILE" ]; then
+        source "$PROJECT_STATE_FILE"
+        
+        # Verificar se o projeto ainda existe
+        if oc get project "$TEST_PROJECT" &>/dev/null; then
+            return 0
+        else
+            log_info "Projeto anterior não existe mais, criando novo..."
+            rm -f "$PROJECT_STATE_FILE"
+        fi
+    fi
+    
+    # Criar novo projeto
+    TEST_PROJECT="${PROJECT_PREFIX}-$(date +%s)"
+    echo "TEST_PROJECT=$TEST_PROJECT" > "$PROJECT_STATE_FILE"
+    log_info "Novo projeto de teste será usado: $TEST_PROJECT"
+}
+
+# Inicializar projeto de teste
+get_or_create_test_project
 
 # Inicializar arquivo de estado
 echo "TOTAL_TESTS=0" > "$STATE_FILE"
 echo "PASSED_TESTS=0" >> "$STATE_FILE"
 echo "FAILED_TESTS=0" >> "$STATE_FILE"
 echo "SKIPPED_TESTS=0" >> "$STATE_FILE"
+
+# Inicializar arquivo de timing
+echo "# Tempo de execução dos módulos" > "$TIMING_FILE"
+
+# Tempo de início total
+SCRIPT_START_TIME=$(date +%s)
 
 # Parse argumentos
 while [[ $# -gt 0 ]]; do
@@ -96,6 +130,8 @@ export SKIP_DESTRUCTIVE
 export LOG_FILE
 export TEST_PROJECT
 export STATE_FILE
+export TIMING_FILE
+export PROJECT_STATE_FILE
 
 # Funções de logging (definidas aqui para o script principal)
 log_info() {
@@ -127,7 +163,7 @@ check_prerequisites() {
     fi
     
     # Verificar permissões básicas
-    if ! oc auth can-i create projects &> /dev/null; then
+    if ! oc auth can-i create pods &> /dev/null; then
         echo -e "${YELLOW}[⚠]${NC} Usuário pode não ter permissão para criar projetos. Alguns testes podem falhar." | tee -a "$LOG_FILE"
     fi
     
@@ -140,6 +176,8 @@ cleanup() {
     # Verificar se deve pular a limpeza
     if [ "$SKIP_CLEANUP" -eq 1 ]; then
         log_info "Limpeza pulada (--skip-cleanup ativado)"
+        log_info "Projeto de teste mantido: $TEST_PROJECT"
+        log_info "Para reutilizar em próximas execuções, execute módulos individuais"
         return 0
     fi    
     log_info "Executando limpeza..."
@@ -147,8 +185,9 @@ cleanup() {
     # Deletar projetos de teste
     oc delete project -l "test-validation=true" --wait=false 2>/dev/null || true
     
-    # Remover arquivo de estado
+    # Remover arquivos de estado
     rm -f "$STATE_FILE"
+    rm -f "$PROJECT_STATE_FILE"
     
     log_success "Limpeza concluída"
 }
@@ -160,6 +199,7 @@ trap cleanup EXIT
 run_test_module() {
     local module_dir="$1"
     local test_script="${module_dir}/test.sh"
+    local module_name=$(basename "$module_dir")
     
     if [ ! -f "$test_script" ]; then
         echo -e "${YELLOW}[⚠]${NC} Script de teste não encontrado: $test_script" | tee -a "$LOG_FILE"
@@ -169,11 +209,22 @@ run_test_module() {
     # Tornar o script executável
     chmod +x "$test_script"
     
+    # Registrar tempo de início do módulo
+    local module_start=$(date +%s)
+    
     # Executar o módulo
     bash "$test_script"
+    local exit_code=$?
+    
+    # Calcular tempo de execução
+    local module_end=$(date +%s)
+    local module_duration=$((module_end - module_start))
+    
+    # Registrar tempo no arquivo
+    echo "$module_name:$module_duration" >> "$TIMING_FILE"
     
     # Capturar variáveis atualizadas (o módulo as exporta)
-    return 0
+    return $exit_code
 }
 
 # Banner inicial
@@ -222,6 +273,26 @@ done
 # Carregar estado final
 source "$STATE_FILE"
 
+# Calcular tempo total de execução
+SCRIPT_END_TIME=$(date +%s)
+TOTAL_DURATION=$((SCRIPT_END_TIME - SCRIPT_START_TIME))
+
+# Função para formatar tempo
+format_time() {
+    local seconds=$1
+    local hours=$((seconds / 3600))
+    local minutes=$(( (seconds % 3600) / 60 ))
+    local secs=$((seconds % 60))
+    
+    if [ $hours -gt 0 ]; then
+        echo "${hours}h ${minutes}m ${secs}s"
+    elif [ $minutes -gt 0 ]; then
+        echo "${minutes}m ${secs}s"
+    else
+        echo "${secs}s"
+    fi
+}
+
 echo ""
 echo "╔════════════════════════════════════════════════════════════════╗"
 echo "║                    RELATÓRIO DE VALIDAÇÃO                      ║"
@@ -240,6 +311,32 @@ if [ "$TOTAL_TESTS" -gt 0 ]; then
     echo "Taxa de sucesso: ${success_rate}%"
 else
     echo "Nenhum teste executado"
+fi
+
+echo ""
+echo "╔════════════════════════════════════════════════════════════════╗"
+echo "║               TEMPO DE EXECUÇÃO POR MÓDULO                     ║"
+echo "╚════════════════════════════════════════════════════════════════╝"
+echo ""
+
+# Exibir tempo de cada módulo
+if [ -f "$TIMING_FILE" ]; then
+    printf "%-40s %15s\n" "Módulo" "Tempo"
+    echo "────────────────────────────────────────────────────────────────"
+    
+    while IFS=: read -r module_name duration; do
+        if [[ ! "$module_name" =~ ^# ]]; then
+            formatted_time=$(format_time "$duration")
+            printf "%-40s %15s\n" "$module_name" "$formatted_time"
+        fi
+    done < "$TIMING_FILE"
+    
+    echo "────────────────────────────────────────────────────────────────"
+    formatted_total=$(format_time "$TOTAL_DURATION")
+    printf "%-40s %15s\n" "TEMPO TOTAL" "$formatted_total"
+    
+    # Limpar arquivo de timing
+    rm -f "$TIMING_FILE"
 fi
 
 echo ""

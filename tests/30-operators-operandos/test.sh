@@ -118,7 +118,7 @@ run_test "Listar CRDs: Listar crd" \
     "oc get crd -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Listar CRDs: Descrever crd" \
-    "oc describe crd elasticsearches.logging.openshift.io -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+    "oc describe crd ingresscontrollers.operator.openshift.io -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Componentes do OLM: Listar pods" \
     "oc get pods -n openshift-operator-lifecycle-manager 2>/dev/null || echo "Recurso não encontrado""
@@ -163,7 +163,7 @@ run_test "Listar CRDs: Listar crd" \
     "oc get crd -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Listar CRDs: Descrever crd" \
-    "oc describe crd elasticsearches.logging.openshift.io -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+    "oc describe crd ingresscontrollers.operator.openshift.io -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Componentes do OLM: Listar pods" \
     "oc get pods -n openshift-operator-lifecycle-manager 2>/dev/null || echo "Recurso não encontrado""
@@ -208,7 +208,7 @@ run_test "Listar CRDs: Listar crd" \
     "oc get crd -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 run_test "Listar CRDs: Descrever crd" \
-    "oc describe crd elasticsearches.logging.openshift.io -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
+    "oc describe crd ingresscontrollers.operator.openshift.io -n ${TEST_PROJECT} 2>/dev/null || echo "Recurso não encontrado""
 
 
 

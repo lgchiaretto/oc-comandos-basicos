@@ -37,6 +37,21 @@ oc delete svc <nome-do-service>
 oc get endpoints <nome-do-service>
 ```
 
+## 🔍 Investigação de Conectividade
+
+
+### Descrever Endpoints
+```bash
+# Ver detalhes dos endpoints de um service
+oc describe endpoints <nome-do-service>
+
+# Em namespace específico
+oc describe endpoints <nome-do-service> -n <nome-do-projeto>
+
+# Exemplo prático
+oc describe endpoints test-app -n meu-projeto
+```
+
 ---
 
 ## 🛣️ Routes
