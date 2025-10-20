@@ -12,13 +12,14 @@ This repository is a **comprehensive Portuguese-language reference guide** for O
 - **INICIO-RAPIDO.md**: Quick-start guide with the top 20 most-used commands
 - **comandos-openshift-ORIGINAL-COMPLETO.md**: Original monolithic reference (kept for historical purposes)
 
-### Test Infrastructure (NEW!)
+### Test Infrastructure (AUTO-GENERATED!)
 - **tests/**: Modular test suite for validating all documented commands
   - **tests/lib/common.sh**: Shared functions library for all test modules
-  - **tests/01-...-30-*/**: Individual test modules (one per documentation file)
+  - **tests/01-...-30-*/**: Individual test modules (one per documentation file) - **AUTO-GENERATED**
   - **tests/README.md**: Complete testing documentation
 - **test-commands.sh**: Main test orchestrator script
-- **generate-test-modules.py**: Python script to auto-generate test modules
+- **generate-all-tests.py**: 🤖 **Auto-generator script** - Regenerates ALL test modules from markdown files
+- **GENERATE-TESTS-README.md**: Complete documentation for the auto-generator
 
 ### Content Categories
 1. **Essential Commands (01-03)**: Authentication, projects, applications
@@ -122,7 +123,36 @@ When assisting users:
 
 ## Test Suite Workflow
 
-### When Adding New Commands
+### 🤖 AUTOMATED TEST GENERATION (RECOMMENDED)
+
+**The preferred workflow is to use the auto-generator:**
+
+1. **Edit markdown files (01-30)** - Add/modify/remove commands
+2. **Run the auto-generator:**
+   ```bash
+   python3 generate-all-tests.py
+   ```
+3. **Validate changes:**
+   ```bash
+   ./test-commands.sh --module XX  # Test specific module
+   ./test-commands.sh              # Test everything
+   ```
+4. **Commit both files** - The `.md` and the auto-generated `test.sh`
+
+**Key Benefits:**
+- ✅ Perfect synchronization between docs and tests
+- ✅ Automatic command sanitization (error handling)
+- ✅ Automatic filtering of invalid commands (placeholders)
+- ✅ Saves hours of manual work
+- ✅ Reduces human error
+
+**Read GENERATE-TESTS-README.md for complete documentation.**
+
+### Manual Test Updates (Legacy Method)
+
+Only use manual editing when the auto-generator doesn't produce the desired result:
+
+
 1. Add the command to the appropriate markdown file (01-30)
 2. Update the corresponding test script in `tests/XX-topic/test.sh`
 3. Run the specific test module: `./test-commands.sh --module XX`
@@ -150,7 +180,7 @@ run_test "Test description" \
 ### Regenerating All Test Modules
 If you make bulk changes to commands:
 ```bash
-python3 generate-test-modules.py
+python3 generate-all-tests.py
 ```
 
 ### Running Tests
