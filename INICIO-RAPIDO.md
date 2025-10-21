@@ -84,10 +84,10 @@ oc get csr -o name | xargs oc adm certificate approve
 ### 8. Scaling
 ```bash
 # Escalar deployment
-oc scale deployment <nome> --replicas=3
+oc scale deployment test-app --replicas=3
 
 # Ver status do rollout
-oc rollout status deployment/<nome>
+oc rollout status deployment/test-app
 ```
 
 ### 9. Criar Aplicação
@@ -99,16 +99,16 @@ oc new-app <imagem>
 oc new-app <url-git>
 
 # Expor service
-oc expose service <nome>
+oc expose service test-app
 ```
 
 ### 10. ConfigMaps e Secrets
 ```bash
 # Criar configmap
-oc create configmap <nome> --from-literal=key=value
+oc create configmap test-app --from-literal=key=value
 
 # Criar secret
-oc create secret generic <nome> --from-literal=key=value
+oc create secret generic test-app --from-literal=key=value
 ```
 
 ---
@@ -187,13 +187,13 @@ oc new-project development
 oc new-app <imagem-ou-git>
 
 # 3. Expor service
-oc expose service <nome-do-service>
+oc expose service test-app
 
 # 4. Ver status
 oc status
 
 # 5. Ver logs
-oc logs -f deployment/<nome>
+oc logs -f deployment/test-app
 ```
 
 ### Debug de Pod com Problema

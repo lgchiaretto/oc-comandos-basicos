@@ -100,7 +100,7 @@ RESOURCES=(
 ```bash
 for resource in "${RESOURCES[@]}"; do
   echo "Backing up ${resource}..."
-  oc get ${resource} -n ${NAMESPACE} -o yaml > ${BACKUP_DIR}/${resource}.yaml  || true
+  oc get ${resource} -n ${NAMESPACE} -o yaml > ${BACKUP_DIR}/${resource}.yaml
 done
 ```
 

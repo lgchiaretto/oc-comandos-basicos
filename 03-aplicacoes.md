@@ -18,22 +18,22 @@ Este documento contém comandos para criar e gerenciar aplicações no OpenShift
 ## 🆕 Criação de Aplicações
 
 ### A partir de Imagem Docker
-```bash
+```bash ignore
 # Criar aplicação a partir de imagem
 oc new-app <nome-da-imagem>
 ```
 
-```bash
+```bash ignore
 # Exemplo com imagem pública
 oc new-app nginx
 ```
 
-```bash
+```bash ignore
 # Imagem de registry customizado
 oc new-app myregistry.com/myapp:latest
 ```
 
-```bash
+```bash ignore
 # Com nome personalizado
 oc new-app nginx --name=meu-nginx
 ```
@@ -44,33 +44,33 @@ oc new-app httpd:latest --name=test-app -n development
 ```
 
 ### A partir de Repositório Git
-```bash
+```bash ignore
 # Criar aplicação a partir de repositório Git
 oc new-app <url-do-repositorio-git>
 ```
 
-```bash
+```bash ignore
 # Especificando branch
 oc new-app <url-do-repositorio-git>#<branch>
 ```
 
-```bash
+```bash ignore
 # Exemplo prático
 oc new-app https://github.com/sclorg/django-ex
 ```
 
-```bash
+```bash ignore
 # Branch específica
 oc new-app https://github.com/sclorg/django-ex#develop
 ```
 
 ### Com Variáveis de Ambiente
-```bash
+```bash ignore
 # Criar aplicação com variáveis
 oc new-app <imagem> -e VAR1=valor1 -e VAR2=valor2
 ```
 
-```bash
+```bash ignore
 # Exemplo
 oc new-app mysql -e MYSQL_USER=user -e MYSQL_PASSWORD=pass
 ```
@@ -81,7 +81,7 @@ oc new-app mysql -e MYSQL_USER=user -e MYSQL_PASSWORD=pass
 oc get templates -n openshift
 ```
 
-```bash
+```bash ignore
 # Criar a partir de template
 oc new-app --template=<nome-do-template>
 ```
@@ -92,15 +92,17 @@ oc new-app --template=mysql-persistent -p MYSQL_USER=admin
 ```
 
 ### Com Estratégia de Build
-```bash
+```bash ignore
 # Especificar estratégia de build
 oc new-app <url-git> --strategy=docker
+```
+```bash  ignore
 oc new-app <url-git> --strategy=source
 ```
 
-```bash
+```bash ignore
 # A partir de código local
-oc new-app . --name=<nome-da-app>
+oc new-app . --name=test-app
 ```
 
 ---
@@ -115,7 +117,7 @@ oc get all
 
 ```bash
 # Listar recursos com labels
-oc get all -l app=<nome-da-app>
+oc get all -l app=test-app
 ```
 
 ```bash
@@ -149,35 +151,35 @@ oc get is -n development
 ```
 
 ### Deletar Aplicações
-```bash
+```bash ignore
 # Deletar aplicação e recursos relacionados
-oc delete all -l app=<nome-da-app>
+oc delete all -l app=test-app
 ```
 
-```bash
+```bash ignore
 # Deletar por seletor
-oc delete all --selector app=<nome-da-app>
+oc delete all --selector app=test-app
 ```
 
-```bash
+```bash ignore
 # Deletar deployment específico
-oc delete deployment <nome>
+oc delete deployment test-app
 ```
 
 ### Expor Aplicação
-```bash
+```bash ignore
 # Expor service como route
-oc expose service <nome-do-service>
+oc expose service test-app
 ```
 
-```bash
+```bash ignore
 # Com hostname customizado
-oc expose service <nome> --hostname=app.example.com
+oc expose service test-app --hostname=app.example.com
 ```
 
 ```bash
 # Com TLS
-oc create route edge --service=<nome>
+oc create route edge --service=test-app
 ```
 
 ---
@@ -198,17 +200,12 @@ oc status -n development
 ### Descrever Recursos
 ```bash
 # Descrever deployment
-oc describe deployment <nome-do-deployment>
+oc describe deployment test-app
 ```
 
 ```bash
 # Descrever deployment em namespace específico
-oc describe deployment <nome-do-deployment> -n development
-```
-
-```bash
-# Exemplo prático
-oc describe deployment test-app -n meu-projeto
+oc describe deployment test-app -n development
 ```
 
 ---
@@ -218,28 +215,23 @@ oc describe deployment test-app -n meu-projeto
 ### Atualizar Imagem do Deployment
 ```bash
 # Atualizar imagem de um container
-oc set image deployment/<nome-do-deployment> <nome-do-container>=<nova-imagem>
-```
-
-```bash
-# Exemplo prático
 oc set image deployment/test-app httpd=httpd:2.4 -n development
 ```
 
-```bash
+```bash ignore
 # Atualizar múltiplos containers
-oc set image deployment/<nome> container1=image1:tag container2=image2:tag
+oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ```
 
 ### Patch de Deployment
 ```bash
 # Aplicar patch usando merge
-oc patch deployment <nome> -n <projeto> --type=merge -p '{"spec":{"replicas":3}}'
+oc patch deployment test-app -n <projeto> --type=merge -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
 # Patch para atualizar imagem
-oc patch deployment <nome> -n <projeto> --type=merge -p '{
+oc patch deployment test-app -n <projeto> --type=merge -p '{
   "spec": {
     "template": {
       "spec": {
@@ -281,24 +273,18 @@ oc auth can-i get secrets -n development
 ### Wait para Deployment
 ```bash
 # Aguardar deployment estar disponível
-oc wait --for=condition=available deployment/<nome>
+oc wait --for=condition=available deployment/test-app
 ```
 
 ```bash
 # Com timeout
-oc wait --for=condition=available --timeout=60s deployment/<nome>
+oc wait --for=condition=available --timeout=60s deployment/test-app
 ```
 
 ```bash
 # Aguardar em namespace específico
-oc wait --for=condition=available --timeout=60s deployment/<nome> -n development
+oc wait --for=condition=available --timeout=60s deployment/test-app -n development
 ```
-
-```bash
-# Exemplo prático
-oc wait --for=condition=available --timeout=60s deployment/test-app -n meu-projeto
-```
-
 ---
 
 ## 📖 Navegação

@@ -102,7 +102,7 @@ oc get roles
 
 ```bash
 # Criar Role customizada
-oc create role <nome> --verb=<verbos> --resource=<recursos>
+oc create role test-app --verb=<verbos> --resource=<recursos>
 ```
 
 ```bash
@@ -112,12 +112,12 @@ oc create role pod-reader --verb=get,list,watch --resource=pods
 
 ```bash
 # Editar Role
-oc edit role <nome>
+oc edit role test-app
 ```
 
 ```bash
 # Deletar Role
-oc delete role <nome>
+oc delete role test-app
 ```
 
 ### ClusterRoleBindings
@@ -172,7 +172,7 @@ oc adm policy remove-role-from-user <role> <username>
 
 ```bash
 # Ver RoleBinding específico
-oc describe rolebinding <nome>
+oc describe rolebinding test-app
 ```
 
 ---
@@ -188,27 +188,27 @@ oc get sa
 
 ```bash
 # Criar Service Account
-oc create serviceaccount <nome>
+oc create serviceaccount test-app
 ```
 
 ```bash
 # Descrever Service Account
-oc describe sa <nome>
+oc describe sa test-app
 ```
 
 ```bash
 # Ver token da SA
-oc sa get-token <nome>
+oc sa get-token test-app
 ```
 
 ```bash
 # Ver secrets da SA
-oc get sa <nome> -o jsonpath='{.secrets[*].name}'
+oc get sa test-app -o jsonpath='{.secrets[*].name}'
 ```
 
 ```bash
 # Deletar Service Account
-oc delete sa <nome>
+oc delete sa test-app
 ```
 
 ### Usar Service Accounts
@@ -229,12 +229,12 @@ oc adm policy add-cluster-role-to-user <role> system:serviceaccount:<namespace>:
 
 ```bash
 # Usar SA em deployment
-oc set serviceaccount deployment/<nome> <sa-name>
+oc set serviceaccount deployment/test-app <sa-name>
 ```
 
 ```bash
 # Ver qual SA o pod está usando
-oc get pod <nome> -o jsonpath='{.spec.serviceAccountName}'
+oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 ```
 
 ---
@@ -256,17 +256,17 @@ oc get scc anyuid -o yaml
 
 ```bash
 # Descrever SCC
-oc describe scc <nome>
+oc describe scc test-app
 ```
 
 ```bash
 # Ver qual SCC o pod está usando
-oc get pod <nome> -o yaml | grep scc
+oc get pod test-app -o yaml | grep scc
 ```
 
 ```bash
 # Ver usuários/SAs em uma SCC
-oc describe scc <nome> | grep Users
+oc describe scc test-app | grep Users
 ```
 
 ### Adicionar Permissões SCC
@@ -299,7 +299,7 @@ oc describe scc <scc-name>
 ### Troubleshoot SCC
 ```bash
 # Ver por que pod não está rodando devido a SCC
-oc describe pod <nome> | grep -i scc
+oc describe pod test-app | grep -i scc
 ```
 
 ```bash
@@ -309,7 +309,7 @@ oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 
 ```bash
 # Verificar capabilities do container
-oc get pod <nome> -o yaml | grep -A 10 securityContext
+oc get pod test-app -o yaml | grep -A 10 securityContext
 ```
 
 ---
@@ -370,7 +370,7 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 
 ```bash
 # Criar secret TLS
-oc create secret tls <nome> --cert=<cert-file> --key=<key-file>
+oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 
 ---

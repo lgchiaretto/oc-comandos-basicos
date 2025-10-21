@@ -16,22 +16,22 @@ Este documento contém comandos essenciais para autenticação e configuração 
 ## 🔑 Login e Logout
 
 ### Login Básico
-```bash
+```bash ignore
 # Login no cluster OpenShift
 oc login <url-do-cluster>
 ```
 
-```bash
+```bash ignore
 # Login com usuário e senha
 oc login <url-do-cluster> -u <usuario> -p <senha>
 ```
 
-```bash
+```bash ignore
 # Login com token
 oc login --token=<token> --server=<url-do-cluster>
 ```
 
-```bash
+```bash ignore
 # Exemplo prático
 oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```
@@ -154,12 +154,6 @@ cat ~/.kube/config
 # Definir namespace padrão para o contexto atual
 oc config set-context --current --namespace=development
 ```
-
-```bash
-# Exemplo
-oc config set-context --current --namespace=production
-```
-
 ---
 
 ## 🔄 Contextos
@@ -175,23 +169,23 @@ oc config get-contexts
 oc config current-context
 ```
 
-```bash
+```bash ignore
 # Trocar de contexto
 oc config use-context <nome-do-contexto>
 ```
 
-```bash
+```bash ignore
 # Renomear contexto
 oc config rename-context <nome-antigo> <nome-novo>
 ```
 
-```bash
+```bash ignore
 # Deletar contexto
 oc config delete-context <nome-do-contexto>
 ```
 
 ### Criar Contextos Customizados
-```bash
+```bash ignore
 # Criar novo contexto
 oc config set-context <nome-do-contexto> \
   --cluster=<cluster> \
@@ -199,7 +193,7 @@ oc config set-context <nome-do-contexto> \
   --namespace=<namespace>
 ```
 
-```bash
+```bash ignore
 # Exemplo
 oc config set-context dev-context \
   --cluster=dev-cluster \
@@ -207,23 +201,7 @@ oc config set-context dev-context \
   --namespace=development
 ```
 
-## 🔧 Configurações Avançadas
-
-### Múltiplos Clusters
-```bash
-# Adicionar cluster
-oc config set-cluster <nome-cluster> \
-  --server=<url> \
-  --certificate-authority=<ca-file>
-```
-
-```bash
-# Adicionar usuário
-oc config set-credentials <nome-usuario> \
-  --token=<token>
-```
-
-```bash
+```bash ignore
 # Criar contexto para o cluster
 oc config set-context <contexto> \
   --cluster=<cluster> \
@@ -231,12 +209,12 @@ oc config set-context <contexto> \
 ```
 
 ### Variáveis de Ambiente
-```bash
+```bash ignore
 # Definir KUBECONFIG customizado
 export KUBECONFIG=/path/to/kubeconfig
 ```
 
-```bash
+```bash ignore
 # Múltiplos kubeconfigs
 export KUBECONFIG=/path/to/config1:/path/to/config2
 ```
@@ -248,19 +226,15 @@ export KUBECONFIG=/path/to/config1:/path/to/config2
 - ✅ Nunca compartilhe seu token de acesso
 - ✅ Use `oc login` ao invés de guardar token em scripts
 - ✅ Faça logout ao terminar, especialmente em máquinas compartilhadas
-- ✅ Não use `--insecure-skip-tls-verify` em produção
 
 ### Organização
-- ✅ Use contextos descritivos (dev, qa, prod)
-- ✅ Configure namespace padrão para cada contexto
+- ✅ Use contextos descritivos (dev, qa, prod) mesmo em clusters distintos
 - ✅ Mantenha múltiplos kubeconfigs separados por ambiente
-- ✅ Use aliases para facilitar login em diferentes clusters
 
 ### Troubleshooting
 - ✅ Use `oc whoami` para verificar autenticação
 - ✅ Use `oc config view` para ver configuração atual
 - ✅ Use `-v=8` para debug detalhado
-- ✅ Verifique permissões com `oc auth can-i --list`
 
 ---
 

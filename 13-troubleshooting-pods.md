@@ -125,13 +125,13 @@ oc get pod <nome-do-pod> -o yaml | grep -A 10 livenessProbe
 
 ```bash
 # Desabilitar probes temporariamente
-oc set probe deployment/<nome> --liveness --remove
-oc set probe deployment/<nome> --readiness --remove
+oc set probe deployment/test-app --liveness --remove
+oc set probe deployment/test-app --readiness --remove
 ```
 
 ```bash
 # Debug interativo
-oc debug deployment/<nome>
+oc debug deployment/test-app
 ```
 
 ### Pending (Não Agendado)
@@ -178,7 +178,7 @@ oc adm top pod <nome-do-pod>
 
 ```bash
 # Aumentar limite de memória
-oc set resources deployment/<nome> --limits=memory=2Gi
+oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
 ```bash
@@ -203,7 +203,7 @@ oc debug pod/<nome-do-pod>
 
 ```bash
 # Debug de deployment
-oc debug deployment/<nome>
+oc debug deployment/test-app
 ```
 
 ```bash
@@ -213,12 +213,12 @@ oc debug node/<node-name>
 
 ```bash
 # Com imagem específica
-oc debug pod/<nome> --image=registry.redhat.io/rhel8/support-tools
+oc debug pod/test-app --image=registry.redhat.io/rhel8/support-tools
 ```
 
 ```bash
 # Debug sem iniciar
-oc debug pod/<nome> --keep-init-containers=true
+oc debug pod/test-app --keep-init-containers=true
 ```
 
 ### Executar Comandos
@@ -304,17 +304,17 @@ oc exec <nome-do-pod> -- ls -la /mount/path
 ### ConfigMaps e Secrets
 ```bash
 # Verificar ConfigMap montado
-oc get cm <nome> -o yaml
+oc get cm test-app -o yaml
 ```
 
 ```bash
 # Verificar Secret
-oc get secret <nome> -o yaml
+oc get secret test-app -o yaml
 ```
 
 ```bash
 # Ver variáveis de ambiente
-oc set env pod/<nome> --list
+oc set env pod/test-app --list
 ```
 
 ```bash
@@ -330,7 +330,7 @@ oc get svc
 
 ```bash
 # Endpoints do service
-oc get endpoints <nome-do-service>
+oc get endpoints test-app
 ```
 
 ```bash

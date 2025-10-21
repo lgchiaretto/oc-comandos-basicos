@@ -56,18 +56,18 @@ oc logs -f bc/<nome-do-bc>
 ### Triggers
 ```bash
 # Adicionar webhook trigger
-oc set triggers bc/<nome> --from-github
-oc set triggers bc/<nome> --from-webhook
+oc set triggers bc/test-app --from-github
+oc set triggers bc/test-app --from-webhook
 ```
 
 ```bash
 # Remover triggers
-oc set triggers bc/<nome> --remove-all
+oc set triggers bc/test-app --remove-all
 ```
 
 ```bash
 # Ver triggers
-oc describe bc <nome> | grep Triggered
+oc describe bc test-app | grep Triggered
 ```
 
 ---
@@ -128,17 +128,17 @@ oc get builds --sort-by=.metadata.creationTimestamp
 ### Criar BuildConfig
 ```bash
 # Criar BuildConfig binário
-oc new-build --name=<nome> --binary
+oc new-build --name=test-app --binary
 ```
 
 ```bash
 # Em namespace específico
-oc new-build --name=<nome> --binary -n development
+oc new-build --name=test-app --binary -n development
 ```
 
 ```bash
 # Exemplo prático
-oc new-build --name=test-build --binary -n meu-projeto
+oc new-build --name=test-build --binary -n development
 ```
 ### Cancelar Build
 ```bash
@@ -148,33 +148,33 @@ oc cancel-build <nome-do-build>
 
 ```bash
 # Em namespace específico
-oc cancel-build <nome> -n development
+oc cancel-build test-app -n development
 ```
 
 ```bash
 # Exemplo prático
-oc cancel-build test-app-1 -n meu-projeto
+oc cancel-build test-app-1 -n development
 ```
 
 ### Logs de BuildConfig
 ```bash
 # Ver logs de builds por label buildconfig
-oc logs -l buildconfig=<nome>
+oc logs -l buildconfig=test-app
 ```
 
 ```bash
 # Com limite de linhas
-oc logs -l buildconfig=<nome> --tail=20
+oc logs -l buildconfig=test-app --tail=20
 ```
 
 ```bash
 # Em namespace específico
-oc logs -n development -l buildconfig=<nome> --tail=20
+oc logs -n development -l buildconfig=test-app --tail=20
 ```
 
 ```bash
 # Exemplo prático
-oc logs -n meu-projeto -l buildconfig=test-app --tail=20
+oc logs -n development -l buildconfig=test-app --tail=20
 ```
 
 
@@ -217,12 +217,12 @@ oc get is <nome-do-is> -o jsonpath='{.spec.tags[*].name}'
 
 ```bash
 # Criar ImageStream
-oc create imagestream <nome>
+oc create imagestream test-app
 ```
 
 ```bash
 # Importar imagem externa
-oc import-image <nome> --from=<registry>/<image>:<tag> --confirm
+oc import-image test-app --from=<registry>/<image>:<tag> --confirm
 ```
 
 ```bash
@@ -232,7 +232,7 @@ oc delete is <nome-do-is>
 
 ```bash
 # Ver SHA da imagem
-oc get is <nome> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
+oc get is test-app -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 ```
 
 ### ImageStreamTags

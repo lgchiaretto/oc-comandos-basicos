@@ -208,12 +208,12 @@ class TestGenerator:
         for pattern in may_fail_patterns:
             if cmd.startswith(pattern):
                 if '||' not in cmd and '2>' not in cmd:
-                    return f"{cmd}  || true"
+                    return f"{cmd}"
         
         for pattern in admin_patterns:
             if pattern in cmd:
                 if '2>' not in cmd:
-                    return f"{cmd}  || true"
+                    return f"{cmd}"
         
         return cmd
     

@@ -111,7 +111,7 @@ oc get netpol
 
 ```bash
 # Descrever policy
-oc describe networkpolicy <nome>
+oc describe networkpolicy test-app
 ```
 
 ```bash
@@ -201,12 +201,12 @@ oc get pods --show-labels
 
 ```bash
 # Ver se policy está afetando pod
-oc describe networkpolicy <nome>
+oc describe networkpolicy test-app
 ```
 
 ```bash
 # Deletar temporariamente para testar
-oc delete networkpolicy <nome>
+oc delete networkpolicy test-app
 ```
 
 ---

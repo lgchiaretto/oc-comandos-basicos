@@ -86,7 +86,7 @@ oc delete pvc <nome-do-pvc>
 ### Usando em Deployments
 ```bash
 # Adicionar volume PVC a deployment
-oc set volume deployment/<nome> \
+oc set volume deployment/test-app \
   --add --name=<volume-name> \
   --type=persistentVolumeClaim \
   --claim-name=<nome-do-pvc> \
@@ -95,7 +95,7 @@ oc set volume deployment/<nome> \
 
 ```bash
 # Remover volume
-oc set volume deployment/<nome> --remove --name=<volume-name>
+oc set volume deployment/test-app --remove --name=<volume-name>
 ```
 
 ---
@@ -120,7 +120,7 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 
 ```bash
 # Definir StorageClass padrão
-oc patch storageclass <nome> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+oc patch storageclass test-app -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 ---
@@ -130,17 +130,17 @@ oc patch storageclass <nome> -p '{"metadata": {"annotations":{"storageclass.kube
 ### Tipos de Volumes
 ```bash
 # EmptyDir
-oc set volume deployment/<nome> --add --name=tmp --type=emptyDir --mount-path=/tmp
+oc set volume deployment/test-app --add --name=tmp --type=emptyDir --mount-path=/tmp
 ```
 
 ```bash
 # HostPath (requer privilégios)
-oc set volume deployment/<nome> --add --name=host --type=hostPath --path=/data --mount-path=/data
+oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 ```
 
 ```bash
 # Listar volumes de um deployment
-oc set volume deployment/<nome>
+oc set volume deployment/test-app
 ```
 
 ```bash

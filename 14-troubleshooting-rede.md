@@ -56,7 +56,7 @@ oc get networkpolicy
 
 ```bash
 # Descrever policy
-oc describe networkpolicy <nome>
+oc describe networkpolicy test-app
 ```
 
 ```bash
@@ -66,12 +66,12 @@ oc get networkpolicy -o yaml
 
 ```bash
 # Deletar temporariamente para testar
-oc delete networkpolicy <nome>
+oc delete networkpolicy test-app
 ```
 
 ```bash
 # Verificar se policy está bloqueando
-oc describe pod <nome> | grep -i network
+oc describe pod test-app | grep -i network
 ```
 
 ---
@@ -86,17 +86,17 @@ oc get svc
 
 ```bash
 # Detalhes do service
-oc describe svc <nome-do-service>
+oc describe svc test-app
 ```
 
 ```bash
 # Ver ClusterIP
-oc get svc <nome> -o jsonpath='{.spec.clusterIP}'
+oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 ```
 
 ```bash
 # Ver portas
-oc get svc <nome> -o jsonpath='{.spec.ports}'
+oc get svc test-app -o jsonpath='{.spec.ports}'
 ```
 
 ```bash
@@ -112,23 +112,23 @@ oc get endpoints
 
 ```bash
 # Endpoints de service específico
-oc get endpoints <nome-do-service>
+oc get endpoints test-app
 ```
 
 ```bash
 # Verificar se endpoints estão vazios
-oc get endpoints <nome-do-service> -o jsonpath='{.subsets[*].addresses[*].ip}'
+oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
 ```bash
 # Comparar labels do service com pods
-oc get svc <nome> -o jsonpath='{.spec.selector}'
+oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
 ```
 
 ```bash
 # Se não há endpoints, verificar labels
-oc describe svc <nome> | grep Selector
+oc describe svc test-app | grep Selector
 oc get pods --show-labels
 ```
 
@@ -144,12 +144,12 @@ oc get routes
 
 ```bash
 # Detalhes da route
-oc describe route <nome-da-route>
+oc describe route test-app>
 ```
 
 ```bash
 # Ver hostname da route
-oc get route <nome> -o jsonpath='{.spec.host}'
+oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
 ```bash
@@ -159,12 +159,12 @@ curl -v https://<hostname-da-route>
 
 ```bash
 # Ver TLS da route
-oc get route <nome> -o jsonpath='{.spec.tls}'
+oc get route test-app -o jsonpath='{.spec.tls}'
 ```
 
 ```bash
 # Verificar se route aponta para service correto
-oc get route <nome> -o jsonpath='{.spec.to.name}'
+oc get route test-app -o jsonpath='{.spec.to.name}'
 ```
 
 ```bash

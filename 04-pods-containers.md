@@ -39,7 +39,7 @@ oc get pods --show-labels
 
 ```bash
 # Listar pods por seletor
-oc get pods -l app=<nome-da-app>
+oc get pods -l app=test-app
 ```
 
 ```bash
@@ -124,70 +124,77 @@ oc cp ./config.json mypod:/etc/config/config.json
 ## 🔧 Gerenciamento de Pods
 
 ### Criar e Deletar
-```bash
+```bash ignore
 # Criar pod a partir de arquivo YAML
 oc create -f pod.yaml
 ```
 
-```bash
+```bash ignore
 # Aplicar mudanças em pod
 oc apply -f pod.yaml
 ```
 
-```bash
+```bash ignore
 # Deletar um pod
 oc delete pod <nome-do-pod>
 ```
 
-```bash
+```bash ignore
 # Deletar pod forçadamente
 oc delete pod <nome-do-pod> --grace-period=0 --force
 ```
 
 ```bash
 # Deletar todos os pods com label
-oc delete pods -l app=<nome-da-app>
+oc delete pods -l app=test-app
 ```
 
 ### Reiniciar Pods
 ```bash
 # Reiniciar pods de um deployment
-oc rollout restart deployment/<nome-do-deployment>
+oc rollout restart deployment/test-app
 ```
 
-```bash
+```bash ignore
 # Deletar pod para forçar recriação
 oc delete pod <nome-do-pod>
 ```
 
 ```bash
-# Scale down e up
-oc scale deployment <nome> --replicas=0
-oc scale deployment <nome> --replicas=3
+# Scale down deployment test-app
+oc scale deployment test-app --replicas=0
 ```
-
+```bash
+# Scale up deployment test-app
+oc scale deployment test-app --replicas=3
+```
 ---
 
 ## 🔍 Debug e Troubleshooting
 
 ### Debug Interativo
-```bash
+```bash ignore
 # Debug interativo de pod
 oc debug pod/<nome-do-pod>
 ```
 
-```bash
+```bash ignore
 # Debug com imagem customizada
 oc debug pod/<nome-do-pod> --image=busybox
 ```
 
-```bash
+```bash ignore
 # Debug como root
 oc debug pod/<nome-do-pod> --as-root
 ```
 
 ```bash
-# Criar pod de debug temporário
+# Criar pod de debug temporário e imprima o hostname
+oc run debug-pod --image=busybox -it --rm --restart=Never -- hostname
+```
+
+```bash ignore
+# Criar pod de debug temporário e conecte
 oc run debug-pod --image=busybox -it --rm --restart=Never -- sh
 ```
 
@@ -249,7 +256,7 @@ oc logs <nome-do-pod> --since=1h
 
 ```bash
 # Ver logs de todos os pods com label
-oc logs -l app=<nome-da-app>
+oc logs -l app=test-app
 ```
 
 ## 📋 Monitoramento e Eventos

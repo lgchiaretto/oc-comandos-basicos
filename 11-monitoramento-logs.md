@@ -50,7 +50,7 @@ oc logs <nome-do-pod> -p
 
 ```bash
 # Todos os pods de um deployment
-oc logs deployment/<nome-do-deployment>
+oc logs deployment/test-app
 ```
 
 ```bash

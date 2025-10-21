@@ -29,7 +29,7 @@ NC='\033[0m' # No Color
 VERBOSE=0
 STOP_ON_ERROR=0
 SKIP_DESTRUCTIVE=1  # Default: skip destructive commands
-SKIP_CLEANUP=0      # Default: Do not skip cleanup
+CLEANUP=0      # Default: Do not cleanup
 SPECIFIC_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
 LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
@@ -39,7 +39,7 @@ TIMING_FILE="/tmp/oc-test-timing-$$"
 
 # Função para obter ou criar projeto de teste
 get_or_create_test_project() {
-    # Tentar carregar projeto existente se --skip-cleanup foi usado anteriormente
+    # Tentar carregar projeto existente se --cleanup foi usado anteriormente
     if [ -f "$PROJECT_STATE_FILE" ]; then
         source "$PROJECT_STATE_FILE"
         
@@ -92,12 +92,8 @@ while [[ $# -gt 0 ]]; do
             SKIP_DESTRUCTIVE=0
             shift
             ;;
-        --skip-cleanup)
-            SKIP_CLEANUP=1
-            shift
-            ;;
         --cleanup)
-            SKIP_CLEANUP=1
+            CLEANUP=1
             shift
             ;;
         --module)
@@ -111,7 +107,7 @@ while [[ $# -gt 0 ]]; do
             echo "  --verbose          Mostra saída detalhada"
             echo "  --stop-on-error    Para no primeiro erro"
             echo "  --skip-destructive Pula comandos destrutivos"
-            echo "  --skip-cleanup     Pula limpeza após os testes"    
+            echo "  --cleanup          Executa a limpeza após os testes"    
             echo "  --module <num>     Executa apenas módulo específico (ex: 01)"
             exit 0
             ;;
@@ -174,16 +170,18 @@ check_prerequisites() {
 # Função de limpeza
 cleanup() {
     # Verificar se deve pular a limpeza
-    if [ "$SKIP_CLEANUP" -eq 1 ]; then
-        log_info "Limpeza pulada (--skip-cleanup ativado)"
+    if [ "$CLEANUP" -eq 0 ]; then
+        log_info "Limpeza pulada (--cleanup desativado)"
         log_info "Projeto de teste mantido: $TEST_PROJECT"
         log_info "Para reutilizar em próximas execuções, execute módulos individuais"
         return 0
     fi    
     log_info "Executando limpeza..."
     
-#    # Deletar projetos de teste
-#    oc delete project -l "test-validation=true" --wait=false  || true
+    # Deletar projetos de teste
+    oc delete project -l "test-validation=true" --wait=false
+    oc delete project development --wait=false
+    oc delete project production --wait=false
     
     # Remover arquivos de estado
     rm -f "$STATE_FILE"

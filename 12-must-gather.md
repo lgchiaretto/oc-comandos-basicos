@@ -163,7 +163,7 @@ oc adm inspect nodes --dest-dir=/tmp/inspect
 
 ```bash
 # Inspect de recurso específico
-oc adm inspect deployment/<nome> --dest-dir=/tmp/inspect
+oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
 ```
 
 ```bash

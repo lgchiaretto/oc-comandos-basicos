@@ -41,7 +41,7 @@ if [ ! -f "$PROJECT_STATE_FILE" ]; then
         if [[ $REPLY =~ ^[Ss]$ ]]; then
             for project in $test_projects; do
                 echo -e "${BLUE}[INFO]${NC} Deletando projeto: $project"
-                oc delete project "$project" --wait=false  || true
+                oc delete project "$project" --wait=false
             done
             echo -e "${GREEN}[✓]${NC} Projetos marcados para deleção"
         else

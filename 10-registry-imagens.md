@@ -59,17 +59,17 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 ### Push de Imagens
 ```bash
 # Tag para registry interno
-docker tag <imagem-local> <registry-interno>/<projeto>/<nome>:<tag>
+docker tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 ```bash
 # Push para registry interno
-docker push <registry-interno>/<projeto>/<nome>:<tag>
+docker push <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 ```bash
 # Usando Podman
-podman push <imagem> <registry-interno>/<projeto>/<nome>:<tag>
+podman push <imagem> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 ```bash
@@ -88,17 +88,17 @@ oc secrets link default <secret-name> --for=pull
 ### Pull de Imagens
 ```bash
 # Pull de registry interno
-docker pull <registry-interno>/<projeto>/<nome>:<tag>
+docker pull <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 ```bash
 # Ver imagens disponíveis em ImageStream
-oc get is <nome> -o yaml
+oc get is test-app -o yaml
 ```
 
 ```bash
 # Importar imagem externa
-oc import-image <nome>:<tag> --from=<registry-externo>/<image>:<tag> --confirm
+oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 ```
 
 ---

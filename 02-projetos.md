@@ -38,10 +38,6 @@ oc projects
 oc get projects
 ```
 
-```bash
-# Ver projeto atual
-oc project
-```
 
 ```bash ignore
 # Listar com labels
@@ -54,7 +50,12 @@ oc get projects --show-labels
 oc new-project development
 ```
 
-```bash ignore
+```bash
+# Ver projeto atual
+oc project
+```
+
+```bash
 # Criar projeto com descrição
 oc new-project production --description="Minha descrição" --display-name="Nome de Exibição"
 ```
@@ -108,7 +109,7 @@ oc edit project development
 
 ```bash
 # Adicionar label
-oc label namespace development env=development --overwrite
+oc label namespace development env=development test-validation=true --overwrite
 ```
 
 ```bash
@@ -163,8 +164,7 @@ oc new-project <nome> --node-selector=""
 
 ```bash ignore
 # Criar projeto com node selector específico por hostname
-oc new-project <nome> \
-  --node-selector="kubernetes.io/hostname=<hostname>"
+oc new-project <nome> --node-selector="kubernetes.io/hostname=<hostname>"
 ```
 
 ```bash ignore
@@ -359,7 +359,7 @@ oc get projects --sort-by='.metadata.creationTimestamp'
 
 ```bash
 # Projetos com label env=test
-oc get projects -l env=test
+oc get projects -l env=development
 ```
 
 ```bash

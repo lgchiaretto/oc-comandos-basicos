@@ -55,22 +55,22 @@ oc describe co <nome-do-operator>
 
 ```bash
 # Ver condições
-oc get co <nome> -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
+oc get co test-app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 ```
 
 ```bash
 # Ver mensagem de erro
-oc get co <nome> -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
+oc get co test-app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
 ```bash
 # Ver versão
-oc get co <nome> -o jsonpath='{.status.versions[0].version}'
+oc get co test-app -o jsonpath='{.status.versions[0].version}'
 ```
 
 ```bash
 # Ver related objects
-oc get co <nome> -o jsonpath='{.status.relatedObjects}'
+oc get co test-app -o jsonpath='{.status.relatedObjects}'
 ```
 
 ---
@@ -80,7 +80,7 @@ oc get co <nome> -o jsonpath='{.status.relatedObjects}'
 ### Diagnosticar Problemas
 ```bash
 # Ver pods do operator
-oc get co <nome> -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
+oc get co test-app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 ```
 
 ```bash
@@ -106,7 +106,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 ### Forçar Reconciliation
 ```bash
 # Adicionar annotation para forçar reconcile
-oc annotate co/<nome> --overwrite operator.openshift.io/refresh="$(date +%s)"
+oc annotate co/test-app --overwrite operator.openshift.io/refresh="$(date +%s)"
 ```
 
 ```bash
@@ -116,7 +116,7 @@ oc delete pod -n <namespace-do-operator> <pod-name>
 
 ```bash
 # Ver progresso
-oc get co/<nome>
+oc get co/test-app
 ```
 
 ### Must-Gather de Operadores
@@ -340,12 +340,12 @@ oc get packagemanifests -n openshift-marketplace
 
 ```bash
 # Buscar operator específico
-oc get packagemanifests -n openshift-marketplace | grep <nome>
+oc get packagemanifests -n openshift-marketplace | grep test-app
 ```
 
 ```bash
 # Ver channels disponíveis
-oc describe packagemanifest <nome> -n openshift-marketplace
+oc describe packagemanifest test-app -n openshift-marketplace
 ```
 
 ```bash
@@ -372,7 +372,7 @@ oc get csv -n <namespace>
 ### Troubleshoot Operadores OLM
 ```bash
 # Ver status da subscription
-oc describe subscription <nome> -n <namespace>
+oc describe subscription test-app -n <namespace>
 ```
 
 ```bash
@@ -387,7 +387,7 @@ oc get installplan -n <namespace>
 
 ```bash
 # Aprovar install plan manual
-oc patch installplan <nome> -n <namespace> --type merge -p '{"spec":{"approved":true}}'
+oc patch installplan test-app -n <namespace> --type merge -p '{"spec":{"approved":true}}'
 ```
 
 ```bash
@@ -408,17 +408,17 @@ oc get csv -n <namespace>
 
 ```bash
 # Approval automático ou manual
-oc get subscription <nome> -n <namespace> -o jsonpath='{.spec.installPlanApproval}'
+oc get subscription test-app -n <namespace> -o jsonpath='{.spec.installPlanApproval}'
 ```
 
 ```bash
 # Mudar para manual
-oc patch subscription <nome> -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Manual"}}'
+oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Manual"}}'
 ```
 
 ```bash
 # Mudar para automatic
-oc patch subscription <nome> -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Automatic"}}'
+oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Automatic"}}'
 ```
 
 ```bash

@@ -332,29 +332,29 @@ parameters:
 ### Export de Recursos
 ```bash
 # Export pod
-oc get pod <nome> -o yaml --export > pod.yaml
+oc get pod test-app -o yaml --export > pod.yaml
 # Nota: --export está deprecated, use:
-oc get pod <nome> -o yaml > pod.yaml
+oc get pod test-app -o yaml > pod.yaml
 ```
 
 ```bash
 # Limpar metadata desnecessário com yq
-oc get pod <nome> -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
+oc get pod test-app -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
 ```
 
 ```bash
 # Export deployment
-oc get deployment <nome> -o yaml > deployment.yaml
+oc get deployment test-app -o yaml > deployment.yaml
 ```
 
 ```bash
 # Export service
-oc get svc <nome> -o yaml > service.yaml
+oc get svc test-app -o yaml > service.yaml
 ```
 
 ```bash
 # Export route
-oc get route <nome> -o yaml > route.yaml
+oc get route test-app -o yaml > route.yaml
 ```
 
 ```bash
