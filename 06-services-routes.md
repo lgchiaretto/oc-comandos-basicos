@@ -58,7 +58,7 @@ oc describe endpoints <nome-do-service>
 
 ```bash
 # Em namespace específico
-oc describe endpoints <nome-do-service> -n <nome-do-projeto>
+oc describe endpoints <nome-do-service> -n development
 ```
 
 ```bash

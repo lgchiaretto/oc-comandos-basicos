@@ -156,7 +156,7 @@ python3 generate-all-tests.py
 **Ignoring Commands in Documentation:**
 To exclude specific code blocks from test generation, use the `(ignore)` marker:
 ````markdown
-```bash (ignore)
+```bash ignore
 # This command will NOT be included in generated tests
 oc logout
 ```
@@ -191,7 +191,7 @@ This is useful for:
 
 4. **Error Handling**
    - Use `|| true` for commands that may legitimately fail
-   - Use `2>/dev/null` to suppress expected errors
+   - Use `` to suppress expected errors
    - Document why certain tests are skipped
 
    ## Additional Notes

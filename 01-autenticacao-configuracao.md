@@ -63,12 +63,12 @@ oc whoami --show-server
 ```
 
 ### Logout
-```bash (ignore)
+```bash ignore
 # Fazer logout
 oc logout
 ```
 
-```bash (ignore)
+```bash ignore
 # Fazer logout e limpar contexto
 oc logout && rm -f ~/.kube/config
 ```
@@ -152,7 +152,7 @@ cat ~/.kube/config
 ### Namespace Padrão
 ```bash
 # Definir namespace padrão para o contexto atual
-oc config set-context --current --namespace=<nome-do-projeto>
+oc config set-context --current --namespace=development
 ```
 
 ```bash

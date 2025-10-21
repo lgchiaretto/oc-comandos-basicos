@@ -43,7 +43,7 @@ oc get projects
 oc project
 ```
 
-```bash
+```bash ignore
 # Listar com labels
 oc get projects --show-labels
 ```
@@ -51,28 +51,23 @@ oc get projects --show-labels
 ### Criar Projetos
 ```bash
 # Criar novo projeto
-oc new-project <nome-do-projeto>
+oc new-project development
 ```
 
-```bash (ignore)
+```bash ignore
 # Criar projeto com descrição
-oc new-project <nome-do-projeto> --description="Minha descrição" --display-name="Nome de Exibição"
-```
-
-```bash
-# Exemplo completo
-oc new-project producao --description="Ambiente de produção" --display-name="Produção"
+oc new-project production --description="Minha descrição" --display-name="Nome de Exibição"
 ```
 
 ### Trocar entre Projetos
 ```bash
 # Trocar para outro projeto
-oc project <nome-do-projeto>
+oc project development
 ```
 
-```bash
+```bash ignore
 # Exemplo
-oc project producao
+oc project production
 ```
 
 ```bash
@@ -87,64 +82,64 @@ oc project
 ### Descrever e Inspecionar
 ```bash
 # Descrever um projeto
-oc describe project <nome-do-projeto>
+oc describe project development
 ```
 
 ```bash
 # Ver em YAML
-oc get project <nome-do-projeto> -o yaml
+oc get project development -o yaml
 ```
 
 ```bash
 # Ver em JSON
-oc get project <nome-do-projeto> -o json
+oc get project development -o json
 ```
 
 ```bash
 # Exportar definição do projeto
-oc get project <nome-do-projeto> -o yaml > projeto.yaml
+oc get project development -o yaml > projeto.yaml
 ```
 
 ### Editar Projetos
-```bash
+```bash ignore
 # Editar projeto
-oc edit project <nome-do-projeto>
+oc edit project development
 ```
 
 ```bash
 # Adicionar label
-oc label project <nome-do-projeto> env=production
+oc label namespace development env=development --overwrite
 ```
 
 ```bash
 # Adicionar annotation
-oc annotate project <nome-do-projeto> description="Meu projeto"
+oc annotate namespace development description="Meu projeto"
 ```
 
 ```bash
 # Remover label
-oc label project <nome-do-projeto> env-
+oc label namespace development env-
 ```
 
 ```bash
 # Patch de projeto
-oc patch project <nome-do-projeto> -p '{"metadata":{"labels":{"tier":"frontend"}}}'
+oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 ```
 
 ### Deletar Projetos
-```bash
+```bash ignore
 # Deletar um projeto
-oc delete project <nome-do-projeto>
+oc delete project development
 ```
 
-```bash
+```bash ignore
 # Deletar com confirmação
-oc delete project <nome-do-projeto> --wait=true
+oc delete project development --wait=true
 ```
 
-```bash
+```bash ignore
 # Deletar múltiplos projetos
-oc delete project projeto1 projeto2 projeto3
+oc delete project development production
 ```
 
 ```bash
@@ -156,73 +151,61 @@ oc delete project projeto1 projeto2 projeto3
 ## 🎯 Node Selectors
 
 ### Criar Projeto com Node Selector (requer permissões admin)
-```bash
+```bash ignore
 # Criar projeto com node selector para ambiente
 oc new-project <nome> --node-selector='env=prd'
 ```
 
-```bash
+```bash ignore
 # Criar projeto sem node selector (permite qualquer node)
 oc new-project <nome> --node-selector=""
 ```
 
-```bash
+```bash ignore
 # Criar projeto com node selector específico por hostname
 oc new-project <nome> \
   --node-selector="kubernetes.io/hostname=<hostname>"
 ```
 
-```bash
+```bash ignore
 # Exemplo prático
-oc new-project producao --node-selector='env=production'
+oc new-project production --node-selector='env=production'
 ```
 
 ### Modificar Node Selector Existente
 ```bash
 # Adicionar node selector a projeto existente
-oc patch namespace <nome-do-projeto> -p \
-  '{"metadata":{"annotations":{"openshift.io/node-selector":"env=prod"}}}'
+oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'
 ```
 
 ```bash
 # Remover node selector
-oc patch namespace <nome-do-projeto> -p \
-  '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
+oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
 ```
 
 ## 🔧 Gerenciamento de Projetos
 
 
 ### Labels em Namespaces
-```bash
+```bash ignore
 # Adicionar labels ao namespace
-oc label namespace <nome-do-projeto> <key>=<value>
+oc label namespace development <key>=<value>
 ```
 
 ```bash
 # Adicionar múltiplas labels
-oc label namespace <nome-do-projeto> env=test validation=true --overwrite
-```
-
-```bash
-# Exemplo prático
-oc label namespace meu-projeto test-validation=true env=test --overwrite
+oc label namespace development env=development validation=true --overwrite
 ```
 
 ### Annotations em Namespaces
-```bash
+```bash ignore
 # Adicionar annotation ao namespace
-oc annotate namespace <nome-do-projeto> <key>='<value>'
+oc annotate namespace development <key>='<value>'
 ```
 
 ```bash
 # Sobrescrever annotation existente
-oc annotate namespace <nome-do-projeto> maintainer='admin-team' --overwrite
-```
-
-```bash
-# Exemplo prático
-oc annotate namespace meu-projeto test-maintainer='test-automation' --overwrite
+oc annotate namespace development maintainer='admin-team' --overwrite
 ```
 
 ### Listar Service Accounts
@@ -233,7 +216,7 @@ oc get sa
 
 ```bash
 # Em projeto específico
-oc get sa -n <nome-do-projeto>
+oc get sa -n development
 ```
 
 
@@ -242,22 +225,22 @@ oc get sa -n <nome-do-projeto>
 ## 📄 Templates de Projeto
 
 ### Criar Template de Projeto Customizado
-```bash
+```bash ignore
 # Gerar template padrão
-oc adm create-bootstrap-project-template -o yaml > template.yaml
+oc adm create-bootstrap-project-template -o yaml > /tmp/template.yaml
 ```
 
-```bash
+```bash ignore
 # Editar template
-vim template.yaml
+vim /tmp/template.yaml
 ```
 
-```bash
+```bash ignore
 # Aplicar template customizado
-oc create -f template.yaml -n openshift-config
+oc create -f /tmp/template.yaml -n openshift-config
 ```
 
-```bash
+```bash ignore
 # Configurar cluster para usar template
 oc edit project.config.openshift.io/cluster
 # Adicionar:
@@ -312,12 +295,18 @@ oc get pods,svc,routes
 ```bash
 # Ver quotas do projeto
 oc get quota
+```
+
+```bash
 oc describe quota
 ```
 
 ```bash
 # Ver limit ranges
 oc get limitrange
+```
+
+```bash
 oc describe limitrange
 ```
 
@@ -343,23 +332,18 @@ oc status --suggest
 
 ### Filtrar Projetos
 ```bash
-# Projetos com label específica
-oc get projects -l env=production
-```
-
-```bash
 # Projetos com nome contendo string
 oc get projects | grep dev
 ```
 
 ```bash
 # Projetos ativos
-oc get projects --field-selector status.phase=Active
+oc get projects -o jsonpath='{.items[?(@.status.phase=="Active")].metadata.name}'
 ```
 
 ```bash
 # Projetos em terminação
-oc get projects --field-selector status.phase=Terminating
+oc get projects -o jsonpath='{.items[?(@.status.phase=="Terminating")].metadata.name}'
 ```
 
 ### Análise de Projetos
@@ -374,13 +358,13 @@ oc get projects --sort-by='.metadata.creationTimestamp'
 ```
 
 ```bash
-# Projetos com suas labels
-oc get projects -L env,tier,team
+# Projetos com label env=test
+oc get projects -l env=test
 ```
 
 ```bash
 # Exportar lista de projetos
-oc get projects -o json > all-projects.json
+oc get projects -o json > /tmp/all-projects.json
 ```
 
 ---
@@ -403,12 +387,12 @@ oc get rolebindings
 oc get roles
 ```
 
-```bash
+```bash ignore
 # Adicionar usuário ao projeto
 oc adm policy add-role-to-user admin <usuario> -n <projeto>
 ```
 
-```bash
+```bash ignore
 # Remover usuário do projeto
 oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ```
@@ -418,19 +402,19 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ## 🎓 Exemplos Práticos
 
 ### Criar Ambiente Completo
-```bash (ignore)
+```bash ignore
 # 1. Criar projeto
 oc new-project meu-app-dev \
   --description="Ambiente de desenvolvimento" \
   --display-name="Meu App - DEV"
 ```
 
-```bash (ignore)
+```bash ignore
 # 2. Adicionar labels
 oc label project meu-app-dev env=dev tier=backend team=devops
 ```
 
-```bash (ignore)
+```bash ignore
 # 3. Configurar quota
 cat <<EOF | oc create -f -
 apiVersion: v1
@@ -445,24 +429,23 @@ spec:
 EOF
 ```
 
-```bash (ignore)
+```bash ignore
 # 4. Verificar
-oc describe project meu-app-dev
 oc get quota
 ```
 
 ### Migração entre Projetos
-```bash (ignore)
+```bash ignore
 # 1. Exportar recursos do projeto origem
 oc get all -n projeto-origem -o yaml > recursos.yaml
 ```
 
-```bash (ignore)
+```bash ignore
 # 2. Criar projeto destino
 oc new-project projeto-destino
 ```
 
-```bash (ignore)
+```bash ignore
 # 3. Importar recursos (após ajustar namespace no YAML)
 sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 ```
@@ -473,7 +456,7 @@ sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 ## 💡 Boas Práticas
 
 ### Nomenclatura
-- ✅ Use nomes descritivos: `app-producao`, `api-dev`
+- ✅ Use nomes descritivos: `app-production`, `api-dev`
 - ✅ Inclua ambiente no nome: `myapp-dev`, `myapp-qa`, `myapp-prod`
 - ✅ Use labels para categorização: `env=prod`, `team=backend`
 - ✅ Evite nomes genéricos: `test`, `temp`, `proj1`

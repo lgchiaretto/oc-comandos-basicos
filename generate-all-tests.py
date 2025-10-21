@@ -7,7 +7,7 @@ os arquivos test.sh correspondentes com base nos comandos documentados.
 
 Funcionalidades:
 - Extrai comandos de blocos ```bash
-- Ignora blocos marcados com ```bash (ignore)
+- Ignora blocos marcados com ```bash ignore
 - Filtra comandos com placeholders ou padrões inválidos
 - Gera testes automaticamente com tratamento de erros
 
@@ -57,16 +57,16 @@ class TestGenerator:
         commands = []
         content = md_file.read_text(encoding='utf-8')
         
-        # Regex para encontrar blocos de código bash (mas não os marcados com (ignore))
-        # Primeiro remove blocos marcados como (ignore)
+        # Regex para encontrar blocos de código bash (mas não os marcados com ignore)
+        # Primeiro remove blocos marcados como ignore
         code_blocks = re.finditer(r'```bash(?:\s*\(ignore\))?\n(.*?)```', content, re.DOTALL)
         
-        # Filtra apenas os blocos que não têm (ignore)
+        # Filtra apenas os blocos que não têm ignore
         valid_blocks = []
         for block in code_blocks:
             # Pega o texto completo do match incluindo o marcador bash
             full_match = block.group(0)
-            # Verifica se contém (ignore) no marcador de abertura
+            # Verifica se contém ignore no marcador de abertura
             if '(ignore)' not in full_match.split('\n')[0]:
                 valid_blocks.append(block)
         
@@ -208,12 +208,12 @@ class TestGenerator:
         for pattern in may_fail_patterns:
             if cmd.startswith(pattern):
                 if '||' not in cmd and '2>' not in cmd:
-                    return f"{cmd} 2>/dev/null || true"
+                    return f"{cmd}  || true"
         
         for pattern in admin_patterns:
             if pattern in cmd:
                 if '2>' not in cmd:
-                    return f"{cmd} 2>/dev/null || true"
+                    return f"{cmd}  || true"
         
         return cmd
     

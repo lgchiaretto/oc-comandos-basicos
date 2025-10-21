@@ -262,12 +262,12 @@ oc get events --sort-by='.lastTimestamp'
 
 ```bash
 # Em namespace específico
-oc get events -n <nome-do-projeto> --sort-by='.lastTimestamp'
+oc get events -n development --sort-by='.lastTimestamp'
 ```
 
 ```bash
 # Últimos 10 eventos
-oc get events -n <nome-do-projeto> --sort-by='.lastTimestamp' | head -10
+oc get events -n development --sort-by='.lastTimestamp' | head -10
 ```
 
 ---

@@ -26,7 +26,7 @@ if [ ! -f "$PROJECT_STATE_FILE" ]; then
     echo "Procurando projetos de teste manualmente..."
     
     # Listar projetos com label test-validation
-    test_projects=$(oc get projects -l test-validation=true -o name 2>/dev/null | sed 's|project.project.openshift.io/||')
+    test_projects=$(oc get projects -l test-validation=true -o name  | sed 's|project.project.openshift.io/||')
     
     if [ -z "$test_projects" ]; then
         echo -e "${GREEN}[✓]${NC} Nenhum projeto de teste encontrado no cluster"
@@ -41,7 +41,7 @@ if [ ! -f "$PROJECT_STATE_FILE" ]; then
         if [[ $REPLY =~ ^[Ss]$ ]]; then
             for project in $test_projects; do
                 echo -e "${BLUE}[INFO]${NC} Deletando projeto: $project"
-                oc delete project "$project" --wait=false 2>/dev/null || true
+                oc delete project "$project" --wait=false  || true
             done
             echo -e "${GREEN}[✓]${NC} Projetos marcados para deleção"
         else
@@ -68,7 +68,7 @@ fi
 
 # Mostrar recursos do projeto
 echo -e "${BLUE}[INFO]${NC} Recursos no projeto:"
-oc get all -n "$TEST_PROJECT" 2>/dev/null || echo "  (nenhum recurso)"
+oc get all -n "$TEST_PROJECT"  || echo "  (nenhum recurso)"
 echo ""
 
 # Confirmar deleção
@@ -79,7 +79,7 @@ if [[ $REPLY =~ ^[Ss]$ ]]; then
     echo ""
     echo -e "${BLUE}[INFO]${NC} Deletando projeto: $TEST_PROJECT"
     
-    if oc delete project "$TEST_PROJECT" --wait=false 2>/dev/null; then
+    if oc delete project "$TEST_PROJECT" --wait=false ; then
         echo -e "${GREEN}[✓]${NC} Projeto marcado para deleção"
     else
         echo -e "${RED}[✗]${NC} Erro ao deletar projeto"
@@ -90,8 +90,8 @@ if [[ $REPLY =~ ^[Ss]$ ]]; then
     echo -e "${GREEN}[✓]${NC} Arquivo de estado removido: $PROJECT_STATE_FILE"
     
     # Limpar outros arquivos temporários
-    rm -f /tmp/oc-test-state-* 2>/dev/null
-    rm -f /tmp/oc-test-timing-* 2>/dev/null
+    rm -f /tmp/oc-test-state-* 
+    rm -f /tmp/oc-test-timing-* 
     echo -e "${GREEN}[✓]${NC} Arquivos temporários limpos"
     
     echo ""

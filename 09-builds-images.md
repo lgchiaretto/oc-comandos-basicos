@@ -133,7 +133,7 @@ oc new-build --name=<nome> --binary
 
 ```bash
 # Em namespace específico
-oc new-build --name=<nome> --binary -n <nome-do-projeto>
+oc new-build --name=<nome> --binary -n development
 ```
 
 ```bash
@@ -148,7 +148,7 @@ oc cancel-build <nome-do-build>
 
 ```bash
 # Em namespace específico
-oc cancel-build <nome> -n <nome-do-projeto>
+oc cancel-build <nome> -n development
 ```
 
 ```bash
@@ -169,7 +169,7 @@ oc logs -l buildconfig=<nome> --tail=20
 
 ```bash
 # Em namespace específico
-oc logs -n <nome-do-projeto> -l buildconfig=<nome> --tail=20
+oc logs -n development -l buildconfig=<nome> --tail=20
 ```
 
 ```bash

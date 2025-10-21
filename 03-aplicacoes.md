@@ -40,7 +40,7 @@ oc new-app nginx --name=meu-nginx
 
 ```bash
 # Exemplo com httpd
-oc new-app httpd:latest --name=test-app -n <nome-do-projeto>
+oc new-app httpd:latest --name=test-app -n development
 ```
 
 ### A partir de Repositório Git
@@ -135,7 +135,7 @@ oc get routes
 
 ```bash
 # Listar routes em um namespace específico
-oc get routes -n <nome-do-projeto>
+oc get routes -n development
 ```
 
 ```bash
@@ -145,7 +145,7 @@ oc get is
 
 ```bash
 # Listar ImageStreams em um projeto
-oc get is -n <nome-do-projeto>
+oc get is -n development
 ```
 
 ### Deletar Aplicações
@@ -192,7 +192,7 @@ oc status
 
 ```bash
 # Status de um projeto específico
-oc status -n <nome-do-projeto>
+oc status -n development
 ```
 
 ### Descrever Recursos
@@ -203,7 +203,7 @@ oc describe deployment <nome-do-deployment>
 
 ```bash
 # Descrever deployment em namespace específico
-oc describe deployment <nome-do-deployment> -n <nome-do-projeto>
+oc describe deployment <nome-do-deployment> -n development
 ```
 
 ```bash
@@ -223,7 +223,7 @@ oc set image deployment/<nome-do-deployment> <nome-do-container>=<nova-imagem>
 
 ```bash
 # Exemplo prático
-oc set image deployment/test-app httpd=httpd:2.4 -n <nome-do-projeto>
+oc set image deployment/test-app httpd=httpd:2.4 -n development
 ```
 
 ```bash
@@ -265,13 +265,13 @@ oc auth can-i create deployments
 
 ```bash
 # Verificar em namespace específico
-oc auth can-i create deployments -n <nome-do-projeto>
+oc auth can-i create deployments -n development
 ```
 
 ```bash
 # Verificar outras ações
-oc auth can-i delete pods -n <nome-do-projeto>
-oc auth can-i get secrets -n <nome-do-projeto>
+oc auth can-i delete pods -n development
+oc auth can-i get secrets -n development
 ```
 
 ---
@@ -291,7 +291,7 @@ oc wait --for=condition=available --timeout=60s deployment/<nome>
 
 ```bash
 # Aguardar em namespace específico
-oc wait --for=condition=available --timeout=60s deployment/<nome> -n <nome-do-projeto>
+oc wait --for=condition=available --timeout=60s deployment/<nome> -n development
 ```
 
 ```bash

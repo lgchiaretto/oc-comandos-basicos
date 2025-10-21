@@ -447,7 +447,7 @@ mkdir -p ${BACKUP_DIR}
 for resource in dc deployment statefulset daemonset job cronjob \
                 svc route pvc cm secret sa role rolebinding; do
   echo "Exporting ${resource}..."
-  oc get ${resource} -n ${PROJECT} -o yaml > ${BACKUP_DIR}/${resource}.yaml 2>/dev/null
+  oc get ${resource} -n ${PROJECT} -o yaml > ${BACKUP_DIR}/${resource}.yaml 
 done
 ```
 

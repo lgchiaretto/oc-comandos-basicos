@@ -327,17 +327,17 @@ oc get application -A -o yaml | sed '/status:/d'
 ### Verificações Condicionais
 ```bash
 # Verificar se aplicação existe
-oc get applications.argoproj.io -n openshift-gitops 2>/dev/null || echo "No applications found"
+oc get applications.argoproj.io -n openshift-gitops  || echo "No applications found"
 ```
 
 ```bash
 # Verificar health status com fallback
-oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}' 2>/dev/null || echo "Application not found"
+oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}'  || echo "Application not found"
 ```
 
 ```bash
 # Ver erro condition com fallback
-oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}' 2>/dev/null || echo "No error condition found"
+oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
 ```
 
 ---

@@ -183,7 +183,7 @@ cleanup() {
     log_info "Executando limpeza..."
     
 #    # Deletar projetos de teste
-#    oc delete project -l "test-validation=true" --wait=false 2>/dev/null || true
+#    oc delete project -l "test-validation=true" --wait=false  || true
     
     # Remover arquivos de estado
     rm -f "$STATE_FILE"

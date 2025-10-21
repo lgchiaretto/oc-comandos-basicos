@@ -59,7 +59,7 @@ oc describe configmap <nome>
 
 ```bash
 # Em namespace específico
-oc describe configmap <nome> -n <nome-do-projeto>
+oc describe configmap <nome> -n development
 ```
 
 ```bash
@@ -142,7 +142,7 @@ oc describe secret <nome>
 
 ```bash
 # Em namespace específico
-oc describe secret <nome> -n <nome-do-projeto>
+oc describe secret <nome> -n development
 ```
 
 ```bash
