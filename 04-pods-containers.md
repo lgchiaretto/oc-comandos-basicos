@@ -48,22 +48,22 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 ```
 
 ### Descrever Pods
-```bash
+```bash ignore
 # Descrever um pod
 oc describe pod <nome-do-pod>
 ```
 
-```bash
+```bash ignore
 # Ver definição YAML do pod
 oc get pod <nome-do-pod> -o yaml
 ```
 
-```bash
+```bash ignore
 # Ver definição JSON do pod
 oc get pod <nome-do-pod> -o json
 ```
 
-```bash
+```bash ignore
 # Ver apenas o status
 oc get pod <nome-do-pod> -o jsonpath='{.status.phase}'
 ```
@@ -73,33 +73,33 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.phase}'
 ## 💻 Interação com Pods
 
 ### Acessar Shell
-```bash
+```bash ignore
 # Acessar shell de um pod
 oc rsh <nome-do-pod>
 ```
 
-```bash
+```bash ignore
 # Executar comando em um pod
 oc exec <nome-do-pod> -- <comando>
 ```
 
-```bash
+```bash ignore
 # Executar comando interativo
 oc exec -it <nome-do-pod> -- /bin/bash
 ```
 
-```bash
+```bash ignore
 # Executar comando em container específico
 oc exec <nome-do-pod> -c <nome-do-container> -- <comando>
 ```
 
-```bash
+```bash ignore
 # Exemplo prático
 oc exec -it mypod -- /bin/sh
 ```
 
 ### Copiar Arquivos
-```bash
+```bash ignore
 # Copiar arquivo para o pod
 oc cp <arquivo-local> <nome-do-pod>:<caminho-no-pod>
 ```
@@ -109,12 +109,12 @@ oc cp <arquivo-local> <nome-do-pod>:<caminho-no-pod>
 oc cp <nome-do-pod>:<caminho-no-pod> <arquivo-local>
 ```
 
-```bash
+```bash ignore
 # Copiar diretório
 oc cp /local/dir <nome-do-pod>:/container/dir
 ```
 
-```bash
+```bash ignore
 # Exemplo
 oc cp ./config.json mypod:/etc/config/config.json
 ```
@@ -166,7 +166,7 @@ oc scale deployment test-app --replicas=0
 ```
 ```bash
 # Scale up deployment test-app
-oc scale deployment test-app --replicas=3
+oc scale deployment test-app --replicas=2
 ```
 ---
 
@@ -214,7 +214,7 @@ oc get pods --field-selector=status.phase=Pending
 oc get pods --field-selector=status.phase=Failed
 ```
 
-```bash
+```bash ignore
 # Ver motivo de erro do pod
 oc describe pod <nome-do-pod> | grep -A 10 "Events:"
 ```
@@ -224,32 +224,32 @@ oc describe pod <nome-do-pod> | grep -A 10 "Events:"
 ## 📝 Logs
 
 ### Ver Logs
-```bash
+```bash ignore
 # Ver logs de um pod
 oc logs <nome-do-pod>
 ```
 
-```bash
+```bash ignore
 # Ver logs em tempo real
 oc logs -f <nome-do-pod>
 ```
 
-```bash
+```bash ignore
 # Ver logs de container específico
 oc logs <nome-do-pod> -c <nome-do-container>
 ```
 
-```bash
+```bash ignore
 # Ver logs anteriores (pod crasheado)
 oc logs <nome-do-pod> --previous
 ```
 
-```bash
+```bash ignore
 # Ver últimas N linhas dos logs
 oc logs <nome-do-pod> --tail=<numero>
 ```
 
-```bash
+```bash ignore
 # Ver logs desde timestamp específico
 oc logs <nome-do-pod> --since=1h
 ```
@@ -261,7 +261,7 @@ oc logs -l app=test-app
 
 ## 📋 Monitoramento e Eventos
 
-### Ver Eventos do Pod
+### Ver Eventos
 ```bash
 # Ver eventos ordenados por timestamp
 oc get events --sort-by='.lastTimestamp'

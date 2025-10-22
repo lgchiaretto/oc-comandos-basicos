@@ -89,13 +89,13 @@ fi
 Testado com sucesso:
 ```bash
 # Modo normal (sem mudanças visíveis de comportamento)
-./test-commands.sh --module 01
+./scripts/test-commands.sh --module 01
 
 # Modo verbose (nova funcionalidade)
-./test-commands.sh --module 01 --verbose
+./scripts/test-commands.sh --module 01 --verbose
 
 # Todos os módulos com verbose
-./test-commands.sh --verbose
+./scripts/test-commands.sh --verbose
 ```
 
 ### 📊 Benefícios
@@ -110,17 +110,17 @@ Testado com sucesso:
 
 **Para desenvolvimento e debug:**
 ```bash
-./test-commands.sh --module XX --verbose
+./scripts/test-commands.sh --module XX --verbose
 ```
 
 **Para CI/CD e validação rápida:**
 ```bash
-./test-commands.sh
+./scripts/test-commands.sh
 ```
 
 **Para análise detalhada de problemas:**
 ```bash
-./test-commands.sh --verbose --stop-on-error --module XX
+./scripts/test-commands.sh --verbose --stop-on-error --module XX
 ```
 
 ### ⚙️ Detalhes Técnicos

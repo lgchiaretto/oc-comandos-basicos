@@ -4,7 +4,7 @@
 # Script Principal de Validação de Comandos OpenShift
 # Executa todos os módulos de teste organizados por tópico
 #
-# Uso: ./test-commands.sh [--verbose] [--stop-on-error] [--module <num>]
+# Uso: ./scripts/test-commands.sh [--verbose] [--stop-on-error] [--module <num>]
 #
 # Opções:
 #   --verbose          Mostra saída detalhada de cada comando
@@ -14,7 +14,8 @@
 ##############################################################################
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/lib/common.sh"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+source "${REPO_ROOT}/lib/common.sh"
 
 set -o pipefail
 
@@ -240,8 +241,8 @@ echo ""
 # Verificar pré-requisitos
 check_prerequisites
 
-# Diretório de testes
-TESTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/tests" && pwd)"
+# Diretório de testes (relativo à raiz do repositório)
+TESTS_DIR="${REPO_ROOT}/tests"
 
 if [ ! -d "$TESTS_DIR" ]; then
     log_error "Diretório de testes não encontrado: $TESTS_DIR"

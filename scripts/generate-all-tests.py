@@ -24,7 +24,8 @@ class TestGenerator:
     OC_COMMAND_PREFIX = 'oc '
     
     def __init__(self, verbose: bool = False):
-        self.base_dir = Path(__file__).parent
+        # Script está em scripts/, então base_dir é o parent do parent
+        self.base_dir = Path(__file__).parent.parent
         self.tests_dir = self.base_dir / "tests"
         self.verbose = verbose
         
@@ -225,7 +226,7 @@ class TestGenerator:
         print(f"   {total_commands} comandos totais")
         if errors > 0:
             print(f"   {errors} erros encontrados")
-        print(f"\nExecute: ./test-commands.sh")
+        print(f"\nExecute: ./scripts/test-commands.sh")
         
         # Retorna código de saída apropriado
         sys.exit(1 if errors > 0 else 0)
