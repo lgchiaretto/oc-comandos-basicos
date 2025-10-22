@@ -226,12 +226,12 @@ oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ### Patch de Deployment
 ```bash
 # Aplicar patch usando merge
-oc patch deployment test-app -n <projeto> --type=merge -p '{"spec":{"replicas":3}}'
+oc patch deployment test-app -n development --type=merge -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
 # Patch para atualizar imagem
-oc patch deployment test-app -n <projeto> --type=merge -p '{
+oc patch deployment test-app -n development --type=merge -p '{
   "spec": {
     "template": {
       "spec": {
