@@ -155,7 +155,7 @@ python3 scripts/generate-all-tests.py
 ```
 
 **Ignoring Commands in Documentation:**
-To exclude specific code blocks from test generation, use the `(ignore)` marker:
+To exclude specific code blocks from test generation, use the `(ignore-test)` marker:
 ````markdown
 ```bash ignore-test
 # This command will NOT be included in generated tests
