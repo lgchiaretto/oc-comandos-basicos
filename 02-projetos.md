@@ -39,7 +39,7 @@ oc get projects
 ```
 
 
-```bash ignore
+```bash ignore-test
 # Listar com labels
 oc get projects --show-labels
 ```
@@ -66,7 +66,7 @@ oc new-project production --description="Minha descrição" --display-name="Nome
 oc project development
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo
 oc project production
 ```
@@ -102,7 +102,7 @@ oc get project development -o yaml > projeto.yaml
 ```
 
 ### Editar Projetos
-```bash ignore
+```bash ignore-test
 # Editar projeto
 oc edit project development
 ```
@@ -128,17 +128,17 @@ oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 ```
 
 ### Deletar Projetos
-```bash ignore
+```bash ignore-test
 # Deletar um projeto
 oc delete project development
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar com confirmação
 oc delete project development --wait=true
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar múltiplos projetos
 oc delete project development production
 ```
@@ -149,23 +149,23 @@ oc delete project development production
 
 ## 🎯 Node Selectors
 
-### Criar Projeto com Node Selector (requer permissões admin)
-```bash ignore
+### Criar Projeto com Node Selector
+```bash ignore-test
 # Criar projeto com node selector para ambiente
 oc new-project <nome> --node-selector='env=prd'
 ```
 
-```bash ignore
+```bash ignore-test
 # Criar projeto sem node selector (permite qualquer node)
 oc new-project <nome> --node-selector=""
 ```
 
-```bash ignore
+```bash ignore-test
 # Criar projeto com node selector específico por hostname
 oc new-project <nome> --node-selector="kubernetes.io/hostname=<hostname>"
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo prático
 oc new-project production --node-selector='env=production'
 ```
@@ -185,7 +185,7 @@ oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/nod
 
 
 ### Labels em Namespaces
-```bash ignore
+```bash ignore-test
 # Adicionar labels ao namespace
 oc label namespace development <key>=<value>
 ```
@@ -196,7 +196,7 @@ oc label namespace development env=development validation=true --overwrite
 ```
 
 ### Annotations em Namespaces
-```bash ignore
+```bash ignore-test
 # Adicionar annotation ao namespace
 oc annotate namespace development <key>='<value>'
 ```
@@ -223,22 +223,22 @@ oc get sa -n development
 ## 📄 Templates de Projeto
 
 ### Criar Template de Projeto Customizado
-```bash ignore
+```bash ignore-test
 # Gerar template padrão
 oc adm create-bootstrap-project-template -o yaml > /tmp/template.yaml
 ```
 
-```bash ignore
+```bash ignore-test
 # Editar template
 vim /tmp/template.yaml
 ```
 
-```bash ignore
+```bash ignore-test
 # Aplicar template customizado
 oc create -f /tmp/template.yaml -n openshift-config
 ```
 
-```bash ignore
+```bash ignore-test
 # Configurar cluster para usar template
 oc edit project.config.openshift.io/cluster
 # Adicionar:
@@ -385,12 +385,12 @@ oc get rolebindings
 oc get roles
 ```
 
-```bash ignore
+```bash ignore-test
 # Adicionar usuário ao projeto
 oc adm policy add-role-to-user admin <usuario> -n <projeto>
 ```
 
-```bash ignore
+```bash ignore-test
 # Remover usuário do projeto
 oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ```
@@ -400,19 +400,19 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ## 🎓 Exemplos Práticos
 
 ### Criar Ambiente Completo
-```bash ignore
+```bash ignore-test
 # 1. Criar projeto
 oc new-project meu-app-dev \
   --description="Ambiente de desenvolvimento" \
   --display-name="Meu App - DEV"
 ```
 
-```bash ignore
+```bash ignore-test
 # 2. Adicionar labels
 oc label project meu-app-dev env=dev tier=backend team=devops
 ```
 
-```bash ignore
+```bash ignore-test
 # 3. Configurar quota
 cat <<EOF | oc create -f -
 apiVersion: v1
@@ -427,23 +427,23 @@ spec:
 EOF
 ```
 
-```bash ignore
+```bash ignore-test
 # 4. Verificar
 oc get quota
 ```
 
 ### Migração entre Projetos
-```bash ignore
+```bash ignore-test
 # 1. Exportar recursos do projeto origem
 oc get all -n projeto-origem -o yaml > recursos.yaml
 ```
 
-```bash ignore
+```bash ignore-test
 # 2. Criar projeto destino
 oc new-project projeto-destino
 ```
 
-```bash ignore
+```bash ignore-test
 # 3. Importar recursos (após ajustar namespace no YAML)
 sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 ```

@@ -20,7 +20,7 @@ class TestGenerator:
     # Constantes
     MARKDOWN_START = 1
     MARKDOWN_END = 30
-    BASH_BLOCK_PATTERN = r'```bash(?:\s+ignore)?\n(.*?)```'
+    BASH_BLOCK_PATTERN = r'```bash(?:\s+ignore-test)?\n(.*?)```'
     OC_COMMAND_PREFIX = 'oc '
     
     def __init__(self, verbose: bool = False):
@@ -60,56 +60,72 @@ class TestGenerator:
             
         return True
     
-    def extract_commands(self, md_file: Path) -> List[Tuple[str, str]]:
-        """Extrai comandos de blocos ```bash (exceto os com ignore)."""
+    def extract_commands(self, md_file: Path) -> Tuple[List[Tuple[str, str]], int]:
+        """Extrai comandos de blocos ```bash (exceto os com ignore).
+
+        Retorna uma tupla (commands, ignored_count).
+        """
         try:
             content = md_file.read_text(encoding='utf-8')
         except Exception as e:
             self._log(f"  ERRO ao ler {md_file.name}: {e}", "error")
-            return []
+            return [], 0
         
         commands = []
+        ignored_count = 0
         
         # Encontra todos os blocos de código bash
         for block in re.finditer(self.BASH_BLOCK_PATTERN, content, re.DOTALL):
-            # Ignora blocos marcados com 'ignore'
+            # Ignora blocos marcados com 'ignore-test'
             first_line = block.group(0).split('\n')[0]
-            if 'ignore' in first_line:
+            if 'ignore-test' in first_line:
                 self._log(f"  Bloco com teste ignorado: {block.group(0).split('\n')[1]} -> {block.group(0).split('\n')[2]}", "debug")
+                # Count all commands inside ignored blocks approximately as lines starting with 'oc '
+                for l in block.group(1).split('\n'):
+                    if l.strip().startswith(self.OC_COMMAND_PREFIX):
+                        ignored_count += 1
                 continue
             
             # Processa comandos do bloco
-            commands.extend(self._process_code_block(block.group(1)))
+            block_cmds, block_ignored = self._process_code_block(block.group(1))
+            commands.extend(block_cmds)
+            ignored_count += block_ignored
         
-        return commands
+        return commands, ignored_count
     
-    def _process_code_block(self, block_content: str) -> List[Tuple[str, str]]:
-        """Processa um bloco de código e extrai comandos válidos."""
+    def _process_code_block(self, block_content: str) -> Tuple[List[Tuple[str, str]], int]:
+        """Processa um bloco de código e extrai comandos válidos.
+
+        Retorna (commands, ignored_count_in_block).
+        """
         commands = []
         comment = None
-        
+        ignored_count = 0
+
         for line in block_content.strip().split('\n'):
             line = line.strip()
-            
+
             if not line:
                 continue
-                
+
             # Captura comentários
             if line.startswith('#'):
                 comment = line.lstrip('#').strip()
                 continue
-            
+
             # Captura comandos oc válidos
             if line.startswith(self.OC_COMMAND_PREFIX):
                 if not self._is_valid_command(line):
+                    # comando válido mas que decidimos ignorar (interativo/placeholder)
+                    ignored_count += 1
                     comment = None
                     continue
-                    
+
                 desc = comment or self._extract_description(line)
                 commands.append((desc, line))
                 comment = None
-        
-        return commands
+
+        return commands, ignored_count
         
     def _extract_description(self, cmd: str) -> str:
         """Extrai descrição amigável do comando (oc <action> <resource>)."""
@@ -150,7 +166,7 @@ class TestGenerator:
             f"# Testes para Módulo {module_num}: {module_name}",
             f"# Auto-gerado a partir de {md_file.name}",
             "#\n",
-            'source "lib/common.sh"\n',
+            'source "../lib/common.sh"\n',
             f'section_header "{module_num} - {module_name}"\n'
         ]
         
@@ -189,19 +205,22 @@ class TestGenerator:
         print(f"\n{len(md_files)} arquivos markdown encontrados\n")
 
         total_commands = 0
+        total_ignored = 0
         generated = 0
         errors = 0
+        total_included = 0
 
         for md_file in md_files:
             print(md_file.name)
 
             try:
-                commands = self.extract_commands(md_file)
+                commands, ignored = self.extract_commands(md_file)
                 if not commands:
-                    print("  Nenhum comando encontrado\n")
+                    print("  Nenhum comando válido encontrado\n")
+                    total_ignored += ignored
                     continue
 
-                print(f"  {len(commands)} comandos extraídos")
+                print(f"  {len(commands)} comandos extraídos ({ignored} ignorados)")
 
                 content = self.generate_test_file(md_file, commands)
                 if not content:
@@ -212,6 +231,8 @@ class TestGenerator:
                 print(f"  Gerado: {test_file.relative_to(self.base_dir)}\n")
 
                 total_commands += len(commands)
+                total_ignored += ignored
+                total_included += len(commands)
                 generated += 1
                 
             except Exception as e:
@@ -222,20 +243,30 @@ class TestGenerator:
         # Sumário
         print("=" * 60)
         print("Concluído!")
-        print(f"   {generated} arquivos gerados")
-        print(f"   {total_commands} comandos totais")
+        print(f"   {generated} arquivos test.sh gerados")
+        print(f"   {total_included} comandos incluídos (entraram nos testes)")
+        print(f"   {total_ignored} comandos ignorados (ignore-test ou inválidos)")
+        print(f"   {total_included + total_ignored} comandos totais")
         if errors > 0:
             print(f"   {errors} erros encontrados")
         print(f"\nExecute: ./scripts/test-commands.sh")
-        
+
         # Retorna código de saída apropriado
         sys.exit(1 if errors > 0 else 0)
 
 
 def main():
     """Ponto de entrada principal."""
-    verbose = '--verbose' in sys.argv or '-v' in sys.argv
-    generator = TestGenerator(verbose=verbose)
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description='Gerador Automático de Testes para OpenShift Commands'
+    )
+    parser.add_argument('-v', '--verbose', action='store_true', help='Ativa saída verbosa')
+
+    args = parser.parse_args()
+
+    generator = TestGenerator(verbose=args.verbose)
     generator.generate_all()
 
 

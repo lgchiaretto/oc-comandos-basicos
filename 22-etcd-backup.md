@@ -35,7 +35,7 @@ oc get clusteroperator etcd
 oc describe co etcd
 ```
 
-```bash ignore
+```bash ignore-test
 # Logs do etcd
 oc logs -n openshift-etcd <etcd-pod-name>
 ```
@@ -45,18 +45,18 @@ oc logs -n openshift-etcd <etcd-pod-name>
 oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
-```bash ignore
+```bash ignore-test
 # Logs do etcd-operator
 oc logs -n openshift-etcd-operator <etcd-operator-pod>
 ```
 
 ### Etcd Health Check
-```bash ignore
+```bash ignore-test
 # Executar dentro de pod etcd
 oc rsh -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
-```bash ignore
+```bash ignore-test
 # Dentro do pod:
 etcdctl endpoint health --cluster
 etcdctl endpoint status --cluster -w table
@@ -83,33 +83,33 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 ## 💾 Backup do Cluster
 
 ### Backup Manual do Etcd
-```bash ignore
+```bash ignore-test
 # Conectar a um master node
 oc debug node/<master-node-name>
 ```
 
-```bash ignore
+```bash ignore-test
 # No debug shell:
 chroot /host
 ```
 
-```bash ignore
+```bash ignore-test
 # Executar backup
 /usr/local/bin/cluster-backup.sh /home/core/backup
 ```
 
-```bash ignore
+```bash ignore-test
 # Verificar backup criado
 ls -lh /home/core/backup/
 ```
 
-```bash ignore
+```bash ignore-test
 # Sair do debug
 exit
 exit
 ```
 
-```bash ignore
+```bash ignore-test
 # Copiar backup do node
 oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ```
@@ -125,7 +125,7 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ## 🔄 Restore
 
 ### Restore do Etcd
-```bash ignore
+```bash ignore-test
 # ⚠️ ATENÇÃO: Restore é procedimento crítico!
 # Sempre consulte documentação oficial antes de fazer restore
 # Para rodar o restore você obrigatoriamente precisa ter acesso a um dos 
@@ -134,7 +134,7 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ```
 
 ### Limpar Alarmes
-```bash ignore
+```bash ignore-test
 # Se houver alarm de NOSPACE
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 ```

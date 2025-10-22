@@ -28,7 +28,7 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 oc scale deployment test-app --replicas=3
 ```
 
-```bash ignore
+```bash ignore-test
 # Escalar deployment config
 oc scale dc <nome-do-dc> --replicas=<numero>
 ```
@@ -115,7 +115,7 @@ oc get replicasets
 oc get rs
 ```
 
-```bash ignore
+```bash ignore-test
 # Descrever replicaset
 oc describe rs <nome-do-rs>
 ```
@@ -125,7 +125,7 @@ oc describe rs <nome-do-rs>
 oc get rs -l app=test-app
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar replicaset
 oc delete rs <nome-do-rs>
 ```

@@ -16,22 +16,22 @@ Este documento contém comandos essenciais para autenticação e configuração 
 ## 🔑 Login e Logout
 
 ### Login Básico
-```bash ignore
+```bash ignore-test
 # Login no cluster OpenShift
 oc login <url-do-cluster>
 ```
 
-```bash ignore
+```bash ignore-test
 # Login com usuário e senha
 oc login <url-do-cluster> -u <usuario> -p <senha>
 ```
 
-```bash ignore
+```bash ignore-test
 # Login com token
 oc login --token=<token> --server=<url-do-cluster>
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo prático
 oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```
@@ -63,12 +63,12 @@ oc whoami --show-server
 ```
 
 ### Logout
-```bash ignore
+```bash ignore-test
 # Fazer logout
 oc logout
 ```
 
-```bash ignore
+```bash ignore-test
 # Fazer logout e limpar contexto
 oc logout && rm -f ~/.kube/config
 ```
@@ -169,23 +169,23 @@ oc config get-contexts
 oc config current-context
 ```
 
-```bash ignore
+```bash ignore-test
 # Trocar de contexto
 oc config use-context <nome-do-contexto>
 ```
 
-```bash ignore
+```bash ignore-test
 # Renomear contexto
 oc config rename-context <nome-antigo> <nome-novo>
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar contexto
 oc config delete-context <nome-do-contexto>
 ```
 
 ### Criar Contextos Customizados
-```bash ignore
+```bash ignore-test
 # Criar novo contexto
 oc config set-context <nome-do-contexto> \
   --cluster=<cluster> \
@@ -193,7 +193,7 @@ oc config set-context <nome-do-contexto> \
   --namespace=<namespace>
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo
 oc config set-context dev-context \
   --cluster=dev-cluster \
@@ -201,7 +201,7 @@ oc config set-context dev-context \
   --namespace=development
 ```
 
-```bash ignore
+```bash ignore-test
 # Criar contexto para o cluster
 oc config set-context <contexto> \
   --cluster=<cluster> \
@@ -209,12 +209,12 @@ oc config set-context <contexto> \
 ```
 
 ### Variáveis de Ambiente
-```bash ignore
+```bash ignore-test
 # Definir KUBECONFIG customizado
 export KUBECONFIG=/path/to/kubeconfig
 ```
 
-```bash ignore
+```bash ignore-test
 # Múltiplos kubeconfigs
 export KUBECONFIG=/path/to/config1:/path/to/config2
 ```

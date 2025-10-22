@@ -48,22 +48,22 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 ```
 
 ### Descrever Pods
-```bash ignore
+```bash ignore-test
 # Descrever um pod
 oc describe pod <nome-do-pod>
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver definição YAML do pod
 oc get pod <nome-do-pod> -o yaml
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver definição JSON do pod
 oc get pod <nome-do-pod> -o json
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver apenas o status
 oc get pod <nome-do-pod> -o jsonpath='{.status.phase}'
 ```
@@ -73,33 +73,33 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.phase}'
 ## 💻 Interação com Pods
 
 ### Acessar Shell
-```bash ignore
+```bash ignore-test
 # Acessar shell de um pod
 oc rsh <nome-do-pod>
 ```
 
-```bash ignore
+```bash ignore-test
 # Executar comando em um pod
 oc exec <nome-do-pod> -- <comando>
 ```
 
-```bash ignore
+```bash ignore-test
 # Executar comando interativo
 oc exec -it <nome-do-pod> -- /bin/bash
 ```
 
-```bash ignore
+```bash ignore-test
 # Executar comando em container específico
 oc exec <nome-do-pod> -c <nome-do-container> -- <comando>
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo prático
 oc exec -it mypod -- /bin/sh
 ```
 
 ### Copiar Arquivos
-```bash ignore
+```bash ignore-test
 # Copiar arquivo para o pod
 oc cp <arquivo-local> <nome-do-pod>:<caminho-no-pod>
 ```
@@ -109,12 +109,12 @@ oc cp <arquivo-local> <nome-do-pod>:<caminho-no-pod>
 oc cp <nome-do-pod>:<caminho-no-pod> <arquivo-local>
 ```
 
-```bash ignore
+```bash ignore-test
 # Copiar diretório
 oc cp /local/dir <nome-do-pod>:/container/dir
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo
 oc cp ./config.json mypod:/etc/config/config.json
 ```
@@ -124,22 +124,22 @@ oc cp ./config.json mypod:/etc/config/config.json
 ## 🔧 Gerenciamento de Pods
 
 ### Criar e Deletar
-```bash ignore
+```bash ignore-test
 # Criar pod a partir de arquivo YAML
 oc create -f pod.yaml
 ```
 
-```bash ignore
+```bash ignore-test
 # Aplicar mudanças em pod
 oc apply -f pod.yaml
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar um pod
 oc delete pod <nome-do-pod>
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar pod forçadamente
 oc delete pod <nome-do-pod> --grace-period=0 --force
 ```
@@ -155,7 +155,7 @@ oc delete pods -l app=test-app
 oc rollout restart deployment/test-app
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar pod para forçar recriação
 oc delete pod <nome-do-pod>
 ```
@@ -173,17 +173,17 @@ oc scale deployment test-app --replicas=2
 ## 🔍 Debug e Troubleshooting
 
 ### Debug Interativo
-```bash ignore
+```bash ignore-test
 # Debug interativo de pod
 oc debug pod/<nome-do-pod>
 ```
 
-```bash ignore
+```bash ignore-test
 # Debug com imagem customizada
 oc debug pod/<nome-do-pod> --image=busybox
 ```
 
-```bash ignore
+```bash ignore-test
 # Debug como root
 oc debug pod/<nome-do-pod> --as-root
 ```
@@ -193,7 +193,7 @@ oc debug pod/<nome-do-pod> --as-root
 oc run debug-pod --image=busybox -it --rm --restart=Never -- hostname
 ```
 
-```bash ignore
+```bash ignore-test
 # Criar pod de debug temporário e conecte
 oc run debug-pod --image=busybox -it --rm --restart=Never -- sh
 ```
@@ -214,7 +214,7 @@ oc get pods --field-selector=status.phase=Pending
 oc get pods --field-selector=status.phase=Failed
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver motivo de erro do pod
 oc describe pod <nome-do-pod> | grep -A 10 "Events:"
 ```
@@ -224,32 +224,32 @@ oc describe pod <nome-do-pod> | grep -A 10 "Events:"
 ## 📝 Logs
 
 ### Ver Logs
-```bash ignore
+```bash ignore-test
 # Ver logs de um pod
 oc logs <nome-do-pod>
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver logs em tempo real
 oc logs -f <nome-do-pod>
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver logs de container específico
 oc logs <nome-do-pod> -c <nome-do-container>
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver logs anteriores (pod crasheado)
 oc logs <nome-do-pod> --previous
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver últimas N linhas dos logs
 oc logs <nome-do-pod> --tail=<numero>
 ```
 
-```bash ignore
+```bash ignore-test
 # Ver logs desde timestamp específico
 oc logs <nome-do-pod> --since=1h
 ```

@@ -18,22 +18,22 @@ Este documento contém comandos para criar e gerenciar aplicações no OpenShift
 ## 🆕 Criação de Aplicações
 
 ### A partir de Imagem Docker
-```bash ignore
+```bash ignore-test
 # Criar aplicação a partir de imagem
 oc new-app <nome-da-imagem>
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo com imagem pública
 oc new-app nginx
 ```
 
-```bash ignore
+```bash ignore-test
 # Imagem de registry customizado
 oc new-app myregistry.com/myapp:latest
 ```
 
-```bash ignore
+```bash ignore-test
 # Com nome personalizado
 oc new-app nginx --name=meu-nginx
 ```
@@ -44,33 +44,33 @@ oc new-app httpd:latest --name=test-app -n development
 ```
 
 ### A partir de Repositório Git
-```bash ignore
+```bash ignore-test
 # Criar aplicação a partir de repositório Git
 oc new-app <url-do-repositorio-git>
 ```
 
-```bash ignore
+```bash ignore-test
 # Especificando branch
 oc new-app <url-do-repositorio-git>#<branch>
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo prático
 oc new-app https://github.com/sclorg/django-ex
 ```
 
-```bash ignore
+```bash ignore-test
 # Branch específica
 oc new-app https://github.com/sclorg/django-ex#develop
 ```
 
 ### Com Variáveis de Ambiente
-```bash ignore
+```bash ignore-test
 # Criar aplicação com variáveis
 oc new-app <imagem> -e VAR1=valor1 -e VAR2=valor2
 ```
 
-```bash ignore
+```bash ignore-test
 # Exemplo
 oc new-app mysql -e MYSQL_USER=user -e MYSQL_PASSWORD=pass
 ```
@@ -81,7 +81,7 @@ oc new-app mysql -e MYSQL_USER=user -e MYSQL_PASSWORD=pass
 oc get templates -n openshift
 ```
 
-```bash ignore
+```bash ignore-test
 # Criar a partir de template
 oc new-app --template=<nome-do-template>
 ```
@@ -92,7 +92,7 @@ oc new-app --template=mysql-persistent -p MYSQL_USER=admin
 ```
 
 ### Com Estratégia de Build
-```bash ignore
+```bash ignore-test
 # Especificar estratégia de build
 oc new-app <url-git> --strategy=docker
 ```
@@ -100,7 +100,7 @@ oc new-app <url-git> --strategy=docker
 oc new-app <url-git> --strategy=source
 ```
 
-```bash ignore
+```bash ignore-test
 # A partir de código local
 oc new-app . --name=test-app
 ```
@@ -151,28 +151,28 @@ oc get is -n development
 ```
 
 ### Deletar Aplicações
-```bash ignore
+```bash ignore-test
 # Deletar aplicação e recursos relacionados
 oc delete all -l app=test-app
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar por seletor
 oc delete all --selector app=test-app
 ```
 
-```bash ignore
+```bash ignore-test
 # Deletar deployment específico
 oc delete deployment test-app
 ```
 
 ### Expor Aplicação
-```bash ignore
+```bash ignore-test
 # Expor service como route
 oc expose service test-app
 ```
 
-```bash ignore
+```bash ignore-test
 # Com hostname customizado
 oc expose service test-app --hostname=app.example.com
 ```
@@ -218,7 +218,7 @@ oc describe deployment test-app -n development
 oc set image deployment/test-app httpd=httpd:2.4 -n development
 ```
 
-```bash ignore
+```bash ignore-test
 # Atualizar múltiplos containers
 oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ```
