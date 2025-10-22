@@ -161,6 +161,10 @@ To exclude specific code blocks from test generation, use the `(ignore)` marker:
 # This command will NOT be included in generated tests
 oc logout
 ```
+```bash ignore
+# This command will NOT be included in generated tests too
+oc get pods
+```
 ````
 
 This is useful for:
@@ -183,7 +187,7 @@ This is useful for:
    
 2. **Validation Before Commit**
    - Always run `./scripts/test-commands.sh` before committing
-   - Target success rate: >95%
+   - Target success rate: 100% passing tests
    
 3. **Modular Organization**
    - Keep tests in their respective module directories
@@ -191,7 +195,6 @@ This is useful for:
    - Don't create monolithic test files
 
 4. **Error Handling**
-   - Use `|| true` for commands that may legitimately fail
    - Use `` to suppress expected errors
    - Document why certain tests are skipped
 

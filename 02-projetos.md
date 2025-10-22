@@ -143,9 +143,7 @@ oc delete project development --wait=true
 oc delete project development production
 ```
 
-```bash
-# CUIDADO: Isso deleta TODOS os recursos do projeto!
-```
+> ⚠️ **CUIDADO:** este comando deleta *todos* os recursos do projeto!
 
 ---
 
