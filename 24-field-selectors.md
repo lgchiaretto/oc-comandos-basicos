@@ -255,7 +255,7 @@ oc get events --field-selector=type=Warning,involvedObject.namespace=default
 ### Filtros Básicos com GREP
 ```bash
 # Pods com problemas (não Running ou Completed)
-oc get pods -A | egrep -v "Running|Completed"
+oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ```bash
@@ -302,7 +302,7 @@ oc get pods -A | egrep -v "kube-system|kube-public|openshift-"
 
 ```bash
 # Ver apenas pods com problemas
-oc get pods -A | egrep -v "Running|Completed" | egrep -v "NAME"
+oc get pods -A | grep -E -v "Running|Completed" | egrep -v "NAME"
 ```
 
 ---
@@ -369,7 +369,7 @@ oc adm top nodes --no-headers | sort -k3 -nr
 ### Health Checks Rápidos
 ```bash
 # Verificar se há pods com problemas
-if oc get pods -A | egrep -v "Running|Completed" | grep -v NAME; then
+if oc get pods -A | grep -E -v "Running|Completed" | grep -v NAME; then
   echo "⚠️  Pods com problemas encontrados!"
 else
   echo "✅ Todos os pods estão OK"

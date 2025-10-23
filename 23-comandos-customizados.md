@@ -205,7 +205,7 @@ oc adm must-gather \
 ### Filtros Complexos
 ```bash
 # Pods que não estão Running ou Completed
-oc get pods -A | egrep -v "Running|Completed"
+oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ```bash
@@ -499,7 +499,7 @@ oc get all -A --no-headers | awk '{print $1}' | sort | uniq -c
 ### Aliases Úteis para Scripts
 ```bash ignore-test
 # Adicionar ao ~/.bashrc
-alias ocpods='oc get pods -A | egrep -v "Running|Completed"'
+alias ocpods='oc get pods -A | grep -E -v "Running|Completed"'
 alias occo='oc get co | grep -v "True.*False.*False"'
 alias occsrfix='oc get csr -o name | xargs oc adm certificate approve'
 alias octop='oc adm top pods --all-namespaces --no-headers | sort -k3 -nr | head -10'
@@ -509,7 +509,7 @@ alias octop='oc adm top pods --all-namespaces --no-headers | sort -k3 -nr | head
 ```bash
 # Health check completo do cluster
 echo "=== Cluster Operators ===" && oc get co | grep -v "True.*False.*False" && \
-echo "=== Problematic Pods ===" && oc get pods -A | egrep -v "Running|Completed" && \
+echo "=== Problematic Pods ===" && oc get pods -A | grep -E -v "Running|Completed" && \
 echo "=== Pending CSRs ===" && oc get csr | grep Pending && \
 echo "=== Non-Ready Nodes ===" && oc get nodes | grep -v "Ready"
 ```

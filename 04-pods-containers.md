@@ -43,11 +43,16 @@ oc get pods -l app=test-app
 ```
 
 ```bash
+# Listar pods em um projeto específico
+# oc get pods -n <namespace>
+oc get pods -n development
+```
+
+```bash
 # Listar pods com status customizado
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP
 ```
 
-### Descrever Pods
 ```bash ignore-test
 # Descrever um pod
 oc describe pod <nome-do-pod>
@@ -85,7 +90,7 @@ oc exec <nome-do-pod> -- <comando>
 
 ```bash ignore-test
 # Executar comando interativo
-oc exec -it <nome-do-pod> -- /bin/bash
+oc exec -it <nome-do-pod> -- /bin/sh
 ```
 
 ```bash ignore-test
@@ -112,6 +117,11 @@ oc cp <nome-do-pod>:<caminho-no-pod> <arquivo-local>
 ```bash ignore-test
 # Copiar diretório
 oc cp /local/dir <nome-do-pod>:/container/dir
+```
+
+```bash ignore-test
+# Copiar diretório com rsync (precisa ter rsync instalado no pod)
+oc rsync /local/dir <nome-do-pod>:/container/dir
 ```
 
 ```bash ignore-test

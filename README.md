@@ -4,6 +4,51 @@ Este é um guia abrangente de comandos do OpenShift (OCP) organizado por categor
 
 ---
 
+## 🎓 Como Usar Este Guia
+
+### Para Iniciantes
+Comece pelos documentos essenciais (1-6) para entender os conceitos básicos do OpenShift.
+
+### Para Administradores
+Foque nos documentos de administração avançada (19-22) e troubleshooting (13-15).
+
+### Para DevOps
+Concentre-se em Build/CI/CD (9-10), aplicações (3) e observabilidade (11-12).
+
+### Para Troubleshooting
+Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
+
+---
+
+## ⚠️ Importante
+
+> **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
+> 
+---
+
+## 📋 Categorias de Comandos
+
+### Por Recurso
+- **Pods**: Documentos 4, 13
+- **Deployments**: Documento 5
+- **Services**: Documento 6
+- **Storage**: Documentos 8, 15
+- **Nodes**: Documento 20
+
+### Por Função
+- **Criação**: Documentos 2, 3, 7, 9
+- **Troubleshooting**: Documentos 13, 14, 15
+- **Monitoramento**: Documentos 11, 12
+- **Segurança**: Documentos 16, 17, 18
+
+### Por Nível
+- **Básico**: Documentos 1-6
+- **Intermediário**: Documentos 7-12
+- **Avançado**: Documentos 13-22
+- **Expert**: Documentos 23-30
+
+---
+
 ## 📖 Índice de Documentos
 
 ### 🎯 Comandos Essenciais
@@ -169,29 +214,13 @@ Este é um guia abrangente de comandos do OpenShift (OCP) organizado por categor
 
 ---
 
-## 🎓 Como Usar Este Guia
-
-### Para Iniciantes
-Comece pelos documentos essenciais (1-6) para entender os conceitos básicos do OpenShift.
-
-### Para Administradores
-Foque nos documentos de administração avançada (19-22) e troubleshooting (13-15).
-
-### Para DevOps
-Concentre-se em Build/CI/CD (9-10), aplicações (3) e observabilidade (11-12).
-
-### Para Troubleshooting
-Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
-
----
-
 ## 🔍 Busca Rápida por Comando
 
 ### Comandos Mais Usados
 
 ```bash
 # Listar pods com problemas
-oc get pods -A | egrep -v "Running|Completed"
+oc get pods -A | grep -E -v "Running|Completed"
 
 # Aprovar todos os CSRs pendentes
 oc get csr -o name | xargs oc adm certificate approve
@@ -214,29 +243,6 @@ oc get events --field-selector type=Warning
 
 ---
 
-## 📋 Categorias de Comandos
-
-### Por Recurso
-- **Pods**: Documentos 4, 13
-- **Deployments**: Documento 5
-- **Services**: Documento 6
-- **Storage**: Documentos 8, 15
-- **Nodes**: Documento 20
-
-### Por Função
-- **Criação**: Documentos 2, 3, 7, 9
-- **Troubleshooting**: Documentos 13, 14, 15
-- **Monitoramento**: Documentos 11, 12
-- **Segurança**: Documentos 16, 17, 18
-
-### Por Nível
-- **Básico**: Documentos 1-6
-- **Intermediário**: Documentos 7-12
-- **Avançado**: Documentos 13-22
-- **Expert**: Documentos 23-30
-
----
-
 ## 💡 Dicas Gerais
 
 ### Watch Commands
@@ -254,12 +260,6 @@ oc get events --watch
 
 - **Documentação Oficial**: https://docs.redhat.com/en/documentation/openshift_container_platform/
 
----
-
-## ⚠️ Importante
-
-> **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
-> 
 ---
 
 ## 📝 Contribuindo

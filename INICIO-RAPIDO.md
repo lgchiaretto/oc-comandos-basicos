@@ -27,7 +27,7 @@ oc get pods
 oc get all
 
 # Listar pods com problemas
-oc get pods -A | egrep -v "Running|Completed"
+oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ### 3. Debug de Pods
@@ -119,7 +119,7 @@ oc create secret generic test-app --from-literal=key=value
 ```bash
 # Health check completo do cluster
 echo "=== Pods com Problemas ===" && \
-oc get pods -A | egrep -v "Running|Completed" && \
+oc get pods -A | grep -E -v "Running|Completed" && \
 echo "" && \
 echo "=== Cluster Operators ===" && \
 oc get co | grep -v "True.*False.*False" && \
