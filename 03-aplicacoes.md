@@ -38,8 +38,14 @@ oc new-app myregistry.com/myapp:latest
 oc new-app nginx --name=meu-nginx
 ```
 
-```bash ignore-test
+```bash
+# Criar com app do Git usando s2i
+oc new-app https://github.com/lgchiaretto/s2i-chiaretto.git --name=s2i-chiaretto
+```
+
+```bash
 # Exemplo com httpd
+# oc new-app httpd:latest --name=test-app -n <namespace>
 oc new-app httpd:latest --name=test-app -n development
 ```
 
@@ -163,22 +169,26 @@ oc delete all --selector app=test-app
 
 ```bash ignore-test
 # Deletar deployment específico
+# oc delete deployment <deployment-name>
 oc delete deployment test-app
 ```
 
 ### Expor Aplicação
 ```bash ignore-test
 # Expor service como route
+# oc expose service <service-name>
 oc expose service test-app
 ```
 
 ```bash ignore-test
 # Com hostname customizado
+# oc expose service <service-name> --hostname=app.example.com
 oc expose service test-app --hostname=app.example.com
 ```
 
 ```bash
 # Com TLS
+# oc create route <route-name> --service=test-app
 oc create route edge --service=test-app
 ```
 
@@ -194,17 +204,20 @@ oc status
 
 ```bash
 # Status de um projeto específico
+# oc status -n <namespace>
 oc status -n development
 ```
 
 ### Descrever Recursos
 ```bash
 # Descrever deployment
+# oc describe deployment <deployment-name>
 oc describe deployment test-app
 ```
 
 ```bash
 # Descrever deployment em namespace específico
+# oc describe deployment <deployment-name> -n <namespace>
 oc describe deployment test-app -n development
 ```
 
@@ -215,22 +228,26 @@ oc describe deployment test-app -n development
 ### Atualizar Imagem do Deployment
 ```bash
 # Atualizar imagem de um container
+# oc set image <resource-name>/test-app httpd=httpd:2.4 -n <namespace>
 oc set image deployment/test-app httpd=httpd:2.4 -n development
 ```
 
 ```bash ignore-test
 # Atualizar múltiplos containers
+# oc set image <resource-name>/test-app container1=image1:tag container2=image2:tag
 oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ```
 
 ### Patch de Deployment
 ```bash
 # Aplicar patch usando merge
+# oc patch deployment <deployment-name> -n <namespace> --type=merge -p '{"spec":{"replicas":3}}'
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
 # Patch para atualizar imagem
+# oc patch deployment <deployment-name> -n <namespace> --type=merge -p '{
 oc patch deployment test-app -n development --type=merge -p '{
   "spec": {
     "template": {
@@ -257,12 +274,15 @@ oc auth can-i create deployments
 
 ```bash
 # Verificar em namespace específico
+# oc auth can-i create deployments -n <namespace>
 oc auth can-i create deployments -n development
 ```
 
 ```bash
 # Verificar outras ações
+# oc auth can-i delete pods -n <namespace>
 oc auth can-i delete pods -n development
+# oc auth can-i get secrets -n <namespace>
 oc auth can-i get secrets -n development
 ```
 
@@ -283,6 +303,7 @@ oc wait --for=condition=available --timeout=60s deployment/test-app
 
 ```bash
 # Aguardar em namespace específico
+# oc wait --for=condition=available --timeout=60s deployment/test-app -n <namespace>
 oc wait --for=condition=available --timeout=60s deployment/test-app -n development
 ```
 ---

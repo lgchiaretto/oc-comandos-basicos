@@ -20,7 +20,9 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 ```bash ignore-test
 # Quem pode fazer determinada ação
 oc adm policy who-can <verbo> <recurso>
+# oc adm policy <resource-name> get pods
 oc adm policy who-can get pods
+# oc adm policy <resource-name> delete projects
 oc adm policy who-can delete projects
 ```
 
@@ -79,8 +81,11 @@ oc get clusterroles
 
 ```bash
 # Roles importantes
+# oc get clusterrole <role-name> -o yaml
 oc get clusterrole admin -o yaml
+# oc get clusterrole <role-name> -o yaml
 oc get clusterrole edit -o yaml
+# oc get clusterrole <role-name> -o yaml
 oc get clusterrole view -o yaml
 ```
 
@@ -91,6 +96,7 @@ oc describe clusterrole <nome-da-role>
 
 ```bash
 # Ver permissões de uma ClusterRole
+# oc describe clusterrole <role-name> | grep -A 50 PolicyRule
 oc describe clusterrole admin | grep -A 50 PolicyRule
 ```
 
@@ -107,16 +113,19 @@ oc create role test-app --verb=<verbos> --resource=<recursos>
 
 ```bash
 # Exemplo
+# oc create role <role-name> --verb=get,list,watch --resource=pods
 oc create role pod-reader --verb=get,list,watch --resource=pods
 ```
 
 ```bash ignore-test
 # Editar Role
+# oc edit role <role-name>
 oc edit role test-app
 ```
 
 ```bash
 # Deletar Role
+# oc delete role <role-name>
 oc delete role test-app
 ```
 
@@ -172,6 +181,7 @@ oc adm policy remove-role-from-user <role> <username>
 
 ```bash
 # Ver RoleBinding específico
+# oc describe rolebinding <rolebinding-name>
 oc describe rolebinding test-app
 ```
 
@@ -188,26 +198,31 @@ oc get sa
 
 ```bash
 # Criar Service Account
+# oc create serviceaccount <serviceaccount-name>
 oc create serviceaccount test-app
 ```
 
 ```bash
 # Descrever Service Account
+# oc describe sa <serviceaccount-name>
 oc describe sa test-app
 ```
 
 ```bash
 # Ver token da SA
+# oc sa <serviceaccount-name> test-app
 oc sa get-token test-app
 ```
 
 ```bash ignore-test
 # Ver secrets da SA
+# oc get sa <serviceaccount-name> -o jsonpath='{.secrets[*].name}'
 oc get sa test-app -o jsonpath='{.secrets[*].name}'
 ```
 
 ```bash
 # Deletar Service Account
+# oc delete sa <serviceaccount-name>
 oc delete sa test-app
 ```
 
@@ -219,6 +234,7 @@ oc adm policy add-role-to-user <role> system:serviceaccount:<namespace>:<sa-name
 
 ```bash
 # Exemplo: dar role edit
+# oc adm policy <resource-name> <username> system:serviceaccount:myproject:mysa
 oc adm policy add-role-to-user edit system:serviceaccount:myproject:mysa
 ```
 
@@ -234,6 +250,7 @@ oc set serviceaccount deployment/test-app <sa-name>
 
 ```bash
 # Ver qual SA o pod está usando
+# oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 ```
 
@@ -256,16 +273,19 @@ oc get scc anyuid -o yaml
 
 ```bash
 # Descrever SCC
+# oc describe scc <resource-name>
 oc describe scc test-app
 ```
 
 ```bash
 # Ver qual SCC o pod está usando
+# oc get pod <resource-name>app -o yaml | grep scc
 oc get pod test-app -o yaml | grep scc
 ```
 
 ```bash
 # Ver usuários/SAs em uma SCC
+# oc describe scc <resource-name> | grep Users
 oc describe scc test-app | grep Users
 ```
 
@@ -277,7 +297,9 @@ oc adm policy add-scc-to-user <scc-name> system:serviceaccount:<namespace>:<sa-n
 
 ```bash
 # Exemplos comuns
+# oc adm policy <resource-name> <username> system:serviceaccount:myproject:mysa
 oc adm policy add-scc-to-user anyuid system:serviceaccount:myproject:mysa
+# oc adm policy <resource-name> <username> system:serviceaccount:myproject:mysa
 oc adm policy add-scc-to-user privileged system:serviceaccount:myproject:mysa
 ```
 
@@ -299,6 +321,7 @@ oc describe scc <scc-name>
 ### Troubleshoot SCC
 ```bash
 # Ver por que pod não está rodando devido a SCC
+# oc describe pod <resource-name> | grep -i scc
 oc describe pod test-app | grep -i scc
 ```
 
@@ -309,6 +332,7 @@ oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 
 ```bash
 # Verificar capabilities do container
+# oc get pod <resource-name>app -o yaml | grep -A 10 securityContext
 oc get pod test-app -o yaml | grep -A 10 securityContext
 ```
 

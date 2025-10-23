@@ -152,6 +152,7 @@ oc delete pods -l app=test-app
 ### Reiniciar Pods
 ```bash
 # Reiniciar pods de um deployment
+# oc rollout restart <resource-name>/test-app
 oc rollout restart deployment/test-app
 ```
 
@@ -162,10 +163,12 @@ oc delete pod <nome-do-pod>
 
 ```bash
 # Scale down deployment test-app
+# oc scale deployment <deployment-name> --replicas=0
 oc scale deployment test-app --replicas=0
 ```
 ```bash
 # Scale up deployment test-app
+# oc scale deployment <deployment-name> --replicas=2
 oc scale deployment test-app --replicas=2
 ```
 ---

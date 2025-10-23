@@ -56,6 +56,7 @@ oc get networkpolicy
 
 ```bash
 # Descrever policy
+# oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
@@ -66,11 +67,13 @@ oc get networkpolicy -o yaml
 
 ```bash
 # Deletar temporariamente para testar
+# oc delete networkpolicy <resource-name>
 oc delete networkpolicy test-app
 ```
 
 ```bash
 # Verificar se policy está bloqueando
+# oc describe pod <resource-name> | grep -i network
 oc describe pod test-app | grep -i network
 ```
 
@@ -86,16 +89,19 @@ oc get svc
 
 ```bash
 # Detalhes do service
+# oc describe svc <service-name>
 oc describe svc test-app
 ```
 
 ```bash
 # Ver ClusterIP
+# oc get svc <service-name> -o jsonpath='{.spec.clusterIP}'
 oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 ```
 
 ```bash
 # Ver portas
+# oc get svc <service-name> -o jsonpath='{.spec.ports}'
 oc get svc test-app -o jsonpath='{.spec.ports}'
 ```
 
@@ -112,22 +118,26 @@ oc get endpoints
 
 ```bash
 # Endpoints de service específico
+# oc get endpoints <resource-name>
 oc get endpoints test-app
 ```
 
 ```bash ignore-test
 # Verificar se endpoints estão vazios
+# oc get endpoints <resource-name>app -o jsonpath='{.subsets[*].addresses[*].ip}'
 oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
 ```bash ignore-test
 # Comparar labels do service com pods
+# oc get svc <service-name> -o jsonpath='{.spec.selector}'
 oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
 ```
 
 ```bash
 # Se não há endpoints, verificar labels
+# oc describe svc <service-name> | grep Selector
 oc describe svc test-app | grep Selector
 oc get pods --show-labels
 ```
@@ -144,11 +154,13 @@ oc get routes
 
 ```bash
 # Detalhes da route
+# oc describe route <route-name>>
 oc describe route test-app>
 ```
 
 ```bash
 # Ver hostname da route
+# oc get route <route-name> -o jsonpath='{.spec.host}'
 oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
@@ -159,11 +171,13 @@ curl -v https://<hostname-da-route>
 
 ```bash
 # Ver TLS da route
+# oc get route <route-name> -o jsonpath='{.spec.tls}'
 oc get route test-app -o jsonpath='{.spec.tls}'
 ```
 
 ```bash
 # Verificar se route aponta para service correto
+# oc get route <route-name> -o jsonpath='{.spec.to.name}'
 oc get route test-app -o jsonpath='{.spec.to.name}'
 ```
 
@@ -180,6 +194,7 @@ oc get pods -n openshift-ingress
 
 ```bash
 # Logs do router
+# oc logs -n <namespace> -l app=router
 oc logs -n openshift-ingress -l app=router
 ```
 
@@ -195,6 +210,7 @@ oc get ingresscontroller -n openshift-ingress-operator
 
 ```bash
 # Descrever IngressController
+# oc describe ingresscontroller default -n <namespace>
 oc describe ingresscontroller default -n openshift-ingress-operator
 ```
 
@@ -297,6 +313,7 @@ oc exec <pod-name> -- cat /etc/resolv.conf
 
 ```bash
 # Verificar DNS operator
+# oc get clusteroperator <resource-name>
 oc get clusteroperator dns
 ```
 
@@ -313,6 +330,7 @@ oc get pods -n openshift-dns
 
 ```bash ignore-test
 # Restart DNS pods se necessário
+# oc delete pod -n <namespace> --all
 oc delete pod -n openshift-dns --all
 ```
 

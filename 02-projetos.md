@@ -47,6 +47,7 @@ oc get projects --show-labels
 ### Criar Projetos
 ```bash
 # Criar novo projeto
+# oc new-project <project-name>
 oc new-project development
 ```
 
@@ -57,17 +58,20 @@ oc project
 
 ```bash
 # Criar projeto com descrição
+# oc new-project <project-name> --description="Minha descrição" --display-name="Nome de Exibição"
 oc new-project production --description="Minha descrição" --display-name="Nome de Exibição"
 ```
 
 ### Trocar entre Projetos
 ```bash
 # Trocar para outro projeto
+# oc project <project-name>
 oc project development
 ```
 
 ```bash ignore-test
 # Exemplo
+# oc project <project-name>
 oc project production
 ```
 
@@ -83,68 +87,81 @@ oc project
 ### Descrever e Inspecionar
 ```bash
 # Descrever um projeto
+# oc describe project <project-name>
 oc describe project development
 ```
 
 ```bash
 # Ver em YAML
+# oc get project <project-name> -o yaml
 oc get project development -o yaml
 ```
 
 ```bash
 # Ver em JSON
+# oc get project <project-name> -o json
 oc get project development -o json
 ```
 
 ```bash
 # Exportar definição do projeto
+# oc get project <project-name> -o yaml > projeto.yaml
 oc get project development -o yaml > projeto.yaml
 ```
 
 ### Editar Projetos
 ```bash ignore-test
 # Editar projeto
+# oc edit project <project-name>
 oc edit project development
 ```
 
 ```bash
 # Adicionar label
+# oc label namespace <namespace-name> test-validation=true
 oc label namespace development test-validation=true
 ```
 
 ```bash
 # Trocar o valor de uma label existente
+# oc label namespace <namespace-name> test-validation=true --overwrite
 oc label namespace production test-validation=true --overwrite
 ```
 
 ```bash
 # Adicionar annotation
+# oc annotate namespace <namespace-name> description="Meu projeto"
 oc annotate namespace development description="Meu projeto"
 ```
 
 ```bash
 # Remover label
+# oc label namespace <namespace-name> env-
 oc label namespace development env-
 ```
 
 ```bash
 # Patch de projeto
+# oc patch namespace <namespace-name> -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 ```
 
 ### Deletar Projetos
 ```bash ignore-test
 # Deletar um projeto
+# oc delete project <project-name>
 oc delete project development
 ```
 
 ```bash ignore-test
 # Deletar com confirmação
+# oc delete project <project-name> --wait=true
 oc delete project development --wait=true
 ```
 
 ```bash ignore-test
 # Deletar múltiplos projetos
+# oc delete project <project-name> production
 oc delete project development production
 ```
 
@@ -172,17 +189,20 @@ oc new-project <nome> --node-selector="kubernetes.io/hostname=<hostname>"
 
 ```bash ignore-test
 # Exemplo prático
+# oc new-project <project-name> --node-selector='env=production'
 oc new-project production --node-selector='env=production'
 ```
 
 ### Modificar Node Selector Existente
 ```bash
 # Adicionar node selector a projeto existente
+# oc patch namespace <namespace-name> -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'
 ```
 
 ```bash
 # Remover node selector
+# oc patch namespace <namespace-name> -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
 ```
 
@@ -197,6 +217,7 @@ oc label namespace development <key>=<value>
 
 ```bash
 # Adicionar múltiplas labels
+# oc label namespace <namespace-name> env=development validation=true --overwrite
 oc label namespace development env=development validation=true --overwrite
 ```
 
@@ -208,7 +229,8 @@ oc annotate namespace development <key>='<value>'
 
 ```bash
 # Sobrescrever annotation existente
-oc annotate namespace development maintainer='admin-team' --overwrite
+# oc annotate namespace <namespace-name> test-maintainer='test-team' --overwrite
+oc annotate namespace development test-maintainer='test-team' --overwrite
 ```
 
 ### Listar Service Accounts
@@ -240,6 +262,7 @@ vim /tmp/template.yaml
 
 ```bash ignore-test
 # Aplicar template customizado
+# oc create -f /tmp/template.yaml -n <namespace>
 oc create -f /tmp/template.yaml -n openshift-config
 ```
 
@@ -407,6 +430,7 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ### Criar Ambiente Completo
 ```bash ignore-test
 # 1. Criar projeto
+# oc new-project <project-name> \
 oc new-project meu-app-dev \
   --description="Ambiente de desenvolvimento" \
   --display-name="Meu App - DEV"
@@ -414,6 +438,7 @@ oc new-project meu-app-dev \
 
 ```bash ignore-test
 # 2. Adicionar labels
+# oc label project <project-name> env=dev tier=backend team=devops
 oc label project meu-app-dev env=dev tier=backend team=devops
 ```
 
@@ -445,6 +470,7 @@ oc get all -n projeto-origem -o yaml > recursos.yaml
 
 ```bash ignore-test
 # 2. Criar projeto destino
+# oc new-project <project-name>
 oc new-project projeto-destino
 ```
 

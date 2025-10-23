@@ -122,11 +122,13 @@ oc get secret -n openshift-ingress
 
 ```bash
 # Router default certificate
+# oc get secret <secret-name> -n <namespace> -o yaml
 oc get secret router-certs-default -n openshift-ingress -o yaml
 ```
 
 ```bash
 # Ver validade
+# oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 oc get secret router-certs-default -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
@@ -136,6 +138,7 @@ oc create secret tls custom-certs --cert=<cert-file> --key=<key-file> -n openshi
 ```
 
 ```bash
+# oc patch ingresscontroller default -n <namespace> --type=merge -p '{"spec":{"defaultCertificate":{"name":"custom-certs"}}}'
 oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p '{"spec":{"defaultCertificate":{"name":"custom-certs"}}}'
 ```
 
@@ -220,6 +223,7 @@ oc get configmap -n openshift-config-managed
 
 ```bash
 # Ver CA bundle
+# oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 ```
 

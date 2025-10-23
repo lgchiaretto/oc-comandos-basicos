@@ -337,6 +337,7 @@ oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 
 ```bash
 # Limpeza
+# oc delete pod <resource-name>
 oc delete pod backup-pod
 ```
 

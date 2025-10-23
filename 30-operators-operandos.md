@@ -38,8 +38,11 @@ oc get pods -n openshift-operator-lifecycle-manager -l app=packageserver
 
 ```bash
 # Status do OLM
+# oc get clusteroperator <resource-name>
 oc get clusteroperator operator-lifecycle-manager
+# oc get clusteroperator <resource-name>
 oc get clusteroperator operator-lifecycle-manager-catalog
+# oc get clusteroperator <resource-name>
 oc get clusteroperator operator-lifecycle-manager-packageserver
 ```
 
@@ -51,19 +54,25 @@ oc get catalogsources -n openshift-marketplace
 
 ```bash
 # Principais catalogs
+# oc get catalogsource <resource-name>operators -n <namespace>
 oc get catalogsource redhat-operators -n openshift-marketplace
+# oc get catalogsource <resource-name>operators -n <namespace>
 oc get catalogsource certified-operators -n openshift-marketplace
+# oc get catalogsource <resource-name>operators -n <namespace>
 oc get catalogsource community-operators -n openshift-marketplace
+# oc get catalogsource <resource-name>marketplace -n <namespace>
 oc get catalogsource redhat-marketplace -n openshift-marketplace
 ```
 
 ```bash
 # Descrever catalog
+# oc describe catalogsource <resource-name>operators -n <namespace>
 oc describe catalogsource redhat-operators -n openshift-marketplace
 ```
 
 ```bash
 # Ver imagem do catalog
+# oc get catalogsource <resource-name>operators -n <namespace> -o jsonpath='{.spec.image}'
 oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
 ```
 
@@ -85,21 +94,25 @@ oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 
 ```bash
 # Descrever packagemanifest
+# oc describe packagemanifest <resource-name>operator -n <namespace>
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
 ```
 
 ```bash ignore-test
 # Ver channels disponíveis
+# oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[*].name}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
 ```
 
 ```bash ignore-test
 # Ver versão do channel
+# oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 ```
 
 ```bash
 # Ver default channel
+# oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.defaultChannel}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
 ```
 
@@ -163,6 +176,7 @@ oc get pods -n <operator-namespace>
 ### Exemplo: Elasticsearch Operator
 ```bash
 # Criar namespace
+# oc create namespace <namespace-name>
 oc create namespace openshift-operators-redhat
 ```
 
@@ -279,16 +293,19 @@ oc get crd | grep elasticsearch
 
 ```bash
 # Descrever CRD
+# oc describe crd <resource-name>.operator.openshift.io
 oc describe crd ingresscontrollers.operator.openshift.io
 ```
 
 ```bash
 # Ver spec do CRD
+# oc get crd <resource-name>.operator.openshift.io -o yaml
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
 ```
 
 ```bash ignore-test
 # Ver versões suportadas
+# oc get crd <resource-name>.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 ```
 
@@ -322,6 +339,7 @@ EOF
 ```bash
 # Verificar CR
 oc get elasticsearch -n openshift-logging
+# oc describe elasticsearch elasticsearch -n <namespace>
 oc describe elasticsearch elasticsearch -n openshift-logging
 ```
 
@@ -485,7 +503,9 @@ oc describe installplan <plan> -n <namespace>
 
 ```bash
 # Logs do OLM
+# oc logs -n <namespace> deployment/olm-operator
 oc logs -n openshift-operator-lifecycle-manager deployment/olm-operator
+# oc logs -n <namespace> deployment/catalog-operator
 oc logs -n openshift-operator-lifecycle-manager deployment/catalog-operator
 ```
 

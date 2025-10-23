@@ -23,6 +23,7 @@ oc get clusterversion
 
 ```bash
 # Detalhes da versão
+# oc describe clusterversion <resource-name>
 oc describe clusterversion version
 ```
 

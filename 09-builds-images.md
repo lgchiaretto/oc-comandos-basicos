@@ -22,20 +22,10 @@ oc get buildconfig
 oc get bc
 ```
 
-```bash ignore-test
+```bash
 # Descrever BuildConfig
-oc describe bc <nome-do-bc>
-```
-
-```bash ignore-test
-# Criar build a partir de código Git
-oc new-build <url-do-git>
-```
-
-```bash ignore-test
-# Com estratégia específica
-oc new-build <url-do-git> --strategy=docker
-oc new-build <url-do-git> --strategy=source
+# oc describe bc <buildconfig-name>
+oc describe bc s2i-chiaretto
 ```
 
 ```bash ignore-test
@@ -48,26 +38,30 @@ oc edit bc <nome-do-bc>
 oc delete bc <nome-do-bc>
 ```
 
-```bash ignore-test
+```bash
 # Ver logs do último build
-oc logs -f bc/<nome-do-bc>
+oc logs -f bc/s2i-chiaretto
 ```
 
 ### Triggers
 ```bash
 # Adicionar webhook trigger
-oc set triggers bc/test-app --from-github
-oc set triggers bc/test-app --from-webhook
+# oc set triggers <resource-name>/s2i-chiaretto --from-github
+oc set triggers bc/s2i-chiaretto --from-github
+# oc set triggers <resource-name>/s2i-chiaretto --from-webhook
+oc set triggers bc/s2i-chiaretto --from-webhook
 ```
 
 ```bash
 # Remover triggers
-oc set triggers bc/test-app --remove-all
+# oc set triggers <resource-name>/s2i-chiaretto --remove-all
+oc set triggers bc/s2i-chiaretto --remove-all
 ```
 
 ```bash
 # Ver triggers
-oc describe bc test-app | grep Triggered
+# oc describe bc <buildconfig-name> | grep Triggered
+oc describe bc s2i-chiaretto | grep Triggered
 ```
 
 ---
@@ -75,9 +69,9 @@ oc describe bc test-app | grep Triggered
 ## 🏭 Builds
 
 ### Executar e Monitorar
-```bash ignore-test
+```bash
 # Iniciar novo build
-oc start-build <nome-do-bc>
+oc start-build s2i-chiaretto
 ```
 
 ```bash ignore-test
@@ -97,23 +91,25 @@ oc get builds
 
 ```bash ignore-test
 # Ver status de build específico
-oc get build <nome-do-build>
+# oc get build <build-name>
+oc get build s2i-chiaretto-2
 ```
 
-```bash ignore-test
+```bash
 # Ver logs do build
-oc logs build/<nome-do-build>
-oc logs -f build/<nome-do-build>
+oc logs build/s2i-chiaretto-2-build
 ```
 
 ```bash ignore-test
 # Cancelar build em execução
-oc cancel-build <nome-do-build>
+# oc cancel-build <build-name>
+oc cancel-build s2i-chiaretto-2
 ```
 
 ```bash ignore-test
 # Deletar build
-oc delete build <nome-do-build>
+# oc delete build <build-name>
+oc delete build s2i-chiaretto-2
 ```
 
 ```bash
@@ -124,74 +120,52 @@ oc get builds --sort-by=.metadata.creationTimestamp
 
 ## 🔧 Gerenciamento de Builds
 
-
-### Criar BuildConfig
-```bash
-# Criar BuildConfig binário
-oc new-build --name=test-app --binary
-```
-
-```bash
-# Em namespace específico
-oc new-build --name=test-app --binary -n development
-```
-
-```bash
-# Exemplo prático
-oc new-build --name=test-build --binary -n development
-```
 ### Cancelar Build
 ```bash ignore-test
 # Cancelar build em execução
-oc cancel-build <nome-do-build>
+# oc cancel-build <build-name>
+oc cancel-build s2i-chiaretto-2
 ```
 
 ```bash
 # Em namespace específico
-oc cancel-build test-app -n development
-```
-
-```bash
-# Exemplo prático
-oc cancel-build test-app-1 -n development
+# oc cancel-build s2i-chiaretto -n <namespace>
+oc cancel-build s2i-chiaretto -n development
 ```
 
 ### Logs de BuildConfig
 ```bash
 # Ver logs de builds por label buildconfig
-oc logs -l buildconfig=test-app
+oc logs -l buildconfig=s2i-chiaretto
 ```
 
 ```bash
 # Com limite de linhas
-oc logs -l buildconfig=test-app --tail=20
+oc logs -l buildconfig=s2i-chiaretto --tail=20
 ```
 
 ```bash
 # Em namespace específico
-oc logs -n development -l buildconfig=test-app --tail=20
-```
-
-```bash
-# Exemplo prático
-oc logs -n development -l buildconfig=test-app --tail=20
+# oc logs -n <namespace> -l buildconfig=s2i-chiaretto --tail=20
+oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 ```
 
 
 ### Debug de Builds
 ```bash ignore-test
 # Ver por que build falhou
-oc describe build <nome-do-build>
+# oc describe build <build-name>
+oc describe build s2i-chiaretto-2
 ```
 
 ```bash ignore-test
 # Ver eventos relacionados ao build
-oc get events --field-selector involvedObject.name=<nome-do-build>
+oc get events --field-selector involvedObject.name=s2i-chiaretto-2
 ```
 
 ```bash ignore-test
 # Tentar build novamente
-oc start-build --from-build=<nome-do-build>
+oc start-build --from-build=s2i-chiaretto-2
 ```
 
 ---
@@ -205,34 +179,39 @@ oc get imagestream
 oc get is
 ```
 
-```bash ignore-test
+```bash
 # Descrever ImageStream
-oc describe is <nome-do-is>
-```
-
-```bash ignore-test
-# Ver tags disponíveis
-oc get is <nome-do-is> -o jsonpath='{.spec.tags[*].name}'
+# oc describe is <imagestream-name>
+oc describe is s2i-chiaretto
 ```
 
 ```bash
+# Ver tags disponíveis
+# oc get is <imagestream-name> -o jsonpath='{.spec.tags[*].name}'
+oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
+```
+
+```bash ignore-test
 # Criar ImageStream
-oc create imagestream test-app
+# oc create imagestream <imagestream-name>
+oc create imagestream s2i-chiaretto
 ```
 
 ```bash ignore-test
 # Importar imagem externa
-oc import-image test-app --from=<registry>/<image>:<tag> --confirm
+oc import-image s2i-chiaretto --from=<registry>/<image>:<tag> --confirm
 ```
 
 ```bash ignore-test
 # Deletar ImageStream
-oc delete is <nome-do-is>
+# oc delete is <imagestream-name>
+oc delete is s2i-chiaretto
 ```
 
 ```bash ignore-test
 # Ver SHA da imagem
-oc get is test-app -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
+# oc get is <imagestream-name> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
+oc get is s2i-chiaretto -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 ```
 
 ### ImageStreamTags
@@ -242,9 +221,10 @@ oc get imagestreamtag
 oc get istag
 ```
 
-```bash ignore-test
+```bash
 # Ver detalhes de tag específica
-oc describe istag <nome-do-is>:<tag>
+# oc describe istag <istag-name>:<tag>
+oc describe istag s2i-chiaretto:latest
 ```
 
 ```bash ignore-test
@@ -259,7 +239,7 @@ oc tag <external-image> <is>:<tag>
 
 ```bash ignore-test
 # Deletar tag
-oc delete istag <nome-do-is>:<tag>
+oc delete istag s2i-chiaretto:<tag>
 ```
 
 ---

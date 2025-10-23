@@ -86,6 +86,7 @@ oc delete pvc <nome-do-pvc>
 ### Usando em Deployments
 ```bash ignore-test
 # Adicionar volume PVC a deployment
+# oc set volume <resource-name>/test-app \
 oc set volume deployment/test-app \
   --add --name=<volume-name> \
   --type=persistentVolumeClaim \
@@ -129,16 +130,19 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ### Tipos de Volumes
 ```bash
 # EmptyDir
+# oc set volume <resource-name>/test-app --add --name=tmp --type=emptyDir --mount-path=/tmp
 oc set volume deployment/test-app --add --name=tmp --type=emptyDir --mount-path=/tmp
 ```
 
 ```bash
 # HostPath (requer privilégios)
+# oc set volume <resource-name>/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 ```
 
 ```bash
 # Listar volumes de um deployment
+# oc set volume <resource-name>/test-app
 oc set volume deployment/test-app
 ```
 

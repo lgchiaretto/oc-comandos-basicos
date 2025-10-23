@@ -18,16 +18,19 @@ Este documento contém comandos para editar e fazer patch em recursos do OpenShi
 ### Edit Básico
 ```bash ignore-test
 # Editar deployment
+# oc edit deployment <deployment-name>
 oc edit deployment test-app
 ```
 
 ```bash ignore-test
 # Editar service
+# oc edit svc <service-name>
 oc edit svc test-app
 ```
 
 ```bash ignore-test
 # Editar configmap
+# oc edit cm <configmap-name>
 oc edit cm test-app
 ```
 
@@ -45,6 +48,7 @@ oc edit deployment test-app -n <namespace>
 ### Edit em Arquivo Temporário
 ```bash
 # Export, edit, apply
+# oc get deployment <deployment-name> -o yaml > /tmp/deploy.yaml
 oc get deployment test-app -o yaml > /tmp/deploy.yaml
 vi /tmp/deploy.yaml
 oc apply -f /tmp/deploy.yaml
@@ -69,21 +73,25 @@ oc replace -f /tmp/deploy.yaml --force
 #### Strategic Merge Patch
 ```bash
 # Patch deployment replicas
+# oc patch deployment <deployment-name> -p '{"spec":{"replicas":3}}'
 oc patch deployment test-app -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
 # Patch com type explicit
+# oc patch deployment <deployment-name> --type merge -p '{"spec":{"replicas":3}}'
 oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
 # Adicionar label
+# oc patch deployment <deployment-name> -p '{"metadata":{"labels":{"env":"production"}}}'
 oc patch deployment test-app -p '{"metadata":{"labels":{"env":"production"}}}'
 ```
 
 ```bash
 # Adicionar annotation
+# oc patch deployment <deployment-name> -p '{"metadata":{"annotations":{"description":"My app"}}}'
 oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My app"}}}'
 ```
 
@@ -94,6 +102,7 @@ oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"na
 
 ```bash
 # Múltiplos campos
+# oc patch deployment <deployment-name> --type merge -p '
 oc patch deployment test-app --type merge -p '
 {
   "spec": {
@@ -118,21 +127,25 @@ oc patch deployment test-app --type merge -p '
 #### JSON Patch
 ```bash ignore-test
 # Adicionar elemento a array
+# oc patch deployment <deployment-name> --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NEW_VAR","value":"new_value"}}]'
 oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NEW_VAR","value":"new_value"}}]'
 ```
 
 ```bash ignore-test
 # Remover elemento
+# oc patch deployment <deployment-name> --type json -p='[{"op":"remove","path":"/spec/template/spec/containers/0/env/0"}]'
 oc patch deployment test-app --type json -p='[{"op":"remove","path":"/spec/template/spec/containers/0/env/0"}]'
 ```
 
 ```bash ignore-test
 # Replace elemento
+# oc patch deployment <deployment-name> --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
 oc patch deployment test-app --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
 ```
 
 ```bash
 # Múltiplas operações
+# oc patch deployment <deployment-name> --type json -p='[
 oc patch deployment test-app --type json -p='[
   {"op":"replace","path":"/spec/replicas","value":3},
   {"op":"add","path":"/metadata/labels/team","value":"backend"}
@@ -142,11 +155,13 @@ oc patch deployment test-app --type json -p='[
 #### JSON Merge Patch
 ```bash
 # Merge simples (sobrescreve)
+# oc patch deployment <deployment-name> --type merge -p '{"spec":{"replicas":3}}'
 oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
 # Remover campo (set to null)
+# oc patch deployment <deployment-name> --type merge -p '{"metadata":{"annotations":{"old-annotation":null}}}'
 oc patch deployment test-app --type merge -p '{"metadata":{"annotations":{"old-annotation":null}}}'
 ```
 
@@ -155,11 +170,13 @@ oc patch deployment test-app --type merge -p '{"metadata":{"annotations":{"old-a
 #### Deployments
 ```bash
 # Replicas
+# oc patch deployment <deployment-name> -p '{"spec":{"replicas":5}}'
 oc patch deployment test-app -p '{"spec":{"replicas":5}}'
 ```
 
 ```bash
 # Strategy
+# oc patch deployment <deployment-name> -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
 oc patch deployment test-app -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
 ```
 
@@ -170,70 +187,83 @@ oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"na
 
 ```bash ignore-test
 # Resources
+# oc patch deployment <deployment-name> -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
 ```
 
 ```bash ignore-test
 # Environment variable
+# oc patch deployment <deployment-name> --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"LOG_LEVEL","value":"debug"}}]'
 oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"LOG_LEVEL","value":"debug"}}]'
 ```
 
 #### Services
 ```bash ignore-test
 # Port
+# oc patch svc <service-name> -p '{"spec":{"ports":[{"port":8080,"targetPort":8080}]}}'
 oc patch svc test-app -p '{"spec":{"ports":[{"port":8080,"targetPort":8080}]}}'
 ```
 
 ```bash
 # Type
+# oc patch svc <service-name> -p '{"spec":{"type":"NodePort"}}'
 oc patch svc test-app -p '{"spec":{"type":"NodePort"}}'
 ```
 
 ```bash
 # Selector
+# oc patch svc <service-name> -p '{"spec":{"selector":{"app":"new-app"}}}'
 oc patch svc test-app -p '{"spec":{"selector":{"app":"new-app"}}}'
 ```
 
 #### ConfigMaps
 ```bash
 # Atualizar data
+# oc patch cm <configmap-name> -p '{"data":{"key1":"new-value"}}'
 oc patch cm test-app -p '{"data":{"key1":"new-value"}}'
 ```
 
 ```bash
 # Adicionar nova chave
+# oc patch cm <configmap-name> --type merge -p '{"data":{"new-key":"new-value"}}'
 oc patch cm test-app --type merge -p '{"data":{"new-key":"new-value"}}'
 ```
 
 ```bash ignore-test
 # Remover chave
+# oc patch cm <configmap-name> --type json -p='[{"op":"remove","path":"/data/old-key"}]'
 oc patch cm test-app --type json -p='[{"op":"remove","path":"/data/old-key"}]'
 ```
 
 #### Routes
 ```bash
 # Mudar host
+# oc patch route <route-name> -p '{"spec":{"host":"new-hostname.example.com"}}'
 oc patch route test-app -p '{"spec":{"host":"new-hostname.example.com"}}'
 ```
 
 ```bash
 # Adicionar TLS
+# oc patch route <route-name> -p '{"spec":{"tls":{"termination":"edge"}}}'
 oc patch route test-app -p '{"spec":{"tls":{"termination":"edge"}}}'
 ```
 
 ```bash
 # Mudar service target
+# oc patch route <route-name> -p '{"spec":{"to":{"name":"new-service"}}}'
 oc patch route test-app -p '{"spec":{"to":{"name":"new-service"}}}'
 ```
 
 #### HPA
 ```bash
 # Min/Max replicas
+# oc patch hpa <resource-name>app -p '{"spec":{"minReplicas":2,"maxReplicas":10}}'
 oc patch hpa test-app -p '{"spec":{"minReplicas":2,"maxReplicas":10}}'
 ```
 
 ```bash
 # Target CPU
+# oc patch hpa <resource-name>app -p '{"spec":{"targetCPUUtilizationPercentage":70}}'
 oc patch hpa test-app -p '{"spec":{"targetCPUUtilizationPercentage":70}}'
 ```
 
@@ -270,11 +300,13 @@ oc set image deployment/test-app <container-name>=<new-image>:<tag>
 
 ```bash
 # Exemplo
+# oc set image <resource-name>/myapp myapp=myapp:v2.0
 oc set image deployment/myapp myapp=myapp:v2.0
 ```
 
 ```bash
 # Múltiplos containers
+# oc set image <resource-name>/test-app container1=image1:v2 container2=image2:v2
 oc set image deployment/test-app container1=image1:v2 container2=image2:v2
 ```
 
@@ -291,16 +323,19 @@ oc get deployment/test-app -o jsonpath='{.spec.template.spec.containers[0].image
 ### Set Resources
 ```bash
 # Requests e limits
+# oc set resources <resource-name>/test-app --limits=cpu=500m,memory=512Mi --requests=cpu=250m,memory=256Mi
 oc set resources deployment/test-app --limits=cpu=500m,memory=512Mi --requests=cpu=250m,memory=256Mi
 ```
 
 ```bash
 # Apenas limits
+# oc set resources <resource-name>/test-app --limits=cpu=1,memory=1Gi
 oc set resources deployment/test-app --limits=cpu=1,memory=1Gi
 ```
 
 ```bash
 # Apenas requests
+# oc set resources <resource-name>/test-app --requests=cpu=100m,memory=128Mi
 oc set resources deployment/test-app --requests=cpu=100m,memory=128Mi
 ```
 
@@ -311,17 +346,20 @@ oc set resources deployment/test-app -c=<container-name> --limits=cpu=200m,memor
 
 ```bash
 # Remover limits
+# oc set resources <resource-name>/test-app --limits=cpu=0,memory=0
 oc set resources deployment/test-app --limits=cpu=0,memory=0
 ```
 
 ### Set Env
 ```bash
 # Adicionar variável
+# oc set env <resource-name>/test-app KEY=value
 oc set env deployment/test-app KEY=value
 ```
 
 ```bash
 # Múltiplas variáveis
+# oc set env <resource-name>/test-app KEY1=value1 KEY2=value2
 oc set env deployment/test-app KEY1=value1 KEY2=value2
 ```
 
@@ -342,11 +380,13 @@ oc set env deployment/test-app KEY --from=configmap/<cm-name> --keys=specific-ke
 
 ```bash
 # Remover variável
+# oc set env <resource-name>/test-app KEY-
 oc set env deployment/test-app KEY-
 ```
 
 ```bash
 # Listar variáveis
+# oc set env <resource-name>/test-app --list
 oc set env deployment/test-app --list
 ```
 
@@ -368,6 +408,7 @@ oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeC
 
 ```bash
 # EmptyDir
+# oc set volume <resource-name>/test-app --add --name=tmp-vol --type=emptyDir --mount-path=/tmp
 oc set volume deployment/test-app --add --name=tmp-vol --type=emptyDir --mount-path=/tmp
 ```
 
@@ -378,33 +419,40 @@ oc set volume deployment/test-app --remove --name=<volume-name>
 
 ```bash
 # Listar volumes
+# oc set volume <resource-name>/test-app
 oc set volume deployment/test-app
 ```
 
 ### Set Probe
 ```bash
 # Liveness probe
+# oc set probe <resource-name>/test-app --liveness --get-url=http://:8080/health --initial-delay-seconds=30
 oc set probe deployment/test-app --liveness --get-url=http://:8080/health --initial-delay-seconds=30
 ```
 
 ```bash
 # Readiness probe
+# oc set probe <resource-name>/test-app --readiness --get-url=http://:8080/ready --period-seconds=10
 oc set probe deployment/test-app --readiness --get-url=http://:8080/ready --period-seconds=10
 ```
 
 ```bash
 # TCP probe
+# oc set probe <resource-name>/test-app --liveness --open-tcp=8080 --timeout-seconds=1
 oc set probe deployment/test-app --liveness --open-tcp=8080 --timeout-seconds=1
 ```
 
 ```bash
 # Exec probe
+# oc set probe <resource-name>/test-app --liveness --exec -- cat /tmp/healthy
 oc set probe deployment/test-app --liveness --exec -- cat /tmp/healthy
 ```
 
 ```bash
 # Remover probe
+# oc set probe <resource-name>/test-app --liveness --remove
 oc set probe deployment/test-app --liveness --remove
+# oc set probe <resource-name>/test-app --readiness --remove
 oc set probe deployment/test-app --readiness --remove
 ```
 
@@ -416,17 +464,20 @@ oc set serviceaccount deployment/test-app <sa-name>
 
 ```bash
 # Exemplo
+# oc set serviceaccount <serviceaccount-name>/myapp mysa
 oc set serviceaccount deployment/myapp mysa
 ```
 
 ### Set Selector
 ```bash
 # Service selector
+# oc set selector <resource-name>/test-app app=myapp,tier=frontend
 oc set selector svc/test-app app=myapp,tier=frontend
 ```
 
 ```bash
 # Overwrite
+# oc set selector <resource-name>/test-app app=newapp --overwrite
 oc set selector svc/test-app app=newapp --overwrite
 ```
 

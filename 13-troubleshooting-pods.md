@@ -125,7 +125,9 @@ oc get pod <nome-do-pod> -o yaml | grep -A 10 livenessProbe
 
 ```bash
 # Desabilitar probes temporariamente
+# oc set probe <resource-name>/test-app --liveness --remove
 oc set probe deployment/test-app --liveness --remove
+# oc set probe <resource-name>/test-app --readiness --remove
 oc set probe deployment/test-app --readiness --remove
 ```
 
@@ -147,6 +149,7 @@ oc get pod <nome-do-pod> -o yaml | grep -A 5 resources
 
 ```bash
 # Ver capacidade dos nodes
+# oc adm top <resource-name>
 oc adm top nodes
 ```
 
@@ -178,6 +181,7 @@ oc adm top pod <nome-do-pod>
 
 ```bash
 # Aumentar limite de memória
+# oc set resources <resource-name>/test-app --limits=memory=2Gi
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
@@ -304,16 +308,19 @@ oc exec <nome-do-pod> -- ls -la /mount/path
 ### ConfigMaps e Secrets
 ```bash
 # Verificar ConfigMap montado
+# oc get cm <configmap-name> -o yaml
 oc get cm test-app -o yaml
 ```
 
 ```bash
 # Verificar Secret
+# oc get secret <secret-name> -o yaml
 oc get secret test-app -o yaml
 ```
 
 ```bash
 # Ver variáveis de ambiente
+# oc set env <resource-name>/test-app --list
 oc set env pod/test-app --list
 ```
 
@@ -330,6 +337,7 @@ oc get svc
 
 ```bash
 # Endpoints do service
+# oc get endpoints <resource-name>
 oc get endpoints test-app
 ```
 

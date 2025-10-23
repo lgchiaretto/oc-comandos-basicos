@@ -19,11 +19,13 @@ Este documento contém comandos para formatar e extrair informações específic
 ### Básico
 ```bash
 # Extrair campo específico
+# oc get pod <resource-name>app -o jsonpath='{.metadata.name}'
 oc get pod test-app -o jsonpath='{.metadata.name}'
 ```
 
 ```bash
 # Múltiplos campos
+# oc get pod <resource-name>app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 ```
 
@@ -39,11 +41,13 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 
 ```bash ignore-test
 # Campo nested
+# oc get pod <resource-name>app -o jsonpath='{.spec.containers[0].image}'
 oc get pod test-app -o jsonpath='{.spec.containers[0].image}'
 ```
 
 ```bash ignore-test
 # Todos os containers
+# oc get pod <resource-name>app -o jsonpath='{.spec.containers[*].name}'
 oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 ```
 
@@ -315,11 +319,13 @@ oc get pods -o wide
 
 ```bash
 # YAML
+# oc get pod <resource-name>app -o yaml
 oc get pod test-app -o yaml
 ```
 
 ```bash
 # JSON
+# oc get pod <resource-name>app -o json
 oc get pod test-app -o json
 ```
 

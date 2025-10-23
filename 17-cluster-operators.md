@@ -55,21 +55,25 @@ oc describe co <nome-do-operator>
 
 ```bash ignore-test
 # Ver condições
+# oc get co <resource-name>app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 oc get co test-app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 ```
 
 ```bash ignore-test
 # Ver mensagem de erro
+# oc get co <resource-name>app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 oc get co test-app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
 ```bash ignore-test
 # Ver versão
+# oc get co <resource-name>app -o jsonpath='{.status.versions[0].version}'
 oc get co test-app -o jsonpath='{.status.versions[0].version}'
 ```
 
 ```bash
 # Ver related objects
+# oc get co <resource-name>app -o jsonpath='{.status.relatedObjects}'
 oc get co test-app -o jsonpath='{.status.relatedObjects}'
 ```
 
@@ -80,6 +84,7 @@ oc get co test-app -o jsonpath='{.status.relatedObjects}'
 ### Diagnosticar Problemas
 ```bash ignore-test
 # Ver pods do operator
+# oc get co <resource-name>app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 oc get co test-app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 ```
 
@@ -138,6 +143,7 @@ find . -name "*operator*" -type d
 ### Authentication Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co authentication
 ```
 
@@ -159,6 +165,7 @@ oc logs -n openshift-authentication-operator <pod-name>
 ### Ingress Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co ingress
 ```
 
@@ -174,17 +181,20 @@ oc get pods -n openshift-ingress
 
 ```bash
 # Logs do router
+# oc logs -n <namespace> -l app=router
 oc logs -n openshift-ingress -l app=router
 ```
 
 ```bash
 # Configuração
+# oc describe ingresscontroller default -n <namespace>
 oc describe ingresscontroller default -n openshift-ingress-operator
 ```
 
 ### Network Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co network
 ```
 
@@ -211,6 +221,7 @@ oc logs -n openshift-network-operator <pod-name>
 ### DNS Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co dns
 ```
 
@@ -232,6 +243,7 @@ oc logs -n openshift-dns <dns-pod>
 ### Image Registry Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co image-registry
 ```
 
@@ -253,6 +265,7 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.s
 ### Storage Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co storage
 ```
 
@@ -274,6 +287,7 @@ oc get sc
 ### Monitoring Operator
 ```bash
 # Status
+# oc get co <resource-name>
 oc get co monitoring
 ```
 
@@ -284,6 +298,7 @@ oc get pods -n openshift-monitoring
 
 ```bash
 # Configuração
+# oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
@@ -345,6 +360,7 @@ oc get packagemanifests -n openshift-marketplace | grep test-app
 
 ```bash
 # Ver channels disponíveis
+# oc describe packagemanifest <resource-name>app -n <namespace>
 oc describe packagemanifest test-app -n openshift-marketplace
 ```
 

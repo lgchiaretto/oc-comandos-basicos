@@ -126,6 +126,7 @@ oc get events
 ### Uso de Recursos
 ```bash
 # Top nodes (CPU e memória)
+# oc adm top <resource-name>
 oc adm top nodes
 ```
 
@@ -136,6 +137,7 @@ oc adm top nodes --selector=<label>
 
 ```bash
 # Top pods
+# oc adm top <resource-name>
 oc adm top pods
 ```
 
@@ -192,6 +194,7 @@ oc get prometheusrule -A
 
 ```bash
 # Ver configuração do Prometheus
+# oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
@@ -217,6 +220,7 @@ EOF
 
 ```bash
 # Ver status do monitoring
+# oc get clusteroperator <resource-name>
 oc get clusteroperator monitoring
 ```
 

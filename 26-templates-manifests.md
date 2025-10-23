@@ -332,28 +332,34 @@ parameters:
 ### Export de Recursos
 ```bash
 # Export pod
+# oc get pod <resource-name>app -o yaml --export > pod.yaml
 oc get pod test-app -o yaml --export > pod.yaml
 # Nota: --export está deprecated, use:
+# oc get pod <resource-name>app -o yaml > pod.yaml
 oc get pod test-app -o yaml > pod.yaml
 ```
 
 ```bash
 # Limpar metadata desnecessário com yq
+# oc get pod <resource-name>app -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
 oc get pod test-app -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
 ```
 
 ```bash
 # Export deployment
+# oc get deployment <deployment-name> -o yaml > deployment.yaml
 oc get deployment test-app -o yaml > deployment.yaml
 ```
 
 ```bash
 # Export service
+# oc get svc <service-name> -o yaml > service.yaml
 oc get svc test-app -o yaml > service.yaml
 ```
 
 ```bash
 # Export route
+# oc get route <route-name> -o yaml > route.yaml
 oc get route test-app -o yaml > route.yaml
 ```
 
@@ -366,6 +372,7 @@ oc get deployments -o yaml > all-deployments.yaml
 ```bash
 # Export como template
 oc get deployment,svc,route -l app=myapp -o yaml | \
+# oc create template <resource-name>template --dry-run=client -o yaml > myapp-template.yaml
 oc create template myapp-template --dry-run=client -o yaml > myapp-template.yaml
 ```
 
@@ -384,6 +391,7 @@ EOF
 # Adicionar recursos exportados
 oc get deployment myapp -o yaml | sed 's/^/  /' >> app-template.yaml
 echo "---" >> app-template.yaml
+# oc get svc <service-name> -o yaml | sed 's/^/  /' >> app-template.yaml
 oc get svc myapp -o yaml | sed 's/^/  /' >> app-template.yaml
 ```
 

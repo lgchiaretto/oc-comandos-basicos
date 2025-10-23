@@ -18,6 +18,7 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ### Criar Jobs
 ```bash
 # Job simples
+# oc create job <job-name> --image=busybox -- echo "Hello World"
 oc create job my-job --image=busybox -- echo "Hello World"
 ```
 
@@ -118,6 +119,7 @@ EOF
 
 ```bash
 # Monitorar
+# oc get job <job-name>
 oc get job parallel-job
 oc get pods -l job-name=parallel-job
 ```
@@ -149,6 +151,7 @@ EOF
 ### Criar CronJobs
 ```bash
 # CronJob simples
+# oc create cronjob <job-name> --image=busybox --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 oc create cronjob my-cronjob --image=busybox --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 ```
 

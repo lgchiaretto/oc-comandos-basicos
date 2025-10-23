@@ -134,27 +134,32 @@ oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ### Análise de Applications (ArgoCD)
 ```bash
 # Ver status de sync do ArgoCD app
+# oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions}' | jq .
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions}' | jq .
 ```
 
 ```bash
 # Ver sync policy
+# oc get application <resource-name>hml -n <namespace> -o jsonpath='{.spec.syncPolicy}' | jq
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.spec.syncPolicy}' | jq
 ```
 
 ```bash ignore-test
 # Listar recursos de uma aplicação
+# oc get application <resource-name>dev -n <namespace> -o json | jq '.status.resources[] | select(.kind == "Pod")'
 oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.resources[] | select(.kind == "Pod")'
 ```
 
 ### Análise de ClusterLogForwarder
 ```bash ignore-test
 # Ver condições do log forwarder
+# oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 ```
 
 ```bash
 # Ver filter conditions
+# oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.filterConditions}' | jq '.'
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.filterConditions}' | jq '.'
 ```
 
@@ -247,33 +252,39 @@ oc get all -o yaml | grep 5000
 ### Busca em AdminNetworkPolicy
 ```bash
 # Ver regras de ingress
+# oc get adminnetworkpolicy <resource-name>communication -o yaml | grep -A 30 "ingress:" | head -40
 oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 30 "ingress:" | head -40
 ```
 
 ### Análise de ArgoCD
 ```bash
 # Ver source da aplicação
+# oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 10 source
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
 ```
 
 ```bash
 # Ver destination
+# oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 5 destination
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
 ```
 
 ```bash
 # Ver sync policy
+# oc get application <resource-name>hml -n <namespace> -o yaml | grep -A 5 -B 5 sync
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A 5 -B 5 sync
 ```
 
 ```bash
 # Ver mensagens de erro
+# oc get application <resource-name>dev -n <namespace> -o yaml | grep -A 20 -B 5 "message"
 oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 5 "message"
 ```
 
 ### Filtros em CatalogSource
 ```bash
 # Ver status do catalog source
+# oc get catalogsource <resource-name>operators -n <namespace> -o yaml | grep -A 10 status:
 oc get catalogsource certified-operators -n openshift-marketplace -o yaml | grep -A 10 status:
 ```
 
@@ -289,16 +300,19 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 ### Análise de API Requests
 ```bash ignore-test
 # Ver API requests com formatação
+# oc get apirequestcounts <resource-name>.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 ```bash ignore-test
 # Para networking ingresses
+# oc get apirequestcounts <resource-name>.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 ```bash ignore-test
 # Para roles RBAC
+# oc get apirequestcounts <resource-name>.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
@@ -327,16 +341,19 @@ oc get application -A -o yaml | sed '/status:/d'
 ### Verificações Condicionais
 ```bash
 # Verificar se aplicação existe
+# oc get applications.argoproj.io -n <namespace>  || echo "No applications found"
 oc get applications.argoproj.io -n openshift-gitops  || echo "No applications found"
 ```
 
 ```bash
 # Verificar health status com fallback
+# oc get application <resource-name>dev -n <namespace> -o jsonpath='{.status.health.status}'  || echo "Application not found"
 oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}'  || echo "Application not found"
 ```
 
 ```bash ignore-test
 # Ver erro condition com fallback
+# oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
 ```
 
@@ -423,11 +440,13 @@ oc get apiservice | grep -v True
 
 ```bash
 # Ver certificados de apiservice
+# oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
 ```bash
 # Análise completa de apiservice
+# oc get apiservice <service-name>.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text
 oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text
 ```
 
@@ -448,6 +467,7 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 
 ```bash
 # Verificar certificado de apiservice
+# oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 

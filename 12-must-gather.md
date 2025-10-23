@@ -16,39 +16,39 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 ## 🩺 Must-Gather Básico
 
 ### Coletar Dados do Cluster
-```bash
-# Must-gather padrão (coleta completa)
+```bash ignore-test
+# Must-gather padrão (coleta completa dos componentes padrões do OpenShift)
 oc adm must-gather
 ```
 
-```bash
+```bash ignore-test
 # Salvar em diretório específico
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-```bash
+```bash ignore-test
 # Ver progresso
-oc adm must-gather --dest-dir=/tmp/must-gather -v=4
+oc adm must-gather -v=4
 ```
 
-```bash
-# Must-gather em background
-oc adm must-gather --dest-dir=/tmp/must-gather &
+```bash ignore-test
+# Salvar arquivos em um diretório específico
+oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-```bash
+```bash ignore-test
 # Ver pods do must-gather
 oc get pods -n openshift-must-gather-*
 ```
 
 ### Coleta por Tempo
-```bash
+```bash ignore-test
 # Coletar logs das últimas 2 horas
-oc adm must-gather -- /usr/bin/gather --since 2h
+oc adm must-gather --since 2h
 ```
 
 ```bash ignore-test
-# Coletar apenas logs específicos
+# Executar o pod do must-gather no node <node-name>
 oc adm must-gather --node-name=<node-name>
 ```
 
@@ -57,89 +57,9 @@ oc adm must-gather --node-name=<node-name>
 ## 🎯 Must-Gather Específico
 
 ### Must-Gather por Componente
-```bash
-# Must-gather de rede (SDN/OVN)
-oc adm must-gather --image=quay.io/openshift/origin-must-gather -- /usr/bin/gather_network
-```
 
-```bash
-# Must-gather de storage
-oc adm must-gather --image=registry.redhat.io/odf4/ocs-must-gather-rhel8:latest
-```
-
-```bash
-# Must-gather de logging
-oc adm must-gather --image=registry.redhat.io/openshift-logging/cluster-logging-rhel8-operator:latest
-```
-
-```bash
-# Must-gather de Service Mesh
-oc adm must-gather --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8:latest
-```
-
-```bash
-# Must-gather de operadores
-oc adm must-gather --image=registry.redhat.io/openshift4/ose-must-gather:latest -- /usr/bin/gather_audit_logs
-```
-
-### Múltiplas Imagens
-```bash
-# Coletar de múltiplos componentes
-oc adm must-gather \
-  --image=registry.redhat.io/openshift4/ose-must-gather:latest \
-  --image=registry.redhat.io/odf4/ocs-must-gather-rhel8:latest
-```
-
----
-
-## 📂 Análise de Logs
-
-### Estrutura do Must-Gather
-```bash
-# Explorar estrutura
-tree /tmp/must-gather
-```
-
-```bash ignore-test
-# Ver logs de namespace específico
-cd /tmp/must-gather/namespaces/<namespace>/
-```
-
-```bash ignore-test
-# Ver logs de pods
-cat /tmp/must-gather/namespaces/<namespace>/pods/<pod>/logs/current.log
-```
-
-```bash
-# Ver eventos
-cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml
-```
-
-### Buscar Problemas
-```bash
-# Buscar erros
-grep -r "error" /tmp/must-gather/
-```
-
-```bash
-# Buscar warnings
-grep -r "warning" /tmp/must-gather/
-```
-
-```bash
-# Buscar crashes
-grep -r "crash\|panic\|fatal" /tmp/must-gather/
-```
-
-```bash
-# Buscar OOMKilled
-grep -r "OOMKilled" /tmp/must-gather/
-```
-
-```bash
-# Ver todos os eventos de erro
-cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml | grep -i error
-```
+Algumas vezes é necessário coletar informações de um componente específico (ex.: logging, network, storage, operator). Para as instruções oficiais por componente — incluindo qual imagem usar e quais argumentos são suportados por versão — consulte a KCS da Red Hat:
+https://access.redhat.com/solutions/5459251
 
 ---
 
@@ -151,18 +71,20 @@ cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml | grep -i error
 oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 ```
 
-```bash
-# Inspect de tipo de recurso
+```bash ignore-test
+# Captura dado de debugging para todos os
+# os projetos dos cluster operators
 oc adm inspect clusteroperators --dest-dir=/tmp/inspect
 ```
 
-```bash
+```bash ignore-test
 # Inspect de nós
 oc adm inspect nodes --dest-dir=/tmp/inspect
 ```
 
-```bash
+```bash ignore-test
 # Inspect de recurso específico
+# oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect
 oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
 ```
 
@@ -172,7 +94,7 @@ oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 ```
 
 ### Múltiplos Recursos
-```bash
+```bash ignore-test
 # Inspect de vários recursos
 oc adm inspect \
   clusteroperators \
@@ -181,7 +103,7 @@ oc adm inspect \
   --dest-dir=/tmp/inspect
 ```
 
-```bash
+```bash ignore-test
 # Inspect all-namespaces
 oc adm inspect ns --all-namespaces --dest-dir=/tmp/inspect
 ```
