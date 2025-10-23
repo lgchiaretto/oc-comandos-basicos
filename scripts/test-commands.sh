@@ -97,10 +97,11 @@ while [[ $# -gt 0 ]]; do
             echo "  --end-module <num>     Termina no módulo especificado (ex: 15)"
             echo ""
             echo "Exemplos:"
-            echo "  $0                                # Executa todos os módulos"
-            echo "  $0 --module 05                    # Executa apenas o módulo 05"
-            echo "  $0 --start-module 10              # Executa do módulo 10 ao 30"
-            echo "  $0 --start-module 01 --end-module 05  # Executa módulos 01 a 05"
+            echo "  $0                                    # Executa todos os módulos"
+            echo "  $0 --module 05                        # Executa apenas o módulo 05"
+            echo "  $0 --end-module 05                    # Executa até o módulo 05"
+            echo "  $0 --start-module 10                  # Executa do módulo 10 ao 30"
+            echo "  $0 --start-module 06 --end-module 08  # Executa módulos 06 a 08"
             exit 0
             ;;
         *)
