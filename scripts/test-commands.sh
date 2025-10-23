@@ -9,8 +9,6 @@
 # Opções:
 #   --verbose              Mostra saída detalhada de cada comando
 #   --stop-on-error        Para execução no primeiro erro
-#   --skip-destructive     Pula comandos destrutivos (padrão)
-#   --allow-destructive    Permite comandos destrutivos
 #   --cleanup              Executa limpeza após os testes
 #   --module <num>         Executa apenas o módulo especificado (ex: --module 01)
 #   --start-module <num>   Inicia a partir do módulo especificado (ex: --start-module 10)
@@ -41,7 +39,6 @@ NC='\033[0m' # No Color
 # Variáveis globais
 VERBOSE=0
 STOP_ON_ERROR=0
-SKIP_DESTRUCTIVE=1  # Default: skip destructive commands
 CLEANUP=0      # Default: Do not cleanup
 SPECIFIC_MODULE=""
 START_MODULE=""
@@ -72,14 +69,6 @@ while [[ $# -gt 0 ]]; do
             STOP_ON_ERROR=1
             shift
             ;;
-        --skip-destructive)
-            SKIP_DESTRUCTIVE=1
-            shift
-            ;;
-        --allow-destructive)
-            SKIP_DESTRUCTIVE=0
-            shift
-            ;;
         --cleanup)
             CLEANUP=1
             shift
@@ -102,8 +91,6 @@ while [[ $# -gt 0 ]]; do
             echo "Opções:"
             echo "  --verbose              Mostra saída detalhada"
             echo "  --stop-on-error        Para no primeiro erro"
-            echo "  --skip-destructive     Pula comandos destrutivos (padrão)"
-            echo "  --allow-destructive    Permite comandos destrutivos"
             echo "  --cleanup              Executa a limpeza após os testes (Default: não)"
             echo "  --module <num>         Executa apenas módulo específico (ex: 01)"
             echo "  --start-module <num>   Inicia a partir do módulo especificado (ex: 10)"
@@ -128,7 +115,6 @@ done
 # Exportar variáveis para os módulos
 export VERBOSE
 export STOP_ON_ERROR
-export SKIP_DESTRUCTIVE
 export LOG_FILE
 export STATE_FILE
 export TIMING_FILE

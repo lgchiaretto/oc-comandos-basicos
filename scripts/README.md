@@ -22,8 +22,6 @@ Script principal de validação que executa todos os módulos de teste.
 |-------|-----------|
 | `--verbose` | Mostra saída detalhada de cada comando |
 | `--stop-on-error` | Para execução no primeiro erro |
-| `--skip-destructive` | Pula comandos destrutivos (padrão) |
-| `--allow-destructive` | Permite comandos destrutivos |
 | `--cleanup` | Executa limpeza após os testes |
 | `--module <num>` | Executa apenas o módulo especificado |
 | `--start-module <num>` | Inicia a partir do módulo especificado |
