@@ -20,12 +20,6 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
 
 ---
 
-## ⚠️ Importante
-
-> **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
-> 
----
-
 ## 📋 Categorias de Comandos
 
 ### Por Recurso
@@ -47,6 +41,12 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
 - **Avançado**: Documentos 13-22
 - **Expert**: Documentos 23-30
 
+---
+
+## ⚠️ Importante
+
+> **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
+> 
 ---
 
 ## 📖 Índice de Documentos
