@@ -1,6 +1,6 @@
 # 📜 Scripts de Validação e Testes
 
-Este diretório contém os scripts principais para validação e gerenciamento dos testes de comandos sugeridos OpenShift.
+Este diretório contém os scripts principais para validação e gerenciamento dos testes de comandos sugeridos nesse repositório.
 
 Scripts são destinados exclusivamente ao desenvolvimento deste projeto — não os execute em ambientes de produção nem em clusters que não sejam de desenvolvimento desse projeto.
 
