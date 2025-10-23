@@ -14,9 +14,9 @@ NC='\033[0m'
 
 PROJECT_STATE_FILE="/tmp/oc-test-project-state"
 
-echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║     Limpeza de Projeto de Teste OpenShift                     ║${NC}"
-echo -e "${BLUE}╚════════════════════════════════════════════════════════════════╝${NC}"
+echo -e "${BLUE}╔═════════════════════════════════════════════════╗${NC}"
+echo -e "${BLUE}║     Limpeza de Projeto de Teste OpenShift       ║${NC}"
+echo -e "${BLUE}╚═════════════════════════════════════════════════╝${NC}"
 echo ""
 
 echo "Procurando projetos de teste..."

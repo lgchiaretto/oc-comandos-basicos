@@ -27,7 +27,6 @@ if [ ! -f "$STATE_FILE" ]; then
     echo "TOTAL_TESTS=0" > "$STATE_FILE"
     echo "PASSED_TESTS=0" >> "$STATE_FILE"
     echo "FAILED_TESTS=0" >> "$STATE_FILE"
-    echo "SKIPPED_TESTS=0" >> "$STATE_FILE"
 fi
 
 # Carregar estado
@@ -38,7 +37,6 @@ save_state() {
     echo "TOTAL_TESTS=$TOTAL_TESTS" > "$STATE_FILE"
     echo "PASSED_TESTS=$PASSED_TESTS" >> "$STATE_FILE"
     echo "FAILED_TESTS=$FAILED_TESTS" >> "$STATE_FILE"
-    echo "SKIPPED_TESTS=$SKIPPED_TESTS" >> "$STATE_FILE"
 }
 
 # Funções de logging
@@ -66,19 +64,9 @@ log_skip() {
 run_test() {
     local description="$1"
     local command="$2"
-    local should_skip="${3:-0}"
     
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
     save_state
-    
-    # Verificar se should_skip é um número antes de comparar
-    if [[ "$should_skip" =~ ^[0-9]+$ ]] && [ "$should_skip" -eq 1 ]; then
-        log_skip "$description"
-        SKIPPED_TESTS=$((SKIPPED_TESTS + 1))
-        save_state
-        echo ""
-        return 0
-    fi
     
     if [ "$VERBOSE" -eq 1 ]; then
         log_info "Executando: $command"

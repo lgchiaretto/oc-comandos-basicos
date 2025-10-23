@@ -4,13 +4,25 @@
 # Script Principal de Validação de Comandos OpenShift
 # Executa todos os módulos de teste organizados por tópico
 #
-# Uso: ./scripts/test-commands.sh [--verbose] [--stop-on-error] [--module <num>]
+# Uso: ./scripts/test-commands.sh [OPÇÕES]
 #
 # Opções:
-#   --verbose          Mostra saída detalhada de cada comando
-#   --stop-on-error    Para execução no primeiro erro
-#   --skip-destructive Pula comandos destrutivos (delete, etc)
-#   --module <num>     Executa apenas o módulo especificado (ex: --module 01)
+#   --verbose              Mostra saída detalhada de cada comando
+#   --stop-on-error        Para execução no primeiro erro
+#   --skip-destructive     Pula comandos destrutivos (padrão)
+#   --allow-destructive    Permite comandos destrutivos
+#   --cleanup              Executa limpeza após os testes
+#   --module <num>         Executa apenas o módulo especificado (ex: --module 01)
+#   --start-module <num>   Inicia a partir do módulo especificado (ex: --start-module 10)
+#   --end-module <num>     Termina no módulo especificado (ex: --end-module 15)
+#
+# Exemplos:
+#   ./scripts/test-commands.sh                              # Executa todos os módulos
+#   ./scripts/test-commands.sh --module 05                  # Executa apenas módulo 05
+#   ./scripts/test-commands.sh --start-module 10            # Executa do 10 ao 30
+#   ./scripts/test-commands.sh --start-module 01 --end-module 05  # Executa 01 a 05
+#   ./scripts/test-commands.sh --start-module 06 --end-module 08  # Executa 06 a 08
+#   ./scripts/test-commands.sh --start-module 08 --end-module 30  # Executa 08 a 30
 ##############################################################################
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -32,6 +44,8 @@ STOP_ON_ERROR=0
 SKIP_DESTRUCTIVE=1  # Default: skip destructive commands
 CLEANUP=0      # Default: Do not cleanup
 SPECIFIC_MODULE=""
+START_MODULE=""
+END_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
 LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
 TIMING_FILE="/tmp/oc-test-timing-$$"
@@ -40,7 +54,6 @@ TIMING_FILE="/tmp/oc-test-timing-$$"
 echo "TOTAL_TESTS=0" > "$STATE_FILE"
 echo "PASSED_TESTS=0" >> "$STATE_FILE"
 echo "FAILED_TESTS=0" >> "$STATE_FILE"
-echo "SKIPPED_TESTS=0" >> "$STATE_FILE"
 
 # Inicializar arquivo de timing
 echo "# Tempo de execução dos módulos" > "$TIMING_FILE"
@@ -75,15 +88,32 @@ while [[ $# -gt 0 ]]; do
             SPECIFIC_MODULE="$2"
             shift 2
             ;;
+        --start-module)
+            START_MODULE="$2"
+            shift 2
+            ;;
+        --end-module)
+            END_MODULE="$2"
+            shift 2
+            ;;
         --help)
-            echo "Uso: $0 [--verbose] [--stop-on-error] [--module <num>]"
+            echo "Uso: $0 [OPÇÕES]"
             echo ""
             echo "Opções:"
-            echo "  --verbose          Mostra saída detalhada"
-            echo "  --stop-on-error    Para no primeiro erro"
-            echo "  --skip-destructive Pula comandos destrutivos"
-            echo "  --cleanup          Executa a limpeza após os testes"    
-            echo "  --module <num>     Executa apenas módulo específico (ex: 01)"
+            echo "  --verbose              Mostra saída detalhada"
+            echo "  --stop-on-error        Para no primeiro erro"
+            echo "  --skip-destructive     Pula comandos destrutivos (padrão)"
+            echo "  --allow-destructive    Permite comandos destrutivos"
+            echo "  --cleanup              Executa a limpeza após os testes"
+            echo "  --module <num>         Executa apenas módulo específico (ex: 01)"
+            echo "  --start-module <num>   Inicia a partir do módulo especificado (ex: 10)"
+            echo "  --end-module <num>     Termina no módulo especificado (ex: 15)"
+            echo ""
+            echo "Exemplos:"
+            echo "  $0 --module 05                    # Executa apenas o módulo 05"
+            echo "  $0 --start-module 10              # Executa do módulo 10 ao 30"
+            echo "  $0 --start-module 01 --end-module 05  # Executa módulos 01 a 05"
+            echo "  $0 --start-module 06 --end-module 08  # Executa módulos 06 a 08"
             exit 0
             ;;
         *)
@@ -101,6 +131,12 @@ export SKIP_DESTRUCTIVE
 export LOG_FILE
 export STATE_FILE
 export TIMING_FILE
+
+# Validar combinações de parâmetros
+if [ -n "$SPECIFIC_MODULE" ] && { [ -n "$START_MODULE" ] || [ -n "$END_MODULE" ]; }; then
+    log_error "Erro: --module não pode ser usado com --start-module ou --end-module"
+    exit 1
+fi
 
 # Funções de logging (definidas aqui para o script principal)
 log_info() {
@@ -192,7 +228,7 @@ run_test_module() {
 
 # Banner inicial
 echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║     Script de Validação de Comandos OpenShift                 ║"
+echo "║     Script de Validação de Comandos OpenShift                  ║"
 echo "║     Testando comandos da documentação (modular)                ║"
 echo "╚════════════════════════════════════════════════════════════════╝"
 echo ""
@@ -213,14 +249,70 @@ if [ ! -d "$TESTS_DIR" ]; then
     exit 1
 fi
 
+# Função para filtrar módulos por range
+filter_modules() {
+    local all_modules=("$@")
+    local filtered=()
+    
+    for module_dir in "${all_modules[@]}"; do
+        local module_num=$(basename "$module_dir" | cut -d'-' -f1)
+        
+        # Remover zeros à esquerda para comparação numérica
+        module_num=$((10#$module_num))
+        
+        # Aplicar filtro de início
+        if [ -n "$START_MODULE" ]; then
+            local start_num=$((10#$START_MODULE))
+            if [ $module_num -lt $start_num ]; then
+                continue
+            fi
+        fi
+        
+        # Aplicar filtro de fim
+        if [ -n "$END_MODULE" ]; then
+            local end_num=$((10#$END_MODULE))
+            if [ $module_num -gt $end_num ]; then
+                continue
+            fi
+        fi
+        
+        filtered+=("$module_dir")
+    done
+    
+    echo "${filtered[@]}"
+}
+
 # Lista de módulos
 if [ -n "$SPECIFIC_MODULE" ]; then
     # Executar apenas módulo específico
     modules=("${TESTS_DIR}/${SPECIFIC_MODULE}-"*)
 else
     # Executar todos os módulos em ordem
-    modules=($(find "$TESTS_DIR" -maxdepth 1 -type d -name '[0-9][0-9]-*' | sort))
+    all_modules=($(find "$TESTS_DIR" -maxdepth 1 -type d -name '[0-9][0-9]-*' | sort))
+    
+    # Aplicar filtros de range se especificados
+    if [ -n "$START_MODULE" ] || [ -n "$END_MODULE" ]; then
+        modules=($(filter_modules "${all_modules[@]}"))
+    else
+        modules=("${all_modules[@]}")
+    fi
 fi
+
+# Verificar se há módulos para executar
+if [ ${#modules[@]} -eq 0 ]; then
+    log_error "Nenhum módulo encontrado com os critérios especificados"
+    exit 1
+fi
+
+# Mostrar informações sobre os módulos que serão executados
+log_info "Módulos a serem executados: ${#modules[@]}"
+if [ -n "$START_MODULE" ] || [ -n "$END_MODULE" ]; then
+    range_info="Range: "
+    [ -n "$START_MODULE" ] && range_info+="início=${START_MODULE} "
+    [ -n "$END_MODULE" ] && range_info+="fim=${END_MODULE}"
+    log_info "$range_info"
+fi
+echo ""
 
 # Executar cada módulo
 for module_dir in "${modules[@]}"; do
@@ -266,7 +358,6 @@ echo ""
 echo "Total de testes: $TOTAL_TESTS"
 echo -e "${GREEN}Passou: $PASSED_TESTS${NC}"
 echo -e "${RED}Falhou: $FAILED_TESTS${NC}"
-echo -e "${YELLOW}Pulado: $SKIPPED_TESTS${NC}"
 echo ""
 
 if [ "$TOTAL_TESTS" -gt 0 ]; then
