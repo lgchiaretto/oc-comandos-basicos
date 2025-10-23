@@ -20,8 +20,10 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 ```bash ignore-test
 # Quem pode fazer determinada ação
 oc adm policy who-can <verbo> <recurso>
+
 # oc adm policy <resource-name> get pods
 oc adm policy who-can get pods
+
 # oc adm policy <resource-name> delete projects
 oc adm policy who-can delete projects
 ```
@@ -59,14 +61,16 @@ oc get groups
 oc get identities
 ```
 
-```bash ignore-test
+```bash
 # Descrever usuário
-oc describe user <username>
+# oc describe user <username>
+oc describe user admin
 ```
 
-```bash ignore-test
+```bash
 # Ver grupos de um usuário
-oc describe user <username> | grep Groups
+# oc describe user <username> | grep Groups
+oc describe user admin | grep Groups
 ```
 
 ---

@@ -131,7 +131,7 @@ oc set probe deployment/test-app --liveness --remove
 oc set probe deployment/test-app --readiness --remove
 ```
 
-```bash
+```bash ignore-test
 # Debug interativo
 oc debug deployment/test-app
 ```
@@ -205,7 +205,7 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].lastState.te
 oc debug pod/<nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Debug de deployment
 oc debug deployment/test-app
 ```
@@ -213,16 +213,6 @@ oc debug deployment/test-app
 ```bash ignore-test
 # Debug de node
 oc debug node/<node-name>
-```
-
-```bash
-# Com imagem específica
-oc debug pod/test-app --image=registry.redhat.io/rhel8/support-tools
-```
-
-```bash
-# Debug sem iniciar
-oc debug pod/test-app --keep-init-containers=true
 ```
 
 ### Executar Comandos

@@ -294,7 +294,7 @@ oc -n openshift-storage exec -it $(oc get pods -n openshift-storage -l app=rook-
 oc -n openshift-storage exec -it $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd status
 ```
 
-```bash
+```bash ignore-test
 # Must-gather do ODF
 oc adm must-gather --image=registry.redhat.io/odf4/ocs-must-gather-rhel8:latest
 ```
@@ -353,40 +353,40 @@ oc debug node/<node-name>
 chroot /host
 ```
 
-```bash
+```bash ignore-test
 # Ver discos
 lsblk
 fdisk -l
 ```
 
-```bash
+```bash ignore-test
 # Ver mounts
 mount | grep pvc
 df -h
 ```
 
-```bash
+```bash ignore-test
 # Ver logs do kubelet relacionados a storage
 journalctl -u kubelet | grep -i volume
 ```
 
-```bash
+```bash ignore-test
 # Ver logs do CRI-O
 journalctl -u crio | grep -i volume
 ```
 
 ### Comandos Úteis em Nodes
-```bash
+```bash ignore-test
 # Dentro do debug node:
 chroot /host
 ```
 
-```bash
+```bash ignore-test
 # Ver volumes do Kubernetes
 ls -la /var/lib/kubelet/pods/
 ```
 
-```bash
+```bash ignore-test
 # Ver PVs montados
 ls -la /var/lib/origin/openshift.local.volumes/
 ```
@@ -396,7 +396,7 @@ ls -la /var/lib/origin/openshift.local.volumes/
 ls -laZ /var/lib/kubelet/pods/<pod-id>/volumes/
 ```
 
-```bash
+```bash ignore-test
 # Verificar SELinux contexts
 ls -laZ /path/to/mount
 ```

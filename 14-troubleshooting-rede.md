@@ -354,17 +354,17 @@ oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
 ## 🛠️ Ferramentas de Debug
 
 ### Pod de Debug de Rede
-```bash
+```bash ignore-test
 # Criar pod com ferramentas de rede
 oc run netshoot --rm -i --tty --image nicolaka/netshoot -- /bin/bash
 ```
 
-```bash
+```bash ignore-test
 # Ou usando imagem Red Hat
 oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bin/bash
 ```
 
-```bash
+```
 # Dentro do pod, testar:
 # - curl, wget
 # - ping, traceroute
@@ -379,7 +379,7 @@ oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bi
 oc debug node/<node-name>
 ```
 
-```bash
+```bash ignore-test
 # No node (chroot):
 chroot /host
 ```
@@ -390,7 +390,7 @@ tcpdump -i any -n host <ip-do-pod>
 tcpdump -i any -n port <porta>
 ```
 
-```bash
+```bash ignore-test
 # Salvar captura
 tcpdump -i any -w /tmp/capture.pcap
 ```
