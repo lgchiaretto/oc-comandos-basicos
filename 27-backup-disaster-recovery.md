@@ -58,19 +58,19 @@ cat > /tmp/backup-namespace.sh << 'EOF'
 set -e
 ```
 
-```bash
+```bash ignore-test
 NAMESPACE=$1
 BACKUP_DIR="namespace-backup-${NAMESPACE}-$(date +%Y%m%d-%H%M%S)"
 ```
 
-```bash
+```bash ignore-test
 if [ -z "$NAMESPACE" ]; then
   echo "Usage: $0 <namespace>"
   exit 1
 fi
 ```
 
-```bash
+```bash ignore-test
 echo "=== Backing up namespace: ${NAMESPACE} ==="
 mkdir -p ${BACKUP_DIR}
 ```
@@ -97,25 +97,25 @@ RESOURCES=(
 )
 ```
 
-```bash
+```bash ignore-test
 for resource in "${RESOURCES[@]}"; do
   echo "Backing up ${resource}..."
   oc get ${resource} -n ${NAMESPACE} -o yaml > ${BACKUP_DIR}/${resource}.yaml
 done
 ```
 
-```bash
+```bash ignore-test
 # Backup namespace itself
 oc get namespace ${NAMESPACE} -o yaml > ${BACKUP_DIR}/namespace.yaml
 ```
 
-```bash
+```bash ignore-test
 # Compress
 tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
 rm -rf ${BACKUP_DIR}
 ```
 
-```bash
+```bash ignore-test
 echo "✅ Backup completed: ${BACKUP_DIR}.tar.gz"
 ls -lh ${BACKUP_DIR}.tar.gz
 EOF
@@ -138,17 +138,17 @@ cat > /tmp/backup-all-namespaces.sh << 'EOF'
 set -e
 ```
 
-```bash
+```bash ignore-test
 BACKUP_DIR="cluster-backup-$(date +%Y%m%d-%H%M%S)"
 mkdir -p ${BACKUP_DIR}
 ```
 
-```bash
+```bash ignore-test
 echo "=== Cluster-wide resources ==="
 mkdir -p ${BACKUP_DIR}/cluster
 ```
 
-```bash
+```bash ignore-test
 # Cluster-scoped resources
 oc get namespaces -o yaml > ${BACKUP_DIR}/cluster/namespaces.yaml
 oc get nodes -o yaml > ${BACKUP_DIR}/cluster/nodes.yaml
@@ -159,7 +159,7 @@ oc get persistentvolumes -o yaml > ${BACKUP_DIR}/cluster/persistentvolumes.yaml
 oc get customresourcedefinitions -o yaml > ${BACKUP_DIR}/cluster/crds.yaml
 ```
 
-```bash
+```bash ignore-test
 echo "=== Backing up user namespaces ==="
 for ns in $(oc get ns -o jsonpath='{.items[?(@.metadata.name!~"^(openshift|kube|default).*")].metadata.name}'); do
   echo "Namespace: $ns"
@@ -168,13 +168,13 @@ for ns in $(oc get ns -o jsonpath='{.items[?(@.metadata.name!~"^(openshift|kube|
 done
 ```
 
-```bash
+```bash ignore-test
 # Compress everything
 tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
 rm -rf ${BACKUP_DIR}
 ```
 
-```bash
+```bash ignore-test
 echo "✅ Full cluster backup: ${BACKUP_DIR}.tar.gz"
 EOF
 ```
@@ -258,7 +258,7 @@ velero restore create --from-backup my-backup
 ## 💾 Backup de Dados
 
 ### Backup de PVCs
-```bash
+```bash ignore-test
 # Snapshot de PVC (se StorageClass suportar)
 cat <<EOF | oc apply -f -
 apiVersion: snapshot.storage.k8s.io/v1
@@ -298,7 +298,7 @@ EOF
 ```
 
 ### Backup Manual de Dados em PVC
-```bash
+```bash ignore-test
 # Criar pod temporário para acessar PVC
 cat <<EOF | oc apply -f -
 apiVersion: v1
@@ -341,22 +341,22 @@ oc delete pod backup-pod
 ```
 
 ### Backup de Database
-```bash
+```bash ignore-test
 # MySQL/MariaDB
 oc exec <mysql-pod> -- mysqldump -u root -p<password> --all-databases > mysql-backup.sql
 ```
 
-```bash
+```bash ignore-test
 # PostgreSQL
 oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
 ```
 
-```bash
+```bash ignore-test
 # MongoDB
 oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
 ```
 
-```bash
+```bash ignore-test
 # Restore (exemplos)
 oc exec -i <mysql-pod> -- mysql -u root -p<password> < mysql-backup.sql
 oc exec -i <postgres-pod> -- psql -U postgres < postgres-backup.sql
@@ -374,7 +374,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 # Disaster Recovery Checklist
 ```
 
-```bash
+```bash ignore-test
 ## Backups Configurados
 - [ ] Etcd backup diário
 - [ ] Application manifests backup
@@ -384,7 +384,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] Cluster configuration backup
 ```
 
-```bash
+```bash ignore-test
 ## Documentação
 - [ ] Procedimentos de restore documentados
 - [ ] Lista de contatos de emergência
@@ -393,7 +393,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] RTO/RPO definidos por aplicação
 ```
 
-```bash
+```bash ignore-test
 ## Testes
 - [ ] Teste de restore de etcd
 - [ ] Teste de restore de aplicações
@@ -401,7 +401,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] DR drill completo (anual)
 ```
 
-```bash
+```bash ignore-test
 ## Armazenamento
 - [ ] Backups em localização offsite
 - [ ] Backups encriptados
@@ -513,7 +513,7 @@ oc get routes -A
 # Exemplo: Restore em 30min = RTO de 30min
 ```
 
-```bash
+```bash ignore-test
 # Medir RPO real
 LAST_BACKUP=$(ls -t cluster-backup-*.tar.gz | head -1)
 BACKUP_TIME=$(stat -c %Y $LAST_BACKUP)

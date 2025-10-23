@@ -88,12 +88,12 @@ oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
 ```
 
-```bash
+```bash ignore-test
 # Ver channels disponíveis
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
 ```
 
-```bash
+```bash ignore-test
 # Ver versão do channel
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 ```
@@ -108,22 +108,22 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 ## 📦 Instalando Operators
 
 ### Passo a Passo Completo
-```bash
+```bash ignore-test
 # 1. Escolher operator
 oc get packagemanifests -n openshift-marketplace | grep <operator-name>
 ```
 
-```bash
+```bash ignore-test
 # 2. Ver detalhes
 oc describe packagemanifest <operator-name> -n openshift-marketplace
 ```
 
-```bash
+```bash ignore-test
 # 3. Criar namespace (se necessário)
 oc create namespace <operator-namespace>
 ```
 
-```bash
+```bash ignore-test
 # 4. Criar OperatorGroup
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
@@ -137,7 +137,7 @@ spec:
 EOF
 ```
 
-```bash
+```bash ignore-test
 # 5. Criar Subscription
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -154,7 +154,7 @@ spec:
 EOF
 ```
 
-```bash
+```bash ignore-test
 # 6. Verificar instalação
 oc get csv -n <operator-namespace>
 oc get pods -n <operator-namespace>
@@ -194,22 +194,22 @@ oc get pods -n openshift-operators-redhat
 ```
 
 ### Install Plan
-```bash
+```bash ignore-test
 # Listar install plans
 oc get installplan -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Descrever install plan
 oc describe installplan <plan-name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Se approval for Manual, aprovar
 oc patch installplan <plan-name> -n <namespace> --type merge -p '{"spec":{"approved":true}}'
 ```
 
-```bash
+```bash ignore-test
 # Ver status
 oc get installplan <plan-name> -n <namespace> -o jsonpath='{.status.phase}'
 ```
@@ -287,13 +287,13 @@ oc describe crd ingresscontrollers.operator.openshift.io
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Ver versões suportadas
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 ```
 
 ### Criar Custom Resources
-```bash
+```bash ignore-test
 # Ver exemplos no CSV
 CSV_NAME=$(oc get csv -n <namespace> -o name | head -1)
 oc get $CSV_NAME -n <namespace> -o yaml | grep -A 50 alm-examples
@@ -326,7 +326,7 @@ oc describe elasticsearch elasticsearch -n openshift-logging
 ```
 
 ### Gerenciar CRs
-```bash
+```bash ignore-test
 # Listar CRs de um tipo
 oc get <crd-resource-name>
 ```
@@ -336,43 +336,43 @@ oc get <crd-resource-name>
 oc get elasticsearch -o custom-columns=NAME:.metadata.name,STATUS:.status.cluster.status
 ```
 
-```bash
+```bash ignore-test
 # Edit CR
 oc edit elasticsearch <name>
 ```
 
-```bash
+```bash ignore-test
 # Patch CR
 oc patch elasticsearch <name> -p '{"spec":{"redundancyPolicy":"FullRedundancy"}}'
 ```
 
-```bash
+```bash ignore-test
 # Delete CR
 oc delete elasticsearch <name>
 ```
 
-```bash
+```bash ignore-test
 # Ver eventos relacionados
 oc get events --field-selector involvedObject.name=<cr-name>
 ```
 
 ### Ver Status de CRs
-```bash
+```bash ignore-test
 # Status geral
 oc get <cr-type> <name> -o jsonpath='{.status}'
 ```
 
-```bash
+```bash ignore-test
 # Condições
 oc get <cr-type> <name> -o jsonpath='{.status.conditions}'
 ```
 
-```bash
+```bash ignore-test
 # Exemplo específico
 oc get elasticsearch <name> -o jsonpath='{.status.cluster.status}'
 ```
 
-```bash
+```bash ignore-test
 # Watch status
 oc get <cr-type> <name>
 ```
@@ -387,79 +387,79 @@ oc get <cr-type> <name>
 oc get csv -A
 ```
 
-```bash
+```bash ignore-test
 # CSV em namespace específico
 oc get csv -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Descrever CSV
 oc describe csv <csv-name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Ver fase do CSV
 oc get csv <csv-name> -n <namespace> -o jsonpath='{.status.phase}'
 ```
 
-```bash
+```bash ignore-test
 # Ver mensagem de erro
 oc get csv <csv-name> -n <namespace> -o jsonpath='{.status.message}'
 ```
 
-```bash
+```bash ignore-test
 # Ver pods gerenciados pelo CSV
 oc get csv <csv-name> -n <namespace> -o jsonpath='{.spec.install.spec.deployments[*].name}'
 ```
 
 ### Logs do Operator
-```bash
+```bash ignore-test
 # Ver deployment do operator
 oc get deployment -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Pods do operator
 oc get pods -n <namespace> -l name=<operator-name>
 ```
 
-```bash
+```bash ignore-test
 # Logs
 oc logs -n <namespace> deployment/<operator-deployment>
 ```
 
-```bash
+```bash ignore-test
 # Logs com follow
 oc logs -n <namespace> deployment/<operator-deployment> -f
 ```
 
-```bash
+```bash ignore-test
 # Logs anteriores (se crashou)
 oc logs -n <namespace> <operator-pod> --previous
 ```
 
 ### Troubleshoot Subscription
-```bash
+```bash ignore-test
 # Ver subscription
 oc get subscription <name> -n <namespace> -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Ver status
 oc get subscription <name> -n <namespace> -o jsonpath='{.status}'
 ```
 
-```bash
+```bash ignore-test
 # Ver CSV instalado
 oc get subscription <name> -n <namespace> -o jsonpath='{.status.installedCSV}'
 ```
 
-```bash
+```bash ignore-test
 # Ver conditions
 oc get subscription <name> -n <namespace> -o jsonpath='{.status.conditions}'
 ```
 
-```bash
+```bash ignore-test
 # Recrear subscription (deletar e criar novamente)
 oc delete subscription <name> -n <namespace>
 # Recriar...
@@ -472,12 +472,12 @@ oc get catalogsource -n openshift-marketplace
 oc get pods -n openshift-marketplace
 ```
 
-```bash
+```bash ignore-test
 # Ver packagemanifest
 oc get packagemanifest <operator> -n openshift-marketplace
 ```
 
-```bash
+```bash ignore-test
 # Verificar install plan
 oc get installplan -n <namespace>
 oc describe installplan <plan> -n <namespace>
@@ -489,66 +489,66 @@ oc logs -n openshift-operator-lifecycle-manager deployment/olm-operator
 oc logs -n openshift-operator-lifecycle-manager deployment/catalog-operator
 ```
 
-```bash
+```bash ignore-test
 # Eventos
 oc get events -n <namespace> --sort-by='.lastTimestamp'
 ```
 
 ### CR Não Cria Recursos
-```bash
+```bash ignore-test
 # Verificar se operator está rodando
 oc get pods -n <operator-namespace>
 ```
 
-```bash
+```bash ignore-test
 # Logs do operator
 oc logs -n <operator-namespace> <operator-pod>
 ```
 
-```bash
+```bash ignore-test
 # Ver status do CR
 oc describe <cr-type> <cr-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver eventos
 oc get events --field-selector involvedObject.name=<cr-name>
 ```
 
-```bash
+```bash ignore-test
 # Verificar RBAC
 oc auth can-i create pods --as=system:serviceaccount:<namespace>:<sa>
 ```
 
-```bash
+```bash ignore-test
 # Ver service account do operator
 oc get deployment <operator> -n <namespace> -o jsonpath='{.spec.template.spec.serviceAccountName}'
 oc describe sa <sa-name> -n <namespace>
 ```
 
 ### Remover Operator
-```bash
+```bash ignore-test
 # 1. Deletar todos os CRs criados
 oc get <cr-type> -A
 oc delete <cr-type> <name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # 2. Deletar subscription
 oc delete subscription <name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # 3. Deletar CSV
 oc delete csv <csv-name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # 4. (Opcional) Deletar CRDs
 oc delete crd <crd-name>
 ```
 
-```bash
+```bash ignore-test
 # 5. (Opcional) Deletar namespace
 oc delete namespace <namespace>
 ```

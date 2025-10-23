@@ -40,7 +40,7 @@ oc describe co etcd
 oc logs -n openshift-etcd <etcd-pod-name>
 ```
 
-```bash
+```bash ignore-test
 # Pegar o log do pod etcd-0
 oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
@@ -63,17 +63,17 @@ etcdctl endpoint status --cluster -w table
 etcdctl member list -w table
 ```
 
-```bash
+```bash ignore-test
 # 'etcdctl endpoint status --cluster -w table' executado diretamente no pod
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl endpoint status --cluster -w table
 ```
 
-```bash
+```bash ignore-test
 # 'etcdctl member list -w table' executado diretamente no pod
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
 ```
 
-```bash
+```bash ignore-test
 # Verificar alarmes
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl alarm list
 ```

@@ -57,22 +57,22 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 ## 📤 Push e Pull de Imagens
 
 ### Push de Imagens
-```bash
+```bash ignore-test
 # Tag para registry interno
 docker tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```bash
+```bash ignore-test
 # Push para registry interno
 docker push <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```bash
+```bash ignore-test
 # Usando Podman
 podman push <imagem> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```bash
+```bash ignore-test
 # Criar secret para registry externo
 oc create secret docker-registry <secret-name> \
   --docker-server=<registry-url> \
@@ -80,13 +80,13 @@ oc create secret docker-registry <secret-name> \
   --docker-password=<pass>
 ```
 
-```bash
+```bash ignore-test
 # Linkar secret para pull
 oc secrets link default <secret-name> --for=pull
 ```
 
 ### Pull de Imagens
-```bash
+```bash ignore-test
 # Pull de registry interno
 docker pull <registry-interno>/<projeto>/test-app:<tag>
 ```
@@ -96,7 +96,7 @@ docker pull <registry-interno>/<projeto>/test-app:<tag>
 oc get is test-app -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Importar imagem externa
 oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 ```
@@ -111,7 +111,7 @@ oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 oc get imagecontentsourcepolicy
 ```
 
-```bash
+```bash ignore-test
 # Criar ICSP para mirror
 cat <<EOF | oc apply -f -
 apiVersion: operator.openshift.io/v1alpha1
@@ -132,12 +132,12 @@ oc get imagecontentsourcepolicy -o yaml
 ```
 
 ### Mirror com oc-mirror
-```bash
+```bash ignore-test
 # Mirror de operator catalogs
 oc mirror --config=imageset-config.yaml docker://<mirror-registry>
 ```
 
-```bash
+```bash ignore-test
 # Ver resultados do mirror
 oc mirror list operators --catalog=<catalog-image>
 ```
@@ -147,17 +147,17 @@ oc mirror list operators --catalog=<catalog-image>
 ## 🧹 Image Pruning
 
 ### Limpeza de Imagens
-```bash
+```bash ignore-test
 # Executar image pruner manual
 oc adm prune images --confirm
 ```
 
-```bash
+```bash ignore-test
 # Dry-run (sem deletar)
 oc adm prune images
 ```
 
-```bash
+```bash ignore-test
 # Prune de imagens antigas
 oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 ```
@@ -178,17 +178,17 @@ oc get jobs -n openshift-image-registry
 ```
 
 ### Limpeza de Builds
-```bash
+```bash ignore-test
 # Prune de builds antigos
 oc adm prune builds --confirm
 ```
 
-```bash
+```bash ignore-test
 # Manter apenas N builds
 oc adm prune builds --keep-complete=5 --keep-failed=1 --confirm
 ```
 
-```bash
+```bash ignore-test
 # Prune por idade
 oc adm prune builds --keep-younger-than=48h --confirm
 ```

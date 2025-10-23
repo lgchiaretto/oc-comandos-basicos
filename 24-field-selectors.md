@@ -67,12 +67,12 @@ oc get events --field-selector type=Warning
 oc get events --field-selector type=Normal
 ```
 
-```bash
+```bash ignore-test
 # Eventos de um recurso específico
 oc get events --field-selector involvedObject.name=<pod-name>
 ```
 
-```bash
+```bash ignore-test
 # Eventos de um namespace
 oc get events --field-selector involvedObject.namespace=<namespace>
 ```
@@ -207,7 +207,7 @@ oc get svc -l app=myapp
 oc get all -l app=myapp
 ```
 
-```bash
+```bash ignore-test
 # Pods de um deployment específico
 oc get pods -l deployment=<deployment-name>
 ```
@@ -233,7 +233,7 @@ oc get pods -l app=myapp,version=v2 --field-selector=status.phase=Running,metada
 ```
 
 ### Múltiplos Field Selectors
-```bash
+```bash ignore-test
 # Combinar múltiplas condições
 oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 ```
@@ -418,7 +418,7 @@ oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 ```
 
 ### Filtros Combinados Complexos
-```bash
+```bash ignore-test
 # Pods não-Running em namespaces específicos
 oc get pods -A | egrep "my-app|my-service" | egrep -v "Running|Completed"
 ```
@@ -469,7 +469,7 @@ oc get pods -A --field-selector=status.phase=Pending --sort-by='.metadata.creati
 oc get pvc -A | grep -v Bound
 ```
 
-```bash
+```bash ignore-test
 # Services sem endpoints
 for svc in $(oc get svc -o name); do
   if [ -z "$(oc get endpoints ${svc##*/} -o jsonpath='{.subsets[*].addresses[*].ip}')" ]; then
@@ -478,7 +478,7 @@ for svc in $(oc get svc -o name); do
 done
 ```
 
-```bash
+```bash ignore-test
 # Routes sem host
 oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E "^[^ ]+ *$"
 ```

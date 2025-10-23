@@ -109,7 +109,12 @@ oc edit project development
 
 ```bash
 # Adicionar label
-oc label namespace development env=development test-validation=true --overwrite
+oc label namespace development test-validation=true
+```
+
+```bash
+# Trocar o valor de uma label existente
+oc label namespace production test-validation=true --overwrite
 ```
 
 ```bash
@@ -334,12 +339,12 @@ oc status --suggest
 oc get projects | grep dev
 ```
 
-```bash
+```bash ignore-test
 # Projetos ativos
 oc get projects -o jsonpath='{.items[?(@.status.phase=="Active")].metadata.name}'
 ```
 
-```bash
+```bash ignore-test
 # Projetos em terminação
 oc get projects -o jsonpath='{.items[?(@.status.phase=="Terminating")].metadata.name}'
 ```

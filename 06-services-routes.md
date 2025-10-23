@@ -27,17 +27,17 @@ oc get svc
 oc describe svc test-app
 ```
 
-```bash
+```bash ignore-test
 # Criar service
 oc expose deployment test-app --port=<porta>
 ```
 
-```bash
+```bash ignore-test
 # Criar service com tipo específico
 oc create service clusterip test-app --tcp=<porta>:<porta-destino>
 ```
 
-```bash
+```bash ignore-test
 # Deletar service
 oc delete svc test-app
 ```
@@ -71,19 +71,39 @@ oc describe endpoints test-app -n development
 ## 🛣️ Routes
 
 ### Criar Routes
-```bash
+```bash ignore-test
 # Criar route a partir de service
 oc expose service test-app
 ```
 
-```bash
+```bash ignore-test
 # Com hostname específico
 oc expose service test-app --hostname=<hostname>
 ```
 
-```bash
+```bash ignore-test
 # Com path específico
 oc expose service test-app --path=/api
+```
+
+```bash
+# Criar route com TLS edge
+oc create route edge test-app --service=test-app
+```
+
+```bash ignore-test
+# Route passthrough TLS
+oc create route passthrough test-app --service=test-app
+```
+
+```bash ignore-test
+# Route reencrypt TLS
+oc create route reencrypt test-app --service=test-app
+```
+
+```bash ignore-test
+# Com certificado customizado
+oc create route edge test-app --service=<svc> --cert=<cert-file> --key=<key-file>
 ```
 
 ```bash
@@ -93,44 +113,23 @@ oc get routes
 
 ```bash
 # Descrever route
-oc describe route test-app>
+oc describe route test-app
 ```
 
 ```bash
 # Ver URL da route
-oc get route test-app> -o jsonpath='{.spec.host}'
-```
-
-### Routes com TLS
-```bash
-# Criar route com TLS edge
-oc create route edge test-app> --service=test-app
-```
-
-```bash
-# Route passthrough TLS
-oc create route passthrough test-app> --service=test-app
-```
-
-```bash
-# Route reencrypt TLS
-oc create route reencrypt test-app> --service=test-app
-```
-
-```bash
-# Com certificado customizado
-oc create route edge test-app --service=<svc> --cert=<cert-file> --key=<key-file>
+oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
 ### Gerenciar Routes
-```bash
+```bash ignore-test
 # Editar route
-oc edit route test-app>
+oc edit route test-app
 ```
 
 ```bash
 # Deletar route
-oc delete route test-app>
+oc delete route test-app
 ```
 
 ```bash

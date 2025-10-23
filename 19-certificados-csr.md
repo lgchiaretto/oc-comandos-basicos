@@ -31,44 +31,44 @@ oc get csr | grep Pending
 oc get csr -o wide
 ```
 
-```bash
+```bash ignore-test
 # Ver CSR específico
 oc describe csr <csr-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver certificado em CSR
 oc get csr <csr-name> -o jsonpath='{.spec.request}' | base64 -d | openssl req -text -noout
 ```
 
 ### Aprovar CSRs
-```bash
+```bash ignore-test
 # Aprovar CSR específico
 oc adm certificate approve <csr-name>
 ```
 
-```bash
+```bash ignore-test
 # Aprovar todos os CSRs pendentes (CUIDADO!)
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
-```bash
+```bash ignore-test
 # Aprovar apenas CSRs de nodes
 oc get csr -o json | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
 ```
 
-```bash
+```bash ignore-test
 # Aprovar CSRs específicos de worker nodes
 oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:node:worker")) | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
 ### Negar CSRs
-```bash
+```bash ignore-test
 # Negar CSR
 oc adm certificate deny <csr-name>
 ```
 
-```bash
+```bash ignore-test
 # Deletar CSR
 oc delete csr <csr-name>
 ```
@@ -84,7 +84,7 @@ oc get csr
 oc get csr --sort-by='.metadata.creationTimestamp'
 ```
 
-```bash
+```bash ignore-test
 # Count de CSRs por status
 oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | uniq -c
 ```
@@ -104,12 +104,12 @@ oc get secret -n openshift-kube-apiserver
 oc get secret -n openshift-kube-apiserver | grep serving
 ```
 
-```bash
+```bash ignore-test
 # Ver validade do certificado
 oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
-```bash
+```bash ignore-test
 # Ver detalhes do certificado
 oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
 ```
@@ -130,7 +130,7 @@ oc get secret router-certs-default -n openshift-ingress -o yaml
 oc get secret router-certs-default -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
-```bash
+```bash ignore-test
 # Substituir certificado do ingress
 oc create secret tls custom-certs --cert=<cert-file> --key=<key-file> -n openshift-ingress
 ```
@@ -145,17 +145,17 @@ oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 
-```bash
+```bash ignore-test
 # Ver secret específico
 oc get secret <secret-name> -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Anotar service para gerar certificado automático
 oc annotate service <service-name> service.beta.openshift.io/serving-cert-secret-name=<secret-name>
 ```
 
-```bash
+```bash ignore-test
 # Verificar certificado gerado
 oc get secret <secret-name>
 ```
@@ -165,12 +165,12 @@ oc get secret <secret-name>
 ## 🌐 Certificados de API
 
 ### Custom API Certificates
-```bash
+```bash ignore-test
 # Configurar certificado customizado para API
 oc create secret tls api-certs --cert=<cert-file> --key=<key-file> -n openshift-config
 ```
 
-```bash
+```bash ignore-test
 # Aplicar certificado
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts":{"namedCertificates":[{"names":["<api-hostname>"],"servingCertificate":{"name":"api-certs"}}]}}}'
 ```
@@ -181,12 +181,12 @@ oc get apiserver cluster -o yaml
 ```
 
 ### OAuth Certificates
-```bash
+```bash ignore-test
 # Configurar certificado para OAuth
 oc create secret tls oauth-certs --cert=<cert-file> --key=<key-file> -n openshift-config
 ```
 
-```bash
+```bash ignore-test
 # Aplicar
 oc patch oauths cluster --type=merge -p '{"spec":{"componentRoutes":[{"hostname":"<oauth-hostname>","name":"oauth-openshift","namespace":"openshift-authentication","servingCertKeyPairSecret":{"name":"oauth-certs"}}]}}'
 ```
@@ -196,7 +196,7 @@ oc patch oauths cluster --type=merge -p '{"spec":{"componentRoutes":[{"hostname"
 ## 🔧 Troubleshooting
 
 ### Problemas com Certificados
-```bash
+```bash ignore-test
 # Verificar expiração de todos os certificados importantes
 for ns in openshift-kube-apiserver openshift-ingress openshift-authentication; do
   echo "=== Namespace: $ns ==="
@@ -208,7 +208,7 @@ for ns in openshift-kube-apiserver openshift-ingress openshift-authentication; d
 done
 ```
 
-```bash
+```bash ignore-test
 # Verificar certificado de um pod
 oc exec <pod-name> -- openssl s_client -connect <host>:<port> -showcerts
 ```
@@ -229,49 +229,49 @@ oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 # Forçar renovação deletando secrets (serão recriados)
 ```
 
-```bash
+```bash ignore-test
 # CUIDADO: Isso pode causar downtime!
 oc delete secret <secret-name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Aguardar recreação
 oc get secret <secret-name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Verificar novo certificado
 oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
 ### CSR Não Aprovado Automaticamente
-```bash
+```bash ignore-test
 # Ver por que CSR não foi aprovado
 oc describe csr <csr-name>
 ```
 
-```bash
+```bash ignore-test
 # Verificar CSR signer
 oc get csr <csr-name> -o jsonpath='{.spec.signerName}'
 ```
 
-```bash
+```bash ignore-test
 # Verificar usages
 oc get csr <csr-name> -o jsonpath='{.spec.usages}'
 ```
 
-```bash
+```bash ignore-test
 # Ver username que criou
 oc get csr <csr-name> -o jsonpath='{.spec.username}'
 ```
 
-```bash
+```bash ignore-test
 # Logs do cluster-signing-controller
 oc logs -n openshift-kube-controller-manager <pod-name> | grep csr
 ```
 
 ### Bulk CSR Operations
-```bash
+```bash ignore-test
 # Script para aprovar CSRs de nodes periodicamente
 cat > /tmp/approve-csrs.sh << 'EOF'
 #!/bin/bash
@@ -288,7 +288,7 @@ chmod +x /tmp/approve-csrs.sh
 /tmp/approve-csrs.sh &
 ```
 
-```bash
+```bash ignore-test
 # Verificar CSRs antigos para limpeza
 oc get csr -o json | jq -r '.items[] | select(.metadata.creationTimestamp < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete csr
 ```

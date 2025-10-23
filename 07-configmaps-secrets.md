@@ -23,15 +23,15 @@ oc get cm
 
 ```bash
 # De literal
-oc create configmap test-app --from-literal=<chave>=<valor>
+oc create configmap test-app --from-literal=chave=valor
 ```
 
-```bash
+```bash ignore-test
 # De arquivo
 oc create configmap test-app --from-file=<arquivo>
 ```
 
-```bash
+```bash ignore-test
 # De diretório
 oc create configmap test-app --from-file=<diretorio>/
 ```
@@ -41,12 +41,12 @@ oc create configmap test-app --from-file=<diretorio>/
 oc get cm test-app -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Editar ConfigMap
 oc edit cm test-app
 ```
 
-```bash
+```bash ignore-test
 # Deletar ConfigMap
 oc delete cm test-app
 ```
@@ -77,7 +77,7 @@ oc create cm app-config \
 
 ```bash
 # Ver apenas as chaves
-oc get cm test-app -o jsonpath='{.data}'
+oc get cm app-config -o jsonpath='{.data}'
 ```
 
 ---
@@ -85,17 +85,17 @@ oc get cm test-app -o jsonpath='{.data}'
 ## 🔒 Secrets
 
 ### Criar Secrets
-```bash
+```bash ignore-test
 # Secret genérico
-oc create secret generic test-app --from-literal=<chave>=<valor>
+oc create secret generic test-app --from-literal=chave=valor
 ```
 
-```bash
+```bash ignore-test
 # De arquivo
 oc create secret generic test-app --from-file=<arquivo>
 ```
 
-```bash
+```bash ignore-test
 # Secret para Docker Registry
 oc create secret docker-registry test-app \
   --docker-server=<registry> \
@@ -104,7 +104,7 @@ oc create secret docker-registry test-app \
   --docker-email=<email>
 ```
 
-```bash
+```bash ignore-test
 # Secret TLS
 oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
@@ -121,15 +121,15 @@ oc get secret test-app -o yaml
 
 ```bash
 # Decodificar secret
-oc get secret test-app -o jsonpath='{.data.<chave>}' | base64 -d
+oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
 ```
 
-```bash
+```bash ignore-test
 # Editar secret
 oc edit secret test-app
 ```
 
-```bash
+```bash ignore-test
 # Deletar secret
 oc delete secret test-app
 ```
@@ -151,17 +151,17 @@ oc describe secret test-secret -n development
 ```
 
 ### Link Secrets
-```bash
+```bash ignore-test
 # Linkar secret à service account
 oc secrets link <service-account> <nome-do-secret>
 ```
 
-```bash
+```bash ignore-test
 # Linkar para pull de imagens
 oc secrets link default <pull-secret> --for=pull
 ```
 
-```bash
+```bash ignore-test
 # Linkar para mount
 oc secrets link <service-account> <nome-do-secret> --for=mount
 ```
@@ -173,17 +173,17 @@ oc secrets link <service-account> <nome-do-secret> --for=mount
 ### Como Variáveis de Ambiente
 ```bash
 # ConfigMap
-oc set env deployment/test-app --from=configmap/<nome-cm>
+oc set env deployment/test-app --from=configmap/test-app
 ```
 
 ```bash
 # Secret
-oc set env deployment/test-app --from=secret/<nome-secret>
+oc set env deployment/test-app --from=secret/test-app
 ```
 
 ```bash
 # Chave específica
-oc set env deployment/test-app CHAVE=valor --from=configmap/<nome-cm>
+oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ```
 
 ### Como Volumes
@@ -192,7 +192,7 @@ oc set env deployment/test-app CHAVE=valor --from=configmap/<nome-cm>
 oc set volume deployment/test-app \
   --add --name=config-vol \
   --type=configmap \
-  --configmap-name=<nome-cm> \
+  --configmap-name=test-app \
   --mount-path=/etc/config
 ```
 
@@ -201,7 +201,7 @@ oc set volume deployment/test-app \
 oc set volume deployment/test-app \
   --add --name=secret-vol \
   --type=secret \
-  --secret-name=<nome-secret> \
+  --secret-name=test-secret \
   --mount-path=/etc/secret
 ```
 

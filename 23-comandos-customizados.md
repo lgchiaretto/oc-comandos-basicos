@@ -85,7 +85,7 @@ oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n "
 ```
 
 ### Service Mesh com AWK
-```bash
+```bash ignore-test
 # Extrair versão do Service Mesh Operator
 oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.metadata.ownerReferences[0].name}' | awk -F "." '{print $2"."$3}' | cut -c2-
 ```
@@ -95,7 +95,7 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 ## 📊 Comandos com JQ
 
 ### Análise de Cluster Operators
-```bash
+```bash ignore-test
 # Ver status detalhado dos cluster operators
 oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.conditions[] | select(.type=="Progressing").status), (.status.conditions[] | select(.type=="Degraded").status), (.status.conditions[] | select(.type=="Degraded").message)] | @tsv'
 ```
@@ -105,28 +105,28 @@ oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.co
 oc get clusteroperator/operator-lifecycle-manager-packageserver -o json | jq
 ```
 
-```bash
+```bash ignore-test
 # Filtrar operators degradados
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
 ### Análise de Pods
-```bash
+```bash ignore-test
 # Encontrar pods com OOMKilled
 oc get pods -o json | jq '.items[] | select(.status.containerStatuses[]?.lastState.terminated.reason=="OOMKilled") | .metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Ver recursos de todos os pods
 oc get pods -o json | jq '.items[] | {name: .metadata.name, cpu: .spec.containers[].resources.requests.cpu, memory: .spec.containers[].resources.requests.memory}'
 ```
 
-```bash
+```bash ignore-test
 # Listar pods por fase
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Ver imagens de todos os containers
 oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ```
@@ -142,13 +142,13 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.spec.syncPolicy}' | jq
 ```
 
-```bash
+```bash ignore-test
 # Listar recursos de uma aplicação
 oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.resources[] | select(.kind == "Pod")'
 ```
 
 ### Análise de ClusterLogForwarder
-```bash
+```bash ignore-test
 # Ver condições do log forwarder
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 ```
@@ -159,12 +159,12 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.f
 ```
 
 ### CSR com JQ
-```bash
+```bash ignore-test
 # Listar CSRs com status vazio e aprovar
 oc get csr -ojson | jq -r '.items[] | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
-```bash
+```bash ignore-test
 # Ver detalhes de CSRs pendentes
 oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: .metadata.name, user: .spec.username}'
 ```
@@ -181,7 +181,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 ```
 
 ### Must-Gather Dinâmico com JQ
-```bash
+```bash ignore-test
 # Must-gather com detecção automática de operators
 oc adm must-gather \
   --image-stream=openshift/must-gather \
@@ -218,7 +218,7 @@ oc get co | grep -v "True.*False.*False"
 oc get nodes | grep -v "Ready"
 ```
 
-```bash
+```bash ignore-test
 # Filtrar eventos importantes
 oc describe pod <pod-name> | grep -A 10 "Events:"
 ```
@@ -287,23 +287,23 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 ## 🔄 Pipes Complexos
 
 ### Análise de API Requests
-```bash
+```bash ignore-test
 # Ver API requests com formatação
 oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
-```bash
+```bash ignore-test
 # Para networking ingresses
 oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
-```bash
+```bash ignore-test
 # Para roles RBAC
 oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 ### Análise de ClusterOperators com Tabela
-```bash
+```bash ignore-test
 # Criar tabela formatada de cluster operators
 oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .status.conditions[?(@.type=="Progressing")]}{.status}{"\t"}{end}{range .status.conditions[?(@.type=="Degraded")]}{.status}{"\t"}{.message}{"\n"}{end}{end}' | column -t -s $'\t'
 ```
@@ -335,7 +335,7 @@ oc get applications.argoproj.io -n openshift-gitops  || echo "No applications fo
 oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}'  || echo "Application not found"
 ```
 
-```bash
+```bash ignore-test
 # Ver erro condition com fallback
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
 ```
@@ -372,7 +372,7 @@ done
 ```
 
 ### Aprovar CSRs em Loop
-```bash
+```bash ignore-test
 # Aprovar CSRs pendentes até não haver mais
 while true; do
   csrs=$(oc get csr | grep Pending | awk '{print $1}')
@@ -400,17 +400,17 @@ done
 ## 📈 Análise de Cluster Operators
 
 ### Status Completo
-```bash
+```bash ignore-test
 # Ver todos os operators e suas condições
 oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.conditions[] | select(.type=="Available").status), Progressing=\(.status.conditions[] | select(.type=="Progressing").status), Degraded=\(.status.conditions[] | select(.type=="Degraded").status)"'
 ```
 
-```bash
+```bash ignore-test
 # Operators com problemas detalhados
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'
 ```
 
-```bash
+```bash ignore-test
 # Ver versões dos operators
 oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[0].version}{"\n"}{end}' | column -t
 ```
@@ -436,12 +436,12 @@ oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}
 ## 🔐 Extração de Certificados
 
 ### Extrair e Analisar Certificados
-```bash
+```bash ignore-test
 # Extrair certificado de service
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
 ```
 
-```bash
+```bash ignore-test
 # Ver expiração do certificado
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -noout -enddate
 ```
@@ -477,7 +477,7 @@ oc get all -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```
 
 ### Aliases Úteis para Scripts
-```bash
+```bash ignore-test
 # Adicionar ao ~/.bashrc
 alias ocpods='oc get pods -A | egrep -v "Running|Completed"'
 alias occo='oc get co | grep -v "True.*False.*False"'

@@ -36,43 +36,43 @@ oc get pods -A --field-selector=status.phase=Failed
 oc get pods --field-selector=status.phase=Pending
 ```
 
-```bash
+```bash ignore-test
 # Descrever pod
 oc describe pod <nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Ver eventos relacionados
 oc get events --field-selector involvedObject.name=<nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Status detalhado
 oc get pod <nome-do-pod> -o yaml
 ```
 
 ### Verificar Logs
-```bash
+```bash ignore-test
 # Logs do pod
 oc logs <nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Logs de container específico
 oc logs <nome-do-pod> -c <container-name>
 ```
 
-```bash
+```bash ignore-test
 # Logs do container anterior (crashado)
 oc logs <nome-do-pod> --previous
 ```
 
-```bash
+```bash ignore-test
 # Seguir logs em tempo real
 oc logs -f <nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Últimas 100 linhas
 oc logs <nome-do-pod> --tail=100
 ```
@@ -82,7 +82,7 @@ oc logs <nome-do-pod> --tail=100
 ## 🚨 Pods com Problemas
 
 ### ImagePullBackOff
-```bash
+```bash ignore-test
 # Ver erro de pull
 oc describe pod <nome-do-pod> | grep -A 10 Events
 ```
@@ -97,28 +97,28 @@ oc get is
 oc get secrets | grep docker
 ```
 
-```bash
+```bash ignore-test
 # Tentar pull manual (debug)
 oc debug node/<node-name> -- chroot /host podman pull <image>
 ```
 
-```bash
+```bash ignore-test
 # Verificar image na spec
 oc get pod <nome-do-pod> -o jsonpath='{.spec.containers[0].image}'
 ```
 
 ### CrashLoopBackOff
-```bash
+```bash ignore-test
 # Ver logs do crash
 oc logs <nome-do-pod> --previous
 ```
 
-```bash
+```bash ignore-test
 # Ver motivo do crash
 oc describe pod <nome-do-pod> | grep -i "exit code"
 ```
 
-```bash
+```bash ignore-test
 # Verificar liveness/readiness probes
 oc get pod <nome-do-pod> -o yaml | grep -A 10 livenessProbe
 ```
@@ -135,12 +135,12 @@ oc debug deployment/test-app
 ```
 
 ### Pending (Não Agendado)
-```bash
+```bash ignore-test
 # Ver eventos de scheduling
 oc describe pod <nome-do-pod> | grep -A 20 Events
 ```
 
-```bash
+```bash ignore-test
 # Verificar resources requests
 oc get pod <nome-do-pod> -o yaml | grep -A 5 resources
 ```
@@ -155,7 +155,7 @@ oc adm top nodes
 oc get nodes
 ```
 
-```bash
+```bash ignore-test
 # Verificar node selectors
 oc get pod <nome-do-pod> -o yaml | grep nodeSelector
 ```
@@ -166,12 +166,12 @@ oc describe nodes | grep Taints
 ```
 
 ### OOMKilled
-```bash
+```bash ignore-test
 # Verificar limite de memória
 oc get pod <nome-do-pod> -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 ```
 
-```bash
+```bash ignore-test
 # Ver uso atual
 oc adm top pod <nome-do-pod>
 ```
@@ -181,12 +181,12 @@ oc adm top pod <nome-do-pod>
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
-```bash
+```bash ignore-test
 # Ver histórico de restarts
 oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
-```bash
+```bash ignore-test
 # Ver motivo da última terminação
 oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
 ```
@@ -196,7 +196,7 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].lastState.te
 ## 🔧 Debug de Containers
 
 ### Debug Interativo
-```bash
+```bash ignore-test
 # Criar pod de debug
 oc debug pod/<nome-do-pod>
 ```
@@ -206,7 +206,7 @@ oc debug pod/<nome-do-pod>
 oc debug deployment/test-app
 ```
 
-```bash
+```bash ignore-test
 # Debug de node
 oc debug node/<node-name>
 ```
@@ -222,51 +222,51 @@ oc debug pod/test-app --keep-init-containers=true
 ```
 
 ### Executar Comandos
-```bash
+```bash ignore-test
 # Shell no container
 oc rsh <nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Comando específico
 oc exec <nome-do-pod> -- <comando>
 ```
 
-```bash
+```bash ignore-test
 # Em container específico
 oc exec <nome-do-pod> -c <container> -- <comando>
 ```
 
-```bash
+```bash ignore-test
 # Verificar conectividade
 oc exec <nome-do-pod> -- curl -v <url>
 oc exec <nome-do-pod> -- ping <host>
 ```
 
-```bash
+```bash ignore-test
 # Verificar DNS
 oc exec <nome-do-pod> -- nslookup <service>
 oc exec <nome-do-pod> -- cat /etc/resolv.conf
 ```
 
-```bash
+```bash ignore-test
 # Verificar filesystem
 oc exec <nome-do-pod> -- df -h
 oc exec <nome-do-pod> -- ls -la /path
 ```
 
 ### Port Forward para Debug
-```bash
+```bash ignore-test
 # Forward de porta
 oc port-forward <nome-do-pod> 8080:8080
 ```
 
-```bash
+```bash ignore-test
 # Múltiplas portas
 oc port-forward <nome-do-pod> 8080:8080 9090:9090
 ```
 
-```bash
+```bash ignore-test
 # Em background
 oc port-forward <nome-do-pod> 8080:8080 &
 ```
@@ -286,17 +286,17 @@ curl http://localhost:8080
 oc get pvc
 ```
 
-```bash
+```bash ignore-test
 # Status do PVC
 oc describe pvc <nome-do-pvc>
 ```
 
-```bash
+```bash ignore-test
 # Verificar mounts no pod
 oc describe pod <nome-do-pod> | grep -A 10 Mounts
 ```
 
-```bash
+```bash ignore-test
 # Verificar permissões
 oc exec <nome-do-pod> -- ls -la /mount/path
 ```
@@ -317,7 +317,7 @@ oc get secret test-app -o yaml
 oc set env pod/test-app --list
 ```
 
-```bash
+```bash ignore-test
 # Verificar dentro do pod
 oc exec <nome-do-pod> -- env | sort
 ```
@@ -333,17 +333,17 @@ oc get svc
 oc get endpoints test-app
 ```
 
-```bash
+```bash ignore-test
 # Teste de conectividade
 oc exec <nome-do-pod> -- curl -v <service-name>:<port>
 ```
 
-```bash
+```bash ignore-test
 # DNS lookup
 oc exec <nome-do-pod> -- nslookup <service-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver rede do pod
 oc get pod <nome-do-pod> -o jsonpath='{.status.podIP}'
 ```
@@ -354,17 +354,17 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.podIP}'
 oc get sa
 ```
 
-```bash
+```bash ignore-test
 # Ver SCC do pod
 oc get pod <nome-do-pod> -o yaml | grep scc
 ```
 
-```bash
+```bash ignore-test
 # Verificar RBAC
 oc adm policy who-can <verbo> <recurso>
 ```
 
-```bash
+```bash ignore-test
 # Ver runAsUser
 oc get pod <nome-do-pod> -o jsonpath='{.spec.securityContext.runAsUser}'
 ```

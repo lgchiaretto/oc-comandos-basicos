@@ -16,28 +16,28 @@ Este documento contém comandos para editar e fazer patch em recursos do OpenShi
 ## ✏️ Edit
 
 ### Edit Básico
-```bash
+```bash ignore-test
 # Editar deployment
 oc edit deployment test-app
 ```
 
-```bash
+```bash ignore-test
 # Editar service
 oc edit svc test-app
 ```
 
-```bash
+```bash ignore-test
 # Editar configmap
 oc edit cm test-app
 ```
 
-```bash
+```bash ignore-test
 # Editar com editor específico
 EDITOR=nano oc edit deployment test-app
 KUBE_EDITOR=vim oc edit deployment test-app
 ```
 
-```bash
+```bash ignore-test
 # Editar em namespace específico
 oc edit deployment test-app -n <namespace>
 ```
@@ -87,7 +87,7 @@ oc patch deployment test-app -p '{"metadata":{"labels":{"env":"production"}}}'
 oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My app"}}}'
 ```
 
-```bash
+```bash ignore-test
 # Atualizar imagem
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"<container-name>","image":"new-image:tag"}]}}}}'
 ```
@@ -116,17 +116,17 @@ oc patch deployment test-app --type merge -p '
 ```
 
 #### JSON Patch
-```bash
+```bash ignore-test
 # Adicionar elemento a array
 oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NEW_VAR","value":"new_value"}}]'
 ```
 
-```bash
+```bash ignore-test
 # Remover elemento
 oc patch deployment test-app --type json -p='[{"op":"remove","path":"/spec/template/spec/containers/0/env/0"}]'
 ```
 
-```bash
+```bash ignore-test
 # Replace elemento
 oc patch deployment test-app --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
 ```
@@ -163,23 +163,23 @@ oc patch deployment test-app -p '{"spec":{"replicas":5}}'
 oc patch deployment test-app -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
 ```
 
-```bash
+```bash ignore-test
 # Image
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"<container>","image":"new-image:v2"}]}}}}'
 ```
 
-```bash
+```bash ignore-test
 # Resources
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
 ```
 
-```bash
+```bash ignore-test
 # Environment variable
 oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"LOG_LEVEL","value":"debug"}}]'
 ```
 
 #### Services
-```bash
+```bash ignore-test
 # Port
 oc patch svc test-app -p '{"spec":{"ports":[{"port":8080,"targetPort":8080}]}}'
 ```
@@ -205,7 +205,7 @@ oc patch cm test-app -p '{"data":{"key1":"new-value"}}'
 oc patch cm test-app --type merge -p '{"data":{"new-key":"new-value"}}'
 ```
 
-```bash
+```bash ignore-test
 # Remover chave
 oc patch cm test-app --type json -p='[{"op":"remove","path":"/data/old-key"}]'
 ```
@@ -250,7 +250,7 @@ done
 oc get deploy -l app=myapp -o name | xargs -I {} oc patch {} -p '{"spec":{"replicas":3}}'
 ```
 
-```bash
+```bash ignore-test
 # Patch com filter
 oc get deploy -o json | jq -r '.items[] | select(.spec.replicas < 2) | .metadata.name' | \
 while read deploy; do
@@ -263,7 +263,7 @@ done
 ## ⚙️ Set Commands
 
 ### Set Image
-```bash
+```bash ignore-test
 # Deployment
 oc set image deployment/test-app <container-name>=<new-image>:<tag>
 ```
@@ -278,12 +278,12 @@ oc set image deployment/myapp myapp=myapp:v2.0
 oc set image deployment/test-app container1=image1:v2 container2=image2:v2
 ```
 
-```bash
+```bash ignore-test
 # DeploymentConfig
 oc set image dc/test-app <container-name>=<new-image>
 ```
 
-```bash
+```bash ignore-test
 # Verificar
 oc get deployment/test-app -o jsonpath='{.spec.template.spec.containers[0].image}'
 ```
@@ -304,7 +304,7 @@ oc set resources deployment/test-app --limits=cpu=1,memory=1Gi
 oc set resources deployment/test-app --requests=cpu=100m,memory=128Mi
 ```
 
-```bash
+```bash ignore-test
 # Container específico
 oc set resources deployment/test-app -c=<container-name> --limits=cpu=200m,memory=256Mi
 ```
@@ -325,17 +325,17 @@ oc set env deployment/test-app KEY=value
 oc set env deployment/test-app KEY1=value1 KEY2=value2
 ```
 
-```bash
+```bash ignore-test
 # De ConfigMap
 oc set env deployment/test-app --from=configmap/<cm-name>
 ```
 
-```bash
+```bash ignore-test
 # De Secret
 oc set env deployment/test-app --from=secret/<secret-name>
 ```
 
-```bash
+```bash ignore-test
 # Chave específica de CM
 oc set env deployment/test-app KEY --from=configmap/<cm-name> --keys=specific-key
 ```
@@ -351,17 +351,17 @@ oc set env deployment/test-app --list
 ```
 
 ### Set Volumes
-```bash
+```bash ignore-test
 # Adicionar volume de ConfigMap
 oc set volume deployment/test-app --add --name=config-vol --type=configmap --configmap-name=<cm-name> --mount-path=/etc/config
 ```
 
-```bash
+```bash ignore-test
 # Adicionar volume de Secret
 oc set volume deployment/test-app --add --name=secret-vol --type=secret --secret-name=<secret-name> --mount-path=/etc/secret
 ```
 
-```bash
+```bash ignore-test
 # Adicionar PVC
 oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeClaim --claim-name=<pvc-name> --mount-path=/data
 ```
@@ -371,7 +371,7 @@ oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeC
 oc set volume deployment/test-app --add --name=tmp-vol --type=emptyDir --mount-path=/tmp
 ```
 
-```bash
+```bash ignore-test
 # Remover volume
 oc set volume deployment/test-app --remove --name=<volume-name>
 ```
@@ -409,7 +409,7 @@ oc set probe deployment/test-app --readiness --remove
 ```
 
 ### Set ServiceAccount
-```bash
+```bash ignore-test
 # Definir ServiceAccount
 oc set serviceaccount deployment/test-app <sa-name>
 ```

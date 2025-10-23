@@ -26,22 +26,22 @@ oc get pvc
 oc get pvc --field-selector=status.phase=Pending
 ```
 
-```bash
+```bash ignore-test
 # Descrever PVC
 oc describe pvc <nome-do-pvc>
 ```
 
-```bash
+```bash ignore-test
 # Ver eventos relacionados
 oc get events --field-selector involvedObject.name=<nome-do-pvc>
 ```
 
-```bash
+```bash ignore-test
 # Ver qual PV está bound
 oc get pvc <nome-do-pvc> -o jsonpath='{.spec.volumeName}'
 ```
 
-```bash
+```bash ignore-test
 # Verificar capacidade solicitada vs disponível
 oc get pvc <nome-do-pvc> -o jsonpath='{.spec.resources.requests.storage}'
 ```
@@ -62,23 +62,23 @@ oc get pv --field-selector=status.phase=Available
 oc get pv --field-selector=status.phase=Failed
 ```
 
-```bash
+```bash ignore-test
 # Descrever PV
 oc describe pv <nome-do-pv>
 ```
 
-```bash
+```bash ignore-test
 # Ver claim que está usando o PV
 oc get pv <nome-do-pv> -o jsonpath='{.spec.claimRef.name}'
 ```
 
-```bash
+```bash ignore-test
 # Ver access modes
 oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 ```
 
 ### Pending PVC
-```bash
+```bash ignore-test
 # Ver por que PVC está Pending
 oc describe pvc <nome-do-pvc> | grep -A 10 Events
 ```
@@ -93,13 +93,13 @@ oc get pv --field-selector=status.phase=Available
 oc get sc
 ```
 
-```bash
+```bash ignore-test
 # Verificar se StorageClass existe
 oc get pvc <nome-do-pvc> -o jsonpath='{.spec.storageClassName}'
 oc get sc <storage-class-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver provisioner
 oc get sc <storage-class-name> -o jsonpath='{.provisioner}'
 ```
@@ -115,12 +115,12 @@ oc get storageclass
 oc get sc
 ```
 
-```bash
+```bash ignore-test
 # Descrever StorageClass
 oc describe sc <nome-da-sc>
 ```
 
-```bash
+```bash ignore-test
 # Ver qual é a default
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
 ```
@@ -141,7 +141,7 @@ oc get sc test-app -o yaml
 oc get pods -A | grep -i provisioner
 ```
 
-```bash
+```bash ignore-test
 # Logs do provisioner (exemplo CSI)
 oc logs -n <namespace> <provisioner-pod>
 ```
@@ -162,12 +162,12 @@ oc get pods -A | grep csi
 ## 🚨 Problemas Comuns
 
 ### Volume Não Monta
-```bash
+```bash ignore-test
 # Verificar pod que usa o volume
 oc describe pod <nome-do-pod> | grep -A 10 Volumes
 ```
 
-```bash
+```bash ignore-test
 # Ver eventos de mount
 oc get events --field-selector involvedObject.name=<nome-do-pod> | grep -i mount
 ```
@@ -177,12 +177,12 @@ oc get events --field-selector involvedObject.name=<nome-do-pod> | grep -i mount
 oc get pvc
 ```
 
-```bash
+```bash ignore-test
 # Ver node do pod
 oc get pod <nome-do-pod> -o jsonpath='{.spec.nodeName}'
 ```
 
-```bash
+```bash ignore-test
 # Debug no node
 oc debug node/<node-name>
 chroot /host
@@ -202,14 +202,14 @@ oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 oc get pv test-app -o jsonpath='{.spec.accessModes}'
 ```
 
-```bash
+```bash ignore-test
 # Se PV for RWO e pod está em outro node
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 oc get pod <nome-do-pod> -o jsonpath='{.spec.nodeName}'
 ```
 
 ### Volume Full (Cheio)
-```bash
+```bash ignore-test
 # Verificar uso dentro do pod
 oc exec <nome-do-pod> -- df -h
 ```
@@ -224,7 +224,7 @@ oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
 ```
 
-```bash
+```bash ignore-test
 # Verificar se expansão é permitida
 oc get sc <storage-class> -o jsonpath='{.allowVolumeExpansion}'
 ```
@@ -235,12 +235,12 @@ oc describe pvc test-app
 ```
 
 ### PVC Stuck Terminating
-```bash
+```bash ignore-test
 # Verificar se há pods usando
 oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolumeClaim.claimName=="<pvc-name>") | .metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Deletar pods que estão usando
 oc delete pod <nome-do-pod> --grace-period=0 --force
 ```
@@ -317,7 +317,7 @@ oc get csidrivers
 oc get pods -A | grep csi
 ```
 
-```bash
+```bash ignore-test
 # Logs do CSI driver (exemplo)
 oc logs -n <namespace> <csi-driver-pod> -c csi-driver
 ```
@@ -327,7 +327,7 @@ oc logs -n <namespace> <csi-driver-pod> -c csi-driver
 oc get csinodes
 ```
 
-```bash
+```bash ignore-test
 # Descrever CSI node
 oc describe csinode <node-name>
 ```
@@ -337,7 +337,7 @@ oc describe csinode <node-name>
 ## 🛠️ Debug Avançado
 
 ### Verificar Backend de Storage
-```bash
+```bash ignore-test
 # Debug em node específico
 oc debug node/<node-name>
 chroot /host
@@ -381,7 +381,7 @@ ls -la /var/lib/kubelet/pods/
 ls -la /var/lib/origin/openshift.local.volumes/
 ```
 
-```bash
+```bash ignore-test
 # Verificar permissões
 ls -laZ /var/lib/kubelet/pods/<pod-id>/volumes/
 ```

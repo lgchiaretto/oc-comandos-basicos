@@ -48,17 +48,17 @@ oc get network.operator.openshift.io cluster -o yaml
 ```
 
 ### Pod Network
-```bash
+```bash ignore-test
 # Ver CIDR dos pods
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*].cidr}'
 ```
 
-```bash
+```bash ignore-test
 # Ver CIDR dos services
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]}'
 ```
 
-```bash
+```bash ignore-test
 # Ver IP de um pod
 oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 ```
@@ -68,7 +68,7 @@ oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 oc get pods -o wide -A
 ```
 
-```bash
+```bash ignore-test
 # Verificar range de IPs usado
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 ```
@@ -88,7 +88,7 @@ oc describe ingresscontroller -n openshift-ingress-operator default
 ```
 
 ### Escalar Ingress Controller
-```bash
+```bash ignore-test
 # Escalar número de réplicas do IngressController
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
 ```
@@ -168,7 +168,7 @@ EOF
 ```
 
 ### Testar Network Policies
-```bash
+```bash ignore-test
 # Antes de aplicar policy, testar conectividade
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
 ```
@@ -178,7 +178,7 @@ oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-ser
 oc apply -f networkpolicy.yaml
 ```
 
-```bash
+```bash ignore-test
 # Testar novamente
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
 ```
@@ -257,7 +257,7 @@ EOF
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'
 ```
 
-```bash
+```bash ignore-test
 # Verificar MTU em pod
 oc exec <pod-name> -- ip link show eth0
 ```
@@ -268,7 +268,7 @@ oc exec <pod-name> -- ip link show eth0
 oc get nodes -o wide
 ```
 
-```bash
+```bash ignore-test
 # Criar DaemonSet de teste
 cat <<EOF | oc apply -f -
 apiVersion: apps/v1

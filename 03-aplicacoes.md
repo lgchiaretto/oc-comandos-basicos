@@ -38,7 +38,7 @@ oc new-app myregistry.com/myapp:latest
 oc new-app nginx --name=meu-nginx
 ```
 
-```bash
+```bash ignore-test
 # Exemplo com httpd
 oc new-app httpd:latest --name=test-app -n development
 ```
@@ -86,7 +86,7 @@ oc get templates -n openshift
 oc new-app --template=<nome-do-template>
 ```
 
-```bash
+```bash ignore-test
 # Com parâmetros
 oc new-app --template=mysql-persistent -p MYSQL_USER=admin
 ```

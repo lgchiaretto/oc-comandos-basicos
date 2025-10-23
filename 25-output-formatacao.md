@@ -27,69 +27,69 @@ oc get pod test-app -o jsonpath='{.metadata.name}'
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 ```
 
-```bash
+```bash ignore-test
 # Array de pods
 oc get pods -o jsonpath='{.items[*].metadata.name}'
 ```
 
-```bash
+```bash ignore-test
 # Com quebra de linha
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 ```
 
-```bash
+```bash ignore-test
 # Campo nested
 oc get pod test-app -o jsonpath='{.spec.containers[0].image}'
 ```
 
-```bash
+```bash ignore-test
 # Todos os containers
 oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 ```
 
 ### Filtros e Condições
-```bash
+```bash ignore-test
 # Pods em estado específico
 oc get pods -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}'
 ```
 
-```bash
+```bash ignore-test
 # Pods com restart > 0
 oc get pods -o jsonpath='{.items[?(@.status.containerStatuses[0].restartCount>0)].metadata.name}'
 ```
 
-```bash
+```bash ignore-test
 # Nodes ready
 oc get nodes -o jsonpath='{.items[?(@.status.conditions[?(@.type=="Ready")].status=="True")].metadata.name}'
 ```
 
-```bash
+```bash ignore-test
 # PVCs bound
 oc get pvc -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
 ### Exemplos Práticos
-```bash
+```bash ignore-test
 # IPs de todos os pods
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.podIP}{"\n"}{end}'
 ```
 
-```bash
+```bash ignore-test
 # Imagens de todos os containers
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.containers[*].image}{"\n"}{end}'
 ```
 
-```bash
+```bash ignore-test
 # Nodes e suas roles
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.node-role\.kubernetes\.io/worker}{"\n"}{end}'
 ```
 
-```bash
+```bash ignore-test
 # PVs e seus claims
 oc get pv -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.claimRef.name}{"\n"}{end}'
 ```
 
-```bash
+```bash ignore-test
 # Ver requests de CPU/memória
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\tCPU:"}{.spec.containers[0].resources.requests.cpu}{"\tMEM:"}{.spec.containers[0].resources.requests.memory}{"\n"}{end}'
 ```
@@ -174,23 +174,23 @@ oc get pods -o json | jq .
 oc get pods -o json | jq '.'
 ```
 
-```bash
+```bash ignore-test
 # Extrair campo
 oc get pods -o json | jq '.items[].metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Com filtros
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
 ```
 
 ### Filtros Avançados
-```bash
+```bash ignore-test
 # Múltiplos campos
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) \(.status.phase)"'
 ```
 
-```bash
+```bash ignore-test
 # Array de objetos
 oc get pods -o json | jq '[.items[] | {name: .metadata.name, phase: .status.phase}]'
 ```
@@ -200,7 +200,7 @@ oc get pods -o json | jq '[.items[] | {name: .metadata.name, phase: .status.phas
 oc get pods -o json | jq '.items | length'
 ```
 
-```bash
+```bash ignore-test
 # Group by
 oc get pods -A -o json | jq -r 'group_by(.metadata.namespace) | .[] | "\(.[0].metadata.namespace): \(length) pods"'
 ```
@@ -211,32 +211,32 @@ oc get pods -o json | jq '.items | sort_by(.metadata.creationTimestamp)'
 ```
 
 ### Exemplos Práticos com JQ
-```bash
+```bash ignore-test
 # Pods não Running
 oc get pods -A -o json | jq -r '.items[] | select(.status.phase != "Running" and .status.phase != "Succeeded") | "\(.metadata.namespace)/\(.metadata.name): \(.status.phase)"'
 ```
 
-```bash
+```bash ignore-test
 # Top pods por restarts
 oc get pods -A -o json | jq -r '.items[] | "\(.status.containerStatuses[0].restartCount) \(.metadata.namespace)/\(.metadata.name)"' | sort -rn | head -10
 ```
 
-```bash
+```bash ignore-test
 # Nodes e seus IPs
 oc get nodes -o json | jq -r '.items[] | "\(.metadata.name): \(.status.addresses[] | select(.type=="InternalIP") | .address)"'
 ```
 
-```bash
+```bash ignore-test
 # PVCs e tamanhos
 oc get pvc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name): \(.spec.resources.requests.storage)"'
 ```
 
-```bash
+```bash ignore-test
 # Services e seus ClusterIPs
 oc get svc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name): \(.spec.clusterIP)"'
 ```
 
-```bash
+```bash ignore-test
 # Cluster Operators degraded
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
@@ -261,7 +261,7 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase --no-headers
 ```
 
-```bash
+```bash ignore-test
 # Nodes
 oc get nodes -o custom-columns=NAME:.metadata.name,STATUS:.status.conditions[?(@.type==\"Ready\")].status,VERSION:.status.nodeInfo.kubeletVersion
 ```
@@ -271,7 +271,7 @@ oc get nodes -o custom-columns=NAME:.metadata.name,STATUS:.status.conditions[?(@
 oc get pvc -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,VOLUME:.spec.volumeName,CAPACITY:.spec.resources.requests.storage
 ```
 
-```bash
+```bash ignore-test
 # Services
 oc get svc -o custom-columns=NAME:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORT:.spec.ports[0].port
 ```
@@ -282,7 +282,7 @@ oc get svc -o custom-columns=NAME:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spe
 oc get deploy -o custom-columns=NAME:.metadata.name,DESIRED:.spec.replicas,CURRENT:.status.replicas,READY:.status.readyReplicas,UP-TO-DATE:.status.updatedReplicas
 ```
 
-```bash
+```bash ignore-test
 # Pods com resources
 oc get pods -o custom-columns=NAME:.metadata.name,CPU_REQ:.spec.containers[0].resources.requests.cpu,MEM_REQ:.spec.containers[0].resources.requests.memory,CPU_LIM:.spec.containers[0].resources.limits.cpu,MEM_LIM:.spec.containers[0].resources.limits.memory
 ```

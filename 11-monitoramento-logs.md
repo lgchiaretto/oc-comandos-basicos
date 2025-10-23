@@ -16,33 +16,33 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 ## 📝 Logs
 
 ### Logs de Pods
-```bash
+```bash ignore-test
 # Ver logs de pod
 oc logs <nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Seguir logs em tempo real
 oc logs -f <nome-do-pod>
 ```
 
-```bash
+```bash ignore-test
 # Logs de container específico
 oc logs <nome-do-pod> -c <nome-do-container>
 ```
 
-```bash
+```bash ignore-test
 # Últimas N linhas
 oc logs <nome-do-pod> --tail=100
 ```
 
-```bash
+```bash ignore-test
 # Logs desde tempo específico
 oc logs <nome-do-pod> --since=1h
 oc logs <nome-do-pod> --since-time=2024-01-01T00:00:00Z
 ```
 
-```bash
+```bash ignore-test
 # Logs anteriores (pod crashado)
 oc logs <nome-do-pod> --previous
 oc logs <nome-do-pod> -p
@@ -53,23 +53,23 @@ oc logs <nome-do-pod> -p
 oc logs deployment/test-app
 ```
 
-```bash
+```bash ignore-test
 # Logs com timestamps
 oc logs <nome-do-pod> --timestamps
 ```
 
 ### Logs do Cluster
-```bash
+```bash ignore-test
 # Logs de node específico
 oc adm node-logs <nome-do-node>
 ```
 
-```bash
+```bash ignore-test
 # Logs do journal
 oc adm node-logs <nome-do-node> -u kubelet
 ```
 
-```bash
+```bash ignore-test
 # Logs do CRI-O
 oc adm node-logs <nome-do-node> -u crio
 ```
@@ -89,7 +89,7 @@ oc get events
 oc get events --sort-by='.lastTimestamp'
 ```
 
-```bash
+```bash ignore-test
 # Eventos de um namespace específico
 oc get events -n <namespace>
 ```
@@ -99,7 +99,7 @@ oc get events -n <namespace>
 oc get events -A
 ```
 
-```bash
+```bash ignore-test
 # Eventos de um recurso específico
 oc get events --field-selector involvedObject.name=<nome-do-pod>
 ```
@@ -129,7 +129,7 @@ oc get events
 oc adm top nodes
 ```
 
-```bash
+```bash ignore-test
 # Top nodes com labels
 oc adm top nodes --selector=<label>
 ```
@@ -159,18 +159,18 @@ oc adm top pods --sort-by=cpu
 oc adm top pods --sort-by=memory
 ```
 
-```bash
+```bash ignore-test
 # Top de um pod específico
 oc adm top pod <nome-do-pod>
 ```
 
 ### Métricas Detalhadas
-```bash
+```bash ignore-test
 # Ver uso atual vs requests/limits
 oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
 ```
 
-```bash
+```bash ignore-test
 # Ver uso de todos os pods
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.containers[0].resources.requests.cpu) MEM:\(.spec.containers[0].resources.requests.memory)"'
 ```
@@ -226,7 +226,7 @@ oc get clusteroperator monitoring
 oc get servicemonitor -A
 ```
 
-```bash
+```bash ignore-test
 # Criar ServiceMonitor para app
 cat <<EOF | oc apply -f -
 apiVersion: monitoring.coreos.com/v1

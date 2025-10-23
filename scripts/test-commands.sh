@@ -34,33 +34,7 @@ CLEANUP=0      # Default: Do not cleanup
 SPECIFIC_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
 LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
-PROJECT_PREFIX="test-validation"
-PROJECT_STATE_FILE="/tmp/oc-test-project-state"
 TIMING_FILE="/tmp/oc-test-timing-$$"
-
-# Função para obter ou criar projeto de teste
-get_or_create_test_project() {
-    # Tentar carregar projeto existente se --cleanup foi usado anteriormente
-    if [ -f "$PROJECT_STATE_FILE" ]; then
-        source "$PROJECT_STATE_FILE"
-        
-        # Verificar se o projeto ainda existe
-        if oc get project "$TEST_PROJECT" &>/dev/null; then
-            return 0
-        else
-            log_info "Projeto anterior não existe mais, criando novo..."
-            rm -f "$PROJECT_STATE_FILE"
-        fi
-    fi
-    
-    # Criar novo projeto
-    TEST_PROJECT="${PROJECT_PREFIX}-$(date +%s)"
-    echo "TEST_PROJECT=$TEST_PROJECT" > "$PROJECT_STATE_FILE"
-    log_info "Novo projeto de teste será usado: $TEST_PROJECT"
-}
-
-# Inicializar projeto de teste
-get_or_create_test_project
 
 # Inicializar arquivo de estado
 echo "TOTAL_TESTS=0" > "$STATE_FILE"
@@ -125,10 +99,8 @@ export VERBOSE
 export STOP_ON_ERROR
 export SKIP_DESTRUCTIVE
 export LOG_FILE
-export TEST_PROJECT
 export STATE_FILE
 export TIMING_FILE
-export PROJECT_STATE_FILE
 
 # Funções de logging (definidas aqui para o script principal)
 log_info() {
@@ -173,20 +145,12 @@ cleanup() {
     # Verificar se deve pular a limpeza
     if [ "$CLEANUP" -eq 0 ]; then
         log_info "Limpeza pulada (--cleanup desativado)"
-        log_info "Projeto de teste mantido: $TEST_PROJECT"
-        log_info "Para reutilizar em próximas execuções, execute módulos individuais"
         return 0
     fi    
     log_info "Executando limpeza..."
     
-    # Deletar projetos de teste
-    oc delete project -l "test-validation=true" --wait=false
-    oc delete project development --wait=false
-    oc delete project production --wait=false
-    
     # Remover arquivos de estado
     rm -f "$STATE_FILE"
-    rm -f "$PROJECT_STATE_FILE"
     
     log_success "Limpeza concluída"
 }

@@ -45,21 +45,7 @@ class TestGenerator:
             elif self.verbose:
                 self._log(f"  Arquivo {i:02d}-*.md não encontrado", "debug")
         return sorted(files)
-    
-    def _is_valid_command(self, cmd: str) -> bool:
-        """Valida se o comando é apropriado para teste."""
-        # Comandos interativos que não devem ser testados
-        interactive_commands = ['oc login', 'oc logout', 'oc edit', 'oc rsh', 'oc rsync']
-        if any(cmd.startswith(ic) for ic in interactive_commands):
-            return False
-            
-        # Comandos com placeholders não substituídos
-        if '<' in cmd and '>' in cmd:
-            self._log(f"  Ignorando comando com placeholder: {cmd[:50]}...", "debug")
-            return False
-            
-        return True
-    
+       
     def extract_commands(self, md_file: Path) -> Tuple[List[Tuple[str, str]], int]:
         """Extrai comandos de blocos ```bash (exceto os com ignore).
 
@@ -102,28 +88,80 @@ class TestGenerator:
         comment = None
         ignored_count = 0
 
-        for line in block_content.strip().split('\n'):
-            line = line.strip()
+        lines = block_content.split('\n')
+        i = 0
+        while i < len(lines):
+            raw = lines[i]
+            line = raw.rstrip()
 
-            if not line:
+            # Skip empty lines
+            if not line.strip():
+                i += 1
                 continue
 
-            # Captura comentários
-            if line.startswith('#'):
+            # Capture comments above commands
+            if line.lstrip().startswith('#'):
                 comment = line.lstrip('#').strip()
+                i += 1
                 continue
 
-            # Captura comandos oc válidos
-            if line.startswith(self.OC_COMMAND_PREFIX):
-                if not self._is_valid_command(line):
-                    # comando válido mas que decidimos ignorar (interativo/placeholder)
-                    ignored_count += 1
-                    comment = None
-                    continue
+            # If line starts a command
+            if line.lstrip().startswith(self.OC_COMMAND_PREFIX):
+                # Start accumulating possible multi-line command
+                cmd_lines = [line]
 
-                desc = comment or self._extract_description(line)
-                commands.append((desc, line))
+                # Detect here-document on the first line (e.g. <<EOF)
+                heredoc_match = re.search(r'<<-?\s*(?:"|\')?(?P<delim>\w+)(?:"|\')?', line)
+                j = i + 1
+
+                if heredoc_match:
+                    delim = heredoc_match.group('delim')
+                    # include lines until a line that equals the delimiter
+                    while j < len(lines):
+                        cmd_lines.append(lines[j])
+                        if lines[j].strip() == delim:
+                            j += 1
+                            break
+                        j += 1
+                else:
+                    # otherwise, include continuation lines while they look like part of the command
+                    while j < len(lines):
+                        nxt = lines[j]
+                        # If previous line explicitly ends with backslash, always continue
+                        if cmd_lines[-1].rstrip().endswith('\\'):
+                            cmd_lines.append(nxt)
+                            j += 1
+                            continue
+
+                        # If next line is a comment or empty, stop
+                        if not nxt.strip() or nxt.lstrip().startswith('#'):
+                            break
+
+                        # If next line starts with another 'oc ' it's a new command -> stop
+                        if nxt.lstrip().startswith(self.OC_COMMAND_PREFIX):
+                            break
+
+                        # If next line is indented (common continuation) or starts with pipe/operators, include
+                        if re.match(r'^\s', nxt) or re.match(r'^\s*[|&;]', nxt):
+                            cmd_lines.append(nxt)
+                            j += 1
+                            continue
+
+                        # Otherwise, stop accumulation
+                        break
+
+                full_cmd = '\n'.join(cmd_lines).strip()
+
+                # Validate command (use the first non-empty line for validation)
+                first_cmd_line = full_cmd.split('\n', 1)[0].strip()
+                desc = comment or self._extract_description(first_cmd_line)
+                commands.append((desc, full_cmd))
                 comment = None
+                i = j
+                continue
+
+            # If we reach here, not a comment or oc command -> skip
+            i += 1
 
         return commands, ignored_count
         

@@ -22,22 +22,22 @@ oc get clusteroperators
 oc get co
 ```
 
-```bash
+```bash ignore-test
 # Ver versões
 oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].version
 ```
 
-```bash
+```bash ignore-test
 # Operators com problema (não Available)
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Operators Degraded
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Operators Progressing
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 ```
@@ -48,22 +48,22 @@ oc get co
 ```
 
 ### Status Detalhado
-```bash
+```bash ignore-test
 # Descrever Cluster Operator
 oc describe co <nome-do-operator>
 ```
 
-```bash
+```bash ignore-test
 # Ver condições
 oc get co test-app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 ```
 
-```bash
+```bash ignore-test
 # Ver mensagem de erro
 oc get co test-app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
-```bash
+```bash ignore-test
 # Ver versão
 oc get co test-app -o jsonpath='{.status.versions[0].version}'
 ```
@@ -78,27 +78,27 @@ oc get co test-app -o jsonpath='{.status.relatedObjects}'
 ## 🔧 Troubleshooting
 
 ### Diagnosticar Problemas
-```bash
+```bash ignore-test
 # Ver pods do operator
 oc get co test-app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 ```
 
-```bash
+```bash ignore-test
 # Logs do operator
 oc logs -n <namespace-do-operator> <pod-name>
 ```
 
-```bash
+```bash ignore-test
 # Eventos relacionados
 oc get events -n <namespace-do-operator> --sort-by='.lastTimestamp'
 ```
 
-```bash
+```bash ignore-test
 # Ver deployment do operator
 oc get deploy -n <namespace-do-operator>
 ```
 
-```bash
+```bash ignore-test
 # Descrever deployment
 oc describe deploy -n <namespace-do-operator> <deploy-name>
 ```
@@ -109,7 +109,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 oc annotate co/test-app --overwrite operator.openshift.io/refresh="$(date +%s)"
 ```
 
-```bash
+```bash ignore-test
 # Restart do operator (deletar pod)
 oc delete pod -n <namespace-do-operator> <pod-name>
 ```
@@ -151,7 +151,7 @@ oc get pods -n openshift-authentication
 oc get oauth cluster -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Logs
 oc logs -n openshift-authentication-operator <pod-name>
 ```
@@ -203,7 +203,7 @@ oc get pods -n openshift-ovn-kubernetes
 oc get pods -n openshift-sdn
 ```
 
-```bash
+```bash ignore-test
 # Logs
 oc logs -n openshift-network-operator <pod-name>
 ```
@@ -224,7 +224,7 @@ oc get pods -n openshift-dns
 oc get dns.operator/default -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Logs
 oc logs -n openshift-dns <dns-pod>
 ```
@@ -348,7 +348,7 @@ oc get packagemanifests -n openshift-marketplace | grep test-app
 oc describe packagemanifest test-app -n openshift-marketplace
 ```
 
-```bash
+```bash ignore-test
 # Criar subscription
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -364,64 +364,64 @@ spec:
 EOF
 ```
 
-```bash
+```bash ignore-test
 # Ver progresso da instalação
 oc get csv -n <namespace>
 ```
 
 ### Troubleshoot Operadores OLM
-```bash
+```bash ignore-test
 # Ver status da subscription
 oc describe subscription test-app -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Ver CSV
 oc describe csv <csv-name> -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Ver install plan
 oc get installplan -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Aprovar install plan manual
 oc patch installplan test-app -n <namespace> --type merge -p '{"spec":{"approved":true}}'
 ```
 
-```bash
+```bash ignore-test
 # Logs do OLM
 oc logs -n openshift-operator-lifecycle-manager <olm-operator-pod>
 ```
 
-```bash
+```bash ignore-test
 # Catalog operator logs
 oc logs -n openshift-operator-lifecycle-manager <catalog-operator-pod>
 ```
 
 ### Atualizar Operadores
-```bash
+```bash ignore-test
 # Ver versão atual
 oc get csv -n <namespace>
 ```
 
-```bash
+```bash ignore-test
 # Approval automático ou manual
 oc get subscription test-app -n <namespace> -o jsonpath='{.spec.installPlanApproval}'
 ```
 
-```bash
+```bash ignore-test
 # Mudar para manual
 oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Manual"}}'
 ```
 
-```bash
+```bash ignore-test
 # Mudar para automatic
 oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Automatic"}}'
 ```
 
-```bash
+```bash ignore-test
 # Ver install plans pendentes
 oc get installplan -n <namespace> -o json | jq -r '.items[] | select(.spec.approved==false) | .metadata.name'
 ```

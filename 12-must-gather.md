@@ -47,7 +47,7 @@ oc get pods -n openshift-must-gather-*
 oc adm must-gather -- /usr/bin/gather --since 2h
 ```
 
-```bash
+```bash ignore-test
 # Coletar apenas logs específicos
 oc adm must-gather --node-name=<node-name>
 ```
@@ -100,12 +100,12 @@ oc adm must-gather \
 tree /tmp/must-gather
 ```
 
-```bash
+```bash ignore-test
 # Ver logs de namespace específico
 cd /tmp/must-gather/namespaces/<namespace>/
 ```
 
-```bash
+```bash ignore-test
 # Ver logs de pods
 cat /tmp/must-gather/namespaces/<namespace>/pods/<pod>/logs/current.log
 ```
@@ -146,7 +146,7 @@ cat /tmp/must-gather/cluster-scoped-resources/core/events.yaml | grep -i error
 ## 🔬 Inspect
 
 ### Inspecionar Recursos
-```bash
+```bash ignore-test
 # Inspect de namespace completo
 oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 ```
@@ -166,7 +166,7 @@ oc adm inspect nodes --dest-dir=/tmp/inspect
 oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
 ```
 
-```bash
+```bash ignore-test
 # Inspect com logs
 oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 ```
@@ -203,7 +203,7 @@ oc get clusterversion
 oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
 ```
 
-```bash
+```bash ignore-test
 # Pods recentemente reiniciados
 oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 ```
@@ -213,7 +213,7 @@ oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 ```
 
-```bash
+```bash ignore-test
 # Nodes com problemas
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```

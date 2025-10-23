@@ -104,7 +104,7 @@ oc exec -it mypod -- /bin/sh
 oc cp <arquivo-local> <nome-do-pod>:<caminho-no-pod>
 ```
 
-```bash
+```bash ignore-test
 # Copiar arquivo do pod
 oc cp <nome-do-pod>:<caminho-no-pod> <arquivo-local>
 ```

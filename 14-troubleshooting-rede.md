@@ -17,33 +17,33 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ## 🔍 Diagnóstico Básico
 
 ### Conectividade de Pod
-```bash
+```bash ignore-test
 # IP do pod
 oc get pod <nome-do-pod> -o jsonpath='{.status.podIP}'
 ```
 
-```bash
+```bash ignore-test
 # Testar conectividade entre pods
 oc exec <pod-origem> -- ping <ip-pod-destino>
 oc exec <pod-origem> -- curl <ip-pod-destino>:<porta>
 ```
 
-```bash
+```bash ignore-test
 # Testar service por nome
 oc exec <pod-origem> -- curl <nome-service>:<porta>
 ```
 
-```bash
+```bash ignore-test
 # Testar DNS
 oc exec <pod-origem> -- nslookup <nome-service>
 ```
 
-```bash
+```bash ignore-test
 # Verificar rotas de rede
 oc exec <pod-origem> -- ip route
 ```
 
-```bash
+```bash ignore-test
 # Interfaces de rede
 oc exec <pod-origem> -- ip addr
 ```
@@ -99,7 +99,7 @@ oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 oc get svc test-app -o jsonpath='{.spec.ports}'
 ```
 
-```bash
+```bash ignore-test
 # Testar service de dentro do cluster
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <service-name>:<port>
 ```
@@ -115,12 +115,12 @@ oc get endpoints
 oc get endpoints test-app
 ```
 
-```bash
+```bash ignore-test
 # Verificar se endpoints estão vazios
 oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
-```bash
+```bash ignore-test
 # Comparar labels do service com pods
 oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
@@ -152,7 +152,7 @@ oc describe route test-app>
 oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
-```bash
+```bash ignore-test
 # Testar route externamente
 curl -v https://<hostname-da-route>
 ```
@@ -167,7 +167,7 @@ oc get route test-app -o jsonpath='{.spec.tls}'
 oc get route test-app -o jsonpath='{.spec.to.name}'
 ```
 
-```bash
+```bash ignore-test
 # Ver se service existe
 oc get svc <service-name>
 ```
@@ -220,33 +220,33 @@ oc get pods -n openshift-sdn
 oc get pods -n openshift-ovn-kubernetes
 ```
 
-```bash
+```bash ignore-test
 # Logs de rede (SDN)
 oc logs -n openshift-sdn <sdn-pod-name>
 ```
 
-```bash
+```bash ignore-test
 # Logs de rede (OVN)
 oc logs -n openshift-ovn-kubernetes <ovn-pod-name>
 ```
 
 ### OVN-Kubernetes Debug
-```bash
+```bash ignore-test
 # Ver flows OVN
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-ofctl dump-flows br-int
 ```
 
-```bash
+```bash ignore-test
 # Ver interfaces
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-vsctl show
 ```
 
-```bash
+```bash ignore-test
 # Trace de pacote
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-appctl ofproto/trace br-int <flow>
 ```
 
-```bash
+```bash ignore-test
 # Ver tabelas OVN
 oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-nbctl show
 oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-sbctl show
@@ -263,7 +263,7 @@ oc get network-attachment-definitions
 oc get pods -n openshift-multus
 ```
 
-```bash
+```bash ignore-test
 # Logs do Multus
 oc logs -n openshift-multus <multus-pod>
 ```
@@ -278,19 +278,19 @@ oc logs -n openshift-multus <multus-pod>
 oc get pods -n openshift-dns
 ```
 
-```bash
+```bash ignore-test
 # Logs do DNS
 oc logs -n openshift-dns <dns-pod-name>
 ```
 
-```bash
+```bash ignore-test
 # Testar DNS de dentro do pod
 oc exec <pod-name> -- nslookup kubernetes.default
 oc exec <pod-name> -- nslookup <service-name>
 oc exec <pod-name> -- nslookup <service-name>.<namespace>.svc.cluster.local
 ```
 
-```bash
+```bash ignore-test
 # Ver configuração DNS do pod
 oc exec <pod-name> -- cat /etc/resolv.conf
 ```
@@ -311,7 +311,7 @@ oc get dns.operator/default -o yaml
 oc get pods -n openshift-dns
 ```
 
-```bash
+```bash ignore-test
 # Restart DNS pods se necessário
 oc delete pod -n openshift-dns --all
 ```
@@ -321,12 +321,12 @@ oc delete pod -n openshift-dns --all
 oc get svc -n openshift-dns
 ```
 
-```bash
+```bash ignore-test
 # Testar resolução externa
 oc exec <pod> -- nslookup google.com
 ```
 
-```bash
+```bash ignore-test
 # Testar resolução interna
 oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
 ```
@@ -356,7 +356,7 @@ oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bi
 ```
 
 ### Captura de Pacotes
-```bash
+```bash ignore-test
 # Debug node e captura de pacotes
 oc debug node/<node-name>
 ```
@@ -366,7 +366,7 @@ oc debug node/<node-name>
 chroot /host
 ```
 
-```bash
+```bash ignore-test
 # Capturar tráfego
 tcpdump -i any -n host <ip-do-pod>
 tcpdump -i any -n port <porta>

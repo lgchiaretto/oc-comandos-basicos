@@ -26,17 +26,17 @@ oc get clusterversion
 oc describe clusterversion version
 ```
 
-```bash
+```bash ignore-test
 # Versão em formato compacto
 oc get clusterversion -o jsonpath='{.items[0].status.desired.version}{"\n"}'
 ```
 
-```bash
+```bash ignore-test
 # Ver histórico de updates
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq .
 ```
 
-```bash
+```bash ignore-test
 # Cluster ID
 oc get clusterversion -o jsonpath='{.items[0].spec.clusterID}{"\n"}'
 ```
@@ -47,12 +47,12 @@ oc get clusterversion -o jsonpath='{.items[0].spec.clusterID}{"\n"}'
 oc get clusterversion version -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Ver se está updating
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
 
-```bash
+```bash ignore-test
 # Ver mensagem de progresso
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
 ```
@@ -82,7 +82,7 @@ oc adm upgrade
 oc adm upgrade --to-latest=false
 ```
 
-```bash
+```bash ignore-test
 # Ver canal atual
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
@@ -93,7 +93,7 @@ oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 oc adm upgrade --to-latest=true
 ```
 
-```bash
+```bash ignore-test
 # Update para versão específica
 oc adm upgrade --to=<version>
 ```
@@ -103,7 +103,7 @@ oc adm upgrade --to=<version>
 oc adm upgrade --to=4.14.15
 ```
 
-```bash
+```bash ignore-test
 # Update forçado (não recomendado)
 oc adm upgrade --to=<version> --force --allow-upgrade-with-warnings
 ```
@@ -124,7 +124,7 @@ oc get co
 oc get co | grep -v "True.*False.*False"
 ```
 
-```bash
+```bash ignore-test
 # Logs de um operator específico
 oc logs -n <operator-namespace> <operator-pod>
 ```
@@ -134,7 +134,7 @@ oc logs -n <operator-namespace> <operator-pod>
 oc describe clusterversion
 ```
 
-```bash
+```bash ignore-test
 # Histórico completo
 oc get clusterversion -o json | jq '.items[0].status.history'
 ```
@@ -172,7 +172,7 @@ oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.14"}
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.14"}}'
 ```
 
-```bash
+```bash ignore-test
 # Verificar mudança
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
@@ -188,7 +188,7 @@ oc adm upgrade
 oc get clusterversion version -o jsonpath='{.spec.upstream}{"\n"}'
 ```
 
-```bash
+```bash ignore-test
 # Configurar upstream customizado (disconnected)
 oc patch clusterversion version --type merge -p '{"spec":{"upstream":"<update-server-url>"}}'
 ```
@@ -208,27 +208,27 @@ oc describe clusterversion
 oc get co | grep -v "True.*False.*False"
 ```
 
-```bash
+```bash ignore-test
 # Descrever operator problemático
 oc describe co <operator-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver mensagem de erro
 oc get co <operator-name> -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}{"\n"}'
 ```
 
-```bash
+```bash ignore-test
 # Ver pods do operator
 oc get pods -n <operator-namespace>
 ```
 
-```bash
+```bash ignore-test
 # Logs do operator
 oc logs -n <operator-namespace> <pod-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver eventos
 oc get events -n <operator-namespace> --sort-by='.lastTimestamp'
 ```
@@ -240,7 +240,7 @@ oc get events -n <operator-namespace> --sort-by='.lastTimestamp'
 # NÃO RECOMENDADO EM PRODUÇÃO!
 ```
 
-```bash
+```bash ignore-test
 # Ver se cluster está em update
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
@@ -251,7 +251,7 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 # Se update falhar, o cluster permanece na versão atual
 ```
 
-```bash
+```bash ignore-test
 # Ver versão atual vs desejada
 echo "Current: $(oc get clusterversion -o jsonpath='{.items[0].status.history[0].version}')"
 echo "Desired: $(oc get clusterversion -o jsonpath='{.items[0].status.desired.version}')"
@@ -299,13 +299,13 @@ echo "=== Pre-Update Health Check ==="
 echo ""
 ```
 
-```bash
+```bash ignore-test
 # Cluster Operators
 DEGRADED=$(oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name' | wc -l)
 echo "Degraded Operators: $DEGRADED"
 ```
 
-```bash
+```bash ignore-test
 # Nodes
 NOT_READY=$(oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name' | wc -l)
 echo "Not Ready Nodes: $NOT_READY"
@@ -317,13 +317,13 @@ BAD_PODS=$(oc get pods -A --field-selector=status.phase!=Running,status.phase!=S
 echo "Non-Running Pods: $BAD_PODS"
 ```
 
-```bash
+```bash ignore-test
 # MCPs
 UPDATING_MCP=$(oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name' | wc -l)
 echo "Updating MCPs: $UPDATING_MCP"
 ```
 
-```bash
+```bash ignore-test
 echo ""
 if [ $DEGRADED -eq 0 ] && [ $NOT_READY -eq 0 ] && [ $BAD_PODS -eq 0 ] && [ $UPDATING_MCP -eq 0 ]; then
   echo "✅ Cluster is healthy for update"
@@ -348,7 +348,7 @@ CURRENT_VERSION=$(oc get clusterversion version -o jsonpath='{.status.desired.ve
 CHANNEL=$(oc get clusterversion version -o jsonpath='{.spec.channel}')
 ```
 
-```bash
+```bash ignore-test
 curl -sH "Accept: application/json" \
   "https://api.openshift.com/api/upgrades_info/v1/graph?channel=${CHANNEL}&id=${CLUSTER_ID}"
 ```

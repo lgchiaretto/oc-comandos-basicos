@@ -27,12 +27,12 @@ oc get pv
 oc get persistentvolumes
 ```
 
-```bash
+```bash ignore-test
 # Descrever PV
 oc describe pv <nome-do-pv>
 ```
 
-```bash
+```bash ignore-test
 # Ver em detalhes
 oc get pv <nome-do-pv> -o yaml
 ```
@@ -47,7 +47,7 @@ oc get pv --field-selector=status.phase=Available
 oc get pv --field-selector=status.phase=Bound
 ```
 
-```bash
+```bash ignore-test
 # Deletar PV
 oc delete pv <nome-do-pv>
 ```
@@ -63,28 +63,28 @@ oc get pvc
 oc get persistentvolumeclaims
 ```
 
-```bash
+```bash ignore-test
 # Descrever PVC
 oc describe pvc <nome-do-pvc>
 ```
 
-```bash
+```bash ignore-test
 # Criar PVC
 oc create -f <pvc-definition.yaml>
 ```
 
-```bash
+```bash ignore-test
 # Ver status da claim
 oc get pvc <nome-do-pvc> -o jsonpath='{.status.phase}'
 ```
 
-```bash
+```bash ignore-test
 # Deletar PVC
 oc delete pvc <nome-do-pvc>
 ```
 
 ### Usando em Deployments
-```bash
+```bash ignore-test
 # Adicionar volume PVC a deployment
 oc set volume deployment/test-app \
   --add --name=<volume-name> \
@@ -93,7 +93,7 @@ oc set volume deployment/test-app \
   --mount-path=<path>
 ```
 
-```bash
+```bash ignore-test
 # Remover volume
 oc set volume deployment/test-app --remove --name=<volume-name>
 ```
@@ -108,21 +108,20 @@ oc get storageclass
 oc get sc
 ```
 
-```bash
+```bash ignore-test
 # Descrever StorageClass
 oc describe sc <nome-da-sc>
 ```
 
-```bash
+```bash ignore-test
+# Definir StorageClass padrão
+oc patch storageclass <nome-da-sc> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+```bash ignore-test
 # Ver StorageClass padrão
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
 ```
-
-```bash
-# Definir StorageClass padrão
-oc patch storageclass test-app -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-```
-
 ---
 
 ## 📁 Volumes em Pods
@@ -143,7 +142,7 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 oc set volume deployment/test-app
 ```
 
-```bash
+```bash ignore-test
 # Ver volumes montados em pod
 oc describe pod <nome-do-pod> | grep -A 5 Volumes
 ```

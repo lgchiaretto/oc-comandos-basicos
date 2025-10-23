@@ -26,23 +26,23 @@ oc get templates
 oc get templates -n openshift
 ```
 
-```bash
+```bash ignore-test
 # Descrever template
 oc describe template <template-name> -n openshift
 ```
 
-```bash
+```bash ignore-test
 # Ver YAML do template
 oc get template <template-name> -n openshift -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Buscar templates disponíveis
 oc get templates -n openshift | grep <keyword>
 ```
 
 ### Criar Template
-```bash
+```bash ignore-test
 # Template básico
 cat <<EOF | oc apply -f -
 apiVersion: template.openshift.io/v1
@@ -86,7 +86,7 @@ EOF
 ```
 
 ### Template Completo
-```bash
+```bash ignore-test
 # Template com múltiplos recursos
 cat <<EOF | oc apply -f -
 apiVersion: template.openshift.io/v1
@@ -203,22 +203,22 @@ EOF
 ## ⚙️ Processing Templates
 
 ### Processar Template
-```bash
+```bash ignore-test
 # Process e display (não cria recursos)
 oc process <template-name>
 ```
 
-```bash
+```bash ignore-test
 # Com parâmetros
 oc process <template-name> -p APP_NAME=myapp -p REPLICAS=3
 ```
 
-```bash
+```bash ignore-test
 # Process e create
 oc process <template-name> -p APP_NAME=myapp | oc create -f -
 ```
 
-```bash
+```bash ignore-test
 # De um template no openshift namespace
 oc process -n openshift <template-name> -p PARAM=value | oc create -f -
 ```
@@ -229,17 +229,17 @@ oc process -f template.yaml -p APP_NAME=myapp | oc create -f -
 ```
 
 ### Ver Parâmetros
-```bash
+```bash ignore-test
 # Listar parâmetros de um template
 oc process <template-name> --parameters
 ```
 
-```bash
+```bash ignore-test
 # De template no openshift namespace
 oc process -n openshift <template-name> --parameters
 ```
 
-```bash
+```bash ignore-test
 # Formato mais legível
 oc process -n openshift <template-name> --parameters | column -t
 ```
@@ -256,12 +256,12 @@ DB_NAME=production
 EOF
 ```
 
-```bash
+```bash ignore-test
 # Usar com template
 oc process <template-name> --param-file=params.env | oc create -f -
 ```
 
-```bash
+```bash ignore-test
 # Ou combinar arquivo + override
 oc process <template-name> --param-file=params.env -p REPLICAS=5 | oc create -f -
 ```
@@ -285,7 +285,7 @@ parameters:
   value: "1"
 ```
 
-```bash
+```bash ignore-test
 # Com generate (senha aleatória, por exemplo)
 parameters:
 - name: DATABASE_PASSWORD
@@ -305,7 +305,7 @@ parameters:
 ```
 
 ### Generate Values
-```bash
+```bash ignore-test
 # Gerar valores aleatórios
 parameters:
 - name: SECRET_KEY
@@ -313,13 +313,13 @@ parameters:
   from: "[a-zA-Z0-9]{32}"
 ```
 
-```bash
+```bash ignore-test
 - name: DATABASE_USER
   generate: expression
   from: "user[0-9]{4}"
 ```
 
-```bash
+```bash ignore-test
 - name: API_KEY
   generate: expression
   from: "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
@@ -430,7 +430,7 @@ oc apply -k app/overlays/dev/
 ```
 
 ### Backup de Projeto Completo
-```bash
+```bash ignore-test
 # Script para backup de projeto
 cat > /tmp/backup-project.sh << 'EOF'
 #!/bin/bash
@@ -438,11 +438,11 @@ PROJECT=$1
 BACKUP_DIR="project-backup-${PROJECT}-$(date +%Y%m%d)"
 ```
 
-```bash
+```bash ignore-test
 mkdir -p ${BACKUP_DIR}
 ```
 
-```bash
+```bash ignore-test
 # Export de cada tipo de recurso
 for resource in dc deployment statefulset daemonset job cronjob \
                 svc route pvc cm secret sa role rolebinding; do
@@ -451,14 +451,14 @@ for resource in dc deployment statefulset daemonset job cronjob \
 done
 ```
 
-```bash
+```bash ignore-test
 # Compress
 tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
 echo "Backup saved to ${BACKUP_DIR}.tar.gz"
 EOF
 ```
 
-```bash
+```bash ignore-test
 chmod +x /tmp/backup-project.sh
 /tmp/backup-project.sh <project-name>
 ```
