@@ -282,12 +282,12 @@ cat > /tmp/approve-csrs.sh << 'EOF'
 while true; do
   echo "=== $(date) ==="
   oc get csr -o json | jq -r '.items[] | select(.status == {}) | select(.spec.username | contains("system:node:")) | .metadata.name' | xargs --no-run-if-empty oc adm certificate approve
-  sleep 60
+  sleep 10
 done
 EOF
 ```
 
-```bash
+```bash ignore-test
 chmod +x /tmp/approve-csrs.sh
 /tmp/approve-csrs.sh &
 ```

@@ -119,13 +119,13 @@ oc edit project development
 ```bash
 # Adicionar label
 # oc label namespace <namespace-name> test-validation=true
-oc label namespace development test-validation=true
+oc label namespace development test-validation=true pod-security.kubernetes.io/enforce=privileged
 ```
 
 ```bash
 # Trocar o valor de uma label existente
 # oc label namespace <namespace-name> test-validation=true --overwrite
-oc label namespace production test-validation=true --overwrite
+oc label namespace production test-validation=true pod-security.kubernetes.io/enforce=privileged --overwrite
 ```
 
 ```bash

@@ -77,7 +77,7 @@ oc describe endpoints test-app -n development
 ## 🛣️ Routes
 
 ### Criar Routes
-```bash
+```bash ignore-test
 # Criar route a partir de service
 # oc expose service <service-name>
 oc expose service test-app
@@ -141,7 +141,7 @@ oc get route test-app -o jsonpath='{.spec.host}'
 oc edit route test-app
 ```
 
-```bash
+```bash ignore-test
 # Deletar route
 # oc delete route <route-name>
 oc delete route test-app

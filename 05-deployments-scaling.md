@@ -114,8 +114,8 @@ oc rollout undo deployment/test-app --to-revision=1
 
 ```bash
 # Ver detalhes de uma revisão
-# oc rollout history <resource-name>/test-app --revision=1
-oc rollout history deployment/test-app --revision=1
+# oc rollout history <resource-name>/test-app --revision=3
+oc rollout history deployment/test-app --revision=3
 ```
 
 ---

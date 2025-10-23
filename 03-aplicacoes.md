@@ -246,20 +246,9 @@ oc patch deployment test-app -n development --type=merge -p '{"spec":{"replicas"
 ```
 
 ```bash
-# Patch para atualizar imagem
-# oc patch deployment <deployment-name> -n <namespace> --type=merge -p '{
-oc patch deployment test-app -n development --type=merge -p '{
-  "spec": {
-    "template": {
-      "spec": {
-        "containers": [{
-          "name": "httpd",
-          "image": "httpd:latest"
-        }]
-      }
-    }
-  }
-}'
+# Patch para atualizar imagem (JSON em uma linha)
+# oc patch deployment <deployment-name> -n <namespace> --type=merge -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"httpd:latest"}]}}}}'
+oc patch deployment test-app -n development --type=merge -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"httpd:latest"}]}}}}'
 ```
 
 ---

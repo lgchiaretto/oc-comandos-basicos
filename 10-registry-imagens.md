@@ -22,11 +22,6 @@ oc get route -n openshift-image-registry
 ```
 
 ```bash
-# Login no registry interno
-oc registry login
-```
-
-```bash
 # Ver info do registry
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 ```

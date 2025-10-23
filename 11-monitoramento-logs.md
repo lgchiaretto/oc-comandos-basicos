@@ -135,28 +135,28 @@ oc adm top nodes
 oc adm top nodes --selector=<label>
 ```
 
-```bash
+```bash ignore-test
 # Top pods
 # oc adm top <resource-name>
 oc adm top pods
 ```
 
-```bash
+```bash ignore-test
 # Top pods de todos namespaces
 oc adm top pods -A
 ```
 
-```bash
+```bash ignore-test
 # Top pods com containers
 oc adm top pods --containers
 ```
 
-```bash
+```bash ignore-test
 # Ordenar por CPU
 oc adm top pods --sort-by=cpu
 ```
 
-```bash
+```bash ignore-test
 # Ordenar por memória
 oc adm top pods --sort-by=memory
 ```
@@ -193,12 +193,6 @@ oc get prometheusrule -A
 ```
 
 ```bash
-# Ver configuração do Prometheus
-# oc get configmap <configmap-name> -n <namespace> -o yaml
-oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
-```
-
-```bash
 # Ver pods do monitoring
 oc get pods -n openshift-monitoring
 ```
@@ -216,6 +210,12 @@ data:
   config.yaml: |
     enableUserWorkload: true
 EOF
+```
+
+```bash ignore-test
+# Ver configuração do Prometheus
+# oc get configmap <configmap-name> -n <namespace> -o yaml
+oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
 ```bash

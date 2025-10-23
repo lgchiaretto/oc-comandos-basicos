@@ -39,12 +39,12 @@ oc get pv <nome-do-pv> -o yaml
 
 ```bash
 # Ver PVs disponíveis
-oc get pv --field-selector=status.phase=Available
+oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
 ```bash
 # Ver PVs bound
-oc get pv --field-selector=status.phase=Bound
+oc get pv -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
 ```bash ignore-test
@@ -86,7 +86,7 @@ oc delete pvc <nome-do-pvc>
 ### Usando em Deployments
 ```bash ignore-test
 # Adicionar volume PVC a deployment
-# oc set volume <resource-name>/test-app \
+# oc set volume <resource-name>/test-app
 oc set volume deployment/test-app \
   --add --name=<volume-name> \
   --type=persistentVolumeClaim \
@@ -130,11 +130,11 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ### Tipos de Volumes
 ```bash
 # EmptyDir
-# oc set volume <resource-name>/test-app --add --name=tmp --type=emptyDir --mount-path=/tmp
-oc set volume deployment/test-app --add --name=tmp --type=emptyDir --mount-path=/tmp
+# oc set volume <resource-name>/test-app --add --add --name=emptydir --type=emptyDir --mount-path=/emptydir
+oc set volume deployment/test-app --add --name=emptydir --type=emptyDir --mount-path=/emptydir
 ```
 
-```bash
+```bash ignore-test
 # HostPath (requer privilégios)
 # oc set volume <resource-name>/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data

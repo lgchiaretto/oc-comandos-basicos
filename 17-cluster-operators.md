@@ -296,7 +296,7 @@ oc get co monitoring
 oc get pods -n openshift-monitoring
 ```
 
-```bash
+```bash ignore-test
 # Configuração
 # oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml

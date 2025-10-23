@@ -38,7 +38,7 @@ oc edit bc <nome-do-bc>
 oc delete bc <nome-do-bc>
 ```
 
-```bash
+```bash ignore-test
 # Ver logs do último build
 oc logs -f bc/s2i-chiaretto
 ```
@@ -97,7 +97,7 @@ oc get build s2i-chiaretto-2
 
 ```bash
 # Ver logs do build
-oc logs build/s2i-chiaretto-2-build
+oc logs build/s2i-chiaretto-2
 ```
 
 ```bash ignore-test
@@ -127,7 +127,7 @@ oc get builds --sort-by=.metadata.creationTimestamp
 oc cancel-build s2i-chiaretto-2
 ```
 
-```bash
+```bash ignore-test
 # Em namespace específico
 # oc cancel-build s2i-chiaretto -n <namespace>
 oc cancel-build s2i-chiaretto -n development

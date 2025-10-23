@@ -55,6 +55,22 @@ oc edit cm test-app
 oc delete cm test-app
 ```
 
+### Exemplos Avançados
+```bash
+# Múltiplos valores literais
+# oc create cm <configmap-name> \
+oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
+```
+
+```bash
+# Ver apenas as chaves
+# oc get cm <configmap-name> -o jsonpath='{.data}'
+oc get cm test-app -o jsonpath='{.data}'
+```
+
+---
+
+
 ### Descrever ConfigMap
 ```bash
 # Ver detalhes de um ConfigMap
@@ -71,30 +87,13 @@ oc describe configmap test-app -n development
 ```bash
 # Exemplo prático
 # oc describe configmap <configmap-name> -n <namespace>
-oc describe configmap test-config -n development
+oc describe configmap test-app -n development
 ```
-
-### Exemplos Avançados
-```bash
-# Múltiplos valores literais
-# oc create cm <configmap-name> \
-oc create cm app-config \
-  --from-literal=database.host=db.example.com \
-  --from-literal=database.port=5432
-```
-
-```bash
-# Ver apenas as chaves
-# oc get cm <configmap-name> -o jsonpath='{.data}'
-oc get cm app-config -o jsonpath='{.data}'
-```
-
----
 
 ## 🔒 Secrets
 
 ### Criar Secrets
-```bash ignore-test
+```bash
 # Secret genérico
 # oc create secret <secret-name> test-app --from-literal=chave=valor
 oc create secret generic test-app --from-literal=chave=valor
@@ -210,22 +209,14 @@ oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ### Como Volumes
 ```bash
 # Patch deployment para montar ConfigMap
-# oc set volume <resource-name>/test-app \
-oc set volume deployment/test-app \
-  --add --name=config-vol \
-  --type=configmap \
-  --configmap-name=test-app \
-  --mount-path=/etc/config
+# oc set volume <resource-name>/test-app
+oc set volume --add --type=configmap deployment/test-app --configmap-name test-app --mount-path=/config
 ```
 
 ```bash
 # Montar Secret
-# oc set volume <resource-name>/test-app \
-oc set volume deployment/test-app \
-  --add --name=secret-vol \
-  --type=secret \
-  --secret-name=test-secret \
-  --mount-path=/etc/secret
+# oc set volume <resource-name>/test-app
+oc set volume --add --type=secret deployment/test-app --secret-name test-app --mount-path=/test-app-secret
 ```
 
 ---
