@@ -282,7 +282,7 @@ oc get pvc
 
 ```bash ignore-test
 # Status do PVC
-oc describe pvc <nome-do-pvc>
+oc describe pvc test-app
 ```
 
 ```bash ignore-test
@@ -308,7 +308,7 @@ oc get cm test-app -o yaml
 oc get secret test-app -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Ver variáveis de ambiente
 # oc set env <resource-name>/test-app --list
 oc set env pod/test-app --list

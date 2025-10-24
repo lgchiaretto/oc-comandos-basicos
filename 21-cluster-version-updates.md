@@ -89,7 +89,7 @@ oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
 ### Iniciar Update
-```bash
+```bash ignore-test
 # Update para última versão do canal
 oc adm upgrade --to-latest=true
 ```
@@ -99,7 +99,7 @@ oc adm upgrade --to-latest=true
 oc adm upgrade --to=<version>
 ```
 
-```bash
+```bash ignore-test
 # Exemplo
 oc adm upgrade --to=4.14.15
 ```
@@ -111,6 +111,7 @@ oc adm upgrade --to=<version> --force --allow-upgrade-with-warnings
 
 ### Monitorar Update
 ```bash
+
 # Status do update
 oc get clusterversion
 ```

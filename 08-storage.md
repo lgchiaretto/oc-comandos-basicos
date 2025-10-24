@@ -65,7 +65,7 @@ oc get persistentvolumeclaims
 
 ```bash ignore-test
 # Descrever PVC
-oc describe pvc <nome-do-pvc>
+oc describe pvc test-app
 ```
 
 ```bash ignore-test
@@ -75,12 +75,12 @@ oc create -f <pvc-definition.yaml>
 
 ```bash ignore-test
 # Ver status da claim
-oc get pvc <nome-do-pvc> -o jsonpath='{.status.phase}'
+oc get pvc test-app -o jsonpath='{.status.phase}'
 ```
 
 ```bash ignore-test
 # Deletar PVC
-oc delete pvc <nome-do-pvc>
+oc delete pvc test-app
 ```
 
 ### Usando em Deployments
@@ -90,7 +90,7 @@ oc delete pvc <nome-do-pvc>
 oc set volume deployment/test-app \
   --add --name=<volume-name> \
   --type=persistentVolumeClaim \
-  --claim-name=<nome-do-pvc> \
+  --claim-name=test-app \
   --mount-path=<path>
 ```
 

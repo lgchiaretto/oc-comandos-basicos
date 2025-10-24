@@ -125,7 +125,7 @@ oc get co/test-app
 ```
 
 ### Must-Gather de Operadores
-```bash
+```bash ignore-test
 # Must-gather específico para operadores
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```

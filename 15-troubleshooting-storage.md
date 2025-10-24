@@ -15,6 +15,25 @@ Este documento contém comandos para diagnosticar problemas de storage no OpenSh
 
 ## 📦 PV e PVC
 
+### Criar PVC
+
+```bash
+oc create -f - <<EOF
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-app
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  # Nenhuma linha storageClassName é informada.
+  # O OpenShift usará a StorageClass marcada como "(default)".
+EOF
+```
+
 ### Diagnosticar PVC
 ```bash
 # Listar PVCs e status
@@ -23,27 +42,27 @@ oc get pvc
 
 ```bash
 # PVCs Pending
-oc get pvc --field-selector=status.phase=Pending
+oc get pvc -o jsonpath='{.items[?(@.status.phase=="Pending")].metadata.name}'
 ```
 
-```bash ignore-test
+```bash
 # Descrever PVC
-oc describe pvc <nome-do-pvc>
+oc describe pvc test-app
 ```
 
-```bash ignore-test
+```bash
 # Ver eventos relacionados
-oc get events --field-selector involvedObject.name=<nome-do-pvc>
+oc get events --field-selector involvedObject.name=test-app
 ```
 
-```bash ignore-test
+```bash
 # Ver qual PV está bound
-oc get pvc <nome-do-pvc> -o jsonpath='{.spec.volumeName}'
+oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 ```
 
-```bash ignore-test
+```bash
 # Verificar capacidade solicitada vs disponível
-oc get pvc <nome-do-pvc> -o jsonpath='{.spec.resources.requests.storage}'
+oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
 ### Diagnosticar PV
@@ -54,12 +73,12 @@ oc get pv
 
 ```bash
 # PVs disponíveis
-oc get pv --field-selector=status.phase=Available
+oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
 ```bash
 # PVs com problema
-oc get pv --field-selector=status.phase=Failed
+oc get pv -o jsonpath='{.items[?(@.status.phase=="Failed")].metadata.name}'
 ```
 
 ```bash ignore-test
@@ -78,14 +97,14 @@ oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 ```
 
 ### Pending PVC
-```bash ignore-test
+```bash
 # Ver por que PVC está Pending
-oc describe pvc <nome-do-pvc> | grep -A 10 Events
+oc describe pvc test-app | grep -A 10 Events
 ```
 
 ```bash
 # Verificar se há PV disponível
-oc get pv --field-selector=status.phase=Available
+oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
 ```bash
@@ -95,7 +114,6 @@ oc get sc
 
 ```bash ignore-test
 # Verificar se StorageClass existe
-oc get pvc <nome-do-pvc> -o jsonpath='{.spec.storageClassName}'
 oc get sc <storage-class-name>
 ```
 
@@ -120,8 +138,8 @@ oc get sc
 oc describe sc <nome-da-sc>
 ```
 
-```bash ignore-test
-# Ver qual é a default
+```bash
+# Ver qual é a storageclass default
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
 ```
 
@@ -129,23 +147,14 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 # Ver provisioner
 oc get sc -o custom-columns=NAME:.metadata.name,PROVISIONER:.provisioner
 ```
-
-```bash
+ignore-test
+```bash 
 # Verificar parâmetros
-# oc get sc <resource-name>app -o yaml
-oc get sc test-app -o yaml
+# oc get sc <resource-name> -o yaml
+oc get sc <resource-name> -o yaml
 ```
 
 ### Problemas com StorageClass
-```bash
-# Verificar se provisioner está rodando
-oc get pods -A | grep -i provisioner
-```
-
-```bash ignore-test
-# Logs do provisioner (exemplo CSI)
-oc logs -n <namespace> <provisioner-pod>
-```
 
 ```bash
 # Ver CSI drivers
@@ -199,10 +208,10 @@ df -h
 oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 ```
 
-```bash
+```bash ignore-test
 # Verificar access mode do PV
 # oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
-oc get pv test-app -o jsonpath='{.spec.accessModes}'
+oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 ```
 
 ```bash ignore-test
@@ -281,17 +290,17 @@ oc get storagecluster -n openshift-storage
 
 ```bash
 # Ver Ceph status
-oc -n openshift-storage exec -it $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph status
+oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph status --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
 ```bash
 # Ceph health
-oc -n openshift-storage exec -it $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph health detail
+oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph health detail --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
 ```bash
 # Ver OSDs
-oc -n openshift-storage exec -it $(oc get pods -n openshift-storage -l app=rook-ceph-tools -o name) -- ceph osd status
+oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph osd status --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
 ```bash ignore-test

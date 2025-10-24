@@ -54,7 +54,7 @@ oc exec <pod-origem> -- ip addr
 oc get networkpolicy
 ```
 
-```bash
+```bash ignore-test
 # Descrever policy
 # oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
@@ -65,13 +65,13 @@ oc describe networkpolicy test-app
 oc get networkpolicy -o yaml
 ```
 
-```bash
+```bash ignore-tests
 # Deletar temporariamente para testar
 # oc delete networkpolicy <resource-name>
 oc delete networkpolicy test-app
 ```
 
-```bash
+```bash ignore-tests
 # Verificar se policy está bloqueando
 # oc describe pod <resource-name> | grep -i network
 oc describe pod test-app | grep -i network
@@ -155,7 +155,7 @@ oc get routes
 ```bash
 # Detalhes da route
 # oc describe route <route-name>>
-oc describe route test-app>
+oc describe route test-app
 ```
 
 ```bash

@@ -49,7 +49,7 @@ oc get cm test-app -o yaml
 oc edit cm test-app
 ```
 
-```bash ignore-test
+```bash
 # Deletar ConfigMap
 # oc delete cm <configmap-name>
 oc delete cm test-app
@@ -58,7 +58,7 @@ oc delete cm test-app
 ### Exemplos Avançados
 ```bash
 # Múltiplos valores literais
-# oc create cm <configmap-name> \
+# oc create cm <configmap-name>
 oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
 ```
 

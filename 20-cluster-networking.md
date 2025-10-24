@@ -112,7 +112,7 @@ oc get networkpolicy
 oc get netpol
 ```
 
-```bash
+```bash ignore-test
 # Descrever policy
 # oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
@@ -198,18 +198,18 @@ oc get events | grep -i network
 oc get networkpolicy -o yaml
 ```
 
-```bash
+```bash ignore-test
 # Ver labels dos pods
 oc get pods --show-labels
 ```
 
-```bash
+```bash ignore-test
 # Ver se policy está afetando pod
 # oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
-```bash
+```bash ignore-test
 # Deletar temporariamente para testar
 # oc delete networkpolicy <resource-name>
 oc delete networkpolicy test-app

@@ -105,8 +105,8 @@ oc get project development -o json
 
 ```bash
 # Exportar definição do projeto
-# oc get project <project-name> -o yaml > projeto.yaml
-oc get project development -o yaml > projeto.yaml
+# oc get project <project-name> -o yaml > /tmp/projeto.yaml
+oc get project development -o yaml > /tmp/projeto.yaml
 ```
 
 ### Editar Projetos
