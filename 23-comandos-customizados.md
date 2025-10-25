@@ -374,15 +374,15 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 ```bash
 # Coletar logs de todos os pods em um arquivo
 for pod in $(oc get pods -o name); do
-  echo "=== $pod ===" >> all-logs.txt
-  oc logs $pod >> all-logs.txt 2>&1
+  echo "=== $pod ===" >> /tmp/all-logs.txt
+  oc logs $pod >> /tmp/all-logs.txt 2>&1
 done
 ```
 
 ```bash ignore-test
 # Coletar logs apenas de pods com erro
 for pod in $(oc get pods --field-selector=status.phase!=Running -o name); do
-  echo "=== $pod ===" >> error-logs.txt
+  echo "=== $pod ===" >> /tmp/error-logs.txt
   oc logs $pod --previous >> error-logs.txt 2>&1
 done
 ```

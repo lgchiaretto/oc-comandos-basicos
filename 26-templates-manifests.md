@@ -389,10 +389,10 @@ EOF
 
 ```bash
 # Adicionar recursos exportados
-oc get deployment myapp -o yaml | sed 's/^/  /' >> app-template.yaml
-echo "---" >> app-template.yaml
-# oc get svc <service-name> -o yaml | sed 's/^/  /' >> app-template.yaml
-oc get svc myapp -o yaml | sed 's/^/  /' >> app-template.yaml
+oc get deployment myapp -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
+echo "---" >> /tmp/app-template.yaml
+# oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
+oc get svc myapp -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 ```
 
 ```bash
