@@ -1,6 +1,0 @@
-error: expected 'logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER]'.
-POD or TYPE/NAME is a required argument for the logs command
-See 'oc logs -h' for help and examples
-error: expected 'logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER]'.
-POD or TYPE/NAME is a required argument for the logs command
-See 'oc logs -h' for help and examples

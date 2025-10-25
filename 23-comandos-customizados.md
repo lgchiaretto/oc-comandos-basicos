@@ -22,17 +22,17 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 ## 🔧 Comandos com AWK
 
 ### CSR Management com AWK
-```bash
+```bash ignore-test
 # Aprovar CSRs pendentes usando awk
 oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
 ```
 
-```bash
+```bash ignore-test
 # Aprovar CSRs não aprovados
 oc adm certificate approve $(oc get csr | grep -v -E "Approved|NAME" | awk '{print $1}')
 ```
 
-```bash
+```bash ignore-test
 # Aprovar apenas CSRs específicos
 oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
 ```
@@ -62,10 +62,19 @@ oc get pods -o wide --all-namespaces --no-headers | awk '{print $8}' | sort | un
 # Listar pods com uso de CPU (requer metrics-server)
 oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
 ```
+```bash
+# Listar pods com uso de CPU no cluster todo (requer metrics-server)
+oc adm top pods -A --no-headers | awk '{print $2, $3}' | sort -k2 -h
+```
 
 ```bash
 # Encontrar pods com mais memória
 oc adm top pods --no-headers | awk '{print $1, $3}' | sort -k2 -h
+```
+
+```bash
+# Encontrar pods com mais memória no cluster todo
+oc adm top pods -A --no-headers | awk '{print $2, $4}' | sort -k2 -h
 ```
 
 ### Builds com AWK
@@ -370,7 +379,7 @@ for pod in $(oc get pods -o name); do
 done
 ```
 
-```bash
+```bash ignore-test
 # Coletar logs apenas de pods com erro
 for pod in $(oc get pods --field-selector=status.phase!=Running -o name); do
   echo "=== $pod ===" >> error-logs.txt

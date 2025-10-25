@@ -90,17 +90,11 @@ oc describe ingresscontroller -n openshift-ingress-operator default
 ```
 
 ### Escalar Ingress Controller
-```bash ignore-test
-# Escalar número de réplicas do IngressController
-oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
-```
-
 ```bash
-# Exemplo prático
-# oc scale ingresscontroller -n <namespace> --replicas=2 default
+# Escalar número de réplicas do IngressController
+# oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ```
-
 ---
 
 ## 🛡️ Network Policies
