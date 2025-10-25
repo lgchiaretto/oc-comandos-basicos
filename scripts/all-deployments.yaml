@@ -1,0 +1,191 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"s2i-chiaretto:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"s2i-chiaretto\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2025-10-25T14:52:58Z"
+    generation: 1
+    labels:
+      app: s2i-chiaretto
+      app.kubernetes.io/component: s2i-chiaretto
+      app.kubernetes.io/instance: s2i-chiaretto
+    name: s2i-chiaretto
+    namespace: development
+    resourceVersion: "176304"
+    uid: e67c1f8d-c1ed-48b0-acb1-be1205cf4dc0
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        deployment: s2i-chiaretto
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: s2i-chiaretto
+      spec:
+        containers:
+        - image: ' '
+          imagePullPolicy: IfNotPresent
+          name: s2i-chiaretto
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    conditions:
+    - lastTransitionTime: "2025-10-25T14:52:58Z"
+      lastUpdateTime: "2025-10-25T14:52:58Z"
+      message: Created new replica set "s2i-chiaretto-68dd5b97f4"
+      reason: NewReplicaSetCreated
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2025-10-25T14:52:58Z"
+      lastUpdateTime: "2025-10-25T14:52:58Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+    - lastTransitionTime: "2025-10-25T14:52:58Z"
+      lastUpdateTime: "2025-10-25T14:52:58Z"
+      message: 'Pod "s2i-chiaretto-68dd5b97f4-cjhfn" is invalid: spec.containers[0].image:
+        Invalid value: " ": must not have leading or trailing whitespace'
+      reason: FailedCreate
+      status: "True"
+      type: ReplicaFailure
+    observedGeneration: 1
+    unavailableReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "20"
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"httpd:latest","namespace":"openshift"},"fieldPath":"spec.template.spec.containers[?(@.name==\"httpd\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: "2025-10-25T14:52:58Z"
+    generation: 26
+    labels:
+      app: test-app
+      app.kubernetes.io/component: test-app
+      app.kubernetes.io/instance: test-app
+    name: test-app
+    namespace: development
+    resourceVersion: "177736"
+    uid: a33a6af9-9138-4f3a-839d-259bee23467f
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 3
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        deployment: test-app
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: test-app
+      spec:
+        containers:
+        - env:
+          - name: DATABASE_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: database.port
+                name: test-app
+          - name: DATABASE_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: database.host
+                name: test-app
+          - name: CHAVE
+            valueFrom:
+              secretKeyRef:
+                key: chave
+                name: test-app
+          - name: minhachave
+            value: valor
+          image: registry.redhat.io/ubi8/httpd-24@sha256:59cbb73918a853486b35817d289d0befdabc7615f91b9819bb4f92902451094a
+          imagePullPolicy: IfNotPresent
+          name: httpd
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+          resources:
+            limits:
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /config
+            name: volume-ssgkh
+          - mountPath: /test-app-secret
+            name: volume-74nbf
+          - mountPath: /emptydir
+            name: emptydir
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: test-app
+          name: volume-ssgkh
+        - name: volume-74nbf
+          secret:
+            defaultMode: 420
+            secretName: test-app
+        - emptyDir: {}
+          name: emptydir
+  status:
+    availableReplicas: 3
+    conditions:
+    - lastTransitionTime: "2025-10-25T14:53:13Z"
+      lastUpdateTime: "2025-10-25T14:53:13Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2025-10-25T14:53:14Z"
+      lastUpdateTime: "2025-10-25T14:53:51Z"
+      message: ReplicaSet "test-app-fd48fb45d" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 26
+    readyReplicas: 3
+    replicas: 3
+    updatedReplicas: 3
+kind: List
+metadata:
+  resourceVersion: ""

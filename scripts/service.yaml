@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2025-10-25T14:52:58Z"
+  labels:
+    app: test-app
+    app.kubernetes.io/component: test-app
+    app.kubernetes.io/instance: test-app
+  name: test-app
+  namespace: development
+  resourceVersion: "176317"
+  uid: f314a117-02fa-42c6-b223-6289d56c444d
+spec:
+  clusterIP: 172.40.78.60
+  clusterIPs:
+  - 172.40.78.60
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 8443-tcp
+    port: 8443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    deployment: test-app
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

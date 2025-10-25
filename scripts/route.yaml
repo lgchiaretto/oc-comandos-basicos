@@ -1,0 +1,35 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  creationTimestamp: "2025-10-25T14:53:00Z"
+  labels:
+    app: test-app
+    app.kubernetes.io/component: test-app
+    app.kubernetes.io/instance: test-app
+  name: test-app
+  namespace: development
+  resourceVersion: "176401"
+  uid: 0c812232-42bc-4e03-9d4e-510987fec609
+spec:
+  host: test-app-development.apps.disco-stu.chiarettolabs.com.br
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: test-app
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: "2025-10-25T14:53:00Z"
+      status: "True"
+      type: Admitted
+    host: test-app-development.apps.disco-stu.chiarettolabs.com.br
+    routerCanonicalHostname: router-default.apps.disco-stu.chiarettolabs.com.br
+    routerName: default
+    wildcardPolicy: None

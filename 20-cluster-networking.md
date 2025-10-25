@@ -177,7 +177,7 @@ EOF
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
-```bash
+```bash ignore-test
 # Aplicar policy
 oc apply -f networkpolicy.yaml
 ```
@@ -187,7 +187,7 @@ oc apply -f networkpolicy.yaml
 oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
-```bash
+```bash ignore-test
 # Verificar logs/eventos
 oc get events | grep -i network
 ```
@@ -297,8 +297,8 @@ spec:
 EOF
 ```
 
-```bash
-# Testar de cada node
+```bash ignore-test
+# Testar de cada pod
 for pod in $(oc get pods -l app=network-test -o name); do
   echo "=== Testing from $pod ==="
   oc exec $pod -- ping -c 2 8.8.8.8

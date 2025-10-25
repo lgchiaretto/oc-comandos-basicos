@@ -164,7 +164,7 @@ oc describe secret test-app -n development
 ```bash
 # Exemplo prático
 # oc describe secret <secret-name> -n <namespace>
-oc describe secret test-secret -n development
+oc describe secret test-app -n development
 ```
 
 ### Link Secrets

@@ -22,59 +22,59 @@ oc get clusteroperators
 oc get co
 ```
 
-```bash ignore-test
-# Ver versões
+```bash
+# Ver somente nome e versao do operator
 oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].version
 ```
 
-```bash ignore-test
+```bash
 # Operators com problema (não Available)
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
-```bash ignore-test
+```bash
 # Operators Degraded
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
-```bash ignore-test
+```bash
 # Operators Progressing
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 ```
 
-```bash
+```bash ignore-test
 # Watch operators
-oc get co
+watch oc get co
 ```
 
 ### Status Detalhado
-```bash ignore-test
+```bash
 # Descrever Cluster Operator
-oc describe co <nome-do-operator>
+oc describe co authentication
 ```
 
-```bash ignore-test
+```bash
 # Ver condições
 # oc get co <resource-name>app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
-oc get co test-app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
+oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 ```
 
-```bash ignore-test
-# Ver mensagem de erro
+```bash
+# Ver mensagem do operator
 # oc get co <resource-name>app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
-oc get co test-app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
+oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
-```bash ignore-test
-# Ver versão
+```bash
+# Ver versão de um operator
 # oc get co <resource-name>app -o jsonpath='{.status.versions[0].version}'
-oc get co test-app -o jsonpath='{.status.versions[0].version}'
+oc get co authentication -o jsonpath='{.status.versions[0].version}'
 ```
 
 ```bash
 # Ver related objects
 # oc get co <resource-name>app -o jsonpath='{.status.relatedObjects}'
-oc get co test-app -o jsonpath='{.status.relatedObjects}'
+oc get co authentication -o jsonpath='{.status.relatedObjects}'
 ```
 
 ---
@@ -85,7 +85,7 @@ oc get co test-app -o jsonpath='{.status.relatedObjects}'
 ```bash ignore-test
 # Ver pods do operator
 # oc get co <resource-name>app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
-oc get co test-app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
+oc get co authentication -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 ```
 
 ```bash ignore-test
@@ -111,7 +111,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 ### Forçar Reconciliation
 ```bash
 # Adicionar annotation para forçar reconcile
-oc annotate co/test-app --overwrite operator.openshift.io/refresh="$(date +%s)"
+oc annotate co/authentication --overwrite operator.openshift.io/refresh="$(date +%s)"
 ```
 
 ```bash ignore-test
@@ -121,7 +121,7 @@ oc delete pod -n <namespace-do-operator> <pod-name>
 
 ```bash
 # Ver progresso
-oc get co/test-app
+oc get co/authentication
 ```
 
 ### Must-Gather de Operadores
@@ -130,7 +130,7 @@ oc get co/test-app
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-```bash
+```bash ignore-test
 # Ver logs dos operators no must-gather
 cd /tmp/must-gather
 find . -name "*operator*" -type d
@@ -181,8 +181,8 @@ oc get pods -n openshift-ingress
 
 ```bash
 # Logs do router
-# oc logs -n <namespace> -l app=router
-oc logs -n openshift-ingress -l app=router
+# oc logs -n <namespace> -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
+oc logs -n openshift-ingress -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
 ```
 
 ```bash
@@ -214,7 +214,7 @@ oc get pods -n openshift-sdn
 ```
 
 ```bash ignore-test
-# Logs
+# Logs operator network
 oc logs -n openshift-network-operator <pod-name>
 ```
 
@@ -353,15 +353,15 @@ oc get operatorgroups -A
 oc get packagemanifests -n openshift-marketplace
 ```
 
-```bash
+```bash ignore-test
 # Buscar operator específico
-oc get packagemanifests -n openshift-marketplace | grep test-app
+oc get packagemanifests -n openshift-marketplace | grep odf-operator
 ```
 
 ```bash
 # Ver channels disponíveis
 # oc describe packagemanifest <resource-name>app -n <namespace>
-oc describe packagemanifest test-app -n openshift-marketplace
+oc describe packagemanifest odf-operator -n openshift-marketplace
 ```
 
 ```bash ignore-test
@@ -386,9 +386,9 @@ oc get csv -n <namespace>
 ```
 
 ### Troubleshoot Operadores OLM
-```bash ignore-test
+```bash
 # Ver status da subscription
-oc describe subscription test-app -n <namespace>
+oc describe subscription -n openshift-local-storage   local-storage-operator
 ```
 
 ```bash ignore-test
@@ -422,9 +422,9 @@ oc logs -n openshift-operator-lifecycle-manager <catalog-operator-pod>
 oc get csv -n <namespace>
 ```
 
-```bash ignore-test
+```bash
 # Approval automático ou manual
-oc get subscription test-app -n <namespace> -o jsonpath='{.spec.installPlanApproval}'
+oc get subscription  -n openshift-local-storage   local-storage-operator -o jsonpath='{.spec.installPlanApproval}'
 ```
 
 ```bash ignore-test

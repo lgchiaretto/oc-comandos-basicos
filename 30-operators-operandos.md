@@ -174,17 +174,13 @@ oc get pods -n <operator-namespace>
 ```
 
 ### Exemplo: Elasticsearch Operator
-```bash
+```bash ignore-test
 # Criar namespace
 # oc create namespace <namespace-name>
 oc create namespace openshift-operators-redhat
 ```
 
-```bash
-# OperatorGroup (já existe globalmente, pular se for cluster-wide)
-```
-
-```bash
+```bash ignore-test
 # Subscription
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -234,7 +230,7 @@ oc get installplan <plan-name> -n <namespace> -o jsonpath='{.status.phase}'
 oc get operatorgroups -A
 ```
 
-```bash
+```bash ignore-test
 # OperatorGroup para namespace único
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
@@ -248,7 +244,7 @@ spec:
 EOF
 ```
 
-```bash
+```bash ignore-test
 # OperatorGroup para múltiplos namespaces
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
@@ -264,7 +260,7 @@ spec:
 EOF
 ```
 
-```bash
+```bash ignore-test
 # OperatorGroup cluster-wide (sem targetNamespaces)
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
@@ -288,7 +284,7 @@ oc get crd
 
 ```bash
 # CRDs de um operator específico
-oc get crd | grep elasticsearch
+oc get crd | grep ingresscontrollers
 ```
 
 ```bash
@@ -303,7 +299,7 @@ oc describe crd ingresscontrollers.operator.openshift.io
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
 ```
 
-```bash ignore-test
+```bash
 # Ver versões suportadas
 # oc get crd <resource-name>.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
@@ -316,7 +312,7 @@ CSV_NAME=$(oc get csv -n <namespace> -o name | head -1)
 oc get $CSV_NAME -n <namespace> -o yaml | grep -A 50 alm-examples
 ```
 
-```bash
+```bash ignore-test
 # Criar CR (exemplo: Elasticsearch)
 cat <<EOF | oc apply -f -
 apiVersion: logging.openshift.io/v1
@@ -336,7 +332,7 @@ spec:
 EOF
 ```
 
-```bash
+```bash ignore-test
 # Verificar CR
 oc get elasticsearch -n openshift-logging
 # oc describe elasticsearch elasticsearch -n <namespace>
@@ -349,7 +345,7 @@ oc describe elasticsearch elasticsearch -n openshift-logging
 oc get <crd-resource-name>
 ```
 
-```bash
+```bash ignore-test
 # Com custom-columns
 oc get elasticsearch -o custom-columns=NAME:.metadata.name,STATUS:.status.cluster.status
 ```

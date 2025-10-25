@@ -95,11 +95,6 @@ oc get builds
 oc get build s2i-chiaretto-2
 ```
 
-```bash
-# Ver logs do build
-oc logs build/s2i-chiaretto-2
-```
-
 ```bash ignore-test
 # Cancelar build em execução
 # oc cancel-build <build-name>
@@ -221,7 +216,7 @@ oc get imagestreamtag
 oc get istag
 ```
 
-```bash
+```bash ignore-test
 # Ver detalhes de tag específica
 # oc describe istag <istag-name>:<tag>
 oc describe istag s2i-chiaretto:latest

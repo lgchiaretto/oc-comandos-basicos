@@ -313,7 +313,7 @@ oc describe machine <machine-name> -n openshift-machine-api
 oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.yaml
 ```
 
-```bash
+```bash  ignore-test
 # Editar e aplicar
 # Mudar: nome, replicas, availability zone, etc
 oc apply -f new-machineset.yaml

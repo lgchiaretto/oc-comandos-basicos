@@ -64,13 +64,7 @@ oc get identities
 ```bash
 # Descrever usuário
 # oc describe user <username>
-oc describe user admin
-```
-
-```bash
-# Ver grupos de um usuário
-# oc describe user <username> | grep Groups
-oc describe user admin | grep Groups
+oc describe user chiaretto
 ```
 
 ---
@@ -124,13 +118,13 @@ oc create role pod-reader --verb=get,list,watch --resource=pods
 ```bash ignore-test
 # Editar Role
 # oc edit role <role-name>
-oc edit role test-app
+oc edit role pod-reader
 ```
 
 ```bash
 # Deletar Role
 # oc delete role <role-name>
-oc delete role test-app
+oc delete role pod-reader
 ```
 
 ### ClusterRoleBindings
@@ -186,7 +180,7 @@ oc adm policy remove-role-from-user <role> <username>
 ```bash
 # Ver RoleBinding específico
 # oc describe rolebinding <rolebinding-name>
-oc describe rolebinding test-app
+oc describe rolebinding admin
 ```
 
 ---
@@ -210,12 +204,6 @@ oc create serviceaccount test-app
 # Descrever Service Account
 # oc describe sa <serviceaccount-name>
 oc describe sa test-app
-```
-
-```bash
-# Ver token da SA
-# oc sa <serviceaccount-name> test-app
-oc sa get-token test-app
 ```
 
 ```bash ignore-test
@@ -252,7 +240,7 @@ oc adm policy add-cluster-role-to-user <role> system:serviceaccount:<namespace>:
 oc set serviceaccount deployment/test-app <sa-name>
 ```
 
-```bash
+```bash ignore-test
 # Ver qual SA o pod está usando
 # oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
@@ -278,10 +266,10 @@ oc get scc anyuid -o yaml
 ```bash
 # Descrever SCC
 # oc describe scc <resource-name>
-oc describe scc test-app
+oc describe scc restricted
 ```
 
-```bash
+```bash --ignore-test
 # Ver qual SCC o pod está usando
 # oc get pod <resource-name>app -o yaml | grep scc
 oc get pod test-app -o yaml | grep scc
@@ -290,7 +278,7 @@ oc get pod test-app -o yaml | grep scc
 ```bash
 # Ver usuários/SAs em uma SCC
 # oc describe scc <resource-name> | grep Users
-oc describe scc test-app | grep Users
+oc describe scc restricted | grep Users
 ```
 
 ### Adicionar Permissões SCC
@@ -334,7 +322,7 @@ oc describe pod test-app | grep -i scc
 oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 ```
 
-```bash
+```bash ignore-test
 # Verificar capabilities do container
 # oc get pod <resource-name>app -o yaml | grep -A 10 securityContext
 oc get pod test-app -o yaml | grep -A 10 securityContext

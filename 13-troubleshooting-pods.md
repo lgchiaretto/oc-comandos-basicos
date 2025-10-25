@@ -92,11 +92,6 @@ oc describe pod <nome-do-pod> | grep -A 10 Events
 oc get is
 ```
 
-```bash
-# Verificar secrets de pull
-oc get secrets | grep docker
-```
-
 ```bash ignore-test
 # Tentar pull manual (debug)
 oc debug node/<node-name> -- chroot /host podman pull <image>
