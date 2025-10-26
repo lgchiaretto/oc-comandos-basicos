@@ -41,7 +41,7 @@ cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: Pod
 metadata:
-  name: my-pod1
+  name: my-pod
 spec:
   securityContext:
     runAsUser: 1000
