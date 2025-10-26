@@ -6,12 +6,11 @@ Este documento contém comandos para formatar e extrair informações específic
 
 ## 📋 Índice
 
-1. [Jsonpath](#jsonpath)
-2. [Go-Template](#go-template)
-3. [JQ - JSON Processor](#jq---json-processor)
-4. [Custom Columns](#custom-columns)
-5. [Formatação de Saída](#formatação-de-saída)
-
+1. [🔍 Jsonpath](#jsonpath)
+2. [📝 Go-Template](#go-template)
+3. [🔧 JQ - JSON Processor](#jq-json-processor)
+4. [📊 Custom Columns](#custom-columns)
+5. [🎨 Formatação de Saída](#formatacao-de-saida)
 ---
 
 ## 🔍 Jsonpath
@@ -396,6 +395,14 @@ alias okpy='oc get pods -o yaml'
 # Custom output format
 alias okpf='oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP,NODE:.spec.nodeName'
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/index)
 
 ---
 

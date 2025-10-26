@@ -6,11 +6,10 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 
 ## 📋 Índice
 
-1. [Must-Gather Básico](#must-gather-básico)
-2. [Must-Gather Específico](#must-gather-específico)
-3. [Análise de Logs](#análise-de-logs)
-4. [Inspect](#inspect)
-
+1. [🩺 Must-Gather Básico](#must-gather-basico)
+2. [🎯 Must-Gather Específico](#must-gather-especifico)
+3. [🔬 Inspect](#inspect)
+4. [🛠 ️ Diagnósticos Rápidos](#diagnosticos-rapidos)
 ---
 
 ## 🩺 Must-Gather Básico
@@ -162,6 +161,15 @@ EOF
 chmod +x /tmp/quick-diag.sh
 /tmp/quick-diag.sh > /tmp/cluster-status.txt
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Support](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/index)
+- [Gathering cluster data](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/gathering-cluster-data)
 
 ---
 

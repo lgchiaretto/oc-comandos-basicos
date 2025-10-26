@@ -6,15 +6,15 @@ Este documento contém comandos avançados usando field selectors, label selecto
 
 ## 📋 Índice
 
-1. [Field Selectors Básicos](#field-selectors-básicos)
-2. [Field Selectors Avançados](#field-selectors-avançados)
-3. [Label Selectors](#label-selectors)
-4. [Combinação de Filtros](#combinação-de-filtros)
-5. [Filtros com GREP ](#filtros-com-grep-e-grep -E)
-6. [Ordenação e Paginação](#ordenação-e-paginação)
-7. [Storage e PVCs](#storage-e-pvcs)
-8. [Permissões](#permissões)
-
+1. [🎯 Field Selectors Básicos](#field-selectors-basicos)
+2. [🚀 Field Selectors Avançados](#field-selectors-avancados)
+3. [🏷 ️ Label Selectors](#label-selectors)
+4. [🔗 Combinação de Filtros](#combinacao-de-filtros)
+5. [🔎 Filtros com GREP](#filtros-com-grep)
+6. [📊 Ordenação e Paginação](#ordenacao-e-paginacao)
+7. [💡 Padrões Úteis](#padroes-uteis)
+8. [🛠 ️ Troubleshooting com Filtros](#troubleshooting-com-filtros)
+9. [📚 Recursos Adicionais](#recursos-adicionais)
 ---
 
 ## 🎯 Field Selectors Básicos
@@ -474,6 +474,14 @@ oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E
 
 - **Field Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/
 - **Label Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/index)
 
 ---
 

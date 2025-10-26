@@ -6,11 +6,10 @@ Este documento contém comandos para gerenciar e diagnosticar Cluster Operators 
 
 ## 📋 Índice
 
-1. [Verificar Status](#verificar-status)
-2. [Troubleshooting](#troubleshooting)
-3. [Operadores Principais](#operadores-principais)
-4. [OLM (Operator Lifecycle Manager)](#olm-operator-lifecycle-manager)
-
+1. [🔍 Verificar Status](#verificar-status)
+2. [🔧 Troubleshooting](#troubleshooting)
+3. [⚡ Operadores Principais](#operadores-principais)
+4. [🎯 OLM (Operator Lifecycle Manager)](#olm-operator-lifecycle-manager)
 ---
 
 ## 🔍 Verificar Status
@@ -443,6 +442,15 @@ oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"install
 # Ver install plans pendentes
 oc get installplan -n <namespace> -o json | jq -r '.items[] | select(.spec.approved==false) | .metadata.name'
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Operators](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/index)
+- [Cluster Operators reference](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/cluster-operators-reference)
 
 ---
 

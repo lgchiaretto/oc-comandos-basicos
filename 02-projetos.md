@@ -6,12 +6,17 @@ Este documento contém comandos para criar, listar e gerenciar projetos (namespa
 
 ## 📋 Índice
 
-1. [Conceitos](#conceitos)
-2. [Criação e Listagem](#criação-e-listagem)
-3. [Gerenciamento](#gerenciamento)
-4. [Node Selectors](#node-selectors)
-5. [Templates de Projeto](#templates-de-projeto)
-
+1. [💡 Conceitos](#conceitos)
+2. [🆕 Criação e Listagem](#criacao-e-listagem)
+3. [🔧 Gerenciamento](#gerenciamento)
+4. [🎯 Node Selectors](#node-selectors)
+5. [🔧 Gerenciamento de Projetos](#gerenciamento-de-projetos)
+6. [📄 Templates de Projeto](#templates-de-projeto)
+7. [📊 Informações e Status](#informacoes-e-status)
+8. [🔍 Busca e Filtros](#busca-e-filtros)
+9. [🛡 ️ Segurança e Permissões](#seguranca-e-permissoes)
+10. [🎓 Exemplos Práticos](#exemplos-praticos)
+11. [💡 Boas Práticas](#boas-praticas)
 ---
 
 ## 💡 Conceitos
@@ -501,6 +506,14 @@ sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 - ✅ Use RBAC para controlar acesso
 - ✅ Revise permissões regularmente
 - ✅ Delete projetos não utilizados
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Working with projects](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/projects)
 
 ---
 

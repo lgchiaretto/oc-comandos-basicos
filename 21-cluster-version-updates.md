@@ -6,11 +6,10 @@ Este documento contém comandos para gerenciar versão e atualizações do clust
 
 ## 📋 Índice
 
-1. [Cluster Version](#cluster-version)
-2. [Updates](#updates)
-3. [Update Channels](#update-channels)
-4. [Troubleshooting Updates](#troubleshooting-updates)
-
+1. [📌 Cluster Version](#cluster-version)
+2. [⬆️ Updates](#updates)
+3. [📺 Update Channels](#update-channels)
+4. [🔧 Troubleshooting Updates](#troubleshooting-updates)
 ---
 
 ## 📌 Cluster Version
@@ -354,6 +353,14 @@ CHANNEL=$(oc get clusterversion version -o jsonpath='{.spec.channel}')
 curl -sH "Accept: application/json" \
   "https://api.openshift.com/api/upgrades_info/v1/graph?channel=${CHANNEL}&id=${CLUSTER_ID}"
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Updating clusters](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating/index)
 
 ---
 

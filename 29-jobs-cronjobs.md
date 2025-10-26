@@ -6,11 +6,9 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 
 ## 📋 Índice
 
-1. [Jobs](#jobs)
-2. [CronJobs](#cronjobs)
-3. [Troubleshooting](#troubleshooting)
-4. [Exemplos Práticos](#exemplos-práticos)
-
+1. [🏃 Jobs](#jobs)
+2. [⏰ CronJobs](#cronjobs)
+3. [🔧 Troubleshooting](#troubleshooting)
 ---
 
 ## 🏃 Jobs
@@ -18,9 +16,9 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ### Criar Jobs
 ```bash
 # Job simples
-# oc create job test-app-job --image=busybox -- echo "Hello World"
-# oc create job <job-name> --image=busybox -- echo "Hello World"
-oc create job test-app-job --image=busybox -- echo "Hello World"
+# oc create job test-app-job --image=nicolaka/netshoot -- echo "Hello World"
+# oc create job <job-name> --image=nicolaka/netshoot -- echo "Hello World"
+oc create job test-app-job --image=nicolaka/netshoot -- echo "Hello World"
 ```
 
 ```bash
@@ -35,7 +33,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: busybox
+        image: nicolaka/netshoot
         command: ["echo", "Hello from Job"]
       restartPolicy: Never
   backoffLimit: 4
@@ -54,7 +52,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: busybox
+        image: nicolaka/netshoot
         command: ["sh", "-c", "exit 1"]  # Vai falhar
       restartPolicy: Never
   backoffLimit: 3  # Tentar 3 vezes
@@ -110,7 +108,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: busybox
+        image: nicolaka/netshoot
         command: ["sh", "-c", "echo Processing && sleep 5"]
       restartPolicy: Never
 EOF
@@ -137,7 +135,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: busybox
+        image: nicolaka/netshoot
         command: ["echo", "This job will be deleted"]
       restartPolicy: Never
 EOF
@@ -150,8 +148,8 @@ EOF
 ### Criar CronJobs
 ```bash
 # CronJob simples
-# oc create cronjob <job-name> --image=busybox --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
-oc create cronjob test-app-job --image=busybox --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
+# oc create cronjob <job-name> --image=nicolaka/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
+oc create cronjob test-app-job --image=nicolaka/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 ```
 
 ```bash ignore-test
@@ -169,7 +167,7 @@ spec:
         spec:
           containers:
           - name: job
-            image: busybox
+            image: nicolaka/netshoot
             command: ["sh", "-c", "date; echo Hello from CronJob"]
           restartPolicy: OnFailure
 EOF
@@ -391,6 +389,14 @@ spec:
           restartPolicy: OnFailure
 EOF
 ```
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Jobs and CronJobs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-jobs)
+
 ---
 
 ## 📖 Navegação

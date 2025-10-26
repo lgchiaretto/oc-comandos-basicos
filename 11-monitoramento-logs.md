@@ -6,46 +6,45 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 
 ## 📋 Índice
 
-1. [Logs](#logs)
-2. [Eventos](#eventos)
-3. [Métricas e Top](#métricas-e-top)
-4. [Prometheus e Alertas](#prometheus-e-alertas)
-
+1. [📝 Logs](#logs)
+2. [🔔 Eventos](#eventos)
+3. [📈 Métricas e Top](#metricas-e-top)
+4. [🔥 Prometheus e Alertas](#prometheus-e-alertas)
 ---
 
 ## 📝 Logs
 
 ### Logs de Pods
-```bash ignore-test
+```bash
 # Ver logs de pod
-oc logs <nome-do-pod>
+oc logs my-pod
 ```
 
 ```bash ignore-test
 # Seguir logs em tempo real
-oc logs -f <nome-do-pod>
+oc logs -f my-pod
 ```
 
-```bash ignore-test
+```bash
 # Logs de container específico
-oc logs <nome-do-pod> -c <nome-do-container>
+oc logs my-pod -c my-container
 ```
 
-```bash ignore-test
+```bash
 # Últimas N linhas
-oc logs <nome-do-pod> --tail=100
+oc logs my-pod --tail=100
 ```
 
-```bash ignore-test
+```bash
 # Logs desde tempo específico
-oc logs <nome-do-pod> --since=1h
-oc logs <nome-do-pod> --since-time=2024-01-01T00:00:00Z
+oc logs my-pod --since=1h
+oc logs my-pod --since-time=2025-01-01T00:00:00Z
 ```
 
-```bash ignore-test
+```bash
 # Logs anteriores (pod crashado)
-oc logs <nome-do-pod> --previous
-oc logs <nome-do-pod> -p
+oc logs my-pod --previous
+oc logs my-pod -p
 ```
 
 ```bash
@@ -53,9 +52,9 @@ oc logs <nome-do-pod> -p
 oc logs deployment/test-app
 ```
 
-```bash ignore-test
+```bash
 # Logs com timestamps
-oc logs <nome-do-pod> --timestamps
+oc logs my-pod --timestamps
 ```
 
 ### Logs do Cluster
@@ -99,9 +98,9 @@ oc get events -n <namespace>
 oc get events -A
 ```
 
-```bash ignore-test
+```bash
 # Eventos de um recurso específico
-oc get events --field-selector involvedObject.name=<nome-do-pod>
+oc get events --field-selector involvedObject.name=my-pod
 ```
 
 ```bash
@@ -132,7 +131,7 @@ oc adm top nodes
 
 ```bash ignore-test
 # Top nodes com labels
-oc adm top nodes --selector=<label>
+oc adm top nodes --selector=node-role.kubernetes.io/worker=""
 ```
 
 ```bash ignore-test
@@ -161,9 +160,9 @@ oc adm top pods --sort-by=cpu
 oc adm top pods --sort-by=memory
 ```
 
-```bash ignore-test
+```bash
 # Top de um pod específico
-oc adm top pod <nome-do-pod>
+oc adm top pod my-pod
 ```
 
 ### Métricas Detalhadas
@@ -246,6 +245,15 @@ spec:
       app: <nome-do-app>
 EOF
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Monitoring](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring/index)
+- [Logging](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/logging/index)
 
 ---
 

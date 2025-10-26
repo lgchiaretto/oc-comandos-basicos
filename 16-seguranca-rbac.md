@@ -6,12 +6,11 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 
 ## 📋 Índice
 
-1. [RBAC Básico](#rbac-básico)
-2. [Roles e RoleBindings](#roles-e-rolebindings)
-3. [Service Accounts](#service-accounts)
-4. [Security Context Constraints (SCC)](#security-context-constraints-scc)
-5. [Policies e Auditoria](#policies-e-auditoria)
-
+1. [👥 RBAC Básico](#rbac-basico)
+2. [🎭 Roles e RoleBindings](#roles-e-rolebindings)
+3. [🤖 Service Accounts](#service-accounts)
+4. [🛡 ️ Security Context Constraints (SCC)](#security-context-constraints-scc)
+5. [📜 Policies e Auditoria](#policies-e-auditoria)
 ---
 
 ## 👥 RBAC Básico
@@ -387,6 +386,15 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 # Criar secret TLS
 oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Authentication and authorization](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/index)
+- [Using RBAC](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/using-rbac)
 
 ---
 

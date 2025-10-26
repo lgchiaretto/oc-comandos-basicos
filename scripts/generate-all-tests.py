@@ -105,8 +105,9 @@ class TestGenerator:
                 i += 1
                 continue
 
-            # If line starts a command
-            if line.lstrip().startswith(self.OC_COMMAND_PREFIX):
+            # Check if line contains 'oc ' command (including pipes and here-docs)
+            # Matches: oc ..., cat <<EOF | oc ..., echo ... | oc ...
+            if self.OC_COMMAND_PREFIX in line:
                 # Start accumulating possible multi-line command
                 cmd_lines = [line]
 
@@ -137,8 +138,8 @@ class TestGenerator:
                         if not nxt.strip() or nxt.lstrip().startswith('#'):
                             break
 
-                        # If next line starts with another 'oc ' it's a new command -> stop
-                        if nxt.lstrip().startswith(self.OC_COMMAND_PREFIX):
+                        # If next line contains 'oc ' it's a new command -> stop
+                        if self.OC_COMMAND_PREFIX in nxt:
                             break
 
                         # If next line is indented (common continuation) or starts with pipe/operators, include

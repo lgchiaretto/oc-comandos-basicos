@@ -6,10 +6,9 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 
 ## 📋 Índice
 
-1. [ConfigMaps](#configmaps)
-2. [Secrets](#secrets)
-3. [Usando em Pods](#usando-em-pods)
-
+1. [📝 ConfigMaps](#configmaps)
+2. [🔒 Secrets](#secrets)
+3. [🎯 Usando em Pods](#usando-em-pods)
 ---
 
 ## 📝 ConfigMaps
@@ -218,6 +217,15 @@ oc set volume --add --type=configmap deployment/test-app --configmap-name test-a
 # oc set volume <resource-name>/test-app
 oc set volume --add --type=secret deployment/test-app --secret-name test-app --mount-path=/test-app-secret
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [ConfigMaps](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-pods-configmaps)
+- [Secrets](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-pods-secrets)
 
 ---
 

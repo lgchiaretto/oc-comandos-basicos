@@ -6,17 +6,15 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 
 ## 📋 Índice
 
-1. [Comandos com AWK](#comandos-com-awk)
-2. [Comandos com JQ](#comandos-com-jq)
-3. [Comandos com GREP ](#comandos-com-grep-e-egrep)
-4. [Pipes Complexos](#pipes-complexos)
-5. [Automação e Scripts](#automação-e-scripts)
-6. [Análise de Cluster Operators](#análise-de-cluster-operators)
-7. [Análise de API Requests](#análise-de-api-requests)
-8. [Extração de Certificados](#extração-de-certificados)
-9. [Storage e PVCs](#storage-e-pvcs)
-10. [Permissões e Validações](#permissões-e-validações)
-
+1. [🔧 Comandos com AWK](#comandos-com-awk)
+2. [📊 Comandos com JQ](#comandos-com-jq)
+3. [🔍 Comandos com GREP](#comandos-com-grep)
+4. [🔄 Pipes Complexos](#pipes-complexos)
+5. [🤖 Automação e Scripts](#automacao-e-scripts)
+6. [📈 Análise de Cluster Operators](#analise-de-cluster-operators)
+7. [🔐 Extração de Certificados](#extracao-de-certificados)
+8. [💡 Dicas e Truques](#dicas-e-truques)
+9. [📚 Recursos Adicionais](#recursos-adicionais)
 ---
 
 ## 🔧 Comandos com AWK
@@ -543,6 +541,14 @@ echo "=== Non-Ready Nodes ===" && oc get nodes | grep -v "Ready"
 - **JQ Manual**: https://stedolan.github.io/jq/manual/
 - **AWK Tutorial**: https://www.gnu.org/software/gawk/manual/
 - **GREP Guide**: https://www.gnu.org/software/grep/manual/
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/index)
 
 ---
 

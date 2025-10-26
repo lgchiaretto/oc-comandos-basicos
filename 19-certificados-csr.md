@@ -6,11 +6,10 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 
 ## 📋 Índice
 
-1. [CSR (Certificate Signing Requests)](#csr-certificate-signing-requests)
-2. [Certificados do Cluster](#certificados-do-cluster)
-3. [Certificados de API](#certificados-de-api)
-4. [Troubleshooting](#troubleshooting)
-
+1. [📝 CSR (Certificate Signing Requests)](#csr-certificate-signing-requests)
+2. [🔒 Certificados do Cluster](#certificados-do-cluster)
+3. [🌐 Certificados de API](#certificados-de-api)
+4. [🔧 Troubleshooting](#troubleshooting)
 ---
 
 ## 📝 CSR (Certificate Signing Requests)
@@ -296,6 +295,14 @@ chmod +x /tmp/approve-csrs.sh
 # Verificar CSRs antigos para limpeza
 oc get csr -o json | jq -r '.items[] | select(.metadata.creationTimestamp < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete csr
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Certificate management](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance/certificate-management)
 
 ---
 

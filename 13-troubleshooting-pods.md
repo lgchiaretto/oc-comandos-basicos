@@ -6,11 +6,10 @@ Este documento contém comandos para diagnosticar problemas com pods no OpenShif
 
 ## 📋 Índice
 
-1. [Diagnóstico Básico](#diagnóstico-básico)
-2. [Pods com Problemas](#pods-com-problemas)
-3. [Debug de Containers](#debug-de-containers)
-4. [Problemas Comuns](#problemas-comuns)
-
+1. [🔍 Diagnóstico Básico](#diagnostico-basico)
+2. [🚨 Pods com Problemas](#pods-com-problemas)
+3. [🔧 Debug de Containers](#debug-de-containers)
+4. [🩹 Problemas Comuns](#problemas-comuns)
 ---
 
 ## 🔍 Diagnóstico Básico
@@ -36,45 +35,45 @@ oc get pods -A --field-selector=status.phase=Failed
 oc get pods --field-selector=status.phase=Pending
 ```
 
-```bash ignore-test
+```bash
 # Descrever pod
-oc describe pod <nome-do-pod>
+oc describe pod my-pod
 ```
 
 ```bash ignore-test
 # Ver eventos relacionados
-oc get events --field-selector involvedObject.name=<nome-do-pod>
+oc get events --field-selector involvedObject.name=my-pod
 ```
 
-```bash ignore-test
+```bash
 # Status detalhado
-oc get pod <nome-do-pod> -o yaml
+oc get pod my-pod -o yaml
 ```
 
 ### Verificar Logs
 ```bash ignore-test
 # Logs do pod
-oc logs <nome-do-pod>
+oc logs my-pod
 ```
 
 ```bash ignore-test
 # Logs de container específico
-oc logs <nome-do-pod> -c httpd
+oc logs my-pod -c httpd
 ```
 
 ```bash ignore-test
 # Logs do container anterior (crashado)
-oc logs <nome-do-pod> --previous
+oc logs my-pod --previous
 ```
 
 ```bash ignore-test
 # Seguir logs em tempo real
-oc logs -f <nome-do-pod>
+oc logs -f my-pod
 ```
 
 ```bash ignore-test
 # Últimas 100 linhas
-oc logs <nome-do-pod> --tail=100
+oc logs my-pod --tail=100
 ```
 
 ---
@@ -84,7 +83,7 @@ oc logs <nome-do-pod> --tail=100
 ### ImagePullBackOff
 ```bash ignore-test
 # Ver erro de pull
-oc describe pod <nome-do-pod> | grep -A 10 Events
+oc describe pod my-pod | grep -A 10 Events
 ```
 
 ```bash
@@ -99,23 +98,23 @@ oc debug node/<node-name> -- chroot /host podman pull <image>
 
 ```bash ignore-test
 # Verificar image na spec
-oc get pod <nome-do-pod> -o jsonpath='{.spec.containers[0].image}'
+oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
 ```
 
 ### CrashLoopBackOff
 ```bash ignore-test
 # Ver logs do crash
-oc logs <nome-do-pod> --previous
+oc logs my-pod --previous
 ```
 
 ```bash ignore-test
 # Ver motivo do crash
-oc describe pod <nome-do-pod> | grep -i "exit code"
+oc describe pod my-pod | grep -i "exit code"
 ```
 
 ```bash ignore-test
 # Verificar liveness/readiness probes
-oc get pod <nome-do-pod> -o yaml | grep -A 10 livenessProbe
+oc get pod my-pod -o yaml | grep -A 10 livenessProbe
 ```
 
 ```bash
@@ -134,12 +133,12 @@ oc debug deployment/test-app
 ### Pending (Não Agendado)
 ```bash ignore-test
 # Ver eventos de scheduling
-oc describe pod <nome-do-pod> | grep -A 20 Events
+oc describe pod my-pod | grep -A 20 Events
 ```
 
 ```bash ignore-test
 # Verificar resources requests
-oc get pod <nome-do-pod> -o yaml | grep -A 5 resources
+oc get pod my-pod -o yaml | grep -A 5 resources
 ```
 
 ```bash
@@ -155,7 +154,7 @@ oc get nodes
 
 ```bash ignore-test
 # Verificar node selectors
-oc get pod <nome-do-pod> -o yaml | grep nodeSelector
+oc get pod my-pod -o yaml | grep nodeSelector
 ```
 
 ```bash
@@ -166,12 +165,12 @@ oc describe nodes | grep Taints
 ### OOMKilled
 ```bash ignore-test
 # Verificar limite de memória
-oc get pod <nome-do-pod> -o jsonpath='{.spec.containers[0].resources.limits.memory}'
+oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 ```
 
 ```bash ignore-test
 # Ver uso atual
-oc adm top pod <nome-do-pod>
+oc adm top pod my-pod
 ```
 
 ```bash
@@ -182,12 +181,12 @@ oc set resources deployment/test-app --limits=memory=2Gi
 
 ```bash ignore-test
 # Ver histórico de restarts
-oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].restartCount}'
+oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
 ```bash ignore-test
 # Ver motivo da última terminação
-oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
+oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
 ```
 
 ---
@@ -197,7 +196,7 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.containerStatuses[0].lastState.te
 ### Debug Interativo
 ```bash ignore-test
 # Criar pod de debug
-oc debug pod/<nome-do-pod>
+oc debug pod/my-pod
 ```
 
 ```bash ignore-test
@@ -213,51 +212,51 @@ oc debug node/<node-name>
 ### Executar Comandos
 ```bash ignore-test
 # Shell no container
-oc rsh <nome-do-pod>
+oc rsh my-pod
 ```
 
 ```bash ignore-test
 # Comando específico
-oc exec <nome-do-pod> -- <comando>
+oc exec my-pod -- <comando>
 ```
 
 ```bash ignore-test
 # Em container específico
-oc exec <nome-do-pod> -c <container> -- <comando>
+oc exec my-pod -c <container> -- <comando>
 ```
 
 ```bash ignore-test
 # Verificar conectividade
-oc exec <nome-do-pod> -- curl -v <url>
-oc exec <nome-do-pod> -- ping <host>
+oc exec my-pod -- curl -v <url>
+oc exec my-pod -- ping <host>
 ```
 
 ```bash ignore-test
 # Verificar DNS
-oc exec <nome-do-pod> -- nslookup <service>
-oc exec <nome-do-pod> -- cat /etc/resolv.conf
+oc exec my-pod -- nslookup <service>
+oc exec my-pod -- cat /etc/resolv.conf
 ```
 
 ```bash ignore-test
 # Verificar filesystem
-oc exec <nome-do-pod> -- df -h
-oc exec <nome-do-pod> -- ls -la /path
+oc exec my-pod -- df -h
+oc exec my-pod -- ls -la /path
 ```
 
 ### Port Forward para Debug
 ```bash ignore-test
 # Forward de porta
-oc port-forward <nome-do-pod> 8080:8080
+oc port-forward my-pod 8080:8080
 ```
 
 ```bash ignore-test
 # Múltiplas portas
-oc port-forward <nome-do-pod> 8080:8080 9090:9090
+oc port-forward my-pod 8080:8080 9090:9090
 ```
 
 ```bash ignore-test
 # Em background
-oc port-forward <nome-do-pod> 8080:8080 &
+oc port-forward my-pod 8080:8080 &
 ```
 
 ```bash
@@ -284,12 +283,12 @@ oc describe pvc test-app
 
 ```bash ignore-test
 # Verificar mounts no pod
-oc describe pod <nome-do-pod> | grep -A 10 Mounts
+oc describe pod my-pod | grep -A 10 Mounts
 ```
 
 ```bash ignore-test
 # Verificar permissões
-oc exec <nome-do-pod> -- ls -la /mount/path
+oc exec my-pod -- ls -la /mount/path
 ```
 
 ### ConfigMaps e Secrets
@@ -313,7 +312,7 @@ oc set env pod/test-app --list
 
 ```bash ignore-test
 # Verificar dentro do pod
-oc exec <nome-do-pod> -- env | sort
+oc exec my-pod -- env | sort
 ```
 
 ### Network Issues
@@ -330,17 +329,17 @@ oc get endpoints test-app
 
 ```bash ignore-test
 # Teste de conectividade
-oc exec <nome-do-pod> -- curl -v <service-name>:<port>
+oc exec my-pod -- curl -v <service-name>:<port>
 ```
 
 ```bash ignore-test
 # DNS lookup
-oc exec <nome-do-pod> -- nslookup <service-name>
+oc exec my-pod -- nslookup <service-name>
 ```
 
 ```bash ignore-test
 # Ver rede do pod
-oc get pod <nome-do-pod> -o jsonpath='{.status.podIP}'
+oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
 ### Permissões e Security
@@ -351,7 +350,7 @@ oc get sa
 
 ```bash ignore-test
 # Ver SCC do pod
-oc get pod <nome-do-pod> -o yaml | grep scc
+oc get pod my-pod -o yaml | grep scc
 ```
 
 ```bash ignore-test
@@ -361,8 +360,17 @@ oc adm policy who-can <verbo> <recurso>
 
 ```bash ignore-test
 # Ver runAsUser
-oc get pod <nome-do-pod> -o jsonpath='{.spec.securityContext.runAsUser}'
+oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Troubleshooting](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/troubleshooting)
+- [Investigating pod issues](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/troubleshooting-operating-issues#investigating-pod-issues_troubleshooting-operating-issues)
 
 ---
 

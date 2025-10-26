@@ -6,17 +6,10 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 
 ## 📋 Índice
 
-- [💾 Storage e Volumes](#-storage-e-volumes)
-  - [📋 Índice](#-índice)
-  - [🗄️ PersistentVolumes (PV)](#️-persistentvolumes-pv)
-  - [📦 PersistentVolumeClaims (PVC)](#-persistentvolumeclaims-pvc)
-    - [Criar e Gerenciar](#criar-e-gerenciar)
-    - [Usando em Deployments](#usando-em-deployments)
-  - [🏪 StorageClasses](#-storageclasses)
-  - [📁 Volumes em Pods](#-volumes-em-pods)
-    - [Tipos de Volumes](#tipos-de-volumes)
-  - [📖 Navegação](#-navegação)
-
+1. [🗄 ️ PersistentVolumes (PV)](#persistentvolumes-pv)
+2. [📦 PersistentVolumeClaims (PVC)](#persistentvolumeclaims-pvc)
+3. [🏪 StorageClasses](#storageclasses)
+4. [📁 Volumes em Pods](#volumes-em-pods)
 ---
 
 ## 🗄️ PersistentVolumes (PV)
@@ -152,10 +145,19 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 oc set volume deployment/test-app
 ```
 
-```bash ignore-test
+```bash
 # Ver volumes montados em pod
-oc describe pod <nome-do-pod> | grep -A 5 Volumes
+oc describe pod my-pod | grep -A 5 Volumes
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/index)
+- [Understanding persistent storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/understanding-persistent-storage)
 
 ---
 

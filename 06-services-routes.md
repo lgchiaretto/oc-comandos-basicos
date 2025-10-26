@@ -6,11 +6,9 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 
 ## 📋 Índice
 
-1. [Services](#services)
-2. [Routes](#routes)
-3. [TLS e Certificados](#tls-e-certificados)
-4. [Endpoints](#endpoints)
-
+1. [🔌 Services](#services)
+2. [🔍 Investigação de Conectividade](#investigacao-de-conectividade)
+3. [🛣 ️ Routes](#routes)
 ---
 
 ## 🔌 Services
@@ -151,6 +149,15 @@ oc delete route test-app
 # Ver routes em formato wide
 oc get routes -o wide
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Networking](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/index)
+- [Route configuration](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-routes)
 
 ---
 

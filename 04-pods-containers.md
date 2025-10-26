@@ -6,15 +6,78 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ## 📋 Índice
 
-1. [Listagem e Informações](#listagem-e-informações)
-2. [Interação com Pods](#interação-com-pods)
-3. [Gerenciamento de Pods](#gerenciamento-de-pods)
-4. [Debug e Troubleshooting](#debug-e-troubleshooting)
-5. [Logs](#logs)
-
+- [🐳 Pods e Containers](#-pods-e-containers)
+  - [📋 Índice](#-índice)
+  - [📊 Listagem e Informações](#-listagem-e-informações)
+  - [🔧 Gerenciamento de Pods](#-gerenciamento-de-pods)
+    - [Criar e Deletar](#criar-e-deletar)
+    - [Listar Pods](#listar-pods)
+  - [💻 Interação com Pods](#-interação-com-pods)
+    - [Acessar Shell](#acessar-shell)
+    - [Copiar Arquivos](#copiar-arquivos)
+    - [Reiniciar Pods](#reiniciar-pods)
+  - [🔍 Debug e Troubleshooting](#-debug-e-troubleshooting)
+    - [Debug Interativo](#debug-interativo)
+    - [Verificações](#verificações)
+  - [📝 Logs](#-logs)
+    - [Ver Logs](#ver-logs)
+  - [📋 Monitoramento e Eventos](#-monitoramento-e-eventos)
+    - [Ver Eventos](#ver-eventos)
+  - [📚 Documentação Oficial](#-documentação-oficial)
+  - [📖 Navegação](#-navegação)
 ---
 
 ## 📊 Listagem e Informações
+
+
+## 🔧 Gerenciamento de Pods
+
+### Criar e Deletar
+
+```bash
+# Criar ou atualizar um pod usando um yaml
+cat <<EOF | oc apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  securityContext:
+    runAsUser: 1000
+  containers:
+  - name: my-container
+    image: registry.access.redhat.com/ubi9:latest
+    command: ["/bin/sh"]
+    args: ["-c", "sleep infinity"]
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "100Mi"
+      limits:
+        cpu: 1
+        memory: 1Gi
+EOF
+```
+
+```bash ignore-test
+# Aplicar mudanças em pod
+oc apply -f pod.yaml
+```
+
+```bash ignore-test
+# Deletar um pod
+oc delete pod my-pod
+```
+
+```bash ignore-test
+# Deletar pod forçadamente
+oc delete pod my-pod --grace-period=0 --force
+```
+
+```bash
+# Deletar todos os pods com label
+oc delete pods -l app=test-app
+```
 
 ### Listar Pods
 ```bash
@@ -53,24 +116,29 @@ oc get pods -n development
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP
 ```
 
-```bash ignore-test
+```bash
 # Descrever um pod
-oc describe pod <nome-do-pod>
+oc describe pod my-pod
 ```
 
-```bash ignore-test
+```bash
 # Ver definição YAML do pod
-oc get pod <nome-do-pod> -o yaml
+oc get pod my-pod -o yaml
 ```
 
-```bash ignore-test
+```bash
 # Ver definição JSON do pod
-oc get pod <nome-do-pod> -o json
+oc get pod my-pod -o json
 ```
 
-```bash ignore-test
+```bash
 # Ver apenas o status
-oc get pod <nome-do-pod> -o jsonpath='{.status.phase}'
+oc get pod my-pod -o jsonpath='{.status.phase}'
+```
+
+```bash
+# Esperar um pod ficar running
+oc wait --for=condition=Ready pod/my-pod
 ```
 
 ---
@@ -80,22 +148,22 @@ oc get pod <nome-do-pod> -o jsonpath='{.status.phase}'
 ### Acessar Shell
 ```bash ignore-test
 # Acessar shell de um pod
-oc rsh <nome-do-pod>
+oc rsh my-pod
 ```
 
 ```bash ignore-test
 # Executar comando em um pod
-oc exec <nome-do-pod> -- <comando>
+oc exec my-pod -- <comando>
 ```
 
-```bash ignore-test
+```bash
 # Executar comando interativo
-oc exec -it <nome-do-pod> -- /bin/sh
+oc exec -it my-pod -- /bin/date
 ```
 
-```bash ignore-test
+```bash
 # Executar comando em container específico
-oc exec <nome-do-pod> -c <nome-do-container> -- <comando>
+oc exec my-pod -c my-container -- /bin/date
 ```
 
 ```bash ignore-test
@@ -106,22 +174,22 @@ oc exec -it mypod -- /bin/sh
 ### Copiar Arquivos
 ```bash ignore-test
 # Copiar arquivo para o pod
-oc cp <arquivo-local> <nome-do-pod>:<caminho-no-pod>
+oc cp <arquivo-local> my-pod:<caminho-no-pod>
 ```
 
 ```bash ignore-test
 # Copiar arquivo do pod
-oc cp <nome-do-pod>:<caminho-no-pod> <arquivo-local>
+oc cp my-pod:<caminho-no-pod> <arquivo-local>
 ```
 
 ```bash ignore-test
 # Copiar diretório
-oc cp /local/dir <nome-do-pod>:/container/dir
+oc cp /local/dir my-pod:/container/dir
 ```
 
 ```bash ignore-test
 # Copiar diretório com rsync (precisa ter rsync instalado no pod)
-oc rsync /local/dir <nome-do-pod>:/container/dir
+oc rsync /local/dir my-pod:/container/dir
 ```
 
 ```bash ignore-test
@@ -130,34 +198,6 @@ oc cp ./config.json mypod:/etc/config/config.json
 ```
 
 ---
-
-## 🔧 Gerenciamento de Pods
-
-### Criar e Deletar
-```bash ignore-test
-# Criar pod a partir de arquivo YAML
-oc create -f pod.yaml
-```
-
-```bash ignore-test
-# Aplicar mudanças em pod
-oc apply -f pod.yaml
-```
-
-```bash ignore-test
-# Deletar um pod
-oc delete pod <nome-do-pod>
-```
-
-```bash ignore-test
-# Deletar pod forçadamente
-oc delete pod <nome-do-pod> --grace-period=0 --force
-```
-
-```bash
-# Deletar todos os pods com label
-oc delete pods -l app=test-app
-```
 
 ### Reiniciar Pods
 ```bash
@@ -168,7 +208,7 @@ oc rollout restart deployment/test-app
 
 ```bash ignore-test
 # Deletar pod para forçar recriação
-oc delete pod <nome-do-pod>
+oc delete pod my-pod
 ```
 
 ```bash
@@ -188,27 +228,22 @@ oc scale deployment test-app --replicas=2
 ### Debug Interativo
 ```bash ignore-test
 # Debug interativo de pod
-oc debug pod/<nome-do-pod>
+oc debug pod/my-pod
 ```
 
 ```bash ignore-test
 # Debug com imagem customizada
-oc debug pod/<nome-do-pod> --image=busybox
-```
-
-```bash ignore-test
-# Debug como root
-oc debug pod/<nome-do-pod> --as-root
+oc debug pod/my-pod-debug --image=nicolaka/netshoot
 ```
 
 ```bash
 # Criar pod de debug temporário e imprima o hostname
-oc run debug-pod --image=busybox -it --rm --restart=Never -- hostname
+oc run debug-pod --image=nicolaka/netshoot -it --rm --restart=Never -- hostname
 ```
 
 ```bash ignore-test
 # Criar pod de debug temporário e conecte
-oc run debug-pod --image=busybox -it --rm --restart=Never -- sh
+oc run debug-pod --image=nicolaka/netshoot -it --rm --restart=Never -- sh
 ```
 
 ### Verificações
@@ -227,9 +262,9 @@ oc get pods --field-selector=status.phase=Pending
 oc get pods --field-selector=status.phase=Failed
 ```
 
-```bash ignore-test
+```bash
 # Ver motivo de erro do pod
-oc describe pod <nome-do-pod> | grep -A 10 "Events:"
+oc describe pod my-pod | grep -A 10 "Events:"
 ```
 
 ---
@@ -239,32 +274,32 @@ oc describe pod <nome-do-pod> | grep -A 10 "Events:"
 ### Ver Logs
 ```bash ignore-test
 # Ver logs de um pod
-oc logs <nome-do-pod>
+oc logs my-pod
 ```
 
 ```bash ignore-test
 # Ver logs em tempo real
-oc logs -f <nome-do-pod>
+oc logs -f my-pod
 ```
 
 ```bash ignore-test
 # Ver logs de container específico
-oc logs <nome-do-pod> -c <nome-do-container>
+oc logs my-pod -c my-container
 ```
 
 ```bash ignore-test
 # Ver logs anteriores (pod crasheado)
-oc logs <nome-do-pod> --previous
+oc logs my-pod --previous
 ```
 
 ```bash ignore-test
 # Ver últimas N linhas dos logs
-oc logs <nome-do-pod> --tail=<numero>
+oc logs my-pod --tail=<numero>
 ```
 
 ```bash ignore-test
 # Ver logs desde timestamp específico
-oc logs <nome-do-pod> --since=1h
+oc logs my-pod --since=1h
 ```
 
 ```bash
@@ -289,6 +324,15 @@ oc get events -n development --sort-by='.lastTimestamp'
 # Últimos 10 eventos
 oc get events -n development --sort-by='.lastTimestamp' | head -10
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Nodes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/index)
+- [Working with pods](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/working-with-pods)
 
 ---
 

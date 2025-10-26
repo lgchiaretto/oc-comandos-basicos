@@ -6,11 +6,11 @@ Este documento contém comandos para diagnosticar problemas de storage no OpenSh
 
 ## 📋 Índice
 
-1. [PV e PVC](#pv-e-pvc)
-2. [StorageClass](#storageclass)
-3. [Problemas Comuns](#problemas-comuns)
-4. [Operadores de Storage](#operadores-de-storage)
-
+1. [📦 PV e PVC](#pv-e-pvc)
+2. [🏪 StorageClass](#storageclass)
+3. [🚨 Problemas Comuns](#problemas-comuns)
+4. [🔧 Operadores de Storage](#operadores-de-storage)
+5. [🛠 ️ Debug Avançado](#debug-avancado)
 ---
 
 ## 📦 PV e PVC
@@ -180,14 +180,14 @@ oc get pods -A | grep csi
 ## 🚨 Problemas Comuns
 
 ### Volume Não Monta
-```bash ignore-test
+```bash
 # Verificar pod que usa o volume
-oc describe pod <nome-do-pod> | grep -A 10 Volumes
+oc describe pod my-pod | grep -A 10 Volumes
 ```
 
-```bash ignore-test
+```bash
 # Ver eventos de mount
-oc get events --field-selector involvedObject.name=<nome-do-pod> | grep -i mount
+oc get events --field-selector involvedObject.name=mypod | grep -i mount
 ```
 
 ```bash
@@ -195,9 +195,9 @@ oc get events --field-selector involvedObject.name=<nome-do-pod> | grep -i mount
 oc get pvc
 ```
 
-```bash ignore-test
+```bash
 # Ver node do pod
-oc get pod <nome-do-pod> -o jsonpath='{.spec.nodeName}'
+oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
 ```bash ignore-test
@@ -228,13 +228,13 @@ oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 # oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 # oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
-oc get pod <nome-do-pod> -o jsonpath='{.spec.nodeName}'
+oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
 ### Volume Full (Cheio)
 ```bash ignore-test
 # Verificar uso dentro do pod
-oc exec <nome-do-pod> -- df -h
+oc exec my-pod -- df -h
 ```
 
 ```bash
@@ -271,7 +271,7 @@ oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolume
 
 ```bash ignore-test
 # Deletar pods que estão usando
-oc delete pod <nome-do-pod> --grace-period=0 --force
+oc delete pod my-pod --grace-period=0 --force
 ```
 
 ```bash
@@ -424,6 +424,14 @@ ls -laZ /var/lib/kubelet/pods/<pod-id>/volumes/
 # Verificar SELinux contexts
 ls -laZ /path/to/mount
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Troubleshooting storage issues](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/troubleshooting-storage-issues)
 
 ---
 

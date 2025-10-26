@@ -6,18 +6,9 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 
 ## 📋 Índice
 
-- [📦 Deployments e Scaling](#-deployments-e-scaling)
-  - [📋 Índice](#-índice)
-  - [📏 Scaling](#-scaling)
-    - [Manual](#manual)
-    - [Autoscaling (HPA)](#autoscaling-hpa)
-  - [🔄 Atualizações e Rollbacks](#-atualizações-e-rollbacks)
-    - [Atualizar Imagem](#atualizar-imagem)
-    - [Pausar e Retomar](#pausar-e-retomar)
-    - [Rollback](#rollback)
-  - [📦 ReplicaSets](#-replicasets)
-  - [📖 Navegação](#-navegação)
-
+1. [📏 Scaling](#scaling)
+2. [🔄 Atualizações e Rollbacks](#atualizacoes-e-rollbacks)
+3. [📦 ReplicaSets](#replicasets)
 ---
 
 ## 📏 Scaling
@@ -142,6 +133,15 @@ oc get rs -l app=test-app
 # Deletar replicaset
 oc delete rs <nome-do-rs>
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Deployments and DeploymentConfigs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments)
+- [Autoscaling pods](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-pods-autoscaling)
 
 ---
 

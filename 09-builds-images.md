@@ -6,11 +6,10 @@ Este documento contém comandos para gerenciar builds e imagens no OpenShift.
 
 ## 📋 Índice
 
-1. [BuildConfigs](#buildconfigs)
-2. [Builds](#builds)
-3. [ImageStreams](#imagestreams)
-4. [ImageStreamTags](#imagestreamtags)
-
+1. [🔧 BuildConfigs](#buildconfigs)
+2. [🏭 Builds](#builds)
+3. [🔧 Gerenciamento de Builds](#gerenciamento-de-builds)
+4. [🖼 ️ ImageStreams](#imagestreams)
 ---
 
 ## 🔧 BuildConfigs
@@ -236,6 +235,15 @@ oc tag <external-image> <is>:<tag>
 # Deletar tag
 oc delete istag s2i-chiaretto:<tag>
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Builds](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds)
+- [Build strategies](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds-understanding)
 
 ---
 

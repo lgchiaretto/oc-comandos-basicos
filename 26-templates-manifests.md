@@ -6,11 +6,10 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 
 ## 📋 Índice
 
-1. [Templates](#templates)
-2. [Processing Templates](#processing-templates)
-3. [Parameters](#parameters)
-4. [Export e Manifests](#export-e-manifests)
-
+1. [📋 Templates](#templates)
+2. [⚙️ Processing Templates](#processing-templates)
+3. [🔢 Parameters](#parameters)
+4. [📤 Export e Manifests](#export-e-manifests)
 ---
 
 ## 📋 Templates
@@ -429,6 +428,14 @@ EOF
 # Aplicar
 oc apply -k app/overlays/dev/
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Templates](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images/using-templates)
 
 ---
 

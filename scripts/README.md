@@ -181,11 +181,27 @@ Gera automaticamente módulos de teste a partir da documentação markdown.
 python3 scripts/generate-all-tests.py
 ```
 
-### `exemplos-execucao-testes.sh`
-Exibe exemplos interativos de uso dos scripts de teste.
+### `fix-indexes.py`
+Corrige automaticamente os índices (## 📋 Índice) em todos os arquivos markdown.
 
 ```bash
-./scripts/exemplos-execucao-testes.sh
+python3 scripts/fix-indexes.py
+```
+
+### `find-duplicates.py`
+Analisa e identifica comandos duplicados entre os arquivos markdown.
+
+```bash
+python3 scripts/find-duplicates.py
+```
+
+Gera um relatório CSV (`duplicates-report.csv`) com todos os comandos duplicados.
+
+### `analyze-duplicates.py`
+Analisa o relatório de duplicados e sugere ações (manter, remover, consolidar).
+
+```bash
+python3 scripts/analyze-duplicates.py
 ```
 
 ---

@@ -6,11 +6,10 @@ Este documento contém comandos para gerenciar Operators e seus Operandos (Custo
 
 ## 📋 Índice
 
-1. [Operator Lifecycle Manager (OLM)](#operator-lifecycle-manager-olm)
-2. [Instalando Operators](#instalando-operators)
-3. [Custom Resources (Operandos)](#custom-resources-operandos)
-4. [Troubleshooting Operators](#troubleshooting-operators)
-
+1. [🎯 Operator Lifecycle Manager (OLM)](#operator-lifecycle-manager-olm)
+2. [📦 Instalando Operators](#instalando-operators)
+3. [🎨 Custom Resources (Operandos)](#custom-resources-operandos)
+4. [🔧 Troubleshooting Operators](#troubleshooting-operators)
 ---
 
 ## 🎯 Operator Lifecycle Manager (OLM)
@@ -568,6 +567,15 @@ oc delete crd <crd-name>
 # 5. (Opcional) Deletar namespace
 oc delete namespace <namespace>
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Operators](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/index)
+- [Understanding Operators](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/understanding-operators)
 
 ---
 

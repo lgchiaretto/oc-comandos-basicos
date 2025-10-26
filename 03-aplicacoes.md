@@ -6,13 +6,12 @@ Este documento contém comandos para criar e gerenciar aplicações no OpenShift
 
 ## 📋 Índice
 
-1. [Criação de Aplicações](#criação-de-aplicações)
-2. [Gerenciamento](#gerenciamento)
-3. [Informações e Status](#informações-e-status)
-4. [Atualização de Imagens](#atualização-de-imagens)
-5. [Permissões e Validações](#permissões-e-validações)
-6. [Aguardar Condições](#aguardar-condições)
-
+1. [🆕 Criação de Aplicações](#criacao-de-aplicacoes)
+2. [🔧 Gerenciamento](#gerenciamento)
+3. [📊 Informações e Status](#informacoes-e-status)
+4. [🔄 Atualização de Imagens](#atualizacao-de-imagens)
+5. [🔐 Permissões e Validações](#permissoes-e-validacoes)
+6. [⏳ Aguardar Condições](#aguardar-condicoes)
 ---
 
 ## 🆕 Criação de Aplicações
@@ -285,6 +284,15 @@ oc wait --for=condition=available --timeout=60s deployment/test-app
 # oc wait --for=condition=available --timeout=60s deployment/test-app -n <namespace>
 oc wait --for=condition=available --timeout=60s deployment/test-app -n development
 ```
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Building applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/index)
+- [Deploying applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deploying-applications)
+
 ---
 
 ## 📖 Navegação

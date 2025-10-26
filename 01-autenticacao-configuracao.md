@@ -6,11 +6,11 @@ Este documento contém comandos essenciais para autenticação e configuração 
 
 ## 📋 Índice
 
-1. [Login e Logout](#login-e-logout)
-2. [Configuração do Cliente](#configuração-do-cliente)
-3. [Contextos](#contextos)
-4. [Verificações](#verificações)
-
+1. [🔑 Login e Logout](#login-e-logout)
+2. [🔍 Informações do Cluster](#informacoes-do-cluster)
+3. [⚙️ Configuração do Cliente](#configuracao-do-cliente)
+4. [🔄 Contextos](#contextos)
+5. [📝 Boas Práticas](#boas-praticas)
 ---
 
 ## 🔑 Login e Logout
@@ -235,6 +235,15 @@ export KUBECONFIG=/path/to/config1:/path/to/config2
 - ✅ Use `oc whoami` para verificar autenticação
 - ✅ Use `oc config view` para ver configuração atual
 - ✅ Use `-v=8` para debug detalhado
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/index)
+- [Getting started with the OpenShift CLI](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc#cli-getting-started)
 
 ---
 

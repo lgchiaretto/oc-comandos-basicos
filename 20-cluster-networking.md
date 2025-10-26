@@ -6,12 +6,10 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 
 ## 📋 Índice
 
-1. [Configuração de Rede](#configuração-de-rede)
-2. [Ingress Controllers](#ingress-controllers)
-3. [Network Policies](#network-policies)
-4. [Egress](#egress)
-5. [Service Mesh](#service-mesh)
-
+1. [⚙️ Configuração de Rede](#configuracao-de-rede)
+2. [🌐 Ingress Controllers](#ingress-controllers)
+3. [🛡 ️ Network Policies](#network-policies)
+4. [🔧 Configurações Avançadas](#configuracoes-avancadas)
 ---
 
 ## ⚙️ Configuração de Rede
@@ -168,7 +166,7 @@ EOF
 ### Testar Network Policies
 ```bash ignore-test
 # Antes de aplicar policy, testar conectividade
-oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
+oc run test-pod --image=nicolaka/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
 ```bash ignore-test
@@ -178,7 +176,7 @@ oc apply -f networkpolicy.yaml
 
 ```bash ignore-test
 # Testar novamente
-oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <target-service>
+oc run test-pod --image=nicolaka/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
 ```bash ignore-test
@@ -298,6 +296,14 @@ for pod in $(oc get pods -l app=network-test -o name); do
   oc exec $pod -- ping -c 2 8.8.8.8
 done
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Cluster Network Operator](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/cluster-network-operator)
 
 ---
 

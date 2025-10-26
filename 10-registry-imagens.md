@@ -6,11 +6,10 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 
 ## 📋 Índice
 
-1. [Registry Interno](#registry-interno)
-2. [Push e Pull de Imagens](#push-e-pull-de-imagens)
-3. [Image Mirroring](#image-mirroring)
-4. [Image Pruning](#image-pruning)
-
+1. [🏪 Registry Interno](#registry-interno)
+2. [📤 Push e Pull de Imagens](#push-e-pull-de-imagens)
+3. [🔄 Image Mirroring](#image-mirroring)
+4. [🧹 Image Pruning](#image-pruning)
 ---
 
 ## 🏪 Registry Interno
@@ -190,6 +189,15 @@ oc adm prune builds --keep-complete=5 --keep-failed=1 --confirm
 # Prune por idade
 oc adm prune builds --keep-younger-than=48h --confirm
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Registry](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry/index)
+- [Image streams](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images/managing-image-streams)
 
 ---
 

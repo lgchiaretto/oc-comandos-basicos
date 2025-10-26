@@ -6,20 +6,20 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 
 ## 📋 Índice
 
-1. [Diagnóstico Básico](#diagnóstico-básico)
-2. [Services e Endpoints](#services-e-endpoints)
-3. [Routes e Ingress](#routes-e-ingress)
-4. [SDN/OVN](#sdnovn)
-5. [DNS](#dns)
-
+1. [🔍 Diagnóstico Básico](#diagnostico-basico)
+2. [🔌 Services e Endpoints](#services-e-endpoints)
+3. [🛣 ️ Routes e Ingress](#routes-e-ingress)
+4. [🕸 ️ SDN/OVN](#sdnovn)
+5. [🔤 DNS](#dns)
+6. [🛠 ️ Ferramentas de Debug](#ferramentas-de-debug)
 ---
 
 ## 🔍 Diagnóstico Básico
 
 ### Conectividade de Pod
-```bash ignore-test
+```bash
 # IP do pod
-oc get pod <nome-do-pod> -o jsonpath='{.status.podIP}'
+oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
 ```bash ignore-test
@@ -107,7 +107,7 @@ oc get svc test-app -o jsonpath='{.spec.ports}'
 
 ```bash ignore-test
 # Testar service de dentro do cluster
-oc run test-pod --image=busybox --rm -it --restart=Never -- wget -O- <service-name>:<port>
+oc run test-pod --image=nicolaka/netshoot --rm -it --restart=Never -- wget -O- <service-name>:<port>
 ```
 
 ### Endpoints
@@ -394,6 +394,14 @@ tcpdump -i any -n port <porta>
 # Salvar captura
 tcpdump -i any -w /tmp/capture.pcap
 ```
+
+---
+
+## 📚 Documentação Oficial
+
+Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
+
+- [Troubleshooting network issues](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/troubleshooting-network-issues)
 
 ---
 
