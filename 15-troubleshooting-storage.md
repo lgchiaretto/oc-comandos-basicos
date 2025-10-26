@@ -10,7 +10,7 @@ Este documento contém comandos para diagnosticar problemas de storage no OpenSh
 2. [StorageClass](#storageclass)
 3. [Problemas Comuns](#problemas-comuns)
 4. [Operadores de Storage](#operadores-de-storage)
-5. [Debug Avançado](#debug-avanado)
+5. [Debug Avançado](#debug-avançado)
 ---
 
 ## PV e PVC

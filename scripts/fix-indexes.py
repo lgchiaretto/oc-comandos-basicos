@@ -39,8 +39,8 @@ def extract_main_sections(content: str) -> List[Tuple[str, str, str]]:
         #anchor = re.sub(r'[òóôõö]', 'o', anchor)
         #anchor = re.sub(r'[ùúûü]', 'u', anchor)
         #anchor = re.sub(r'[ç]', 'c', anchor)
-        # Remove caracteres especiais
-        anchor = re.sub(r'[^a-z0-9\s-]', '', anchor)
+        ## Remove caracteres especiais
+        #anchor = re.sub(r'[^a-z0-9\s-]', '', anchor)
         # Substitui espaços por hífens
         anchor = re.sub(r'\s+', '-', anchor)
         # Remove hífens duplicados

@@ -6,9 +6,9 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ## Índice
 
-1. [Listagem e Informações](#listagem-e-informaes)
+1. [Listagem e Informações](#listagem-e-informações)
 2. [Gerenciamento de Pods](#gerenciamento-de-pods)
-3. [Interação com Pods](#interao-com-pods)
+3. [Interação com Pods](#interação-com-pods)
 4. [Debug e Troubleshooting](#debug-e-troubleshooting)
 5. [Logs](#logs)
 6. [Monitoramento e Eventos](#monitoramento-e-eventos)

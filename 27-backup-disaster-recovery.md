@@ -6,7 +6,7 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 
 ## Índice
 
-1. [Backup de Aplicações](#backup-de-aplicaes)
+1. [Backup de Aplicações](#backup-de-aplicações)
 2. [Backup de Dados](#backup-de-dados)
 3. [Disaster Recovery](#disaster-recovery)
 4. [Backups Configurados](#backups-configurados)
