@@ -196,7 +196,7 @@ def process_markdown_file(filepath):
 
 def main():
     """
-    Processa todos os arquivos markdown numerados (01-30).
+    Processa todos os arquivos markdown numerados (01-31).
     """
     base_dir = Path(__file__).parent.parent
     

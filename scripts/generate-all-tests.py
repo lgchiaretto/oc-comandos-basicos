@@ -2,7 +2,7 @@
 """
 Gerador Automático de Testes para OpenShift Commands Reference
 
-Lê arquivos markdown (01-30) e gera automaticamente os test.sh
+Lê arquivos markdown (01-31) e gera automaticamente os test.sh
 correspondentes com base nos comandos documentados.
 
 Uso: python3 generate-all-tests.py [--verbose]
@@ -19,7 +19,7 @@ class TestGenerator:
     
     # Constantes
     MARKDOWN_START = 1
-    MARKDOWN_END = 30
+    MARKDOWN_END = 31
     BASH_BLOCK_PATTERN = r'```bash(?:\s+ignore-test)?\n(.*?)```'
     OC_COMMAND_PREFIX = 'oc '
     
@@ -36,7 +36,7 @@ class TestGenerator:
         print(message)
         
     def find_markdown_files(self) -> List[Path]:
-        """Encontra todos os arquivos markdown numerados (01-30)."""
+        """Encontra todos os arquivos markdown numerados (01-31)."""
         files = []
         for i in range(self.MARKDOWN_START, self.MARKDOWN_END + 1):
             matches = list(self.base_dir.glob(f"{i:02d}-*.md"))

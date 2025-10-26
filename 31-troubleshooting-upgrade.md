@@ -25,13 +25,19 @@ Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Co
 ```bash
 # Verificar versão atual do cluster
 oc get clusterversion
+```
 
+```bash
 # Verificar detalhes completos da versão
 oc get clusterversion version -o yaml
+```
 
+```bash
 # Verificar canal de atualização configurado
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
+```
 
+```bash
 # Verificar versão desejada (target)
 oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
 ```
@@ -41,13 +47,19 @@ oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
 ```bash
 # Verificar progresso do upgrade
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")]}{"\n"}' | jq
+```
 
+```bash
 # Verificar se há upgrade disponível
 oc adm upgrade
+```
 
+```bash
 # Histórico de upgrades
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq
+```
 
+```bash
 # Verificar percentual de conclusão
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
 ```
@@ -57,13 +69,19 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 ```bash
 # Verificar todas as condições do cluster version
 oc get clusterversion -o json | jq '.items[0].status.conditions'
+```
 
+```bash
 # Verificar condição Available
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Available")]}{"\n"}' | jq
+```
 
+```bash
 # Verificar condição Failing
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Failing")]}{"\n"}' | jq
+```
 
+```bash
 # Verificar condição RetrieveUpdatesFailing
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="RetrieveUpdatesFailing")]}{"\n"}' | jq
 ```
@@ -77,13 +95,21 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Retri
 ```bash
 # Verificar pod do Cluster Version Operator
 oc get pods -n openshift-cluster-version
+```
 
+```bash
 # Logs do CVO
+# oc logs -n <namespace> deployments/cluster-version-operator --tail=100
 oc logs -n openshift-cluster-version deployments/cluster-version-operator --tail=100
+```
 
+```bash ignore-test
 # Logs do CVO em tempo real
+# oc logs -n <namespace> deployments/cluster-version-operator -f
 oc logs -n openshift-cluster-version deployments/cluster-version-operator -f
+```
 
+```bash
 # Verificar recursos do CVO
 oc get all -n openshift-cluster-version
 ```
@@ -93,13 +119,17 @@ oc get all -n openshift-cluster-version
 ```bash
 # Verificar se há operadores com override (pausados)
 oc get clusterversion version -o json | jq '.spec.overrides'
+```
 
+```bash
 # Listar operadores em override
 oc get clusterversion version -o jsonpath='{.spec.overrides[*].name}{"\n"}'
+```
 
+```bash ignore-test
 # Remover override de um operador específico
 # CUIDADO: Só faça isso se souber o que está fazendo
-# oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/overrides"}]'
+oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/overrides"}]'
 ```
 
 ---
@@ -111,16 +141,24 @@ oc get clusterversion version -o jsonpath='{.spec.overrides[*].name}{"\n"}'
 ```bash
 # Listar todos os cluster operators
 oc get co
+```
 
+```bash
 # Operadores que não estão Available
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
+```
 
+```bash
 # Operadores que estão Degraded
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
+```
 
+```bash
 # Operadores que estão Progressing
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
+```
 
+```bash
 # Operadores com problemas (resumo)
 oc get co | grep -v "True.*False.*False"
 ```
@@ -128,17 +166,18 @@ oc get co | grep -v "True.*False.*False"
 ### Análise Detalhada de Operadores
 
 ```bash
-# Verificar detalhes de um operador específico
-oc get co <operator-name> -o yaml
-
 # Exemplo: Verificar authentication operator
 oc get co authentication -o yaml
+```
 
+```bash
 # Mensagens de erro de um operador
-oc get co <operator-name> -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}{"\n"}'
+oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}{"\n"}'
+```
 
+```bash
 # Versão atual vs desejada de um operador
-oc get co <operator-name> -o jsonpath='Atual: {.status.versions[0].version}{"\n"}Desejada: {.status.desiredVersion}{"\n"}'
+oc get co authentication -o jsonpath='Atual: {.status.versions[0].version}{"\n"}Desejada: {.status.desiredVersion}{"\n"}'
 ```
 
 ### Operadores Críticos para Upgrade
@@ -149,10 +188,15 @@ for op in kube-apiserver kube-controller-manager kube-scheduler openshift-apiser
   echo "=== $op ==="
   oc get co $op -o jsonpath='{.status.conditions[?(@.type=="Available")].status}{" - "}{.status.conditions[?(@.type=="Degraded")].status}{"\n"}'
 done
+```
 
+```bash
 # Verificar Machine Config Operator
+# oc get co <resource-name>config -o yaml
 oc get co machine-config -o yaml
+```
 
+```bash
 # Verificar Network Operator
 oc get co network -o yaml
 ```
@@ -166,26 +210,43 @@ oc get co network -o yaml
 ```bash
 # Listar todos os nodes
 oc get nodes
+```
 
+```bash
 # Nodes que não estão Ready
 oc get nodes | grep -v Ready
+```
 
+```bash
 # Verificar labels dos nodes
 oc get nodes --show-labels
+```
 
+```bash ignore-test
 # Verificar condições de um node
 oc describe node <node-name> | grep -A 10 Conditions
 ```
+
+```bash ignore-test
+# Verificar se tem anotações no node (analise se  currentConfig está ok, verifique se não tem nenhuma anotação do Machine Config Operator)
+oc describe node <node-name> | awk '/^Annotations:/ {flag=1} flag && /^[A-Z]/ && !/^Annotations:/ {flag=0} flag'
+```
+
+
 
 ### Versões dos Nodes
 
 ```bash
 # Verificar versões do kubelet em cada node
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
+```
 
+```bash
 # Verificar OS dos nodes
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.osImage}{"\n"}{end}'
+```
 
+```bash
 # Nodes que ainda não foram atualizados
 oc get nodes -o wide
 ```
@@ -199,16 +260,24 @@ oc get nodes -o wide
 ```bash
 # Listar Machine Config Pools
 oc get mcp
+```
 
+```bash
 # Verificar MCP master
 oc get mcp master -o yaml
+```
 
+```bash
 # Verificar MCP worker
 oc get mcp worker -o yaml
+```
 
+```bash
 # MCPs que estão atualizando
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name'
+```
 
+```bash
 # MCPs que estão degraded
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
@@ -218,10 +287,14 @@ oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.typ
 ```bash
 # Verificar progresso de atualização dos workers
 oc get mcp worker -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
+```
 
+```bash
 # Verificar progresso de atualização dos masters
 oc get mcp master -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
+```
 
+```bash
 # Listar machines que ainda não foram atualizadas
 oc get machines -n openshift-machine-api
 ```
@@ -231,45 +304,16 @@ oc get machines -n openshift-machine-api
 ```bash
 # Listar todas as machine configs
 oc get mc
+```
 
+```bash
 # Verificar machine config atual do pool
 oc get mcp worker -o jsonpath='{.status.configuration.name}{"\n"}'
+```
 
+```bash ignore-test
 # Comparar machine configs
 oc get mc <mc-name> -o yaml
-```
-
----
-
-## Certificados e CSRs
-
-### Pending CSRs
-
-```bash
-# Listar CSRs pendentes
-oc get csr | grep Pending
-
-# Aprovar todos os CSRs pendentes (nodes em upgrade)
-oc get csr -o name | xargs oc adm certificate approve
-
-# Aprovar CSRs pendentes individualmente
-oc get csr | grep Pending | awk '{print $1}' | xargs -I {} oc adm certificate approve {}
-
-# Verificar detalhes de um CSR
-oc describe csr <csr-name>
-```
-
-### Certificados do Cluster
-
-```bash
-# Verificar certificados dos API servers
-oc get secrets -n openshift-kube-apiserver | grep certificate
-
-# Verificar validade dos certificados
-oc get secrets -n openshift-kube-apiserver -o json | jq -r '.items[] | select(.type=="kubernetes.io/tls") | .metadata.name'
-
-# Verificar certificados do etcd
-oc get secrets -n openshift-etcd | grep etcd
 ```
 
 ---
@@ -280,15 +324,25 @@ oc get secrets -n openshift-etcd | grep etcd
 
 ```bash
 # Logs do kube-apiserver
+# oc logs -n <namespace> -l app=openshift-kube-apiserver --tail=100
 oc logs -n openshift-kube-apiserver -l app=openshift-kube-apiserver --tail=100
+```
 
+```bash
 # Logs do etcd
+# oc logs -n <namespace> -l app=etcd --tail=100
 oc logs -n openshift-etcd -l app=etcd --tail=100
+```
 
+```bash
 # Logs do machine-config-operator
+# oc logs -n <namespace> -l k8s-app=machine-config-operator --tail=100
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-operator --tail=100
+```
 
+```bash
 # Logs do machine-config-daemon (MCD)
+# oc logs -n <namespace> -l k8s-app=machine-config-daemon --tail=50
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --tail=50
 ```
 
@@ -297,26 +351,31 @@ oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --
 ```bash
 # Events recentes de todos os namespaces
 oc get events -A --sort-by='.lastTimestamp' | tail -50
+```
 
-# Events relacionados a upgrade
-oc get events -A | grep -i upgrade
-
+```bash
 # Events de warning
 oc get events -A --field-selector type=Warning
+```
 
+```bash
 # Events de um namespace específico
 oc get events -n openshift-cluster-version --sort-by='.lastTimestamp'
 ```
 
 ### Must-Gather para Upgrade
 
-```bash
+```bash ignore-test
 # Coletar must-gather para análise de upgrade
 oc adm must-gather --dest-dir=/tmp/must-gather-upgrade
+```
 
+```bash ignore-test
 # Must-gather com foco em network (se suspeitar de problemas de rede)
 oc adm must-gather --image=$(oc adm release info --image-for=network-tools) --dest-dir=/tmp/must-gather-network
+```
 
+```bash ignore-test
 # Must-gather para etcd
 oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/tmp/must-gather-etcd
 ```
@@ -330,10 +389,14 @@ oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/t
 ```bash
 # Verificar se há upgradeable=false
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Upgradeable")]}{"\n"}' | jq
+```
 
+```bash
 # Listar operadores que bloqueiam upgrade
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | .metadata.name'
+```
 
+```bash
 # Verificar razão do bloqueio
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | {name: .metadata.name, reason: .status.conditions[] | select(.type=="Upgradeable") | .reason, message: .status.conditions[] | select(.type=="Upgradeable") | .message}'
 ```
@@ -343,13 +406,19 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 ```bash
 # Verificar pods em estado ruim
 oc get pods -A | grep -E 'Error|CrashLoopBackOff|ImagePullBackOff'
+```
 
+```bash
 # Verificar PVCs não vinculados
 oc get pvc -A | grep Pending
+```
 
+```bash
 # Verificar nodes com problemas
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
+```
 
+```bash ignore-test
 # Verificar se há pods evicted
 oc get pods -A | grep Evicted
 ```
@@ -359,11 +428,16 @@ oc get pods -A | grep Evicted
 ```bash
 # Verificar resource quotas que podem estar bloqueando
 oc get resourcequotas -A
+```
 
+```bash
 # Verificar limit ranges
 oc get limitranges -A
+```
 
+```bash
 # Verificar uso de recursos nos nodes
+# oc adm top <resource-name>
 oc adm top nodes
 ```
 
@@ -375,47 +449,52 @@ oc adm top nodes
 
 ```bash ignore-test
 # CUIDADO: Pausar upgrade (não recomendado, apenas em emergências)
-# oc patch clusterversion version --type=merge -p '{"spec":{"overrides":[{"kind":"Deployment","group":"apps","name":"cluster-version-operator","namespace":"openshift-cluster-version","unmanaged":true}]}}'
+oc patch clusterversion version --type=merge -p '{"spec":{"overrides":[{"kind":"Deployment","group":"apps","name":"cluster-version-operator","namespace":"openshift-cluster-version","unmanaged":true}]}}'
+```
 
+```bash
 # Verificar se o upgrade está pausado
 oc get clusterversion -o jsonpath='{.spec.overrides}{"\n"}' | jq
 ```
 
 ### Rollback (Não Suportado Oficialmente)
 
-```bash ignore-test
-# ATENÇÃO: OpenShift não suporta rollback oficial de upgrades
-# Se o upgrade falhar, a opção é corrigir os problemas e continuar
-
+```bash
 # Verificar histórico para entender o estado anterior
 oc get clusterversion -o jsonpath='{.status.history}' | jq
-
-# Em casos extremos, restaurar etcd de backup (requer procedimento específico)
-# Consulte a documentação oficial da Red Hat
 ```
 
 ### Forçar Reconciliação
 
-```bash
+```bash ignore-test
 # Forçar reconciliação do cluster version
 oc patch clusterversion version --type=merge -p '{"spec":{"desiredUpdate":null}}'
+```
 
+```bash ignore-test
 # Reiniciar o CVO
+# oc delete pod -n <namespace> -l app=cluster-version-operator
 oc delete pod -n openshift-cluster-version -l app=cluster-version-operator
+```
 
+```bash ignore-test
 # Forçar reconciliação de um operador específico
 oc delete pod -n <operator-namespace> -l <operator-label>
 ```
 
 ### Limpeza de Recursos Problemáticos
 
-```bash
+```bash ignore-test
 # Remover pods failed/evicted
 oc delete pods -A --field-selector=status.phase=Failed
+```
 
+```bash ignore-test
 # Remover completed jobs antigos
 oc delete jobs -A --field-selector=status.successful=1
+```
 
+```bash ignore-test
 # Limpar CSRs negados
 oc get csr -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Denied")) | .metadata.name' | xargs oc delete csr
 ```
@@ -429,27 +508,47 @@ oc get csr -o json | jq -r '.items[] | select(.status.conditions[] | select(.typ
 ```bash
 # Status geral do cluster
 oc get clusterversion
-oc get co
-oc get nodes
-oc get mcp
+```
 
+```bash
+# Verificar cluster operators
+oc get co
+```
+
+```bash
+# Verificar nodes
+oc get nodes
+```
+
+```bash
+# Verificar machine config pools
+oc get mcp
+```
+
+```bash
 # Verificar se há operadores degraded
 oc get co | grep -i false
-
-# Verificar CSRs pendentes
-oc get csr | grep Pending
 ```
 
 ### 2. Análise de Logs
 
 ```bash
 # CVO logs
+# oc logs -n <namespace> deployment/cluster-version-operator --tail=200
 oc logs -n openshift-cluster-version deployment/cluster-version-operator --tail=200
+```
 
+```bash ignore-test
 # Operador com problema
-oc get co <operator-name> -o yaml
-oc logs -n <namespace> <pod-name> --tail=100
+oc get co authentication -o yaml
+```
 
+```bash ignore-test
+# Logs de pods específicos
+oc logs -n <namespace> <pod-name> --tail=100
+```
+
+```bash
 # Events recentes
 oc get events -A --sort-by='.lastTimestamp' | tail -100
 ```
@@ -458,41 +557,68 @@ oc get events -A --sort-by='.lastTimestamp' | tail -100
 
 ```bash
 # Capacidade dos nodes
+# oc adm top <resource-name>
 oc adm top nodes
+```
 
+```bash
 # Pods com problemas
 oc get pods -A | grep -v Running | grep -v Completed
+```
 
+```bash
 # Verificar se há recursos suficientes
 oc describe nodes | grep -A 5 "Allocated resources"
 ```
 
 ### 4. Ações Corretivas Comuns
 
-```bash
+```bash ignore-test
 # Aprovar CSRs pendentes
 oc get csr -o name | xargs oc adm certificate approve
-
-# Reiniciar pods problemáticos
-oc delete pod -n <namespace> <pod-name>
-
-# Verificar e corrigir MCPs
-oc get mcp
-oc describe mcp <mcp-name>
-
-# Limpar recursos desnecessários
-oc delete pods -A --field-selector=status.phase=Failed
-oc delete pods -A --field-selector=status.phase=Succeeded
 ```
 
----
+```bash ignore-test
+# Reiniciar pods problemáticos
+oc delete pod -n <namespace> <pod-name>
+```
 
-## Comandos de Monitoramento Contínuo
+```bash
+# Verificar MCPs
+oc get mcp
+```
+
+```bash ignore-test
+# Descrever MCP específico
+oc describe mcp <mcp-name>
+```
 
 ### Watch em Tempo Real
 
-```bash
+```bash ignore-test
 # Monitorar cluster version
+watch -n 5 'oc get clusterversion'
+```
+
+```bash ignore-test
+# Monitorar cluster operators
+watch -n 5 'oc get co'
+```
+
+```bash ignore-test
+# Monitorar nodes
+watch -n 5 'oc get nodes'
+```
+
+```bash ignore-test
+# Monitorar MCPs
+watch -n 5 'oc get mcp'
+```
+
+```bash ignore-test
+# Monitorar progresso geral
+watch -n 10 'echo "=== CLUSTER VERSION ===" && oc get clusterversion && echo "\n=== OPERATORS ===" && oc get co | grep -v "True.*False.*False" && echo "\n=== MCPS ===" && oc get mcp && echo "\n=== NODES ===" && oc get nodes'
+```onitorar cluster version
 watch -n 5 'oc get clusterversion'
 
 # Monitorar cluster operators
@@ -500,19 +626,27 @@ watch -n 5 'oc get co'
 
 # Monitorar nodes
 watch -n 5 'oc get nodes'
-
-# Monitorar MCPs
-watch -n 5 'oc get mcp'
-
-# Monitorar progresso geral
-watch -n 10 'echo "=== CLUSTER VERSION ===" && oc get clusterversion && echo "\n=== OPERATORS ===" && oc get co | grep -v "True.*False.*False" && echo "\n=== MCPS ===" && oc get mcp && echo "\n=== NODES ===" && oc get nodes'
-```
-
 ### Monitoramento de Métricas
 
-```bash
+```bash ignore-test
 # Verificar uso de CPU/Memory nos nodes
 watch -n 30 'oc adm top nodes'
+```
+
+```bash
+# Verificar pods com maior uso de recursos
+oc adm top pods -A --sort-by=memory
+```
+
+```bash
+# Verificar persistent volumes
+oc get pv
+```
+
+```bash
+# Verificar persistent volume claims
+oc get pvc -A
+```ch -n 30 'oc adm top nodes'
 
 # Verificar pods com maior uso de recursos
 oc adm top pods -A --sort-by=memory

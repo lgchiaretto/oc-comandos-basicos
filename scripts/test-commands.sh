@@ -17,10 +17,10 @@
 # Exemplos:
 #   ./scripts/test-commands.sh                              # Executa todos os modulos
 #   ./scripts/test-commands.sh --module 05                  # Executa apenas modulo 05
-#   ./scripts/test-commands.sh --start-module 10            # Executa do 10 ao 30
+#   ./scripts/test-commands.sh --start-module 10            # Executa do 10 ao 31
 #   ./scripts/test-commands.sh --start-module 01 --end-module 05  # Executa 01 a 05
 #   ./scripts/test-commands.sh --start-module 06 --end-module 08  # Executa 06 a 08
-#   ./scripts/test-commands.sh --start-module 08 --end-module 30  # Executa 08 a 30
+#   ./scripts/test-commands.sh --start-module 08 --end-module 31  # Executa 08 a 31
 ##############################################################################
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -53,7 +53,7 @@ echo "PASSED_TESTS=0" >> "$STATE_FILE"
 echo "FAILED_TESTS=0" >> "$STATE_FILE"
 
 echo "Cleaning up and regenerating test artifacts..."
-rm -rf ../tests/ && ./generate-all-tests.py
+rm -rf tests/ && ./scripts/generate-all-tests.py
 
 # Inicializar arquivo de timing
 echo "# Tempo de execução dos modulos" > "$TIMING_FILE"
@@ -103,7 +103,7 @@ while [[ $# -gt 0 ]]; do
             echo "  $0                                    # Executa todos os modulos"
             echo "  $0 --module 05                        # Executa apenas o modulo 05"
             echo "  $0 --end-module 05                    # Executa até o modulo 05"
-            echo "  $0 --start-module 10                  # Executa do modulo 10 ao 30"
+            echo "  $0 --start-module 10                  # Executa do modulo 10 ao 31"
             echo "  $0 --start-module 06 --end-module 08  # Executa modulos 06 a 08"
             exit 0
             ;;

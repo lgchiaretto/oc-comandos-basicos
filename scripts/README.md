@@ -32,7 +32,7 @@ Script principal de validação que executa todos os módulos de teste.
 
 ## Exemplos de Uso
 
-### Executar todos os módulos (01-30)
+### Executar todos os módulos (01-31)
 ```bash
 ./scripts/test-commands.sh
 ```
@@ -138,7 +138,7 @@ Custom commands, field selectors, formatting, templates
 ./scripts/test-commands.sh --start-module 23 --end-module 26
 ```
 
-### Bloco 10 - Operações (27-30)
+### Bloco 10 - Operações (27-31)
 Backup/restore, patching, jobs, operators
 ```bash
 ./scripts/test-commands.sh --start-module 27 --end-module 30

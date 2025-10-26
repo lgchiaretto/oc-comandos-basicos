@@ -39,7 +39,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
 - **Básico**: Documentos 1-6
 - **Intermediário**: Documentos 7-12
 - **Avançado**: Documentos 13-22
-- **Expert**: Documentos 23-30
+- **Expert**: Documentos 23-31
 
 ---
 
