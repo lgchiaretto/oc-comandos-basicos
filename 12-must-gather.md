@@ -6,10 +6,10 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 
 ## Índice
 
-1. [Must-Gather Básico](#must-gather básico)
-2. [Must-Gather Específico](#must-gather específico)
+1. [Must-Gather Básico](#must-gather-bsico)
+2. [Must-Gather Específico](#must-gather-especfico)
 3. [Inspect](#inspect)
-4. [Diagnósticos Rápidos](#diagnósticos rápidos)
+4. [Diagnósticos Rápidos](#diagnsticos-rpidos)
 ---
 
 ## Must-Gather Básico

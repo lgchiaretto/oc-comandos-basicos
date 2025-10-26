@@ -8,9 +8,9 @@ Este documento contém comandos para formatar e extrair informações específic
 
 1. [Jsonpath](#jsonpath)
 2. [Go-Template](#go-template)
-3. [JQ - JSON Processor](#jq - json processor)
-4. [Custom Columns](#custom columns)
-5. [Formatação de Saída](#formatação de saída)
+3. [JQ - JSON Processor](#jq-json-processor)
+4. [Custom Columns](#custom-columns)
+5. [Formatação de Saída](#formatao-de-sada)
 ---
 
 ## Jsonpath

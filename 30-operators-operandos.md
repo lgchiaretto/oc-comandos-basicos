@@ -6,10 +6,10 @@ Este documento contém comandos para gerenciar Operators e seus Operandos (Custo
 
 ## Índice
 
-1. [Operator Lifecycle Manager (OLM)](#operator lifecycle manager (olm))
-2. [Instalando Operators](#instalando operators)
-3. [Custom Resources (Operandos)](#custom resources (operandos))
-4. [Troubleshooting Operators](#troubleshooting operators)
+1. [Operator Lifecycle Manager (OLM)](#operator-lifecycle-manager-olm)
+2. [Instalando Operators](#instalando-operators)
+3. [Custom Resources (Operandos)](#custom-resources-operandos)
+4. [Troubleshooting Operators](#troubleshooting-operators)
 ---
 
 ## Operator Lifecycle Manager (OLM)

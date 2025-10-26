@@ -7,7 +7,7 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 ## Índice
 
 1. [Services](#services)
-2. [Investigação de Conectividade](#investigação de conectividade)
+2. [Investigação de Conectividade](#investigao-de-conectividade)
 3. [Routes](#routes)
 ---
 

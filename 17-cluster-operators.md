@@ -6,10 +6,10 @@ Este documento contém comandos para gerenciar e diagnosticar Cluster Operators 
 
 ## Índice
 
-1. [Verificar Status](#verificar status)
+1. [Verificar Status](#verificar-status)
 2. [Troubleshooting](#troubleshooting)
-3. [Operadores Principais](#operadores principais)
-4. [OLM (Operator Lifecycle Manager)](#olm (operator lifecycle manager))
+3. [Operadores Principais](#operadores-principais)
+4. [OLM (Operator Lifecycle Manager)](#olm-operator-lifecycle-manager)
 ---
 
 ## Verificar Status

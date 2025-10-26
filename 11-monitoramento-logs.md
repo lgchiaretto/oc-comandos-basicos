@@ -8,8 +8,8 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 
 1. [Logs](#logs)
 2. [Eventos](#eventos)
-3. [Métricas e Top](#métricas e top)
-4. [Prometheus e Alertas](#prometheus e alertas)
+3. [Métricas e Top](#mtricas-e-top)
+4. [Prometheus e Alertas](#prometheus-e-alertas)
 ---
 
 ## Logs
