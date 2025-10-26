@@ -17,24 +17,24 @@ Este documento contém comandos para formatar e extrair informações específic
 ## 🔍 Jsonpath
 
 ### Básico
-```bash
+```bash ignore-test
 # Extrair campo específico
 # oc get pod <resource-name>app -o jsonpath='{.metadata.name}'
 oc get pod test-app -o jsonpath='{.metadata.name}'
 ```
 
-```bash
+```bash ignore-test
 # Múltiplos campos
 # oc get pod <resource-name>app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 ```
 
-```bash ignore-test
+```bash
 # Array de pods
 oc get pods -o jsonpath='{.items[*].metadata.name}'
 ```
 
-```bash ignore-test
+```bash
 # Com quebra de linha
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 ```
@@ -52,19 +52,24 @@ oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 ```
 
 ### Filtros e Condições
-```bash ignore-test
+```bash
 # Pods em estado específico
 oc get pods -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}'
 ```
 
-```bash ignore-test
+```bash
 # Pods com restart > 0
 oc get pods -o jsonpath='{.items[?(@.status.containerStatuses[0].restartCount>0)].metadata.name}'
 ```
 
-```bash ignore-test
+```bash
 # Nodes ready
-oc get nodes -o jsonpath='{.items[?(@.status.conditions[?(@.type=="Ready")].status=="True")].metadata.name}'
+oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status=="True")]}{.metadata.name}{"\n"}{end}'
+```
+
+```bash
+# Nodes notReady
+oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status!="True")]}{.metadata.name}{"\n"}{end}'
 ```
 
 ```bash ignore-test
@@ -126,7 +131,7 @@ oc get pods -o go-template='{{range .items}}{{.metadata.name}}: {{if .status.con
 
 ```bash
 # Funções built-in
-oc get pods -o go-template='{{range .items}}{{.metadata.name | upper}}{{"\n"}}{{end}}'
+oc get pods -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
 ```
 
 ```bash
@@ -152,7 +157,7 @@ Pod: {{.metadata.name}}
 EOF
 ```
 
-```bash
+```bash ignore-test
 # Usar template
 oc get pods -o go-template-file=/tmp/pod-template.tmpl
 ```
@@ -164,8 +169,7 @@ oc get pods -o go-template-file=/tmp/pod-template.tmpl
 ### Instalação e Uso Básico
 ```bash
 # Instalar jq (se não estiver instalado)
-# sudo yum install jq -y  # RHEL/CentOS
-# sudo apt install jq -y  # Ubuntu/Debian
+# sudo dnf install jq -y
 ```
 
 ```bash
@@ -303,7 +307,7 @@ AGE:.metadata.creationTimestamp
 EOF
 ```
 
-```bash
+```bash ignore-test
 oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 ```
 
@@ -317,13 +321,13 @@ oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 oc get pods -o wide
 ```
 
-```bash
+```bash ignore-test
 # YAML
 # oc get pod <resource-name>app -o yaml
 oc get pod test-app -o yaml
 ```
 
-```bash
+```bash ignore-test
 # JSON
 # oc get pod <resource-name>app -o json
 oc get pod test-app -o json

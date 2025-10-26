@@ -13,178 +13,10 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 
 ---
 
-## 📝 Estratégia de Backup
-
-### O que Fazer Backup
-```bash
-# 1. ETCD (Cluster state) - JÁ COBERTO em 22-etcd-backup.md
-# 2. Persistent Volumes (Dados de aplicações)
-# 3. Manifests e Configurações
-# 4. Secrets e ConfigMaps
-# 5. Registry Images
-# 6. Operator configurations
-```
-
-### Frequência Recomendada
-```bash
-# Diário:
-# - Etcd backup
-# - Application manifests
-# - Secrets/ConfigMaps
-```
-
-```bash
-# Semanal:
-# - Full PV backup
-# - Registry images backup
-```
-
-```bash
-# Antes de:
-# - Cluster updates
-# - Major changes
-# - Operator updates
-```
-
----
-
 ## 💼 Backup de Aplicações
 
-### Backup de Manifests por Namespace
-```bash
-# Script completo de backup de namespace
-cat > /tmp/backup-namespace.sh << 'EOF'
-#!/bin/bash
-set -e
-```
-
-```bash ignore-test
-NAMESPACE=$1
-BACKUP_DIR="namespace-backup-${NAMESPACE}-$(date +%Y%m%d-%H%M%S)"
-```
-
-```bash ignore-test
-if [ -z "$NAMESPACE" ]; then
-  echo "Usage: $0 <namespace>"
-  exit 1
-fi
-```
-
-```bash ignore-test
-echo "=== Backing up namespace: ${NAMESPACE} ==="
-mkdir -p ${BACKUP_DIR}
-```
-
-```bash
-# Resources to backup
-RESOURCES=(
-  "deployments"
-  "statefulsets"
-  "daemonsets"
-  "services"
-  "routes"
-  "configmaps"
-  "secrets"
-  "persistentvolumeclaims"
-  "serviceaccounts"
-  "roles"
-  "rolebindings"
-  "networkpolicies"
-  "horizontalpodautoscalers"
-  "imagestreams"
-  "buildconfigs"
-  "deploymentconfigs"
-)
-```
-
-```bash ignore-test
-for resource in "${RESOURCES[@]}"; do
-  echo "Backing up ${resource}..."
-  oc get ${resource} -n ${NAMESPACE} -o yaml > ${BACKUP_DIR}/${resource}.yaml
-done
-```
-
-```bash ignore-test
-# Backup namespace itself
-oc get namespace ${NAMESPACE} -o yaml > ${BACKUP_DIR}/namespace.yaml
-```
-
-```bash ignore-test
-# Compress
-tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
-rm -rf ${BACKUP_DIR}
-```
-
-```bash ignore-test
-echo "✅ Backup completed: ${BACKUP_DIR}.tar.gz"
-ls -lh ${BACKUP_DIR}.tar.gz
-EOF
-```
-
-```bash
-chmod +x /tmp/backup-namespace.sh
-```
-
-```bash
-# Usar
-/tmp/backup-namespace.sh myproject
-```
-
-### Backup de Todo o Cluster (Manifests)
-```bash
-# Script para backup de todos os namespaces
-cat > /tmp/backup-all-namespaces.sh << 'EOF'
-#!/bin/bash
-set -e
-```
-
-```bash ignore-test
-BACKUP_DIR="cluster-backup-$(date +%Y%m%d-%H%M%S)"
-mkdir -p ${BACKUP_DIR}
-```
-
-```bash ignore-test
-echo "=== Cluster-wide resources ==="
-mkdir -p ${BACKUP_DIR}/cluster
-```
-
-```bash ignore-test
-# Cluster-scoped resources
-oc get namespaces -o yaml > ${BACKUP_DIR}/cluster/namespaces.yaml
-oc get nodes -o yaml > ${BACKUP_DIR}/cluster/nodes.yaml
-oc get clusterroles -o yaml > ${BACKUP_DIR}/cluster/clusterroles.yaml
-oc get clusterrolebindings -o yaml > ${BACKUP_DIR}/cluster/clusterrolebindings.yaml
-oc get storageclasses -o yaml > ${BACKUP_DIR}/cluster/storageclasses.yaml
-oc get persistentvolumes -o yaml > ${BACKUP_DIR}/cluster/persistentvolumes.yaml
-oc get customresourcedefinitions -o yaml > ${BACKUP_DIR}/cluster/crds.yaml
-```
-
-```bash ignore-test
-echo "=== Backing up user namespaces ==="
-for ns in $(oc get ns -o jsonpath='{.items[?(@.metadata.name!~"^(openshift|kube|default).*")].metadata.name}'); do
-  echo "Namespace: $ns"
-  /tmp/backup-namespace.sh $ns
-  mv namespace-backup-${ns}-*.tar.gz ${BACKUP_DIR}/
-done
-```
-
-```bash ignore-test
-# Compress everything
-tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
-rm -rf ${BACKUP_DIR}
-```
-
-```bash ignore-test
-echo "✅ Full cluster backup: ${BACKUP_DIR}.tar.gz"
-EOF
-```
-
-```bash
-chmod +x /tmp/backup-all-namespaces.sh
-```
-
 ### Velero - Backup Tool
-```bash
+```bash ignore-test
 # Instalar Velero Operator
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
@@ -193,19 +25,19 @@ metadata:
   name: redhat-oadp-operator
   namespace: openshift-adp
 spec:
-  channel: stable-1.3
+  channel: stable-1.4
   name: redhat-oadp-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 EOF
 ```
 
-```bash
+```bash ignore-test
 # Aguardar instalação
 oc get csv -n openshift-adp
 ```
 
-```bash
+```bash ignore-test
 # Configurar DataProtectionApplication
 cat <<EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
@@ -237,22 +69,6 @@ spec:
         prefix: velero
 EOF
 ```
-
-```bash
-# Criar backup com Velero
-velero backup create my-backup --include-namespaces myproject
-```
-
-```bash
-# Listar backups
-velero backup get
-```
-
-```bash
-# Restore
-velero restore create --from-backup my-backup
-```
-
 ---
 
 ## 💾 Backup de Dados
@@ -266,9 +82,9 @@ kind: VolumeSnapshot
 metadata:
   name: pvc-snapshot
 spec:
-  volumeSnapshotClassName: <snapshot-class>
+  volumeSnapshotClassName: ocs-storagecluster-cephfsplugin-snapclass
   source:
-    persistentVolumeClaimName: <pvc-name>
+    persistentVolumeClaimName: test-app
 EOF
 ```
 
@@ -316,26 +132,26 @@ spec:
   volumes:
   - name: data
     persistentVolumeClaim:
-      claimName: <pvc-name>
+      claimName: test-app
 EOF
 ```
 
-```bash
+```bash ignore-test
 # Aguardar pod ficar ready
 oc wait --for=condition=ready pod/backup-pod
 ```
 
-```bash
+```bash ignore-test
 # Tar dos dados
 oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 ```
 
-```bash
+```bash ignore-test
 # Copiar backup
 oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 ```
 
-```bash
+```bash ignore-test
 # Limpeza
 # oc delete pod <resource-name>
 oc delete pod backup-pod
@@ -369,7 +185,7 @@ oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 ## 🚨 Disaster Recovery
 
 ### Preparação para DR
-```bash
+```bash ignore-test
 # Checklist de preparação
 cat > /tmp/dr-checklist.md << 'EOF'
 # Disaster Recovery Checklist
@@ -411,120 +227,57 @@ cat > /tmp/dr-checklist.md << 'EOF'
 EOF
 ```
 
-```bash
+```bash ignore-test
 cat /tmp/dr-checklist.md
 ```
 
 ### Restore de Aplicação
-```bash
+```bash ignore-test
 # 1. Restore de namespace
 tar xzf namespace-backup-myproject-*.tar.gz
 cd namespace-backup-myproject-*/
 ```
 
-```bash
+```bash ignore-test
 # 2. Criar namespace
 oc apply -f namespace.yaml
 ```
 
-```bash
+```bash ignore-test
 # 3. Restore de secrets e configmaps primeiro
 oc apply -f secrets.yaml
 oc apply -f configmaps.yaml
 ```
 
-```bash
+```bash ignore-test
 # 4. Restore de PVCs
-oc apply -f persistentvolumeclaims.yaml
+oc apply -f /tmp/persistentvolumeclaims.yaml
 ```
 
-```bash
+```bash ignore-test
 # 5. Aguardar PVCs bound
 oc get pvc
 ```
 
-```bash
+```bash ignore-test
 # 6. Restore de service accounts e RBAC
-oc apply -f serviceaccounts.yaml
-oc apply -f roles.yaml
-oc apply -f rolebindings.yaml
-```
-
-```bash
-# 7. Restore de applications
-oc apply -f deployments.yaml
-oc apply -f statefulsets.yaml
-oc apply -f services.yaml
-oc apply -f routes.yaml
-```
-
-```bash
-# 8. Verificar
-oc get all
-```
-
-### DR em Ambiente Secundário
-```bash
-# Failover para cluster secundário
-```
-
-```bash
-# 1. Confirmar cluster primário está down
-oc get clusterversion # timeout se cluster está down
-```
-
-```bash
-# 2. No cluster secundário, restore do etcd backup
-# (ver 22-etcd-backup.md)
-```
-
-```bash
-# 3. Restore de aplicações
-for backup in namespace-backup-*.tar.gz; do
-  tar xzf $backup
-  # Aplicar manifests...
-done
-```
-
-```bash
-# 4. Atualizar DNS para apontar para novo cluster
-# (fora do escopo do OpenShift)
-```
-
-```bash
-# 5. Verificar aplicações
-oc get pods -A
-oc get routes -A
-```
-
-```bash
-# 6. Testar aplicações críticas
-```
-
-### RPO/RTO
-```bash
-# Recovery Point Objective (RPO)
-# = Quanto de dados você pode perder
-# Exemplo: Backup a cada 1h = RPO de 1h
-```
-
-```bash
-# Recovery Time Objective (RTO)
-# = Quanto tempo para recuperar
-# Exemplo: Restore em 30min = RTO de 30min
+oc apply -f /tmp/serviceaccounts.yaml
+oc apply -f /tmp/roles.yaml
+oc apply -f /tmp/rolebindings.yaml
 ```
 
 ```bash ignore-test
-# Medir RPO real
-LAST_BACKUP=$(ls -t cluster-backup-*.tar.gz | head -1)
-BACKUP_TIME=$(stat -c %Y $LAST_BACKUP)
-CURRENT_TIME=$(date +%s)
-AGE_HOURS=$(( ($CURRENT_TIME - $BACKUP_TIME) / 3600 ))
-echo "Last backup was $AGE_HOURS hours ago"
-echo "Current RPO: ${AGE_HOURS}h"
+# 7. Restore de applications
+oc apply -f /tmp/deployments.yaml
+oc apply -f /tmp/statefulsets.yaml
+oc apply -f /tmp/services.yaml
+oc apply -f /tmp/routes.yaml
 ```
 
----
+```bash ignore-test
+# 8. Verificar
+oc get all
+```
 
 ## 📖 Navegação
 

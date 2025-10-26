@@ -277,6 +277,8 @@ oc get pvc
 
 ```bash ignore-test
 # Status do PVC
+# oc describe pvc test-app
+# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 

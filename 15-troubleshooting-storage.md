@@ -47,6 +47,8 @@ oc get pvc -o jsonpath='{.items[?(@.status.phase=="Pending")].metadata.name}'
 
 ```bash
 # Descrever PVC
+# oc describe pvc test-app
+# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 
@@ -57,11 +59,15 @@ oc get events --field-selector involvedObject.name=test-app
 
 ```bash
 # Ver qual PV está bound
+# oc get pvc test-app -o jsonpath='{.spec.volumeName}'
+# oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 ```
 
 ```bash
 # Verificar capacidade solicitada vs disponível
+# oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
+# oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
@@ -99,6 +105,8 @@ oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 ### Pending PVC
 ```bash
 # Ver por que PVC está Pending
+# oc describe pvc test-app | grep -A 10 Events
+# oc describe pvc <resource-name> | grep -A 10 Events
 oc describe pvc test-app | grep -A 10 Events
 ```
 
@@ -204,7 +212,8 @@ df -h
 ### ReadOnly Filesystem
 ```bash
 # Verificar access mode do PVC
-# oc get pvc <pvc-name> -o jsonpath='{.spec.accessModes}'
+# oc get pvc test-app -o jsonpath='{.spec.accessModes}'
+# oc get pvc <resource-name>app -o jsonpath='{.spec.accessModes}'
 oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 ```
 
@@ -216,7 +225,8 @@ oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 
 ```bash ignore-test
 # Se PV for RWO e pod está em outro node
-# oc get pvc <pvc-name> -o jsonpath='{.spec.volumeName}'
+# oc get pvc test-app -o jsonpath='{.spec.volumeName}'
+# oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 oc get pod <nome-do-pod> -o jsonpath='{.spec.nodeName}'
 ```
@@ -229,13 +239,15 @@ oc exec <nome-do-pod> -- df -h
 
 ```bash
 # Verificar tamanho do PVC
-# oc get pvc <pvc-name> -o jsonpath='{.spec.resources.requests.storage}'
+# oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
+# oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
 ```bash
 # Expandir PVC (se StorageClass permitir)
-# oc patch pvc <pvc-name> -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
+# oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
+# oc patch pvc <resource-name>app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
 oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
 ```
 
@@ -246,14 +258,15 @@ oc get sc <storage-class> -o jsonpath='{.allowVolumeExpansion}'
 
 ```bash
 # Ver progresso da expansão
-# oc describe pvc <pvc-name>
+# oc describe pvc test-app
+# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 
 ### PVC Stuck Terminating
 ```bash ignore-test
 # Verificar se há pods usando
-oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolumeClaim.claimName=="<pvc-name>") | .metadata.name'
+oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolumeClaim.claimName=="test-app") | .metadata.name'
 ```
 
 ```bash ignore-test
@@ -263,13 +276,15 @@ oc delete pod <nome-do-pod> --grace-period=0 --force
 
 ```bash
 # Remover finalizers se necessário (CUIDADO!)
-# oc patch pvc <pvc-name> -p '{"metadata":{"finalizers":null}}'
+# oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
+# oc patch pvc <resource-name>app -p '{"metadata":{"finalizers":null}}'
 oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
 ```
 
 ```bash
 # Ver finalizers
-# oc get pvc <pvc-name> -o jsonpath='{.metadata.finalizers}'
+# oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
+# oc get pvc <resource-name>app -o jsonpath='{.metadata.finalizers}'
 oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
 ```
 

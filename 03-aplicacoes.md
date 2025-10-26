@@ -39,11 +39,6 @@ oc new-app nginx --name=meu-nginx
 ```
 
 ```bash
-# Criar com app do Git usando s2i
-oc new-app https://github.com/lgchiaretto/s2i-chiaretto.git --name=s2i-chiaretto
-```
-
-```bash
 # Exemplo com httpd
 # oc new-app httpd:latest --name=test-app -n <namespace>
 oc new-app httpd:latest --name=test-app -n development
@@ -60,14 +55,9 @@ oc new-app <url-do-repositorio-git>
 oc new-app <url-do-repositorio-git>#<branch>
 ```
 
-```bash ignore-test
-# Exemplo prático
-oc new-app https://github.com/sclorg/django-ex
-```
-
-```bash ignore-test
-# Branch específica
-oc new-app https://github.com/sclorg/django-ex#develop
+```bash
+# Exemplo prático de new-app usando s2i
+oc new-app https://github.com/lgchiaretto/s2i-chiaretto.git --name=s2i-chiaretto
 ```
 
 ### Com Variáveis de Ambiente

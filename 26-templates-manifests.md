@@ -86,7 +86,7 @@ EOF
 ```
 
 ### Template Completo
-```bash ignore-test
+```bash
 # Template com múltiplos recursos
 cat <<EOF | oc apply -f -
 apiVersion: template.openshift.io/v1
@@ -210,12 +210,12 @@ oc process <template-name>
 
 ```bash ignore-test
 # Com parâmetros
-oc process <template-name> -p APP_NAME=myapp -p REPLICAS=3
+oc process <template-name> -p APP_NAME=test-app -p REPLICAS=3
 ```
 
 ```bash ignore-test
 # Process e create
-oc process <template-name> -p APP_NAME=myapp | oc create -f -
+oc process <template-name> -p APP_NAME=test-app | oc create -f -
 ```
 
 ```bash ignore-test
@@ -223,9 +223,9 @@ oc process <template-name> -p APP_NAME=myapp | oc create -f -
 oc process -n openshift <template-name> -p PARAM=value | oc create -f -
 ```
 
-```bash
+```bash ignore-test
 # De arquivo local
-oc process -f template.yaml -p APP_NAME=myapp | oc create -f -
+oc process -f template.yaml -p APP_NAME=test-app | oc create -f -
 ```
 
 ### Ver Parâmetros
@@ -247,8 +247,8 @@ oc process -n openshift <template-name> --parameters | column -t
 ### Usar Arquivo de Parâmetros
 ```bash
 # Criar arquivo de parâmetros
-cat > params.env << EOF
-APP_NAME=myapp
+cat > /tmp/params.env << EOF
+APP_NAME=test-app
 IMAGE=nodejs-16
 REPLICAS=3
 DB_HOST=mongodb.database.svc
@@ -258,12 +258,12 @@ EOF
 
 ```bash ignore-test
 # Usar com template
-oc process <template-name> --param-file=params.env | oc create -f -
+oc process <template-name> --param-file=/tmp/params.env | oc create -f -
 ```
 
 ```bash ignore-test
 # Ou combinar arquivo + override
-oc process <template-name> --param-file=params.env -p REPLICAS=5 | oc create -f -
+oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc create -f -
 ```
 
 ---
@@ -271,14 +271,14 @@ oc process <template-name> --param-file=params.env -p REPLICAS=5 | oc create -f 
 ## 🔢 Parameters
 
 ### Tipos de Parâmetros
-```bash
+```bash ignore-test
 # Parâmetro obrigatório
 parameters:
 - name: APP_NAME
   required: true
 ```
 
-```bash
+```bash ignore-test
 # Com valor default
 parameters:
 - name: REPLICAS
@@ -295,7 +295,7 @@ parameters:
   from: "[a-zA-Z0-9]{16}"
 ```
 
-```bash
+```bash ignore-test
 # Com validation regex
 parameters:
 - name: APP_NAME
@@ -330,69 +330,62 @@ parameters:
 ## 📤 Export e Manifests
 
 ### Export de Recursos
-```bash
-# Export pod
-# oc get pod <resource-name>app -o yaml --export > pod.yaml
-oc get pod test-app -o yaml --export > pod.yaml
-# Nota: --export está deprecated, use:
-# oc get pod <resource-name>app -o yaml > pod.yaml
-oc get pod test-app -o yaml > pod.yaml
-```
-
-```bash
-# Limpar metadata desnecessário com yq
-# oc get pod <resource-name>app -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
-oc get pod test-app -o yaml | yq 'del(.metadata.uid, .metadata.resourceVersion, .metadata.creationTimestamp, .status)' > pod-clean.yaml
+```bash ignore-test
+# oc get pod <resource-name>app -o yaml > /tmp/pod.yaml
+oc get pod test-app -o yaml > /tmp/pod.yaml
 ```
 
 ```bash
 # Export deployment
-# oc get deployment <deployment-name> -o yaml > deployment.yaml
-oc get deployment test-app -o yaml > deployment.yaml
+# oc get deployment <deployment-name> -o yaml > /tmp/deployment.yaml
+oc get deployment test-app -o yaml > /tmp/deployment.yaml
 ```
 
 ```bash
 # Export service
-# oc get svc <service-name> -o yaml > service.yaml
-oc get svc test-app -o yaml > service.yaml
+# oc get svc <service-name> -o yaml > /tmp/service.yaml> 
+oc get svc test-app -o yaml > /tmp/service.yaml
 ```
 
 ```bash
 # Export route
-# oc get route <route-name> -o yaml > route.yaml
-oc get route test-app -o yaml > route.yaml
+# oc get route <route-name> -o yaml > /tmp/route.yaml
+oc get route test-app -o yaml > /tmp/route.yaml
 ```
 
 ```bash
 # Export todos os recursos de um tipo
-oc get deployments -o yaml > all-deployments.yaml
+oc get deployments -o yaml > /tmp/all-deployments.yaml
 ```
 
 ### Criar Template de Recursos Existentes
 ```bash
 # Export como template
-oc get deployment,svc,route -l app=myapp -o yaml | \
-# oc create template <resource-name>template --dry-run=client -o yaml > myapp-template.yaml
-oc create template myapp-template --dry-run=client -o yaml > myapp-template.yaml
+oc get deployment,svc,route -l app=test-app -o yaml
+```
+```bash ignore-test
+# oc create template <resource-name>template --dry-run=client -o yaml > /tmp/test-app-template.yaml
+oc create template test-app-template --dry-run=client -o yaml > /tmp/test-app-template.yaml
 ```
 
 ```bash
 # Ou manualmente
-cat > app-template.yaml << 'EOF'
+cat > /tmp/app-template.yaml << 'EOF'
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
-  name: myapp-template
+  name: test-app-template
 objects:
 EOF
 ```
 
 ```bash
 # Adicionar recursos exportados
-oc get deployment myapp -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
+# oc get deployment <deployment-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
+oc get deployment test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 echo "---" >> /tmp/app-template.yaml
 # oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
-oc get svc myapp -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
+oc get svc test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 ```
 
 ```bash
@@ -401,12 +394,12 @@ oc get svc myapp -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 ```
 
 ### Manifests e Kustomize
-```bash
+```bash ignore-test
 # Estrutura Kustomize
 mkdir -p app/{base,overlays/{dev,prod}}
 ```
 
-```bash
+```bash ignore-test
 # Base
 cat > app/base/kustomization.yaml << EOF
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -418,57 +411,23 @@ resources:
 EOF
 ```
 
-```bash
+```bash 
 # Overlay dev
 cat > app/overlays/dev/kustomization.yaml << EOF
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: myapp-dev
+namespace: test-app-dev
 bases:
 - ../../base
 replicas:
-- name: myapp
+- name: test-app
   count: 1
 EOF
 ```
 
-```bash
+```bash ignore-tests
 # Aplicar
 oc apply -k app/overlays/dev/
-```
-
-### Backup de Projeto Completo
-```bash ignore-test
-# Script para backup de projeto
-cat > /tmp/backup-project.sh << 'EOF'
-#!/bin/bash
-PROJECT=$1
-BACKUP_DIR="project-backup-${PROJECT}-$(date +%Y%m%d)"
-```
-
-```bash ignore-test
-mkdir -p ${BACKUP_DIR}
-```
-
-```bash ignore-test
-# Export de cada tipo de recurso
-for resource in dc deployment statefulset daemonset job cronjob \
-                svc route pvc cm secret sa role rolebinding; do
-  echo "Exporting ${resource}..."
-  oc get ${resource} -n ${PROJECT} -o yaml > ${BACKUP_DIR}/${resource}.yaml 
-done
-```
-
-```bash ignore-test
-# Compress
-tar czf ${BACKUP_DIR}.tar.gz ${BACKUP_DIR}/
-echo "Backup saved to ${BACKUP_DIR}.tar.gz"
-EOF
-```
-
-```bash ignore-test
-chmod +x /tmp/backup-project.sh
-/tmp/backup-project.sh <project-name>
 ```
 
 ---

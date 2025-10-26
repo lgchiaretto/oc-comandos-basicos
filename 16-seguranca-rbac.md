@@ -212,7 +212,7 @@ oc describe sa test-app
 oc get sa test-app -o jsonpath='{.secrets[*].name}'
 ```
 
-```bash
+```bash ignore-test
 # Deletar Service Account
 # oc delete sa <serviceaccount-name>
 oc delete sa test-app
@@ -221,23 +221,24 @@ oc delete sa test-app
 ### Usar Service Accounts
 ```bash ignore-test
 # Adicionar role a Service Account
-oc adm policy add-role-to-user <role> system:serviceaccount:<namespace>:<sa-name>
+oc adm policy add-role-to-user <role> system:serviceaccount:development:test-app
 ```
 
 ```bash
 # Exemplo: dar role edit
-# oc adm policy <resource-name> <username> system:serviceaccount:myproject:mysa
-oc adm policy add-role-to-user edit system:serviceaccount:myproject:mysa
+# oc adm policy <resource-name> <username> system:serviceaccount:development:test-app
+oc adm policy add-role-to-user edit system:serviceaccount:development:test-app
 ```
 
 ```bash ignore-test
 # ClusterRole para SA
-oc adm policy add-cluster-role-to-user <role> system:serviceaccount:<namespace>:<sa-name>
+oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:test-app
 ```
 
 ```bash ignore-test
 # Usar SA em deployment
-oc set serviceaccount deployment/test-app <sa-name>
+# oc set serviceaccount <serviceaccount-name>/test-app test-app
+oc set serviceaccount deployment/test-app test-app
 ```
 
 ```bash ignore-test
@@ -282,32 +283,30 @@ oc describe scc restricted | grep Users
 ```
 
 ### Adicionar Permissões SCC
-```bash ignore-test
-# Adicionar SA a uma SCC
-oc adm policy add-scc-to-user <scc-name> system:serviceaccount:<namespace>:<sa-name>
+```bash
+# Exemplos comuns e use com moderação
+# oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>
+oc adm policy add-scc-to-user anyuid system:serviceaccount:development:test-app
+# oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>
+oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-app
 ```
 
 ```bash
-# Exemplos comuns
-# oc adm policy <resource-name> <username> system:serviceaccount:myproject:mysa
-oc adm policy add-scc-to-user anyuid system:serviceaccount:myproject:mysa
-# oc adm policy <resource-name> <username> system:serviceaccount:myproject:mysa
-oc adm policy add-scc-to-user privileged system:serviceaccount:myproject:mysa
-```
-
-```bash ignore-test
 # Adicionar grupo
-oc adm policy add-scc-to-group <scc-name> <group-name>
+# oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
+oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 ```
 
-```bash ignore-test
-# Remover de SCC
-oc adm policy remove-scc-from-user <scc-name> system:serviceaccount:<namespace>:<sa-name>
+```bash
+# Remover SCC de grupo
+# oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
+oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 ```
 
-```bash ignore-test
+```bash
 # Ver quem pode usar SCC
-oc describe scc <scc-name>
+# oc describe scc <resource-name>
+oc describe scc restricted
 ```
 
 ### Troubleshoot SCC

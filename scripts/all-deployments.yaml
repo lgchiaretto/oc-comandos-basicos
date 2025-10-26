@@ -4,19 +4,19 @@ items:
   kind: Deployment
   metadata:
     annotations:
-      deployment.kubernetes.io/revision: "1"
+      deployment.kubernetes.io/revision: "3"
       image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"s2i-chiaretto:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"s2i-chiaretto\")].image"}]'
       openshift.io/generated-by: OpenShiftNewApp
-    creationTimestamp: "2025-10-25T14:52:58Z"
-    generation: 1
+    creationTimestamp: "2025-10-25T22:03:05Z"
+    generation: 3
     labels:
       app: s2i-chiaretto
       app.kubernetes.io/component: s2i-chiaretto
       app.kubernetes.io/instance: s2i-chiaretto
     name: s2i-chiaretto
     namespace: development
-    resourceVersion: "176304"
-    uid: e67c1f8d-c1ed-48b0-acb1-be1205cf4dc0
+    resourceVersion: "253891"
+    uid: 774b2736-9e30-4dc3-abef-9cf877f57311
   spec:
     progressDeadlineSeconds: 600
     replicas: 1
@@ -38,7 +38,7 @@ items:
           deployment: s2i-chiaretto
       spec:
         containers:
-        - image: ' '
+        - image: image-registry.openshift-image-registry.svc:5000/development/s2i-chiaretto@sha256:1ccca271434d7c1d16133d90cc67b92c6811bece58ab8aa8ab5cd54cedc2c202
           imagePullPolicy: IfNotPresent
           name: s2i-chiaretto
           ports:
@@ -54,27 +54,22 @@ items:
         terminationGracePeriodSeconds: 30
   status:
     conditions:
-    - lastTransitionTime: "2025-10-25T14:52:58Z"
-      lastUpdateTime: "2025-10-25T14:52:58Z"
-      message: Created new replica set "s2i-chiaretto-68dd5b97f4"
-      reason: NewReplicaSetCreated
-      status: "True"
-      type: Progressing
-    - lastTransitionTime: "2025-10-25T14:52:58Z"
-      lastUpdateTime: "2025-10-25T14:52:58Z"
+    - lastTransitionTime: "2025-10-25T22:03:05Z"
+      lastUpdateTime: "2025-10-25T22:03:05Z"
       message: Deployment does not have minimum availability.
       reason: MinimumReplicasUnavailable
       status: "False"
       type: Available
-    - lastTransitionTime: "2025-10-25T14:52:58Z"
-      lastUpdateTime: "2025-10-25T14:52:58Z"
-      message: 'Pod "s2i-chiaretto-68dd5b97f4-cjhfn" is invalid: spec.containers[0].image:
-        Invalid value: " ": must not have leading or trailing whitespace'
-      reason: FailedCreate
+    - lastTransitionTime: "2025-10-25T22:03:05Z"
+      lastUpdateTime: "2025-10-25T22:03:57Z"
+      message: ReplicaSet "s2i-chiaretto-8d9f994d8" is progressing.
+      reason: ReplicaSetUpdated
       status: "True"
-      type: ReplicaFailure
-    observedGeneration: 1
-    unavailableReplicas: 1
+      type: Progressing
+    observedGeneration: 3
+    replicas: 2
+    unavailableReplicas: 2
+    updatedReplicas: 1
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
@@ -82,7 +77,7 @@ items:
       deployment.kubernetes.io/revision: "20"
       image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"httpd:latest","namespace":"openshift"},"fieldPath":"spec.template.spec.containers[?(@.name==\"httpd\")].image"}]'
       openshift.io/generated-by: OpenShiftNewApp
-    creationTimestamp: "2025-10-25T14:52:58Z"
+    creationTimestamp: "2025-10-25T22:03:02Z"
     generation: 26
     labels:
       app: test-app
@@ -90,8 +85,8 @@ items:
       app.kubernetes.io/instance: test-app
     name: test-app
     namespace: development
-    resourceVersion: "177736"
-    uid: a33a6af9-9138-4f3a-839d-259bee23467f
+    resourceVersion: "253861"
+    uid: 55a4bddf-3628-4406-bc76-a48065cf9ae0
   spec:
     progressDeadlineSeconds: 600
     replicas: 3
@@ -114,15 +109,15 @@ items:
       spec:
         containers:
         - env:
-          - name: DATABASE_PORT
-            valueFrom:
-              configMapKeyRef:
-                key: database.port
-                name: test-app
           - name: DATABASE_HOST
             valueFrom:
               configMapKeyRef:
                 key: database.host
+                name: test-app
+          - name: DATABASE_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: database.port
                 name: test-app
           - name: CHAVE
             valueFrom:
@@ -131,7 +126,7 @@ items:
                 name: test-app
           - name: minhachave
             value: valor
-          image: registry.redhat.io/ubi8/httpd-24@sha256:59cbb73918a853486b35817d289d0befdabc7615f91b9819bb4f92902451094a
+          image: image-registry.openshift-image-registry.svc:5000/openshift/httpd@sha256:59cbb73918a853486b35817d289d0befdabc7615f91b9819bb4f92902451094a
           imagePullPolicy: IfNotPresent
           name: httpd
           ports:
@@ -146,9 +141,9 @@ items:
           terminationMessagePolicy: File
           volumeMounts:
           - mountPath: /config
-            name: volume-ssgkh
+            name: volume-klwr2
           - mountPath: /test-app-secret
-            name: volume-74nbf
+            name: volume-rnvj4
           - mountPath: /emptydir
             name: emptydir
         dnsPolicy: ClusterFirst
@@ -160,8 +155,8 @@ items:
         - configMap:
             defaultMode: 420
             name: test-app
-          name: volume-ssgkh
-        - name: volume-74nbf
+          name: volume-klwr2
+        - name: volume-rnvj4
           secret:
             defaultMode: 420
             secretName: test-app
@@ -170,15 +165,15 @@ items:
   status:
     availableReplicas: 3
     conditions:
-    - lastTransitionTime: "2025-10-25T14:53:13Z"
-      lastUpdateTime: "2025-10-25T14:53:13Z"
+    - lastTransitionTime: "2025-10-25T22:03:21Z"
+      lastUpdateTime: "2025-10-25T22:03:21Z"
       message: Deployment has minimum availability.
       reason: MinimumReplicasAvailable
       status: "True"
       type: Available
-    - lastTransitionTime: "2025-10-25T14:53:14Z"
-      lastUpdateTime: "2025-10-25T14:53:51Z"
-      message: ReplicaSet "test-app-fd48fb45d" has successfully progressed.
+    - lastTransitionTime: "2025-10-25T22:03:21Z"
+      lastUpdateTime: "2025-10-25T22:03:57Z"
+      message: ReplicaSet "test-app-787b95cdbb" has successfully progressed.
       reason: NewReplicaSetAvailable
       status: "True"
       type: Progressing

@@ -65,6 +65,8 @@ oc get persistentvolumeclaims
 
 ```bash ignore-test
 # Descrever PVC
+# oc describe pvc test-app
+# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 
@@ -75,11 +77,15 @@ oc create -f <pvc-definition.yaml>
 
 ```bash ignore-test
 # Ver status da claim
+# oc get pvc test-app -o jsonpath='{.status.phase}'
+# oc get pvc <resource-name>app -o jsonpath='{.status.phase}'
 oc get pvc test-app -o jsonpath='{.status.phase}'
 ```
 
 ```bash ignore-test
 # Deletar PVC
+# oc delete pvc test-app
+# oc delete pvc <resource-name>
 oc delete pvc test-app
 ```
 

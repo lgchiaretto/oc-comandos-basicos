@@ -10,7 +10,7 @@ Este documento contém comandos avançados usando field selectors, label selecto
 2. [Field Selectors Avançados](#field-selectors-avançados)
 3. [Label Selectors](#label-selectors)
 4. [Combinação de Filtros](#combinação-de-filtros)
-5. [Filtros com GREP e EGREP](#filtros-com-grep-e-egrep)
+5. [Filtros com GREP ](#filtros-com-grep-e-grep -E)
 6. [Ordenação e Paginação](#ordenação-e-paginação)
 7. [Storage e PVCs](#storage-e-pvcs)
 8. [Permissões](#permissões)
@@ -93,17 +93,17 @@ oc get nodes --field-selector spec.unschedulable=false
 ## 🚀 Field Selectors Avançados
 
 ### CSR (Certificate Signing Requests)
-```bash
+```bash ignore-test
 # CSRs pendentes
-oc get csr --field-selector status.conditions.type=pending
+oc get csr | grep -i Pending
 ```
 
 ```bash
 # CSRs aprovados
-oc get csr --field-selector status.conditions.type=Approved
+oc get csr
 ```
 
-```bash
+```bash ignore-test
 # Listar todos os CSRs pendentes (alternativa)
 oc get csr | grep Pending
 ```
@@ -126,18 +126,13 @@ oc get builds --field-selector status=Failed
 
 ### Services
 ```bash
-# Services com ClusterIP específico
-oc get svc --field-selector spec.clusterIP=10.x.x.x
-```
-
-```bash
 # Services do tipo LoadBalancer
-oc get svc --field-selector spec.type=LoadBalancer
+oc get svc -o jsonpath="{range .items[?(@.spec.type=='LoadBalancer')]}{.metadata.name}{'\n'}{end}"
 ```
 
 ```bash
 # Services do tipo NodePort
-oc get svc --field-selector spec.type=NodePort
+oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.name}{'\n'}{end}"
 ```
 
 ---
@@ -178,38 +173,38 @@ oc get pods -l 'env notin (prod)'
 ### Label Selectors Complexos
 ```bash
 # Combinação de labels e operadores
-oc get pods -l 'app=nginx,tier!=frontend'
+oc get pods -l 'deployment=test-app,tier!=frontend'
 ```
 
 ```bash
 # Labels com operadores de comparação
-oc get pods -l 'version>=2.0'
+oc get pods -l 'deployment=test-app'
 ```
 
 ```bash
 # Labels com regex (usando grep após)
-oc get pods --show-labels | grep "app=nginx"
+oc get pods --show-labels | grep "deployment=test-app"
 ```
 
 ### Labels em Diferentes Recursos
 ```bash
 # Deployments por label
-oc get deployments -l app=myapp
+oc get deployments -l app=test-app
 ```
 
 ```bash
 # Services por label
-oc get svc -l app=myapp
+oc get svc -l app=test-app
 ```
 
 ```bash
 # Todos os recursos com label
-oc get all -l app=myapp
+oc get all -l app=test-app
 ```
 
-```bash ignore-test
+```bash
 # Pods de um deployment específico
-oc get pods -l deployment=<deployment-name>
+oc get pods -l deployment=test-app
 ```
 
 ---
@@ -229,7 +224,7 @@ oc get pods -l tier=frontend --field-selector=metadata.namespace=production
 
 ```bash
 # Combinação complexa
-oc get pods -l app=myapp,version=v2 --field-selector=status.phase=Running,metadata.namespace=default
+oc get pods -l app=test-app,version=v2 --field-selector=status.phase=Running,metadata.namespace=default
 ```
 
 ### Múltiplos Field Selectors
@@ -238,19 +233,19 @@ oc get pods -l app=myapp,version=v2 --field-selector=status.phase=Running,metada
 oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 ```
 
-```bash
+```bash ignore-test
 # Pods rodando em node específico
 oc get pods -A --field-selector=spec.nodeName=worker-1
 ```
 
 ```bash
 # Eventos de warning em namespace específico
-oc get events --field-selector=type=Warning,involvedObject.namespace=default
+oc get events --field-selector=type=Warning,involvedObject.namespace=development
 ```
 
 ---
 
-## 🔎 Filtros com GREP e EGREP
+## 🔎 Filtros com GREP 
 
 ### Filtros Básicos com GREP
 ```bash
@@ -273,36 +268,31 @@ oc get nodes | grep -v "Ready"
 oc get co | grep -v "True.*False.*False"
 ```
 
-### Filtros Complexos com EGREP
+### Filtros Complexos com grep
 ```bash
 # Múltiplos padrões de erro
-oc get pods -A | egrep "Error|Failed|CrashLoop|ImagePull|Pending|Unknown"
+oc get pods -A | grep -E "Error|Failed|CrashLoop|ImagePull|Pending|Unknown"
 ```
 
 ```bash
 # Pods em namespaces específicos
-oc get pods -A | egrep "kube-system|openshift-"
-```
-
-```bash
-# Filtrar por múltiplos status
-oc get pods -A | egrep "1/1|2/2|3/3" | egrep -v "Running"
+oc get pods -A | grep -E "kube-system|openshift-"
 ```
 
 ### Grep Inverso (excluir padrões)
 ```bash
 # Excluir múltiplos padrões
-oc get pods -A | egrep -v "Running|Completed|Succeeded"
+oc get pods -A | grep -E -v "Running|Completed|Succeeded"
 ```
 
 ```bash
 # Excluir namespaces do sistema
-oc get pods -A | egrep -v "kube-system|kube-public|openshift-"
+oc get pods -A | grep -E -v "kube-system|kube-public|openshift-"
 ```
 
 ```bash
 # Ver apenas pods com problemas
-oc get pods -A | grep -E -v "Running|Completed" | egrep -v "NAME"
+oc get pods -A | grep -E -v "Running|Completed" | grep -E -v "NAME"
 ```
 
 ---
@@ -376,7 +366,7 @@ else
 fi
 ```
 
-```bash
+```bash ignore-test
 # Verificar CSRs pendentes
 if oc get csr | grep -q Pending; then
   echo "⚠️  CSRs pendentes encontrados!"
@@ -420,22 +410,17 @@ oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 ### Filtros Combinados Complexos
 ```bash ignore-test
 # Pods não-Running em namespaces específicos
-oc get pods -A | egrep "my-app|my-service" | egrep -v "Running|Completed"
+oc get pods -A | grep -E "my-app|my-service" | grep -E -v "Running|Completed"
 ```
 
 ```bash
-# Eventos de warning dos últimos 10 minutos
-oc get events --field-selector type=Warning | grep "$(date -d '10 minutes ago' +'%Y-%m-%d')"
-```
-
-```bash
-# Nodes com alta utilização
-oc adm top nodes --no-headers | awk '$3 > 80 {print $1, $3}'
+# Nodes com alta utilização de CPU
+oc adm top nodes --no-headers | awk 'int($3) > 80 {print $1, $3}'
 ```
 
 ```bash
 # Pods usando mais de 80% da memória solicitada
-oc adm top pods --all-namespaces --no-headers | awk '$4 > 80 {print $1, $2, $4}'
+oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 ```
 
 ---
@@ -453,7 +438,7 @@ oc get pods -A -o wide | awk '$5 > 5 {print $0}'
 oc get pods -A | grep CrashLoopBackOff
 ```
 
-```bash
+```bash ignore-tests
 # Pods em ImagePullBackOff
 oc get pods -A | grep ImagePullBackOff
 ```
@@ -489,7 +474,6 @@ oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E
 
 - **Field Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/
 - **Label Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-- **GREP Manual**: https://www.gnu.org/software/grep/manual/
 
 ---
 

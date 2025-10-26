@@ -29,7 +29,7 @@ def extract_placeholder_pattern(command):
         r'^oc\s+projects\s*$',
         r'^oc\s+get\s+\w+\s*$',  # oc get pods, oc get all, etc
         r'^oc\s+get\s+\w+\s+-[A-Za-z]',  # oc get pods -A
-        r'^oc\s+get\s+\w+\s+--all-namespaces',
+        r'^oc\s+get\s+\w+\s+-A',
         r'^oc\s+api-resources\s*',
         r'^oc\s+api-versions\s*',
         r'^oc\s+config\s+view\s*',
@@ -75,7 +75,7 @@ def extract_placeholder_pattern(command):
         # Secret names
         (r'(secret\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<secret-name>'),
         # PVC names
-        (r'(pvc\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<pvc-name>'),
+        (r'(pvc\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1test-app'),
         # PV names
         (r'(pv\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<pv-name>'),
         # Node names

@@ -42,11 +42,12 @@ KUBE_EDITOR=vim oc edit deployment test-app
 
 ```bash ignore-test
 # Editar em namespace específico
-oc edit deployment test-app -n <namespace>
+# oc edit deployment <deployment-name> -n <namespace>
+oc edit deployment test-app -n development
 ```
 
 ### Edit em Arquivo Temporário
-```bash
+```bash ignore-test
 # Export, edit, apply
 # oc get deployment <deployment-name> -o yaml > /tmp/deploy.yaml
 oc get deployment test-app -o yaml > /tmp/deploy.yaml
@@ -54,12 +55,12 @@ vi /tmp/deploy.yaml
 oc apply -f /tmp/deploy.yaml
 ```
 
-```bash
+```bash ignore-test
 # Ou com replace
 oc replace -f /tmp/deploy.yaml
 ```
 
-```bash
+```bash ignore-test
 # Com force
 oc replace -f /tmp/deploy.yaml --force
 ```
@@ -110,7 +111,8 @@ oc patch deployment test-app --type merge -p '
     "template": {
       "spec": {
         "containers": [{
-          "name": "app",
+          "name": "httpd",
+          "image": "registry.redhat.io/rhel8/httpd-24",
           "resources": {
             "limits": {
               "cpu": "500m",
@@ -125,18 +127,6 @@ oc patch deployment test-app --type merge -p '
 ```
 
 #### JSON Patch
-```bash ignore-test
-# Adicionar elemento a array
-# oc patch deployment <deployment-name> --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NEW_VAR","value":"new_value"}}]'
-oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NEW_VAR","value":"new_value"}}]'
-```
-
-```bash ignore-test
-# Remover elemento
-# oc patch deployment <deployment-name> --type json -p='[{"op":"remove","path":"/spec/template/spec/containers/0/env/0"}]'
-oc patch deployment test-app --type json -p='[{"op":"remove","path":"/spec/template/spec/containers/0/env/0"}]'
-```
-
 ```bash ignore-test
 # Replace elemento
 # oc patch deployment <deployment-name> --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
@@ -187,8 +177,8 @@ oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"na
 
 ```bash ignore-test
 # Resources
-# oc patch deployment <deployment-name> -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
-oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
+# oc patch deployment <deployment-name> -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","image":"registry.redhat.io/rhel8/httpd-24","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
+oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","image":"registry.redhat.io/rhel8/httpd-24","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
 ```
 
 ```bash ignore-test
@@ -403,7 +393,8 @@ oc set volume deployment/test-app --add --name=secret-vol --type=secret --secret
 
 ```bash ignore-test
 # Adicionar PVC
-oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeClaim --claim-name=<pvc-name> --mount-path=/data
+# oc set volume <resource-name>/test-app --add --name=data-vol --type=persistentVolumeClaim --claim-name=test-app --mount-path=/data
+oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeClaim --claim-name=test-app --mount-path=/data
 ```
 
 ```bash

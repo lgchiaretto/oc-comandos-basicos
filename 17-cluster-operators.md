@@ -50,6 +50,7 @@ watch oc get co
 ### Status Detalhado
 ```bash
 # Descrever Cluster Operator
+# oc describe co <resource-name>
 oc describe co authentication
 ```
 
@@ -388,6 +389,7 @@ oc get csv -n <namespace>
 ### Troubleshoot Operadores OLM
 ```bash
 # Ver status da subscription
+# oc describe subscription -n <namespace>   local-storage-operator
 oc describe subscription -n openshift-local-storage   local-storage-operator
 ```
 

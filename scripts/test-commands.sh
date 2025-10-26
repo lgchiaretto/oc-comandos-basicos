@@ -2,7 +2,7 @@
 
 ##############################################################################
 # Script Principal de Validação de Comandos OpenShift
-# Executa todos os módulos de teste organizados por tópico
+# Executa todos os modulos de teste organizados por tópico
 #
 # Uso: ./scripts/test-commands.sh [OPÇÕES]
 #
@@ -10,13 +10,13 @@
 #   --verbose              Mostra saída detalhada de cada comando
 #   --stop-on-error        Para execução no primeiro erro
 #   --cleanup              Executa limpeza após os testes
-#   --module <num>         Executa apenas o módulo especificado (ex: --module 01)
-#   --start-module <num>   Inicia a partir do módulo especificado (ex: --start-module 10)
-#   --end-module <num>     Termina no módulo especificado (ex: --end-module 15)
+#   --module <num>         Executa apenas o modulo especificado (ex: --module 01)
+#   --start-module <num>   Inicia a partir do modulo especificado (ex: --start-module 10)
+#   --end-module <num>     Termina no modulo especificado (ex: --end-module 15)
 #
 # Exemplos:
-#   ./scripts/test-commands.sh                              # Executa todos os módulos
-#   ./scripts/test-commands.sh --module 05                  # Executa apenas módulo 05
+#   ./scripts/test-commands.sh                              # Executa todos os modulos
+#   ./scripts/test-commands.sh --module 05                  # Executa apenas modulo 05
 #   ./scripts/test-commands.sh --start-module 10            # Executa do 10 ao 30
 #   ./scripts/test-commands.sh --start-module 01 --end-module 05  # Executa 01 a 05
 #   ./scripts/test-commands.sh --start-module 06 --end-module 08  # Executa 06 a 08
@@ -52,8 +52,11 @@ echo "TOTAL_TESTS=0" > "$STATE_FILE"
 echo "PASSED_TESTS=0" >> "$STATE_FILE"
 echo "FAILED_TESTS=0" >> "$STATE_FILE"
 
+echo "Cleaning up and regenerating test artifacts..."
+rm -rf ../tests/ && ./generate-all-tests.py
+
 # Inicializar arquivo de timing
-echo "# Tempo de execução dos módulos" > "$TIMING_FILE"
+echo "# Tempo de execução dos modulos" > "$TIMING_FILE"
 
 # Tempo de início total
 SCRIPT_START_TIME=$(date +%s)
@@ -92,16 +95,16 @@ while [[ $# -gt 0 ]]; do
             echo "  --verbose              Mostra saída detalhada"
             echo "  --stop-on-error        Para no primeiro erro"
             echo "  --cleanup              Executa a limpeza após os testes (Default: não)"
-            echo "  --module <num>         Executa apenas módulo específico (ex: 01)"
-            echo "  --start-module <num>   Inicia a partir do módulo especificado (ex: 10)"
-            echo "  --end-module <num>     Termina no módulo especificado (ex: 15)"
+            echo "  --module <num>         Executa apenas modulo específico (ex: 01)"
+            echo "  --start-module <num>   Inicia a partir do modulo especificado (ex: 10)"
+            echo "  --end-module <num>     Termina no modulo especificado (ex: 15)"
             echo ""
             echo "Exemplos:"
-            echo "  $0                                    # Executa todos os módulos"
-            echo "  $0 --module 05                        # Executa apenas o módulo 05"
-            echo "  $0 --end-module 05                    # Executa até o módulo 05"
-            echo "  $0 --start-module 10                  # Executa do módulo 10 ao 30"
-            echo "  $0 --start-module 06 --end-module 08  # Executa módulos 06 a 08"
+            echo "  $0                                    # Executa todos os modulos"
+            echo "  $0 --module 05                        # Executa apenas o modulo 05"
+            echo "  $0 --end-module 05                    # Executa até o modulo 05"
+            echo "  $0 --start-module 10                  # Executa do modulo 10 ao 30"
+            echo "  $0 --start-module 06 --end-module 08  # Executa modulos 06 a 08"
             exit 0
             ;;
         *)
@@ -112,7 +115,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Exportar variáveis para os módulos
+# Exportar variáveis para os modulos
 export VERBOSE
 export STOP_ON_ERROR
 export LOG_FILE
@@ -181,7 +184,7 @@ cleanup() {
 # Trap para garantir limpeza
 trap cleanup EXIT
 
-# Função para executar um módulo de teste
+# Função para executar um modulo de teste
 run_test_module() {
     local module_dir="$1"
     local test_script="${module_dir}/test.sh"
@@ -195,10 +198,10 @@ run_test_module() {
     # Tornar o script executável
     chmod +x "$test_script"
     
-    # Registrar tempo de início do módulo
+    # Registrar tempo de início do modulo
     local module_start=$(date +%s)
     
-    # Executar o módulo
+    # Executar o modulo
     bash "$test_script"
     local exit_code=$?
     
@@ -209,7 +212,7 @@ run_test_module() {
     # Registrar tempo no arquivo
     echo "$module_name:$module_duration" >> "$TIMING_FILE"
     
-    # Capturar variáveis atualizadas (o módulo as exporta)
+    # Capturar variáveis atualizadas (o modulo as exporta)
     return $exit_code
 }
 
@@ -236,7 +239,7 @@ if [ ! -d "$TESTS_DIR" ]; then
     exit 1
 fi
 
-# Função para filtrar módulos por range
+# Função para filtrar modulos por range
 filter_modules() {
     local all_modules=("$@")
     local filtered=()
@@ -269,12 +272,12 @@ filter_modules() {
     echo "${filtered[@]}"
 }
 
-# Lista de módulos
+# Lista de modulos
 if [ -n "$SPECIFIC_MODULE" ]; then
-    # Executar apenas módulo específico
+    # Executar apenas modulo específico
     modules=("${TESTS_DIR}/${SPECIFIC_MODULE}-"*)
 else
-    # Executar todos os módulos em ordem
+    # Executar todos os modulos em ordem
     all_modules=($(find "$TESTS_DIR" -maxdepth 1 -type d -name '[0-9][0-9]-*' | sort))
     
     # Aplicar filtros de range se especificados
@@ -285,14 +288,14 @@ else
     fi
 fi
 
-# Verificar se há módulos para executar
+# Verificar se há modulos para executar
 if [ ${#modules[@]} -eq 0 ]; then
-    log_error "Nenhum módulo encontrado com os critérios especificados"
+    log_error "Nenhum modulo encontrado com os critérios especificados"
     exit 1
 fi
 
-# Mostrar informações sobre os módulos que serão executados
-log_info "Módulos a serem executados: ${#modules[@]}"
+# Mostrar informações sobre os modulos que serão executados
+log_info "Modulos a serem executados: ${#modules[@]}"
 if [ -n "$START_MODULE" ] || [ -n "$END_MODULE" ]; then
     range_info="Range: "
     [ -n "$START_MODULE" ] && range_info+="início=${START_MODULE} "
@@ -301,7 +304,7 @@ if [ -n "$START_MODULE" ] || [ -n "$END_MODULE" ]; then
 fi
 echo ""
 
-# Executar cada módulo
+# Executar cada modulo
 for module_dir in "${modules[@]}"; do
     if [ -d "$module_dir" ]; then
         run_test_module "$module_dir"
@@ -309,7 +312,7 @@ for module_dir in "${modules[@]}"; do
 done
 
 ##############################################################################
-# RELATÓRIO FINAL
+# RELATORIO FINAL
 ##############################################################################
 
 # Carregar estado final
@@ -337,7 +340,7 @@ format_time() {
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║                    RELATÓRIO DE VALIDAÇÃO                      ║"
+echo "║                    RELATORIO DE VALIDACAO                      ║"
 echo "╚════════════════════════════════════════════════════════════════╝"
 echo ""
 log_info "Finalizado em $(date)"
@@ -356,13 +359,13 @@ fi
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║               TEMPO DE EXECUÇÃO POR MÓDULO                     ║"
+echo "║               TEMPO DE EXECUCAO POR MODULO                     ║"
 echo "╚════════════════════════════════════════════════════════════════╝"
 echo ""
 
-# Exibir tempo de cada módulo
+# Exibir tempo de cada modulo
 if [ -f "$TIMING_FILE" ]; then
-    printf "%-40s %15s\n" "Módulo" "Tempo"
+    printf "%-40s %15s\n" "Modulo" "Tempo"
     echo "────────────────────────────────────────────────────────────────"
     
     while IFS=: read -r module_name duration; do

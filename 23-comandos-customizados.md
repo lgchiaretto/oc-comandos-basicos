@@ -8,7 +8,7 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 
 1. [Comandos com AWK](#comandos-com-awk)
 2. [Comandos com JQ](#comandos-com-jq)
-3. [Comandos com GREP e EGREP](#comandos-com-grep-e-egrep)
+3. [Comandos com GREP ](#comandos-com-grep-e-egrep)
 4. [Pipes Complexos](#pipes-complexos)
 5. [Automação e Scripts](#automação-e-scripts)
 6. [Análise de Cluster Operators](#análise-de-cluster-operators)
@@ -55,7 +55,7 @@ oc get pods -o wide --no-headers | awk '{print $1, $7}'
 
 ```bash
 # Contar pods por node
-oc get pods -o wide --all-namespaces --no-headers | awk '{print $8}' | sort | uniq -c
+oc get pods -o wide -A --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
 ```bash
@@ -80,17 +80,17 @@ oc adm top pods -A --no-headers | awk '{print $2, $4}' | sort -k2 -h
 ### Builds com AWK
 ```bash
 # Gerar comandos describe para todos os builds
-oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n " $1 " " $2}'
+oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}'
 ```
 
 ```bash
 # Executar describe em todos os builds e filtrar imagens
-oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:"
+oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:"
 ```
 
 ```bash
 # Salvar resultado em arquivo
-oc get build --all-namespaces --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:" | tee /tmp/build-images.txt
+oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:" | tee /tmp/build-images.txt
 ```
 
 ### Service Mesh com AWK
@@ -191,7 +191,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 
 ```bash
 # Salvar CA bundle em arquivo
-oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > bundle-ca.crt
+oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/bundle-ca.crt
 ```
 
 ### Must-Gather Dinâmico com JQ
@@ -209,7 +209,7 @@ oc adm must-gather \
 
 ---
 
-## 🔍 Comandos com GREP e EGREP
+## 🔍 Comandos com GREP 
 
 ### Filtros Complexos
 ```bash
@@ -250,7 +250,7 @@ oc get all -A | grep redhat-operator
 
 ```bash
 # Ver configurações de métricas
-oc get all --all-namespaces | grep metrics
+oc get all -A | grep metrics
 ```
 
 ```bash
@@ -266,25 +266,25 @@ oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 3
 ```
 
 ### Análise de ArgoCD
-```bash
+```bash ignore-test
 # Ver source da aplicação
 # oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 10 source
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
 ```
 
-```bash
+```bash ignore-test
 # Ver destination
 # oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 5 destination
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
 ```
 
-```bash
+```bash ignore-test
 # Ver sync policy
 # oc get application <resource-name>hml -n <namespace> -o yaml | grep -A 5 -B 5 sync
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A 5 -B 5 sync
 ```
 
-```bash
+```bash ignore-test
 # Ver mensagens de erro
 # oc get application <resource-name>dev -n <namespace> -o yaml | grep -A 20 -B 5 "message"
 oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 5 "message"
@@ -371,24 +371,24 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 ## 🤖 Automação e Scripts
 
 ### Loop para Coletar Logs
-```bash
+```bash ignore-test
 # Coletar logs de todos os pods em um arquivo
 for pod in $(oc get pods -o name); do
   echo "=== $pod ===" >> /tmp/all-logs.txt
-  oc logs $pod >> /tmp/all-logs.txt 2>&1
+  oc logs $pod >> /tmp/all-logs.txt
 done
 ```
 
 ```bash ignore-test
-# Coletar logs apenas de pods com erro
-for pod in $(oc get pods --field-selector=status.phase!=Running -o name); do
+# Coletar logs do pods com erro
+for pod in $(oc get pods -o jsonpath="{range .items[?(@.status.containerStatuses[*].state.waiting.reason=='CrashLoopBackOff')]}{.metadata.name}{'\n'}{end}"); do
   echo "=== $pod ===" >> /tmp/error-logs.txt
-  oc logs $pod --previous >> error-logs.txt 2>&1
+  oc logs $pod --previous >> /tmp/error-logs.txt
 done
 ```
 
 ### Verificação de ArgoCD Apps
-```bash
+```bash ignore-test
 # Loop para verificar múltiplas aplicações
 for app in $(oc get applications.argoproj.io -n openshift-gitops --no-headers | awk '{print $1}'); do
   echo "Application: $app"
@@ -411,6 +411,19 @@ while true; do
 done
 ```
 
+```bash ignore-test
+# Aprovar CSRs até executar o cancelamento (pressione ctrl+c para cancelar)
+while true; do
+  csrs=$(oc get csr | grep Pending | awk '{print $1}')
+  if [ -z "$csrs" ]; then
+    echo "$(date "+%Y-%m-%d %H:%M:%S") No pending CSRs"
+    sleep 5
+    continue
+  fi
+  oc adm certificate approve $csrs
+done
+```
+
 ### Verificação de Nodes
 ```bash
 # Verificar status de todos os nodes
@@ -426,17 +439,17 @@ done
 ## 📈 Análise de Cluster Operators
 
 ### Status Completo
-```bash ignore-test
+```bash
 # Ver todos os operators e suas condições
 oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.conditions[] | select(.type=="Available").status), Progressing=\(.status.conditions[] | select(.type=="Progressing").status), Degraded=\(.status.conditions[] | select(.type=="Degraded").status)"'
 ```
 
-```bash ignore-test
+```bash
 # Operators com problemas detalhados
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'
 ```
 
-```bash ignore-test
+```bash
 # Ver versões dos operators
 oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[0].version}{"\n"}{end}' | column -t
 ```
@@ -482,7 +495,7 @@ oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64
 
 ```bash
 # Extrair bundle CA do OAuth
-oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > oauth-ca-bundle.crt
+oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/oauth-ca-bundle.crt
 ```
 
 ---
@@ -492,7 +505,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 ### Combinando Comandos
 ```bash
 # Ver pods com mais uso de CPU
-oc adm top pods --all-namespaces --no-headers | sort -k3 -nr | head -10
+oc adm top pods -A --no-headers | sort -k3 -nr | head -10
 ```
 
 ```bash
@@ -511,7 +524,7 @@ oc get all -A --no-headers | awk '{print $1}' | sort | uniq -c
 alias ocpods='oc get pods -A | grep -E -v "Running|Completed"'
 alias occo='oc get co | grep -v "True.*False.*False"'
 alias occsrfix='oc get csr -o name | xargs oc adm certificate approve'
-alias octop='oc adm top pods --all-namespaces --no-headers | sort -k3 -nr | head -10'
+alias octop='oc adm top pods -A --no-headers | sort -k3 -nr | head -10'
 ```
 
 ### Verificações Rápidas

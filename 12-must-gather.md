@@ -105,7 +105,7 @@ oc adm inspect \
 
 ```bash ignore-test
 # Inspect all-namespaces
-oc adm inspect ns --all-namespaces --dest-dir=/tmp/inspect
+oc adm inspect ns -A --dest-dir=/tmp/inspect
 ```
 
 ---
