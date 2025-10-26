@@ -1,6 +1,6 @@
 # 31 - Troubleshooting de Upgrade do Cluster
 
-Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Container Platform. A grande maioria dos problemas de upgrade ocorrem no momento de fazer o reboot dos nodes no momento em que o Machine Config Operator é atualizado e os nodes do cluster são reiniciados para aplicar a nova versão.
+Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Container Platform. A grande maioria dos problemas de upgrade ocorrem durante o reboot dos nodes no momento em que o Machine Config Operator é atualizado e os nodes do cluster são reiniciados para aplicar a nova versão.
 
 ---
 
