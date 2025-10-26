@@ -1,6 +1,6 @@
 # 31 - Troubleshooting de Upgrade do Cluster
 
-Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Container Platform
+Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Container Platform. A grande maioria dos problemas de upgrade ocorrem no momento de fazer o reboot dos nodes no momento em que o Machine Config Operator é atualizado e os nodes do cluster são reiniciados para aplicar a nova versão.
 
 ---
 
@@ -184,9 +184,9 @@ oc get co authentication -o jsonpath='Atual: {.status.versions[0].version}{"\n"}
 
 ```bash
 # Verificar operadores essenciais
-for op in kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver etcd; do
+for op in kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver etcd machine-config; do
   echo "=== $op ==="
-  oc get co $op -o jsonpath='{.status.conditions[?(@.type=="Available")].status}{" - "}{.status.conditions[?(@.type=="Degraded")].status}{"\n"}'
+  oc get co $op -o jsonpath='{"Available: "}{.status.conditions[?(@.type=="Available")].status}{" - Progressing: "}{.status.conditions[?(@.type=="Progressing")].status}{" - Degraded: "}{.status.conditions[?(@.type=="Degraded")].status}{"\n"}'
 done
 ```
 
@@ -229,10 +229,9 @@ oc describe node <node-name> | grep -A 10 Conditions
 
 ```bash ignore-test
 # Verificar se tem anotações no node (analise se  currentConfig está ok, verifique se não tem nenhuma anotação do Machine Config Operator)
+# Esse é importante se o seu node está há muito tempo em SchedulingDisabled e não continua o upgrade
 oc describe node <node-name> | awk '/^Annotations:/ {flag=1} flag && /^[A-Z]/ && !/^Annotations:/ {flag=0} flag'
 ```
-
-
 
 ### Versões dos Nodes
 
@@ -445,43 +444,12 @@ oc adm top nodes
 
 ## Recovery de Upgrade
 
-### Pausar/Retomar Upgrade
+O processo de upgrade não possui uma função de recovery ou rollback.
 
-```bash ignore-test
-# CUIDADO: Pausar upgrade (não recomendado, apenas em emergências)
-oc patch clusterversion version --type=merge -p '{"spec":{"overrides":[{"kind":"Deployment","group":"apps","name":"cluster-version-operator","namespace":"openshift-cluster-version","unmanaged":true}]}}'
-```
+Uma vez iniciado, o upgrade deve ser finalizado.
 
-```bash
-# Verificar se o upgrade está pausado
-oc get clusterversion -o jsonpath='{.spec.overrides}{"\n"}' | jq
-```
-
-### Rollback (Não Suportado Oficialmente)
-
-```bash
-# Verificar histórico para entender o estado anterior
-oc get clusterversion -o jsonpath='{.status.history}' | jq
-```
-
-### Forçar Reconciliação
-
-```bash ignore-test
-# Forçar reconciliação do cluster version
-oc patch clusterversion version --type=merge -p '{"spec":{"desiredUpdate":null}}'
-```
-
-```bash ignore-test
-# Reiniciar o CVO
-# oc delete pod -n <namespace> -l app=cluster-version-operator
-oc delete pod -n openshift-cluster-version -l app=cluster-version-operator
-```
-
-```bash ignore-test
-# Forçar reconciliação de um operador específico
-oc delete pod -n <operator-namespace> -l <operator-label>
-```
-
+Em caso de falha, não tente reverter o processoee o procedimento correto é abrir imediatamente um chamado de suporte na Red Hat para tratar o incidente.
+        
 ### Limpeza de Recursos Problemáticos
 
 ```bash ignore-test
@@ -492,11 +460,6 @@ oc delete pods -A --field-selector=status.phase=Failed
 ```bash ignore-test
 # Remover completed jobs antigos
 oc delete jobs -A --field-selector=status.successful=1
-```
-
-```bash ignore-test
-# Limpar CSRs negados
-oc get csr -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Denied")) | .metadata.name' | xargs oc delete csr
 ```
 
 ---
