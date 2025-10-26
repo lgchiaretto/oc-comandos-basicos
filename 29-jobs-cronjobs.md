@@ -8,7 +8,7 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 
 1. [Índice](#índice)
 2. [Jobs](#jobs)
-3. [ CronJobs](#-cronjobs)
+3. [CronJobs](#cronjobs)
 4. [Troubleshooting](#troubleshooting)
 5. [Documentação Oficial](#documentação-oficial)
 6. [Navegação](#navegação)

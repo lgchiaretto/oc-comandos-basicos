@@ -6,21 +6,13 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 
 ## Índice
 
-- [Must-Gather e Diagnósticos](#must-gather-e-diagnósticos)
-  - [Índice](#índice)
-  - [Must-Gather Básico](#must-gather-básico)
-    - [Coletar Dados do Cluster](#coletar-dados-do-cluster)
-    - [Coleta por Tempo](#coleta-por-tempo)
-  - [Must-Gather Específico](#must-gather-específico)
-    - [Must-Gather por Componente](#must-gather-por-componente)
-  - [Inspect](#inspect)
-    - [Inspecionar Recursos](#inspecionar-recursos)
-    - [Múltiplos Recursos](#múltiplos-recursos)
-  - [Diagnósticos Rápidos](#diagnósticos-rápidos)
-    - [Verificações Básicas](#verificações-básicas)
-    - [Coleta Rápida](#coleta-rápida)
-  - [Documentação Oficial](#documentação-oficial)
-  - [Navegação](#navegação)
+1. [Índice](#índice)
+2. [Must-Gather Básico](#must-gather-básico)
+3. [Must-Gather Específico](#must-gather-específico)
+4. [Inspect](#inspect)
+5. [Diagnósticos Rápidos](#diagnósticos-rápidos)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Must-Gather Básico
