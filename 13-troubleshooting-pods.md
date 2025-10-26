@@ -383,12 +383,15 @@ oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Troubleshooting](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/troubleshooting)
-- [Investigating pod issues](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/troubleshooting-operating-issues#investigating-pod-issues_troubleshooting-operating-issues)
+- [Support](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support)
+- [Nodes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes)
 
 ---
 

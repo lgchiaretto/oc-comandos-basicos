@@ -398,11 +398,14 @@ alias okpf='oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.pha
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/index)
+- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools)
 
 ---
 

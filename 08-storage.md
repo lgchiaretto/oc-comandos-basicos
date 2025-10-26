@@ -153,12 +153,14 @@ oc describe pod my-pod | grep -A 5 Volumes
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/index)
-- [Understanding persistent storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/understanding-persistent-storage)
+- [Storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage)
 
 ---
 

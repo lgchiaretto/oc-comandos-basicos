@@ -178,15 +178,43 @@ Remove projetos de teste criados durante a validação.
 Gera automaticamente módulos de teste a partir da documentação markdown.
 
 ```bash
-python3 scripts/generate-all-tests.py
+python3 scripts/generate-all-tests.py [--verbose]
 ```
+
+**Opções:**
+- `--verbose` ou `-v`: Mostra informações detalhadas durante a geração
 
 ### `fix-indexes.py`
 Corrige automaticamente os índices (## 📋 Índice) em todos os arquivos markdown.
+Gera índice apenas com seções principais (##), ignorando subseções (###).
 
 ```bash
-python3 scripts/fix-indexes.py
+python3 scripts/fix-indexes.py [--verbose]
 ```
+
+**Opções:**
+- `--verbose` ou `-v`: Mostra as seções detectadas em cada arquivo
+
+**Características:**
+- ✅ Detecta apenas seções de nível 2 (##)
+- ✅ Ignora subseções (###)
+- ✅ Remove acentos nas âncoras
+- ✅ Gera links funcionais automaticamente
+
+### `add-docs-section.py`
+Adiciona ou atualiza a seção de Documentação Oficial do OpenShift 4.19 em todos os arquivos markdown.
+
+```bash
+python3 scripts/add-docs-section.py [--force]
+```
+
+**Opções:**
+- `--force` ou `-f`: Sobrescreve seção existente
+
+**Características:**
+- ✅ Links contextualizados por tema
+- ✅ Documentação oficial da Red Hat OpenShift 4.19
+- ✅ Inserção automática antes da navegação
 
 ### `find-duplicates.py`
 Analisa e identifica comandos duplicados entre os arquivos markdown.

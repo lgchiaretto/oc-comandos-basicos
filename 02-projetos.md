@@ -509,11 +509,14 @@ sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Working with projects](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/projects)
+- [Building applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications)
 
 ---
 

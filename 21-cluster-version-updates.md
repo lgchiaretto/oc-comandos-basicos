@@ -356,11 +356,14 @@ curl -sH "Accept: application/json" \
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Updating clusters](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating/index)
+- [Updating clusters](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating)
 
 ---
 

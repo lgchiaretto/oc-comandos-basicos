@@ -391,11 +391,14 @@ EOF
 ```
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Jobs and CronJobs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-jobs)
+- [Nodes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes)
 
 ---
 

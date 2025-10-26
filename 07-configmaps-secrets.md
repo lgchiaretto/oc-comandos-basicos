@@ -220,12 +220,14 @@ oc set volume --add --type=secret deployment/test-app --secret-name test-app --m
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [ConfigMaps](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-pods-configmaps)
-- [Secrets](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-pods-secrets)
+- [Nodes - ConfigMaps and Secrets](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes)
 
 ---
 

@@ -6,7 +6,7 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 
 ## 📋 Índice
 
-1. [⚙️ Configuração de Rede](#configuracao-de-rede)
+1. [⚙ ️ Configuração de Rede](#configuracao-de-rede)
 2. [🌐 Ingress Controllers](#ingress-controllers)
 3. [🛡 ️ Network Policies](#network-policies)
 4. [🔧 Configurações Avançadas](#configuracoes-avancadas)
@@ -299,11 +299,14 @@ done
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Cluster Network Operator](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/cluster-network-operator)
+- [Networking](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking)
 
 ---
 

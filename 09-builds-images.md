@@ -238,12 +238,15 @@ oc delete istag s2i-chiaretto:<tag>
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
+- [CI/CD](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd)
 - [Builds](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds)
-- [Build strategies](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds-understanding)
 
 ---
 

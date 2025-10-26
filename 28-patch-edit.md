@@ -6,9 +6,9 @@ Este documento contém comandos para editar e fazer patch em recursos do OpenShi
 
 ## 📋 Índice
 
-1. [✏️ Edit](#edit)
+1. [✏ ️ Edit](#edit)
 2. [🔧 Patch](#patch)
-3. [⚙️ Set Commands](#set-commands)
+3. [⚙ ️ Set Commands](#set-commands)
 4. [🔄 Replace](#replace)
 ---
 
@@ -519,11 +519,14 @@ oc replace -f resource.yaml --dry-run=client
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/index)
+- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools)
 
 ---
 

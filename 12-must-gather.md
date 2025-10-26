@@ -164,12 +164,14 @@ chmod +x /tmp/quick-diag.sh
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Support](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/index)
-- [Gathering cluster data](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/gathering-cluster-data)
+- [Support](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support)
 
 ---
 

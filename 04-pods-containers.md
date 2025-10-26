@@ -6,25 +6,12 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ## 📋 Índice
 
-- [🐳 Pods e Containers](#-pods-e-containers)
-  - [📋 Índice](#-índice)
-  - [📊 Listagem e Informações](#-listagem-e-informações)
-  - [🔧 Gerenciamento de Pods](#-gerenciamento-de-pods)
-    - [Criar e Deletar](#criar-e-deletar)
-    - [Listar Pods](#listar-pods)
-  - [💻 Interação com Pods](#-interação-com-pods)
-    - [Acessar Shell](#acessar-shell)
-    - [Copiar Arquivos](#copiar-arquivos)
-    - [Reiniciar Pods](#reiniciar-pods)
-  - [🔍 Debug e Troubleshooting](#-debug-e-troubleshooting)
-    - [Debug Interativo](#debug-interativo)
-    - [Verificações](#verificações)
-  - [📝 Logs](#-logs)
-    - [Ver Logs](#ver-logs)
-  - [📋 Monitoramento e Eventos](#-monitoramento-e-eventos)
-    - [Ver Eventos](#ver-eventos)
-  - [📚 Documentação Oficial](#-documentação-oficial)
-  - [📖 Navegação](#-navegação)
+1. [📊 Listagem e Informações](#listagem-e-informacoes)
+2. [🔧 Gerenciamento de Pods](#gerenciamento-de-pods)
+3. [💻 Interação com Pods](#interacao-com-pods)
+4. [🔍 Debug e Troubleshooting](#debug-e-troubleshooting)
+5. [📝 Logs](#logs)
+6. [📋 Monitoramento e Eventos](#monitoramento-e-eventos)
 ---
 
 ## 📊 Listagem e Informações
@@ -337,12 +324,15 @@ oc get events -n development --sort-by='.lastTimestamp' | head -10
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Nodes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/index)
-- [Working with pods](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/working-with-pods)
+- [Nodes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes)
+- [Working with pods](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods)
 
 ---
 

@@ -286,12 +286,15 @@ oc wait --for=condition=available --timeout=60s deployment/test-app -n developme
 ```
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Building applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/index)
-- [Deploying applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deploying-applications)
+- [Building applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications)
+- [Application development](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/applications)
 
 ---
 

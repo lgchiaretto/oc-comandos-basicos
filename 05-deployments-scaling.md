@@ -136,12 +136,15 @@ oc delete rs <nome-do-rs>
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Deployments and DeploymentConfigs](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments)
-- [Autoscaling pods](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/nodes-pods-autoscaling)
+- [Building applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications)
+- [Nodes](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes)
 
 ---
 

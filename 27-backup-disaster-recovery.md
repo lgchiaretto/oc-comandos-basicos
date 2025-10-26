@@ -281,11 +281,14 @@ oc apply -f /tmp/routes.yaml
 oc get all
 ```
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Backup and restore](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore/index)
+- [Backup and restore](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore)
 
 ---
 

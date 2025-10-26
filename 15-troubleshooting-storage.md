@@ -188,7 +188,7 @@ oc describe pod my-pod | grep -A 10 Volumes
 
 ```bash
 # Ver eventos de mount
-oc get events --field-selector involvedObject.name=mypod | grep -i mount
+oc get events --field-selector involvedObject.name=my-pod
 ```
 
 ```bash
@@ -431,11 +431,14 @@ ls -laZ /path/to/mount
 
 ---
 
+
+---
+
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Troubleshooting storage issues](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/troubleshooting-storage-issues)
+- [Storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage)
 
 ---
 
