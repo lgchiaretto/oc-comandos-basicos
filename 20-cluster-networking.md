@@ -257,7 +257,7 @@ oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.
 
 ```bash ignore-test
 # Verificar MTU em pod
-oc exec <pod-name> -- ip link show eth0
+oc exec my-pod -- ip link show eth0
 ```
 
 ### Network Diagnostics

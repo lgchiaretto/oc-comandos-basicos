@@ -215,7 +215,7 @@ done
 
 ```bash ignore-test
 # Verificar certificado de um pod
-oc exec <pod-name> -- openssl s_client -connect <host>:<port> -showcerts
+oc exec my-pod -- openssl s_client -connect <host>:<port> -showcerts
 ```
 
 ```bash

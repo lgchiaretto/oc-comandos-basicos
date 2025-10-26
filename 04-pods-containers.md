@@ -6,15 +6,25 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ## Índice
 
-1. [Índice](#índice)
-2. [Listagem e Informações](#listagem-e-informações)
-3. [Gerenciamento de Pods](#gerenciamento-de-pods)
-4. [Interação com Pods](#interação-com-pods)
-5. [Debug e Troubleshooting](#debug-e-troubleshooting)
-6. [Logs](#logs)
-7. [Monitoramento e Eventos](#monitoramento-e-eventos)
-8. [Documentação Oficial](#documentação-oficial)
-9. [Navegação](#navegação)
+- [Pods e Containers](#pods-e-containers)
+  - [Índice](#índice)
+  - [Listagem e Informações](#listagem-e-informações)
+  - [Gerenciamento de Pods](#gerenciamento-de-pods)
+    - [Criar e Deletar](#criar-e-deletar)
+    - [Listar Pods](#listar-pods)
+  - [Interação com Pods](#interação-com-pods)
+    - [Acessar Shell](#acessar-shell)
+    - [Copiar Arquivos](#copiar-arquivos)
+    - [Reiniciar Pods](#reiniciar-pods)
+  - [Debug e Troubleshooting](#debug-e-troubleshooting)
+    - [Debug Interativo](#debug-interativo)
+    - [Verificações](#verificações)
+  - [Logs](#logs)
+    - [Ver Logs](#ver-logs)
+  - [Monitoramento e Eventos](#monitoramento-e-eventos)
+    - [Ver Eventos](#ver-eventos)
+  - [Documentação Oficial](#documentação-oficial)
+  - [Navegação](#navegação)
 ---
 
 ## Listagem e Informações
@@ -36,7 +46,7 @@ spec:
     runAsUser: 1000
   containers:
   - name: my-container
-    image: registry.access.redhat.com/ubi9:latest
+    image: quay.io/chiaretto/netshoot:latest
     command: ["/bin/sh"]
     args: ["-c", "sleep infinity"]
     resources:

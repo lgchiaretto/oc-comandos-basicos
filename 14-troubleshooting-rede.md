@@ -28,28 +28,28 @@ oc get pod my-pod -o jsonpath='{.status.podIP}'
 
 ```bash ignore-test
 # Testar conectividade entre pods
-oc exec <pod-origem> -- ping <ip-pod-destino>
-oc exec <pod-origem> -- curl <ip-pod-destino>:<porta>
+oc exec my-pod -- ping <ip-pod-destino>
+oc exec my-pod -- curl <ip-pod-destino>:<porta>
 ```
 
 ```bash ignore-test
 # Testar service por nome
-oc exec <pod-origem> -- curl <nome-service>:<porta>
+oc exec my-pod -- curl <nome-service>:<porta>
 ```
 
 ```bash ignore-test
 # Testar DNS
-oc exec <pod-origem> -- nslookup <nome-service>
+oc exec my-pod -- nslookup <nome-service>
 ```
 
-```bash ignore-test
+```bash
 # Verificar rotas de rede
-oc exec <pod-origem> -- ip route
+oc exec my-pod -- ip route
 ```
 
-```bash ignore-test
+```bash
 # Interfaces de rede
-oc exec <pod-origem> -- ip addr
+oc exec my-pod -- ip addr
 ```
 
 ### Network Policies
@@ -305,14 +305,14 @@ oc logs -n openshift-dns <dns-pod-name>
 
 ```bash ignore-test
 # Testar DNS de dentro do pod
-oc exec <pod-name> -- nslookup kubernetes.default
-oc exec <pod-name> -- nslookup <service-name>
-oc exec <pod-name> -- nslookup <service-name>.<namespace>.svc.cluster.local
+oc exec my-pod -- nslookup kubernetes.default
+oc exec my-pod -- nslookup <service-name>
+oc exec my-pod -- nslookup <service-name>.<namespace>.svc.cluster.local
 ```
 
-```bash ignore-test
+```bash
 # Ver configuração DNS do pod
-oc exec <pod-name> -- cat /etc/resolv.conf
+oc exec my-pod -- cat /etc/resolv.conf
 ```
 
 ```bash
@@ -343,14 +343,14 @@ oc delete pod -n openshift-dns --all
 oc get svc -n openshift-dns
 ```
 
-```bash ignore-test
+```bash
 # Testar resolução externa
-oc exec <pod> -- nslookup google.com
+oc exec my-pod -- nslookup redhat.com
 ```
 
-```bash ignore-test
+```bash
 # Testar resolução interna
-oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
+oc exec my-pod -- nslookup kubernetes.default.svc.cluster.local
 ```
 
 ---
