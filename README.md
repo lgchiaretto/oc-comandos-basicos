@@ -181,7 +181,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Filtros complexos
     - Combinações
 
-25. [**Formatação de Output**](25-formatacao-output.md)
+25. [**Formatação de Output**](25-output-formatacao.md)
     - JSONPath
     - Custom columns
     - YAML e JSON

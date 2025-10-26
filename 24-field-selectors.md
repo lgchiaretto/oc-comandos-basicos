@@ -491,7 +491,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 ## Navegação
 
 - [← Voltar para Comandos Customizados](23-comandos-customizados.md)
-- [→ Próximo: Formatação de Output](25-formatacao-output.md)
+- [→ Próximo: Formatação de Output](25-output-formatacao.md)
 - [↑ Índice Principal](README.md)
 
 ---
