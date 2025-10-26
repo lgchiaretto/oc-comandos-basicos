@@ -27,6 +27,7 @@ oc logs -f my-pod
 
 ```bash
 # Logs de container específico
+# oc logs my-pod -c <container-name>
 oc logs my-pod -c my-container
 ```
 
@@ -162,6 +163,7 @@ oc adm top pods --sort-by=memory
 
 ```bash
 # Top de um pod específico
+# oc adm top <resource-name> my-pod
 oc adm top pod my-pod
 ```
 

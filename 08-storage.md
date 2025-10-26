@@ -147,6 +147,7 @@ oc set volume deployment/test-app
 
 ```bash
 # Ver volumes montados em pod
+# oc describe pod <resource-name> | grep -A 5 Volumes
 oc describe pod my-pod | grep -A 5 Volumes
 ```
 

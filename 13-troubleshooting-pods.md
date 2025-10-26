@@ -37,6 +37,7 @@ oc get pods --field-selector=status.phase=Pending
 
 ```bash
 # Descrever pod
+# oc describe pod <resource-name>
 oc describe pod my-pod
 ```
 
@@ -47,6 +48,7 @@ oc get events --field-selector involvedObject.name=my-pod
 
 ```bash
 # Status detalhado
+# oc get pod <resource-name>pod -o yaml
 oc get pod my-pod -o yaml
 ```
 
@@ -58,6 +60,7 @@ oc logs my-pod
 
 ```bash ignore-test
 # Logs de container específico
+# oc logs my-pod -c <container-name>
 oc logs my-pod -c httpd
 ```
 
@@ -83,6 +86,7 @@ oc logs my-pod --tail=100
 ### ImagePullBackOff
 ```bash ignore-test
 # Ver erro de pull
+# oc describe pod <resource-name> | grep -A 10 Events
 oc describe pod my-pod | grep -A 10 Events
 ```
 
@@ -98,6 +102,7 @@ oc debug node/<node-name> -- chroot /host podman pull <image>
 
 ```bash ignore-test
 # Verificar image na spec
+# oc get pod <resource-name>pod -o jsonpath='{.spec.containers[0].image}'
 oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
 ```
 
@@ -109,11 +114,13 @@ oc logs my-pod --previous
 
 ```bash ignore-test
 # Ver motivo do crash
+# oc describe pod <resource-name> | grep -i "exit code"
 oc describe pod my-pod | grep -i "exit code"
 ```
 
 ```bash ignore-test
 # Verificar liveness/readiness probes
+# oc get pod <resource-name>pod -o yaml | grep -A 10 livenessProbe
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
 ```
 
@@ -133,11 +140,13 @@ oc debug deployment/test-app
 ### Pending (Não Agendado)
 ```bash ignore-test
 # Ver eventos de scheduling
+# oc describe pod <resource-name> | grep -A 20 Events
 oc describe pod my-pod | grep -A 20 Events
 ```
 
 ```bash ignore-test
 # Verificar resources requests
+# oc get pod <resource-name>pod -o yaml | grep -A 5 resources
 oc get pod my-pod -o yaml | grep -A 5 resources
 ```
 
@@ -154,6 +163,7 @@ oc get nodes
 
 ```bash ignore-test
 # Verificar node selectors
+# oc get pod <resource-name>pod -o yaml | grep nodeSelector
 oc get pod my-pod -o yaml | grep nodeSelector
 ```
 
@@ -165,11 +175,13 @@ oc describe nodes | grep Taints
 ### OOMKilled
 ```bash ignore-test
 # Verificar limite de memória
+# oc get pod <resource-name>pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 ```
 
 ```bash ignore-test
 # Ver uso atual
+# oc adm top <resource-name> my-pod
 oc adm top pod my-pod
 ```
 
@@ -181,11 +193,13 @@ oc set resources deployment/test-app --limits=memory=2Gi
 
 ```bash ignore-test
 # Ver histórico de restarts
+# oc get pod <resource-name>pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
 ```bash ignore-test
 # Ver motivo da última terminação
+# oc get pod <resource-name>pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
 ```
 
@@ -283,6 +297,7 @@ oc describe pvc test-app
 
 ```bash ignore-test
 # Verificar mounts no pod
+# oc describe pod <resource-name> | grep -A 10 Mounts
 oc describe pod my-pod | grep -A 10 Mounts
 ```
 
@@ -339,6 +354,7 @@ oc exec my-pod -- nslookup <service-name>
 
 ```bash ignore-test
 # Ver rede do pod
+# oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
@@ -350,6 +366,7 @@ oc get sa
 
 ```bash ignore-test
 # Ver SCC do pod
+# oc get pod <resource-name>pod -o yaml | grep scc
 oc get pod my-pod -o yaml | grep scc
 ```
 
@@ -360,6 +377,7 @@ oc adm policy who-can <verbo> <recurso>
 
 ```bash ignore-test
 # Ver runAsUser
+# oc get pod <resource-name>pod -o jsonpath='{.spec.securityContext.runAsUser}'
 oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'
 ```
 

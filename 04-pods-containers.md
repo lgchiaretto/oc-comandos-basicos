@@ -66,11 +66,13 @@ oc apply -f pod.yaml
 
 ```bash ignore-test
 # Deletar um pod
+# oc delete pod <resource-name>
 oc delete pod my-pod
 ```
 
 ```bash ignore-test
 # Deletar pod forçadamente
+# oc delete pod <resource-name>pod --grace-period=0 --force
 oc delete pod my-pod --grace-period=0 --force
 ```
 
@@ -118,21 +120,25 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 
 ```bash
 # Descrever um pod
+# oc describe pod <resource-name>
 oc describe pod my-pod
 ```
 
 ```bash
 # Ver definição YAML do pod
+# oc get pod <resource-name>pod -o yaml
 oc get pod my-pod -o yaml
 ```
 
 ```bash
 # Ver definição JSON do pod
+# oc get pod <resource-name>pod -o json
 oc get pod my-pod -o json
 ```
 
 ```bash
 # Ver apenas o status
+# oc get pod <resource-name>pod -o jsonpath='{.status.phase}'
 oc get pod my-pod -o jsonpath='{.status.phase}'
 ```
 
@@ -163,6 +169,7 @@ oc exec -it my-pod -- /bin/date
 
 ```bash
 # Executar comando em container específico
+# oc exec my-pod -c <container-name> -- /bin/date
 oc exec my-pod -c my-container -- /bin/date
 ```
 
@@ -208,6 +215,7 @@ oc rollout restart deployment/test-app
 
 ```bash ignore-test
 # Deletar pod para forçar recriação
+# oc delete pod <resource-name>
 oc delete pod my-pod
 ```
 
@@ -264,6 +272,7 @@ oc get pods --field-selector=status.phase=Failed
 
 ```bash
 # Ver motivo de erro do pod
+# oc describe pod <resource-name> | grep -A 10 "Events:"
 oc describe pod my-pod | grep -A 10 "Events:"
 ```
 
@@ -284,6 +293,7 @@ oc logs -f my-pod
 
 ```bash ignore-test
 # Ver logs de container específico
+# oc logs my-pod -c <container-name>
 oc logs my-pod -c my-container
 ```
 

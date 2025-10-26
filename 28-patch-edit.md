@@ -97,6 +97,7 @@ oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My a
 
 ```bash ignore-test
 # Atualizar imagem
+# oc patch deployment <deployment-name> -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"new-image:tag"}]}}}}'
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"new-image:tag"}]}}}}'
 ```
 
@@ -330,6 +331,7 @@ oc set resources deployment/test-app --requests=cpu=100m,memory=128Mi
 
 ```bash ignore-test
 # Container específico
+# oc set resources <resource-name>/test-app -c=httpd --limits=cpu=200m,memory=256Mi
 oc set resources deployment/test-app -c=httpd --limits=cpu=200m,memory=256Mi
 ```
 
@@ -398,6 +400,7 @@ oc set volume deployment/test-app --add --name=data-vol --type=emptyDir --mount-
 
 ```bash
 # Remover volume
+# oc set volume <resource-name>/test-app --remove --name=data-vol
 oc set volume deployment/test-app --remove --name=data-vol
 ```
 
@@ -443,6 +446,7 @@ oc set probe deployment/test-app --readiness --remove
 ### Set ServiceAccount
 ```bash ignore-test
 # Definir ServiceAccount
+# oc set serviceaccount <serviceaccount-name>/test-app test-app
 oc set serviceaccount deployment/test-app test-app
 ```
 

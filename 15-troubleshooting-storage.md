@@ -182,6 +182,7 @@ oc get pods -A | grep csi
 ### Volume Não Monta
 ```bash
 # Verificar pod que usa o volume
+# oc describe pod <resource-name> | grep -A 10 Volumes
 oc describe pod my-pod | grep -A 10 Volumes
 ```
 
@@ -197,6 +198,7 @@ oc get pvc
 
 ```bash
 # Ver node do pod
+# oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
@@ -228,6 +230,7 @@ oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 # oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 # oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
+# oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
@@ -271,6 +274,7 @@ oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolume
 
 ```bash ignore-test
 # Deletar pods que estão usando
+# oc delete pod <resource-name>pod --grace-period=0 --force
 oc delete pod my-pod --grace-period=0 --force
 ```
 

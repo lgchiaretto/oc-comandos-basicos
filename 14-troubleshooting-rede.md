@@ -19,6 +19,7 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ### Conectividade de Pod
 ```bash
 # IP do pod
+# oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
