@@ -587,6 +587,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 ## Navegação
 
 - [← Anterior: Jobs e CronJobs](29-jobs-cronjobs.md)
+- [→ Próximo: Troubleshooting de Upgrade do Cluster](31-troubleshooting-upgrade.md)
 - [↑ Índice Principal](README.md)
 
 ---

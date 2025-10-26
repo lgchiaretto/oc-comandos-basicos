@@ -63,7 +63,19 @@ oc get co
 oc get co | grep -v "True.*False.*False"
 ```
 
-### 6. Nodes
+### 6. Upgrade do Cluster
+```bash
+# Ver versão atual e status do upgrade
+oc get clusterversion
+
+# Ver progresso do upgrade
+oc adm upgrade
+
+# Ver se há operadores bloqueando upgrade
+oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | .metadata.name'
+```
+
+### 7. Nodes
 ```bash
 # Listar nodes
 oc get nodes
@@ -72,7 +84,7 @@ oc get nodes
 oc adm top nodes
 ```
 
-### 7. CSR (Certificate Signing Requests)
+### 8. CSR (Certificate Signing Requests)
 ```bash
 # Listar CSRs
 oc get csr
@@ -81,7 +93,7 @@ oc get csr
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
-### 8. Scaling
+### 9. Scaling
 ```bash
 # Escalar deployment
 oc scale deployment test-app --replicas=3
@@ -90,7 +102,7 @@ oc scale deployment test-app --replicas=3
 oc rollout status deployment/test-app
 ```
 
-### 9. Criar Aplicação
+### 10. Criar Aplicação
 ```bash
 # Criar app a partir de imagem
 oc new-app <imagem>

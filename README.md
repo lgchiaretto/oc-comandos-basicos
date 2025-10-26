@@ -212,6 +212,13 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Instalar operators
     - Troubleshooting
 
+31. [**Troubleshooting de Upgrade do Cluster**](31-troubleshooting-upgrade.md)
+    - Verificação de estado do upgrade
+    - Cluster Version Operator
+    - Cluster Operators com problemas
+    - Machine Config Pools
+    - Recovery de upgrade
+
 ---
 
 ## Busca Rápida por Comando
