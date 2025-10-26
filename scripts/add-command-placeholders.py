@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
 Script para adicionar exemplos com placeholders em comandos oc nos arquivos markdown.
-Autor: GitHub Copilot
-Data: 2025-10-22
 """
 
 import re
