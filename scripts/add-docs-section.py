@@ -77,7 +77,7 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
         ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
     ],
     "12-must-gather.md": [
-        ("Support - Gathering data about your cluster", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
+        ("Support - Gathering data about your cluster", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/gathering-cluster-data"),
     ],
     "13-troubleshooting-pods.md": [
         ("Support - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
@@ -99,8 +99,8 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
         ("Service Accounts", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/understanding-and-creating-service-accounts"),
     ],
     "17-cluster-operators.md": [
-        ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
-        ("Operators - Cluster Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/understanding-operators"),
+        ("Operators - Cluster Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/operator-reference"),
         ("Operator Lifecycle Manager", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
         ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
