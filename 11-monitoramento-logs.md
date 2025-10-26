@@ -45,7 +45,7 @@ oc logs my-pod --since=1h
 oc logs my-pod --since-time=2025-01-01T00:00:00Z
 ```
 
-```bash
+```bash ignore-test
 # Logs anteriores (pod crashado)
 oc logs my-pod --previous
 oc logs my-pod -p

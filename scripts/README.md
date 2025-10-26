@@ -275,14 +275,17 @@ Antes de executar, o script verifica:
 ### Sucesso
 ```
 
-                    RELATÓRIO DE VALIDAÇÃO                      
+╔════════════════════════════════════════════════════════════════╗
+║                    RELATORIO DE VALIDACAO                      ║
+╚════════════════════════════════════════════════════════════════╝
 
+[INFO] Finalizado em Sun Oct 26 12:27:55 PM -03 2025
 
-Total de testes: 150
-Passou: 148
-Falhou: 2
+Total de testes: 754
+Passou: 754
+Falhou: 0
 
-Taxa de sucesso: 98.67%
+Taxa de sucesso: 100.00%
 ```
 
 ### Com Range
