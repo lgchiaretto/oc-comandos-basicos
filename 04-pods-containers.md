@@ -231,17 +231,17 @@ oc debug pod/my-pod
 
 ```bash ignore-test
 # Debug com imagem customizada
-oc debug pod/my-pod-debug --image=nicolaka/netshoot
+oc debug pod/my-pod-debug --image=quay.io/chiaretto/netshoot
 ```
 
 ```bash
 # Criar pod de debug temporário e imprima o hostname
-oc run debug-pod --image=nicolaka/netshoot -it --rm --restart=Never -- hostname
+oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- hostname
 ```
 
 ```bash ignore-test
 # Criar pod de debug temporário e conecte
-oc run debug-pod --image=nicolaka/netshoot -it --rm --restart=Never -- sh
+oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- sh
 ```
 
 ### Verificações

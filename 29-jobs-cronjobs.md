@@ -19,9 +19,9 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ### Criar Jobs
 ```bash
 # Job simples
-# oc create job test-app-job --image=nicolaka/netshoot -- echo "Hello World"
-# oc create job <job-name> --image=nicolaka/netshoot -- echo "Hello World"
-oc create job test-app-job --image=nicolaka/netshoot -- echo "Hello World"
+# oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
+# oc create job <job-name> --image=quay.io/chiaretto/netshoot -- echo "Hello World"
+oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
 ```
 
 ```bash
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: nicolaka/netshoot
+        image: quay.io/chiaretto/netshoot
         command: ["echo", "Hello from Job"]
       restartPolicy: Never
   backoffLimit: 4
@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: nicolaka/netshoot
+        image: quay.io/chiaretto/netshoot
         command: ["sh", "-c", "exit 1"]  # Vai falhar
       restartPolicy: Never
   backoffLimit: 3  # Tentar 3 vezes
@@ -111,7 +111,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: nicolaka/netshoot
+        image: quay.io/chiaretto/netshoot
         command: ["sh", "-c", "echo Processing && sleep 5"]
       restartPolicy: Never
 EOF
@@ -138,7 +138,7 @@ spec:
     spec:
       containers:
       - name: job
-        image: nicolaka/netshoot
+        image: quay.io/chiaretto/netshoot
         command: ["echo", "This job will be deleted"]
       restartPolicy: Never
 EOF
@@ -151,8 +151,8 @@ EOF
 ### Criar CronJobs
 ```bash
 # CronJob simples
-# oc create cronjob <job-name> --image=nicolaka/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
-oc create cronjob test-app-job --image=nicolaka/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
+# oc create cronjob <job-name> --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
+oc create cronjob test-app-job --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 ```
 
 ```bash ignore-test
@@ -170,7 +170,7 @@ spec:
         spec:
           containers:
           - name: job
-            image: nicolaka/netshoot
+            image: quay.io/chiaretto/netshoot
             command: ["sh", "-c", "date; echo Hello from CronJob"]
           restartPolicy: OnFailure
 EOF

@@ -169,7 +169,7 @@ EOF
 ### Testar Network Policies
 ```bash ignore-test
 # Antes de aplicar policy, testar conectividade
-oc run test-pod --image=nicolaka/netshoot --rm -it --restart=Never -- wget -O- <target-service>
+oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
 ```bash ignore-test
@@ -179,7 +179,7 @@ oc apply -f networkpolicy.yaml
 
 ```bash ignore-test
 # Testar novamente
-oc run test-pod --image=nicolaka/netshoot --rm -it --restart=Never -- wget -O- <target-service>
+oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
 ```bash ignore-test
@@ -284,7 +284,7 @@ spec:
     spec:
       containers:
       - name: network-test
-        image: nicolaka/netshoot
+        image: quay.io/chiaretto/netshoot
         command: ["sleep", "infinity"]
 EOF
 ```

@@ -111,7 +111,7 @@ oc get svc test-app -o jsonpath='{.spec.ports}'
 
 ```bash ignore-test
 # Testar service de dentro do cluster
-oc run test-pod --image=nicolaka/netshoot --rm -it --restart=Never -- wget -O- <service-name>:<port>
+oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <service-name>:<port>
 ```
 
 ### Endpoints
@@ -360,7 +360,7 @@ oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
 ### Pod de Debug de Rede
 ```bash ignore-test
 # Criar pod com ferramentas de rede
-oc run netshoot --rm -i --tty --image nicolaka/netshoot -- /bin/bash
+oc run netshoot --rm -i --tty --image quay.io/chiaretto/netshoot -- /bin/bash
 ```
 
 ```bash ignore-test
