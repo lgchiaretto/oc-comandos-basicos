@@ -236,17 +236,14 @@ oc tag <external-image> <is>:<tag>
 oc delete istag s2i-chiaretto:<tag>
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [CI/CD](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd)
-- [Builds](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds" target="_blank">CI/CD - Builds</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images" target="_blank">Images</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications" target="_blank">Building applications</a>
 
 ---
 

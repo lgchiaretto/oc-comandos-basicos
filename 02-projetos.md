@@ -507,16 +507,13 @@ sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 - ✅ Revise permissões regularmente
 - ✅ Delete projetos não utilizados
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Building applications](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications" target="_blank">Building applications</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/projects" target="_blank">Working with projects</a>
 
 ---
 

@@ -151,16 +151,14 @@ oc set volume deployment/test-app
 oc describe pod my-pod | grep -A 5 Volumes
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Storage](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage" target="_blank">Storage</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/persistent-storage" target="_blank">Storage - Persistent storage</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/dynamic-provisioning" target="_blank">Storage - Dynamic provisioning</a>
 
 ---
 

@@ -69,10 +69,10 @@ def generate_index(sections: List[Tuple[str, str, str]]) -> str:
     
     for i, (emoji, title, anchor) in enumerate(sections, 1):
         # Formato: 1. [🔧 Título](#anchor)
+        # Inclui emoji no texto do link, mas anchor sem emoji
         emoji_part = f"{emoji} " if emoji else ""
         lines.append(f"{i}. [{emoji_part}{title}](#{anchor})")
     
-    lines.append("")  # Linha em branco no final
     return '\n'.join(lines)
 
 
@@ -101,18 +101,19 @@ def fix_index_in_file(file_path: Path, verbose: bool = False) -> bool:
     new_index = generate_index(sections)
     
     # Pattern para encontrar o índice existente
-    # Procura por "## 📋 Índice" até a próxima linha com "---" ou próxima seção "##"
-    index_pattern = r'## 📋 Índice\n.*?(?=\n---|\n##|\Z)'
+    # Procura por "## 📋 Índice" até a próxima linha com "---"
+    # Inclui a linha com "---" para manter separador após índice
+    index_pattern = r'## 📋 Índice\n.*?\n---'
     
     # Verificar se índice existe
     if not re.search(index_pattern, content, re.DOTALL):
         print(f"  ⚠️  Índice não encontrado no arquivo")
         return False
     
-    # Substituir índice
+    # Substituir índice (adiciona --- no final)
     new_content = re.sub(
         index_pattern, 
-        new_index.rstrip(), 
+        new_index.rstrip() + '\n---', 
         content, 
         count=1, 
         flags=re.DOTALL

@@ -396,16 +396,13 @@ alias okpy='oc get pods -o yaml'
 alias okpf='oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP,NODE:.spec.nodeName'
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc" target="_blank">CLI Tools - OpenShift CLI (oc)</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools" target="_blank">CLI Tools - Usage of oc and kubectl</a>
 
 ---
 

@@ -443,16 +443,14 @@ oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"install
 oc get installplan -n <namespace> -o json | jq -r '.items[] | select(.spec.approved==false) | .metadata.name'
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Operators](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators" target="_blank">Operators - Understanding Operators</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/cluster-operators-reference" target="_blank">Operators - Cluster Operators reference</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration</a>
 
 ---
 

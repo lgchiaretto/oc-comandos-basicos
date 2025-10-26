@@ -568,16 +568,14 @@ oc delete crd <crd-name>
 oc delete namespace <namespace>
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Operators](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators" target="_blank">Operators - Understanding Operators</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/administrator-tasks" target="_blank">Operators - Administrator tasks</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/user-tasks" target="_blank">Operators - User tasks</a>
 
 ---
 

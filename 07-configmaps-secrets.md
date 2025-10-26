@@ -218,16 +218,14 @@ oc set volume --add --type=configmap deployment/test-app --configmap-name test-a
 oc set volume --add --type=secret deployment/test-app --secret-name test-app --mount-path=/test-app-secret
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Nodes - ConfigMaps and Secrets](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/configmaps" target="_blank">Nodes - ConfigMaps</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/secrets" target="_blank">Nodes - Secrets</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance" target="_blank">Security and compliance</a>
 
 ---
 

@@ -14,107 +14,144 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     "01-autenticacao-configuracao.md": [
         ("CLI Tools", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
         ("OpenShift CLI (oc)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc"),
+        ("Authentication and Authorization", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization"),
     ],
     "02-projetos.md": [
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Working with projects", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/projects"),
     ],
     "03-aplicacoes.md": [
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
         ("Application development", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/applications"),
+        ("Developer CLI (odo)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/developer-cli-odo"),
     ],
     "04-pods-containers.md": [
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
-        ("Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
+        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
+        ("Nodes - Working with containers", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/containers"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "05-deployments-scaling.md": [
-        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Building applications - Deployments", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments"),
+        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "06-services-routes.md": [
+        ("Networking - Configuring ingress", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-ingress"),
+        ("Networking - Configuring routes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-routes"),
         ("Networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
     ],
     "07-configmaps-secrets.md": [
-        ("Nodes - ConfigMaps and Secrets", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Nodes - ConfigMaps", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/configmaps"),
+        ("Nodes - Secrets", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/secrets"),
+        ("Security and compliance", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
     ],
     "08-storage.md": [
         ("Storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage"),
+        ("Storage - Persistent storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/persistent-storage"),
+        ("Storage - Dynamic provisioning", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/dynamic-provisioning"),
     ],
     "09-builds-images.md": [
-        ("CI/CD", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd"),
-        ("Builds", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds"),
+        ("CI/CD - Builds", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds"),
+        ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "10-registry-imagens.md": [
-        ("Registry", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry"),
-        ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Registry - Integrated OpenShift image registry", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry"),
+        ("Images - Managing images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Images - Image streams", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images/image-streams"),
     ],
     "11-monitoramento-logs.md": [
-        ("Monitoring", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring"),
+        ("Monitoring - Monitoring overview", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring"),
         ("Logging", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/logging"),
+        ("Nodes - Viewing system event information", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/viewing-system-event-information"),
     ],
     "12-must-gather.md": [
-        ("Support", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
+        ("Support - Gathering data about your cluster", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
+        ("Support - Remote health monitoring", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/remote-health-monitoring"),
     ],
     "13-troubleshooting-pods.md": [
-        ("Support", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Support - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
+        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
+        ("Building applications - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/troubleshooting"),
     ],
     "14-troubleshooting-rede.md": [
-        ("Networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
+        ("Networking - Troubleshooting network issues", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
+        ("Support - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
     ],
     "15-troubleshooting-storage.md": [
-        ("Storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage"),
+        ("Storage - Troubleshooting persistent storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage"),
+        ("Support - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
     ],
     "16-seguranca-rbac.md": [
         ("Authentication and authorization", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization"),
+        ("Security and compliance - Managing security context constraints", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
+        ("Post-installation configuration - Configuring RBAC", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "17-cluster-operators.md": [
-        ("Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operators - Cluster Operators reference", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/cluster-operators-reference"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "18-nodes-machine.md": [
         ("Machine management", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/machine_management"),
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Nodes - Working with nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Post-installation configuration - Configuring nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "19-certificados-csr.md": [
-        ("Security and compliance", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
+        ("Security and compliance - Certificate management", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
+        ("Authentication and authorization", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization"),
     ],
     "20-cluster-networking.md": [
-        ("Networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
+        ("Networking - Understanding networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
+        ("Networking - Multiple networks", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/multiple-networks"),
+        ("Post-installation configuration - Cluster capabilities", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "21-cluster-version-updates.md": [
         ("Updating clusters", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "22-etcd-backup.md": [
-        ("Backup and restore", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore"),
+        ("Backup and restore - Backing up etcd", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "23-comandos-customizados.md": [
-        ("CLI Tools", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
+        ("CLI Tools - Using the OpenShift CLI", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
+        ("CLI Tools - Extending the OpenShift CLI", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/extending-the-openshift-cli"),
     ],
     "24-field-selectors.md": [
-        ("CLI Tools", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
+        ("CLI Tools - OpenShift CLI (oc)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "25-output-formatacao.md": [
-        ("CLI Tools", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
+        ("CLI Tools - OpenShift CLI (oc)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc"),
+        ("CLI Tools - Usage of oc and kubectl", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
     ],
     "26-templates-manifests.md": [
-        ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Images - Using templates", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "27-backup-disaster-recovery.md": [
         ("Backup and restore", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
     ],
     "28-patch-edit.md": [
-        ("CLI Tools", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
+        ("CLI Tools - OpenShift CLI (oc)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "29-jobs-cronjobs.md": [
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Nodes - Working with jobs and cron jobs", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "30-operators-operandos.md": [
-        ("Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operators - Administrator tasks", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/administrator-tasks"),
+        ("Operators - User tasks", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/user-tasks"),
     ],
 }
 
 
 def generate_docs_section(links: List[Tuple[str, str]]) -> str:
-    """Gera a seção de documentação oficial."""
+    """Gera a seção de documentação oficial com links que abrem em nova aba."""
     lines = [
         "## 📚 Documentação Oficial",
         "",
@@ -123,7 +160,8 @@ def generate_docs_section(links: List[Tuple[str, str]]) -> str:
     ]
     
     for title, url in links:
-        lines.append(f"- [{title}]({url})")
+        # Usa HTML para forçar abertura em nova aba
+        lines.append(f'- <a href="{url}" target="_blank">{title}</a>')
     
     lines.append("")
     return '\n'.join(lines)
@@ -154,20 +192,23 @@ def add_docs_section(file_path: Path, force: bool = False) -> bool:
     
     # Se force=True, remove seção existente primeiro
     if force and "## 📚 Documentação Oficial" in content:
-        # Remove seção existente
-        pattern = r'## 📚 Documentação Oficial.*?(?=\n---|\n##|\Z)'
+        # Remove seção existente e separadores extras
+        pattern = r'---\s*\n\s*---\s*\n\s*---\s*\n\s*## 📚 Documentação Oficial.*?(?=\n---\s*\n\s*## 📖 Navegação|\Z)'
+        content = re.sub(pattern, '', content, flags=re.DOTALL)
+        # Também limpa pattern simples
+        pattern = r'## 📚 Documentação Oficial.*?(?=\n---\s*\n\s*## 📖 Navegação|\Z)'
         content = re.sub(pattern, '', content, flags=re.DOTALL)
     
     # Gerar nova seção
     docs_section = generate_docs_section(DOCS_MAP[filename])
     
     # Inserir antes da seção de Navegação
-    nav_pattern = r'(## 📖 Navegação)'
+    nav_pattern = r'(---\s*\n\s*## 📖 Navegação)'
     
     if re.search(nav_pattern, content):
         new_content = re.sub(
             nav_pattern,
-            docs_section + '\n---\n\n\\1',
+            docs_section + '---\n\n\\1',
             content,
             count=1
         )

@@ -354,16 +354,13 @@ curl -sH "Accept: application/json" \
   "https://api.openshift.com/api/upgrades_info/v1/graph?channel=${CHANNEL}&id=${CLUSTER_ID}"
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Updating clusters](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating" target="_blank">Updating clusters</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration</a>
 
 ---
 

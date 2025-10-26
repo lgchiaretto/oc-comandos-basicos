@@ -236,17 +236,14 @@ export KUBECONFIG=/path/to/config1:/path/to/config2
 - ✅ Use `oc config view` para ver configuração atual
 - ✅ Use `-v=8` para debug detalhado
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [CLI Tools](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools)
-- [OpenShift CLI (oc)](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools" target="_blank">CLI Tools</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc" target="_blank">OpenShift CLI (oc)</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization" target="_blank">Authentication and Authorization</a>
 
 ---
 

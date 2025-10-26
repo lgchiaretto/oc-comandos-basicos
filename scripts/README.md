@@ -212,9 +212,11 @@ python3 scripts/add-docs-section.py [--force]
 - `--force` ou `-f`: Sobrescreve seção existente
 
 **Características:**
-- ✅ Links contextualizados por tema
+- ✅ Links contextualizados por tema (2-3 links relevantes por módulo)
 - ✅ Documentação oficial da Red Hat OpenShift 4.19
 - ✅ Inserção automática antes da navegação
+- ✅ Links abrem em nova aba (`target="_blank"`)
+- ✅ Links específicos para cada componente (CLI, Nodes, Networking, Storage, Operators, etc.)
 
 ### `find-duplicates.py`
 Analisa e identifica comandos duplicados entre os arquivos markdown.

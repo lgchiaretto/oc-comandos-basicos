@@ -144,16 +144,13 @@ oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 # Verificar
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm list
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Backup and restore](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore" target="_blank">Backup and restore - Backing up etcd</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration</a>
 
 ---
 

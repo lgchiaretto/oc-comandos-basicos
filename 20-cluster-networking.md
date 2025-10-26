@@ -207,9 +207,6 @@ oc describe networkpolicy test-app
 oc delete networkpolicy test-app
 ```
 
----
-
----
 
 ## 🔧 Configurações Avançadas
 
@@ -297,16 +294,14 @@ for pod in $(oc get pods -l app=network-test -o name); do
 done
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Networking](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking" target="_blank">Networking - Understanding networking</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/multiple-networks" target="_blank">Networking - Multiple networks</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration - Cluster capabilities</a>
 
 ---
 

@@ -162,16 +162,13 @@ chmod +x /tmp/quick-diag.sh
 /tmp/quick-diag.sh > /tmp/cluster-status.txt
 ```
 
----
-
-
----
 
 ## 📚 Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- [Support](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support)
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support" target="_blank">Support - Gathering data about your cluster</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/remote-health-monitoring" target="_blank">Support - Remote health monitoring</a>
 
 ---
 
