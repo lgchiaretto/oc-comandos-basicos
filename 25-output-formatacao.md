@@ -6,11 +6,14 @@ Este documento contém comandos para formatar e extrair informações específic
 
 ## Índice
 
-1. [Jsonpath](#jsonpath)
-2. [Go-Template](#go-template)
-3. [JQ - JSON Processor](#jq-json-processor)
-4. [Custom Columns](#custom-columns)
-5. [Formatação de Saída](#formatação-de-saída)
+1. [Índice](#índice)
+2. [Jsonpath](#jsonpath)
+3. [Go-Template](#go-template)
+4. [JQ - JSON Processor](#jq-json-processor)
+5. [Custom Columns](#custom-columns)
+6. [Formatação de Saída](#formatação-de-saída)
+7. [Documentação Oficial](#documentação-oficial)
+8. [Navegação](#navegação)
 ---
 
 ## Jsonpath

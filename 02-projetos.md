@@ -6,17 +6,20 @@ Este documento contém comandos para criar, listar e gerenciar projetos (namespa
 
 ## Índice
 
-1. [Conceitos](#conceitos)
-2. [Criação e Listagem](#criação-e-listagem)
-3. [Gerenciamento](#gerenciamento)
-4. [Node Selectors](#node-selectors)
-5. [Gerenciamento de Projetos](#gerenciamento-de-projetos)
-6. [Templates de Projeto](#templates-de-projeto)
-7. [Informações e Status](#informações-e-status)
-8. [Busca e Filtros](#busca-e-filtros)
-9. [Segurança e Permissões](#segurança-e-permissões)
-10. [Exemplos Práticos](#exemplos-práticos)
-11. [Boas Práticas](#boas-práticas)
+1. [Índice](#índice)
+2. [Conceitos](#conceitos)
+3. [Criação e Listagem](#criação-e-listagem)
+4. [Gerenciamento](#gerenciamento)
+5. [Node Selectors](#node-selectors)
+6. [Gerenciamento de Projetos](#gerenciamento-de-projetos)
+7. [Templates de Projeto](#templates-de-projeto)
+8. [Informações e Status](#informações-e-status)
+9. [Busca e Filtros](#busca-e-filtros)
+10. [Segurança e Permissões](#segurança-e-permissões)
+11. [Exemplos Práticos](#exemplos-práticos)
+12. [Boas Práticas](#boas-práticas)
+13. [Documentação Oficial](#documentação-oficial)
+14. [Navegação](#navegação)
 ---
 
 ## Conceitos

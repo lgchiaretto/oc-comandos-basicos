@@ -6,10 +6,13 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 
 ## Índice
 
-1. [Configuração de Rede](#configuração-de-rede)
-2. [Ingress Controllers](#ingress-controllers)
-3. [Network Policies](#network-policies)
-4. [Configurações Avançadas](#configurações-avançadas)
+1. [Índice](#índice)
+2. [Configuração de Rede](#configuração-de-rede)
+3. [Ingress Controllers](#ingress-controllers)
+4. [Network Policies](#network-policies)
+5. [Configurações Avançadas](#configurações-avançadas)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Configuração de Rede

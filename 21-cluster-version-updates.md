@@ -6,10 +6,13 @@ Este documento contém comandos para gerenciar versão e atualizações do clust
 
 ## Índice
 
-1. [Cluster Version](#cluster-version)
-2. [Updates](#updates)
-3. [Update Channels](#update-channels)
-4. [Troubleshooting Updates](#troubleshooting-updates)
+1. [Índice](#índice)
+2. [Cluster Version](#cluster-version)
+3. [Updates](#updates)
+4. [Update Channels](#update-channels)
+5. [Troubleshooting Updates](#troubleshooting-updates)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Cluster Version

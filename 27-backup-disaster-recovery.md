@@ -6,12 +6,16 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 
 ## Índice
 
-1. [Backup de Aplicações](#backup-de-aplicações)
-2. [Backup de Dados](#backup-de-dados)
-3. [Disaster Recovery](#disaster-recovery)
-4. [Backups Configurados](#backups-configurados)
-5. [Testes](#testes)
-6. [Armazenamento](#armazenamento)
+1. [Índice](#índice)
+2. [Backup de Aplicações](#backup-de-aplicações)
+3. [Backup de Dados](#backup-de-dados)
+4. [Disaster Recovery](#disaster-recovery)
+5. [Backups Configurados](#backups-configurados)
+6. [Documentação](#documentação)
+7. [Testes](#testes)
+8. [Armazenamento](#armazenamento)
+9. [Documentação Oficial](#documentação-oficial)
+10. [Navegação](#navegação)
 ---
 
 ## Backup de Aplicações

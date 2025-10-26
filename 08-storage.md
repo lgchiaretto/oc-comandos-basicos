@@ -6,10 +6,13 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 
 ## Índice
 
-1. [PersistentVolumes (PV)](#persistentvolumes-(pv))
-2. [PersistentVolumeClaims (PVC)](#persistentvolumeclaims-(pvc))
-3. [StorageClasses](#storageclasses)
-4. [Volumes em Pods](#volumes-em-pods)
+1. [Índice](#índice)
+2. [PersistentVolumes (PV)](#persistentvolumes-(pv))
+3. [PersistentVolumeClaims (PVC)](#persistentvolumeclaims-(pvc))
+4. [StorageClasses](#storageclasses)
+5. [Volumes em Pods](#volumes-em-pods)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## PersistentVolumes (PV)

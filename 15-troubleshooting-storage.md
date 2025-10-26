@@ -6,11 +6,14 @@ Este documento contém comandos para diagnosticar problemas de storage no OpenSh
 
 ## Índice
 
-1. [PV e PVC](#pv-e-pvc)
-2. [StorageClass](#storageclass)
-3. [Problemas Comuns](#problemas-comuns)
-4. [Operadores de Storage](#operadores-de-storage)
-5. [Debug Avançado](#debug-avançado)
+1. [Índice](#índice)
+2. [PV e PVC](#pv-e-pvc)
+3. [StorageClass](#storageclass)
+4. [Problemas Comuns](#problemas-comuns)
+5. [Operadores de Storage](#operadores-de-storage)
+6. [Debug Avançado](#debug-avançado)
+7. [Documentação Oficial](#documentação-oficial)
+8. [Navegação](#navegação)
 ---
 
 ## PV e PVC

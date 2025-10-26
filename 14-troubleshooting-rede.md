@@ -6,12 +6,15 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 
 ## Índice
 
-1. [Diagnóstico Básico](#diagnóstico-básico)
-2. [Services e Endpoints](#services-e-endpoints)
-3. [Routes e Ingress](#routes-e-ingress)
-4. [SDN/OVN](#sdn/ovn)
-5. [DNS](#dns)
-6. [Ferramentas de Debug](#ferramentas-de-debug)
+1. [Índice](#índice)
+2. [Diagnóstico Básico](#diagnóstico-básico)
+3. [Services e Endpoints](#services-e-endpoints)
+4. [Routes e Ingress](#routes-e-ingress)
+5. [SDN/OVN](#sdn/ovn)
+6. [DNS](#dns)
+7. [Ferramentas de Debug](#ferramentas-de-debug)
+8. [Documentação Oficial](#documentação-oficial)
+9. [Navegação](#navegação)
 ---
 
 ## Diagnóstico Básico

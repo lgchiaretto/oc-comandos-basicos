@@ -6,10 +6,13 @@ Este documento contém comandos para gerenciar nodes e configurações de máqui
 
 ## Índice
 
-1. [Gerenciar Nodes](#gerenciar-nodes)
-2. [Machine Config](#machine-config)
-3. [Machine Sets](#machine-sets)
-4. [Node Maintenance](#node-maintenance)
+1. [Índice](#índice)
+2. [Gerenciar Nodes](#gerenciar-nodes)
+3. [Machine Config](#machine-config)
+4. [Machine Sets](#machine-sets)
+5. [Node Maintenance](#node-maintenance)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Gerenciar Nodes

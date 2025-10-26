@@ -6,15 +6,18 @@ Este documento contém comandos avançados usando field selectors, label selecto
 
 ## Índice
 
-1. [Field Selectors Básicos](#field-selectors-básicos)
-2. [Field Selectors Avançados](#field-selectors-avançados)
-3. [Label Selectors](#label-selectors)
-4. [Combinação de Filtros](#combinação-de-filtros)
-5. [Filtros com GREP](#filtros-com-grep)
-6. [Ordenação e Paginação](#ordenação-e-paginação)
-7. [Padrões Úteis](#padrões-úteis)
-8. [Troubleshooting com Filtros](#troubleshooting-com-filtros)
-9. [Recursos Adicionais](#recursos-adicionais)
+1. [Índice](#índice)
+2. [Field Selectors Básicos](#field-selectors-básicos)
+3. [Field Selectors Avançados](#field-selectors-avançados)
+4. [Label Selectors](#label-selectors)
+5. [Combinação de Filtros](#combinação-de-filtros)
+6. [Filtros com GREP](#filtros-com-grep)
+7. [Ordenação e Paginação](#ordenação-e-paginação)
+8. [Padrões Úteis](#padrões-úteis)
+9. [Troubleshooting com Filtros](#troubleshooting-com-filtros)
+10. [Recursos Adicionais](#recursos-adicionais)
+11. [Documentação Oficial](#documentação-oficial)
+12. [Navegação](#navegação)
 ---
 
 ## Field Selectors Básicos

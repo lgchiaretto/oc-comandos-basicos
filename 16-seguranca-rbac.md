@@ -6,11 +6,14 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 
 ## Índice
 
-1. [RBAC Básico](#rbac-básico)
-2. [Roles e RoleBindings](#roles-e-rolebindings)
-3. [Service Accounts](#service-accounts)
-4. [Security Context Constraints (SCC)](#security-context-constraints-(scc))
-5. [Policies e Auditoria](#policies-e-auditoria)
+1. [Índice](#índice)
+2. [RBAC Básico](#rbac-básico)
+3. [Roles e RoleBindings](#roles-e-rolebindings)
+4. [Service Accounts](#service-accounts)
+5. [Security Context Constraints (SCC)](#security-context-constraints-(scc))
+6. [Policies e Auditoria](#policies-e-auditoria)
+7. [Documentação Oficial](#documentação-oficial)
+8. [Navegação](#navegação)
 ---
 
 ## RBAC Básico

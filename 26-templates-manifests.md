@@ -6,10 +6,13 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 
 ## Índice
 
-1. [Templates](#templates)
-2. [Processing Templates](#processing-templates)
-3. [Parameters](#parameters)
-4. [Export e Manifests](#export-e-manifests)
+1. [Índice](#índice)
+2. [Templates](#templates)
+3. [Processing Templates](#processing-templates)
+4. [Parameters](#parameters)
+5. [Export e Manifests](#export-e-manifests)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Templates

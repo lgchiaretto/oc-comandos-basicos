@@ -6,10 +6,13 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 
 ## Índice
 
-1. [CSR (Certificate Signing Requests)](#csr-(certificate-signing-requests))
-2. [Certificados do Cluster](#certificados-do-cluster)
-3. [Certificados de API](#certificados-de-api)
-4. [Troubleshooting](#troubleshooting)
+1. [Índice](#índice)
+2. [CSR (Certificate Signing Requests)](#csr-(certificate-signing-requests))
+3. [Certificados do Cluster](#certificados-do-cluster)
+4. [Certificados de API](#certificados-de-api)
+5. [Troubleshooting](#troubleshooting)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## CSR (Certificate Signing Requests)

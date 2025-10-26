@@ -25,8 +25,8 @@ def extract_main_sections(content: str) -> List[Tuple[str, str, str]]:
         full_title = match.group(1).strip()
         
         # Ignorar seções especiais
-        if any(x in full_title for x in ['Índice', 'Navegação', 'Documentação']):
-            continue
+        #if any(x in full_title for x in ['Índice', 'Navegação', 'Documentação']):
+        #    continue
         
         title = full_title
         

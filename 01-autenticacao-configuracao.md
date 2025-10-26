@@ -6,11 +6,14 @@ Este documento contém comandos essenciais para autenticação e configuração 
 
 ## Índice
 
-1. [Login e Logout](#login-e-logout)
-2. [Informações do Cluster](#informações-do-cluster)
-3. [Configuração do Cliente](#configuração-do-cliente)
-4. [Contextos](#contextos)
-5. [Boas Práticas](#boas-práticas)
+1. [Índice](#índice)
+2. [Login e Logout](#login-e-logout)
+3. [Informações do Cluster](#informações-do-cluster)
+4. [Configuração do Cliente](#configuração-do-cliente)
+5. [Contextos](#contextos)
+6. [Boas Práticas](#boas-práticas)
+7. [Documentação Oficial](#documentação-oficial)
+8. [Navegação](#navegação)
 ---
 
 ## Login e Logout

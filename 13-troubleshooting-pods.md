@@ -6,10 +6,13 @@ Este documento contém comandos para diagnosticar problemas com pods no OpenShif
 
 ## Índice
 
-1. [Diagnóstico Básico](#diagnóstico-básico)
-2. [Pods com Problemas](#pods-com-problemas)
-3. [Debug de Containers](#debug-de-containers)
-4. [Problemas Comuns](#problemas-comuns)
+1. [Índice](#índice)
+2. [Diagnóstico Básico](#diagnóstico-básico)
+3. [Pods com Problemas](#pods-com-problemas)
+4. [Debug de Containers](#debug-de-containers)
+5. [Problemas Comuns](#problemas-comuns)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Diagnóstico Básico

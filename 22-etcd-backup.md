@@ -6,9 +6,12 @@ Este documento contém comandos para gerenciar etcd e realizar backups do cluste
 
 ## Índice
 
-1. [Etcd Status](#etcd-status)
-2. [Backup do Cluster](#backup-do-cluster)
-3. [Restore](#restore)
+1. [Índice](#índice)
+2. [Etcd Status](#etcd-status)
+3. [Backup do Cluster](#backup-do-cluster)
+4. [Restore](#restore)
+5. [Documentação Oficial](#documentação-oficial)
+6. [Navegação](#navegação)
 ---
 
 ## Etcd Status
