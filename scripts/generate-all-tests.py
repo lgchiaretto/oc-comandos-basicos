@@ -205,7 +205,8 @@ class TestGenerator:
             f"# Testes para Módulo {module_num}: {module_name}",
             f"# Auto-gerado a partir de {md_file.name}",
             "#\n",
-            'source "../lib/common.sh"\n',
+            'SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"\n',
+            'source "${SCRIPT_DIR}/../../lib/common.sh"\n',
             f'section_header "{module_num} - {module_name}"\n'
         ]
         

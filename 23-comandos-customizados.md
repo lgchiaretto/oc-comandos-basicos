@@ -531,10 +531,10 @@ alias octop='oc adm top pods -A --no-headers | sort -k3 -nr | head -10'
 ### Verificações Rápidas
 ```bash
 # Health check completo do cluster
-echo "=== Cluster Operators ===" && oc get co | grep -v "True.*False.*False" && \
-echo "=== Problematic Pods ===" && oc get pods -A | grep -E -v "Running|Completed" && \
-echo "=== Pending CSRs ===" && oc get csr | grep Pending && \
-echo "=== Non-Ready Nodes ===" && oc get nodes | grep -v "Ready"
+echo "=== Cluster Operators ===" && (oc get co | grep -v "True.*False.*False" || echo "Todos os operators estão saudáveis") && \
+echo "=== Problematic Pods ===" && (oc get pods -A | grep -E -v "Running|Completed" || echo "Nenhum pod com problema") && \
+echo "=== Pending CSRs ===" && (oc get csr | grep Pending || echo "Nenhum CSR pendente") && \
+echo "=== Non-Ready Nodes ===" && (oc get nodes | grep -v "Ready" || echo "Todos os nodes estão Ready")
 ```
 
 ---

@@ -119,13 +119,13 @@ oc create secret generic test-app --from-literal=key=value
 ```bash
 # Health check completo do cluster
 echo "=== Pods com Problemas ===" && \
-oc get pods -A | grep -E -v "Running|Completed" && \
+(oc get pods -A | grep -E -v "Running|Completed" || echo "Nenhum pod com problema") && \
 echo "" && \
 echo "=== Cluster Operators ===" && \
-oc get co | grep -v "True.*False.*False" && \
+(oc get co | grep -v "True.*False.*False" || echo "Todos os operators estão saudáveis") && \
 echo "" && \
 echo "=== CSRs Pendentes ===" && \
-oc get csr | grep Pending && \
+(oc get csr | grep Pending || echo "Nenhum CSR pendente") && \
 echo "" && \
 echo "=== Nodes ===" && \
 oc get nodes
