@@ -568,35 +568,42 @@ oc describe mcp <mcp-name>
 
 ```bash ignore-test
 # Monitorar cluster version
-watch -n 5 'oc get clusterversion'
+watch 'oc get clusterversion'
 ```
 
 ```bash ignore-test
 # Monitorar cluster operators
-watch -n 5 'oc get co'
+watch 'oc get co'
 ```
 
 ```bash ignore-test
 # Monitorar nodes
-watch -n 5 'oc get nodes'
+watch 'oc get nodes'
 ```
 
 ```bash ignore-test
 # Monitorar MCPs
-watch -n 5 'oc get mcp'
+watch 'oc get mcp'
 ```
 
 ```bash ignore-test
 # Monitorar progresso geral
 watch -n 10 'echo "=== CLUSTER VERSION ===" && oc get clusterversion && echo "\n=== OPERATORS ===" && oc get co | grep -v "True.*False.*False" && echo "\n=== MCPS ===" && oc get mcp && echo "\n=== NODES ===" && oc get nodes'
-```onitorar cluster version
-watch -n 5 'oc get clusterversion'
-
+```
+```bash ignore-test
+# Monitorar cluster version
+watch 'oc get clusterversion'
+```
+```bash ignore-test
 # Monitorar cluster operators
-watch -n 5 'oc get co'
+watch 'oc get co'
+```
 
 # Monitorar nodes
-watch -n 5 'oc get nodes'
+```bash ignore-test
+watch 'oc get nodes'
+```
+
 ### Monitoramento de Métricas
 
 ```bash ignore-test
