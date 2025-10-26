@@ -150,7 +150,7 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 ```
 
-```bash
+```bash ignore-test
 # Verificar
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm list
 ```
