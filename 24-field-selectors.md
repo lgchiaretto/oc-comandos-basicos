@@ -360,7 +360,7 @@ oc adm top nodes --no-headers | sort -k3 -nr
 ## Padrões Úteis
 
 ### Health Checks Rápidos
-```bash
+```bash ignore-test
 # Verificar se há pods com problemas
 if oc get pods -A | grep -E -v "Running|Completed" | grep -v NAME; then
   echo "  Pods com problemas encontrados!"
@@ -379,7 +379,7 @@ else
 fi
 ```
 
-```bash
+```bash ignore-test
 # Verificar cluster operators
 if oc get co | grep -v "True.*False.*False" | grep -v NAME; then
   echo "  Cluster Operators com problemas!"

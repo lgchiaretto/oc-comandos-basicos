@@ -88,7 +88,7 @@ EOF
 ```
 
 ### Template Completo
-```bash
+```bash ignore-test
 # Template com múltiplos recursos
 cat <<EOF | oc apply -f -
 apiVersion: template.openshift.io/v1

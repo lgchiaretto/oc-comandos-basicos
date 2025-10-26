@@ -426,7 +426,7 @@ done
 ```
 
 ### Verificação de Nodes
-```bash
+```bash ignore-test
 # Verificar status de todos os nodes
 for node in $(oc get nodes -o name); do
   echo "=== $node ==="

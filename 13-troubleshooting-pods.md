@@ -176,13 +176,13 @@ oc describe nodes | grep Taints
 ```
 
 ### OOMKilled
-```bash ignore-test
+```bash
 # Verificar limite de memória
 # oc get pod <resource-name>pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 ```
 
-```bash ignore-test
+```bash
 # Ver uso atual
 # oc adm top <resource-name> my-pod
 oc adm top pod my-pod
@@ -194,13 +194,13 @@ oc adm top pod my-pod
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
-```bash ignore-test
+```bash
 # Ver histórico de restarts
 # oc get pod <resource-name>pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
-```bash ignore-test
+```bash
 # Ver motivo da última terminação
 # oc get pod <resource-name>pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
