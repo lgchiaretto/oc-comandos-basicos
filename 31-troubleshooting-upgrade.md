@@ -20,6 +20,20 @@ Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Co
 
 ## Verificação de Estado do Upgrade
 
+### Verificar motivo dos nodes não sairem de SchedulingDisabled
+
+```bash ignore-test
+# Verificar se tem anotações no node (analise se  currentConfig está ok, verifique se não tem nenhuma anotação do Machine Config Operator)
+# Esse é importante se o seu node está há muito tempo em SchedulingDisabled e não continua o upgrade
+oc describe node <node-name> | awk '/^Annotations:/ {flag=1} flag && /^[A-Z]/ && !/^Annotations:/ {flag=0} flag'
+```
+
+```bash ignore-test
+# Verificar se tem pods prendendo o node (analise se tem pods que não são OCP ou pods do OCP que usam algum tipo de PVC)
+# Esse é importante se o seu node está há muito tempo em SchedulingDisabled e não continua o upgrade
+oc describe node <node-name> | awk '/Non-terminated Pods:/{flag=1;next}/Allocated resources:/{flag=0}flag'
+```
+
 ### Versão e Canal Atual
 
 ```bash
@@ -225,12 +239,6 @@ oc get nodes --show-labels
 ```bash ignore-test
 # Verificar condições de um node
 oc describe node <node-name> | grep -A 10 Conditions
-```
-
-```bash ignore-test
-# Verificar se tem anotações no node (analise se  currentConfig está ok, verifique se não tem nenhuma anotação do Machine Config Operator)
-# Esse é importante se o seu node está há muito tempo em SchedulingDisabled e não continua o upgrade
-oc describe node <node-name> | awk '/^Annotations:/ {flag=1} flag && /^[A-Z]/ && !/^Annotations:/ {flag=0} flag'
 ```
 
 ### Versões dos Nodes
