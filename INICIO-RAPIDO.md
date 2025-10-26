@@ -183,9 +183,6 @@ oc adm uncordon <node-name>
 2. Nodes e Machines (ainda não criado)
 3. **[21-csr.md](README.md#21-certificate-signing-requests)** - CSRs
 
-### Referência Completa
-- **[comandos-openshift-ORIGINAL-COMPLETO.md](comandos-openshift-ORIGINAL-COMPLETO.md)** - Todos os comandos em um arquivo
-
 ---
 
 ## Fluxos de Trabalho Comuns

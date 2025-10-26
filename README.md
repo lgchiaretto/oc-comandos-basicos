@@ -16,7 +16,7 @@ Foque nos documentos de administração avançada (19-22) e troubleshooting (13-
 Concentre-se em Build/CI/CD (9-10), aplicações (3) e observabilidade (11-12).
 
 ### Para Troubleshooting
-Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
+Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e openshift upgrade (31).
 
 ---
 
