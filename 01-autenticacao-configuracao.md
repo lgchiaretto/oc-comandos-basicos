@@ -239,9 +239,6 @@ export KUBECONFIG=/path/to/config1:/path/to/config2
 -  Use `oc config view` para ver configuração atual
 -  Use `-v=8` para debug detalhado
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

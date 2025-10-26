@@ -28,37 +28,48 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     "03-aplicacoes.md": [
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
         ("Developer CLI (odo)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/developer-cli-odo"),
+        ("Deployments", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments"),
+        ("Images - Using templates", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
     ],
     "04-pods-containers.md": [
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/working-with-pods"),
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
     ],
     "05-deployments-scaling.md": [
         ("Building applications - Deployments", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments"),
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
+        ("Nodes - Autoscaling", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Nodes - Managing pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
     ],
     "06-services-routes.md": [
         ("Networking - Configuring ingress", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-ingress"),
         ("Networking - Configuring routes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-routes"),
-        ("Networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
+        ("Networking - Understanding Services", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/understanding-networking"),
+        ("Secured routes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-routes#nw-ingress-creating-a-route-via-an-ingress_route-configuration"),
     ],
     "07-configmaps-secrets.md": [
-        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Nodes - ConfigMaps and Secrets", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/working-with-pods"),
         ("Security and compliance", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
     ],
     "08-storage.md": [
         ("Storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage"),
         ("Storage - Dynamic provisioning", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/dynamic-provisioning"),
+        ("Understanding persistent storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/understanding-persistent-storage"),
+        ("Expanding persistent volumes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/expanding-persistent-volumes"),
     ],
     "09-builds-images.md": [
-        ("CI/CD - Builds", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
-        ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
-        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Building applications - Builds", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Images - Managing images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Building applications - Build configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Images - ImageStreams", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
     ],
     "10-registry-imagens.md": [
         ("Registry - Integrated OpenShift image registry", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry"),
-        ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Images - Managing images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
+        ("Image Registry Operator", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry/configuring-registry-operator"),
+        ("Pruning objects to reclaim resources", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "11-monitoramento-logs.md": [
         ("Monitoring - Monitoring overview", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring"),
@@ -83,11 +94,14 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     ],
     "16-seguranca-rbac.md": [
         ("Authentication and authorization", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization"),
-        ("Security and compliance - Managing security context constraints", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
+        ("Security and compliance - Security Context Constraints", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
+        ("RBAC - Using RBAC to define and apply permissions", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/using-rbac"),
+        ("Service Accounts", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/understanding-and-creating-service-accounts"),
     ],
     "17-cluster-operators.md": [
         ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operators - Cluster Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Operator Lifecycle Manager", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
         ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "18-nodes-machine.md": [
@@ -136,13 +150,16 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "29-jobs-cronjobs.md": [
-        ("Nodes - Working with jobs and cron jobs", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
-        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Nodes - Working with jobs", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Building applications - Jobs and CronJobs", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
     ],
     "30-operators-operandos.md": [
         ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
         ("Operators - Administrator tasks", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/administrator-tasks"),
         ("Operators - User tasks", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/user-tasks"),
+        ("Operator Lifecycle Manager", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
+        ("Custom Resources", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
     ],
 }
 

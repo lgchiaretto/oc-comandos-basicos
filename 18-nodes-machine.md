@@ -427,9 +427,6 @@ oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.t
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

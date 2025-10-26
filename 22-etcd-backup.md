@@ -147,9 +147,6 @@ oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 # Verificar
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm list
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

@@ -193,15 +193,14 @@ oc adm prune builds --keep-complete=5 --keep-failed=1 --confirm
 oc adm prune builds --keep-younger-than=48h --confirm
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry">Registry - Integrated OpenShift image registry</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images">Images</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images">Images - Managing images</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry/configuring-registry-operator">Image Registry Operator</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications">Pruning objects to reclaim resources</a>
 ---
 
 ---

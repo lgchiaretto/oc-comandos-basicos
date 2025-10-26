@@ -297,9 +297,6 @@ for pod in $(oc get pods -l app=network-test -o name); do
 done
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

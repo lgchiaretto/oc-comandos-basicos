@@ -520,9 +520,6 @@ oc replace -f directory/ -R
 oc replace -f resource.yaml --dry-run=client
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

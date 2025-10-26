@@ -251,9 +251,6 @@ spec:
 EOF
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

@@ -545,9 +545,6 @@ echo "=== Non-Ready Nodes ===" && oc get nodes | grep -v "Ready"
 - **AWK Tutorial**: https://www.gnu.org/software/gawk/manual/
 - **GREP Guide**: https://www.gnu.org/software/grep/manual/
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

@@ -384,9 +384,6 @@ oc adm policy who-can <verbo> <recurso>
 oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

@@ -287,15 +287,14 @@ oc wait --for=condition=available --timeout=60s deployment/test-app
 # oc wait --for=condition=available --timeout=60s deployment/test-app -n <namespace>
 oc wait --for=condition=available --timeout=60s deployment/test-app -n development
 ```
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications">Building applications</a>
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/developer-cli-odo">Developer CLI (odo)</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments">Deployments</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images">Images - Using templates</a>
 ---
 
 ---

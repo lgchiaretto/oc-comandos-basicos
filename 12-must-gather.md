@@ -165,9 +165,6 @@ chmod +x /tmp/quick-diag.sh
 /tmp/quick-diag.sh > /tmp/cluster-status.txt
 ```
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:

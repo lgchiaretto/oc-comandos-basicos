@@ -478,9 +478,6 @@ oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E
 - **Field Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/
 - **Label Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 
-
-
-
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
