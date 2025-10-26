@@ -36,11 +36,12 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ```bash
 # Criar ou atualizar um pod usando um yaml
+# Essa imagem é uma copia da docker.io/nicolaka/netshoot
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: Pod
 metadata:
-  name: my-pod
+  name: my-pod1
 spec:
   securityContext:
     runAsUser: 1000
