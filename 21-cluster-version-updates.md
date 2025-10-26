@@ -1,18 +1,18 @@
-# 🔄 Cluster Version e Updates
+# Cluster Version e Updates
 
 Este documento contém comandos para gerenciar versão e atualizações do cluster OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [📌 Cluster Version](#cluster-version)
-2. [⬆️ Updates](#updates)
-3. [📺 Update Channels](#update-channels)
-4. [🔧 Troubleshooting Updates](#troubleshooting-updates)
+1. [ Cluster Version](#cluster-version)
+2. [ Updates](#updates)
+3. [ Update Channels](#update-channels)
+4. [ Troubleshooting Updates](#troubleshooting-updates)
 ---
 
-## 📌 Cluster Version
+## Cluster Version
 
 ### Ver Versão Atual
 ```bash
@@ -69,7 +69,7 @@ oc get clusterversion
 
 ---
 
-## ⬆️ Updates
+## Updates
 
 ### Verificar Updates Disponíveis
 ```bash
@@ -142,7 +142,7 @@ oc get clusterversion -o json | jq '.items[0].status.history'
 
 ---
 
-## 📺 Update Channels
+## Update Channels
 
 ### Ver e Mudar Channel
 ```bash
@@ -196,7 +196,7 @@ oc patch clusterversion version --type merge -p '{"spec":{"upstream":"<update-se
 
 ---
 
-## 🔧 Troubleshooting Updates
+## Troubleshooting Updates
 
 ### Update Stuck ou Falhando
 ```bash
@@ -327,10 +327,10 @@ echo "Updating MCPs: $UPDATING_MCP"
 ```bash ignore-test
 echo ""
 if [ $DEGRADED -eq 0 ] && [ $NOT_READY -eq 0 ] && [ $BAD_PODS -eq 0 ] && [ $UPDATING_MCP -eq 0 ]; then
-  echo "✅ Cluster is healthy for update"
+  echo " Cluster is healthy for update"
   exit 0
 else
-  echo "❌ Cluster has issues - investigate before updating"
+  echo " Cluster has issues - investigate before updating"
   exit 1
 fi
 EOF
@@ -355,7 +355,7 @@ curl -sH "Accept: application/json" \
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -364,7 +364,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Cluster Networking](20-cluster-networking.md)
 - [→ Próximo: Etcd e Backup](22-etcd-backup.md)

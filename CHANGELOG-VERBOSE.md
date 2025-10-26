@@ -2,10 +2,10 @@
 
 ## Data: 20/10/2025
 
-### 🎯 Objetivo
+### Objetivo
 Adicionar funcionalidade de debug detalhado e melhorar a legibilidade dos testes.
 
-### ✨ Mudanças Implementadas
+### Mudanças Implementadas
 
 #### 1. **Modo Verbose com [DEBUG]**
 - Adicionada captura e exibição da saída completa dos comandos quando `--verbose` está ativo
@@ -16,13 +16,13 @@ Adicionar funcionalidade de debug detalhado e melhorar a legibilidade dos testes
 **Antes:**
 ```bash
 [INFO] Executando: oc whoami
-[✓] Verificar usuário atual (whoami)
+[] Verificar usuário atual (whoami)
 ```
 
 **Depois (com --verbose):**
 ```bash
 [INFO] Executando: oc whoami
-[✓] Verificar usuário atual (whoami)
+[] Verificar usuário atual (whoami)
 [DEBUG] Saída do comando:
   admin
 ```
@@ -68,7 +68,7 @@ if [ "$VERBOSE" -eq 1 ]; then
 fi
 ```
 
-### 📝 Arquivos Modificados
+### Arquivos Modificados
 
 1. **`/lib/common.sh`**
    - Função `run_test` expandida para suportar modo verbose
@@ -84,7 +84,7 @@ fi
    - Exemplos de uso com [DEBUG]
    - Atualização das boas práticas
 
-### 🧪 Validação
+### Validação
 
 Testado com sucesso:
 ```bash
@@ -98,7 +98,7 @@ Testado com sucesso:
 ./scripts/test-commands.sh --verbose
 ```
 
-### 📊 Benefícios
+### Benefícios
 
 1. **Debug Facilitado:** Agora é possível ver exatamente o que cada comando retorna
 2. **Legibilidade:** Espaçamento consistente torna a saída mais fácil de ler
@@ -106,7 +106,7 @@ Testado com sucesso:
 4. **Compatibilidade:** Modo normal continua funcionando exatamente como antes
 5. **Performance:** Modo verbose só captura saída quando necessário (não impacta modo normal)
 
-### 🔧 Uso Recomendado
+### Uso Recomendado
 
 **Para desenvolvimento e debug:**
 ```bash
@@ -123,14 +123,14 @@ Testado com sucesso:
 ./scripts/test-commands.sh --verbose --stop-on-error --module XX
 ```
 
-### ⚙️ Detalhes Técnicos
+### Detalhes Técnicos
 
 - **Cores mantidas:** Verde (sucesso), Vermelho (erro), Amarelo (skip), Azul (debug)
 - **Log file:** Toda saída verbose também é registrada no log
 - **Exit codes:** Mantidos inalterados
 - **Compatibilidade:** Backward compatible - scripts antigos funcionam sem modificação
 
-### 📚 Referências
+### Referências
 
 - Commit: (será adicionado após commit)
 - Issue: Melhorias de usabilidade do sistema de testes

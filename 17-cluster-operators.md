@@ -1,18 +1,18 @@
-# ⚙️ Cluster Operators
+# Cluster Operators
 
 Este documento contém comandos para gerenciar e diagnosticar Cluster Operators no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔍 Verificar Status](#verificar-status)
-2. [🔧 Troubleshooting](#troubleshooting)
-3. [⚡ Operadores Principais](#operadores-principais)
-4. [🎯 OLM (Operator Lifecycle Manager)](#olm-operator-lifecycle-manager)
+1. [ Verificar Status](#verificar-status)
+2. [ Troubleshooting](#troubleshooting)
+3. [ Operadores Principais](#operadores-principais)
+4. [ OLM (Operator Lifecycle Manager)](#olm-operator-lifecycle-manager)
 ---
 
-## 🔍 Verificar Status
+## Verificar Status
 
 ### Status Geral
 ```bash
@@ -79,7 +79,7 @@ oc get co authentication -o jsonpath='{.status.relatedObjects}'
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Diagnosticar Problemas
 ```bash ignore-test
@@ -138,7 +138,7 @@ find . -name "*operator*" -type d
 
 ---
 
-## ⚡ Operadores Principais
+## Operadores Principais
 
 ### Authentication Operator
 ```bash
@@ -314,7 +314,7 @@ oc get alertmanager -n openshift-monitoring
 
 ---
 
-## 🎯 OLM (Operator Lifecycle Manager)
+## OLM (Operator Lifecycle Manager)
 
 ### Gerenciar Operadores Instalados
 ```bash
@@ -444,7 +444,7 @@ oc get installplan -n <namespace> -o json | jq -r '.items[] | select(.spec.appro
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -454,7 +454,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Segurança e RBAC](16-seguranca-rbac.md)
 - [→ Próximo: Nodes e Machine](18-nodes-machine.md)

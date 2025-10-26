@@ -1,18 +1,18 @@
-# 🔍 Must-Gather e Diagnósticos
+# Must-Gather e Diagnósticos
 
 Este documento contém comandos para coleta de diagnósticos e troubleshooting no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🩺 Must-Gather Básico](#must-gather-basico)
-2. [🎯 Must-Gather Específico](#must-gather-especifico)
-3. [🔬 Inspect](#inspect)
-4. [🛠 ️ Diagnósticos Rápidos](#diagnosticos-rapidos)
+1. [ Must-Gather Básico](#must-gather-basico)
+2. [ Must-Gather Específico](#must-gather-especifico)
+3. [ Inspect](#inspect)
+4. [  Diagnósticos Rápidos](#diagnosticos-rapidos)
 ---
 
-## 🩺 Must-Gather Básico
+## Must-Gather Básico
 
 ### Coletar Dados do Cluster
 ```bash ignore-test
@@ -53,7 +53,7 @@ oc adm must-gather --node-name=<node-name>
 
 ---
 
-## 🎯 Must-Gather Específico
+## Must-Gather Específico
 
 ### Must-Gather por Componente
 
@@ -62,7 +62,7 @@ https://access.redhat.com/solutions/5459251
 
 ---
 
-## 🔬 Inspect
+## Inspect
 
 ### Inspecionar Recursos
 ```bash ignore-test
@@ -109,7 +109,7 @@ oc adm inspect ns -A --dest-dir=/tmp/inspect
 
 ---
 
-## 🛠️ Diagnósticos Rápidos
+## Diagnósticos Rápidos
 
 ### Verificações Básicas
 ```bash
@@ -163,7 +163,7 @@ chmod +x /tmp/quick-diag.sh
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -172,7 +172,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Monitoramento e Logs](11-monitoramento-logs.md)
 - [→ Próximo: Troubleshooting de Pods](13-troubleshooting-pods.md)

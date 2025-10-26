@@ -1,18 +1,18 @@
-# 💾 Storage e Volumes
+# Storage e Volumes
 
 Este documento contém comandos para gerenciar storage no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🗄 ️ PersistentVolumes (PV)](#persistentvolumes-pv)
-2. [📦 PersistentVolumeClaims (PVC)](#persistentvolumeclaims-pvc)
-3. [🏪 StorageClasses](#storageclasses)
-4. [📁 Volumes em Pods](#volumes-em-pods)
+1. [  PersistentVolumes (PV)](#persistentvolumes-pv)
+2. [ PersistentVolumeClaims (PVC)](#persistentvolumeclaims-pvc)
+3. [ StorageClasses](#storageclasses)
+4. [ Volumes em Pods](#volumes-em-pods)
 ---
 
-## 🗄️ PersistentVolumes (PV)
+## PersistentVolumes (PV)
 
 ```bash
 # Listar PVs
@@ -47,7 +47,7 @@ oc delete pv <nome-do-pv>
 
 ---
 
-## 📦 PersistentVolumeClaims (PVC)
+## PersistentVolumeClaims (PVC)
 
 ### Criar e Gerenciar
 ```bash
@@ -100,7 +100,7 @@ oc set volume deployment/test-app --remove --name=<volume-name>
 
 ---
 
-## 🏪 StorageClasses
+## StorageClasses
 
 ```bash
 # Listar StorageClasses
@@ -124,7 +124,7 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ```
 ---
 
-## 📁 Volumes em Pods
+## Volumes em Pods
 
 ### Tipos de Volumes
 ```bash
@@ -152,7 +152,7 @@ oc describe pod my-pod | grep -A 5 Volumes
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -162,7 +162,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: ConfigMaps e Secrets](07-configmaps-secrets.md)
 - [→ Próximo: Builds e Images](09-builds-images.md)

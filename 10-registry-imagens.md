@@ -1,18 +1,18 @@
-# 🐳 Registry e Gestão de Imagens
+# Registry e Gestão de Imagens
 
 Este documento contém comandos para gerenciar o registry interno e imagens no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🏪 Registry Interno](#registry-interno)
-2. [📤 Push e Pull de Imagens](#push-e-pull-de-imagens)
-3. [🔄 Image Mirroring](#image-mirroring)
-4. [🧹 Image Pruning](#image-pruning)
+1. [ Registry Interno](#registry-interno)
+2. [ Push e Pull de Imagens](#push-e-pull-de-imagens)
+3. [ Image Mirroring](#image-mirroring)
+4. [ Image Pruning](#image-pruning)
 ---
 
-## 🏪 Registry Interno
+## Registry Interno
 
 ### Acessar Registry
 ```bash
@@ -49,7 +49,7 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 
 ---
 
-## 📤 Push e Pull de Imagens
+## Push e Pull de Imagens
 
 ### Push de Imagens
 ```bash ignore-test
@@ -99,7 +99,7 @@ oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 
 ---
 
-## 🔄 Image Mirroring
+## Image Mirroring
 
 ### Configurar Mirroring
 ```bash
@@ -140,7 +140,7 @@ oc mirror list operators --catalog=<catalog-image>
 
 ---
 
-## 🧹 Image Pruning
+## Image Pruning
 
 ### Limpeza de Imagens
 ```bash ignore-test
@@ -191,7 +191,7 @@ oc adm prune builds --keep-younger-than=48h --confirm
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -201,7 +201,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Builds e Images](09-builds-images.md)
 - [→ Próximo: Monitoramento e Logs](11-monitoramento-logs.md)

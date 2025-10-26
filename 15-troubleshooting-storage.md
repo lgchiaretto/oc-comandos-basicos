@@ -1,19 +1,19 @@
-# 💾 Troubleshooting de Storage
+# Troubleshooting de Storage
 
 Este documento contém comandos para diagnosticar problemas de storage no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [📦 PV e PVC](#pv-e-pvc)
-2. [🏪 StorageClass](#storageclass)
-3. [🚨 Problemas Comuns](#problemas-comuns)
-4. [🔧 Operadores de Storage](#operadores-de-storage)
-5. [🛠 ️ Debug Avançado](#debug-avancado)
+1. [ PV e PVC](#pv-e-pvc)
+2. [ StorageClass](#storageclass)
+3. [ Problemas Comuns](#problemas-comuns)
+4. [ Operadores de Storage](#operadores-de-storage)
+5. [  Debug Avançado](#debug-avancado)
 ---
 
-## 📦 PV e PVC
+## PV e PVC
 
 ### Criar PVC
 
@@ -132,7 +132,7 @@ oc get sc <storage-class-name> -o jsonpath='{.provisioner}'
 
 ---
 
-## 🏪 StorageClass
+## StorageClass
 
 ### Verificar StorageClasses
 ```bash
@@ -177,7 +177,7 @@ oc get pods -A | grep csi
 
 ---
 
-## 🚨 Problemas Comuns
+## Problemas Comuns
 
 ### Volume Não Monta
 ```bash
@@ -294,7 +294,7 @@ oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
 
 ---
 
-## 🔧 Operadores de Storage
+## Operadores de Storage
 
 ### ODF (OpenShift Data Foundation)
 ```bash
@@ -372,7 +372,7 @@ oc describe csinode <node-name>
 
 ---
 
-## 🛠️ Debug Avançado
+## Debug Avançado
 
 ### Verificar Backend de Storage
 ```bash ignore-test
@@ -430,7 +430,7 @@ ls -laZ /path/to/mount
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -439,7 +439,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Troubleshooting de Rede](14-troubleshooting-rede.md)
 - [→ Próximo: Segurança e RBAC](16-seguranca-rbac.md)

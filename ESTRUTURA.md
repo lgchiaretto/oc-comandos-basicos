@@ -1,12 +1,12 @@
-# 📦 Estrutura do Projeto - Guia OpenShift
+# Estrutura do Projeto - Guia OpenShift
 
-## 🎯 Resumo
+## Resumo
 
 Este repositório contém um guia completo de comandos do OpenShift, organizado de forma modular para facilitar o aprendizado e consulta.
 
 ---
 
-## 📁 Arquivos Criados
+## Arquivos Criados
 
 ### Arquivos Principais
 
@@ -38,9 +38,9 @@ Este repositório contém um guia completo de comandos do OpenShift, organizado 
 
 ---
 
-## 🗂️ Estrutura Planejada (30 Documentos)
+## Estrutura Planejada (30 Documentos)
 
-### 📚 Documentos que Devem Ser Criados
+### Documentos que Devem Ser Criados
 
 Os seguintes arquivos foram planejados no README.md e devem ser criados:
 
@@ -83,8 +83,8 @@ Os seguintes arquivos foram planejados no README.md e devem ser criados:
 - `22-networking.md` - Network Policies
 
 #### Comandos Utilitários (23-26)
-- `23-comandos-customizados.md` ✅ **CRIADO**
-- `24-field-selectors.md` ✅ **CRIADO**
+- `23-comandos-customizados.md`  **CRIADO**
+- `24-field-selectors.md`  **CRIADO**
 - `25-formatacao-output.md` - JSONPath, custom columns
 - `26-templates.md` - Templates de aplicação e projeto
 
@@ -96,7 +96,7 @@ Os seguintes arquivos foram planejados no README.md e devem ser criados:
 
 ---
 
-## 🚀 Como Usar
+## Como Usar
 
 ### Para Começar
 
@@ -123,7 +123,7 @@ Consulte:
 
 ---
 
-## 📊 Estatísticas
+## Estatísticas
 
 ### Arquivo Original
 - **Linhas**: ~1600
@@ -138,7 +138,7 @@ Consulte:
 
 ---
 
-## ✨ Novos Recursos Adicionados
+## Novos Recursos Adicionados
 
 ### Comandos do Bash History
 
@@ -174,7 +174,7 @@ Foram extraídos e adicionados comandos reais de produção:
 
 ---
 
-## 🎯 Próximos Passos
+## Próximos Passos
 
 ### Para Completar o Guia
 
@@ -196,46 +196,46 @@ Foram extraídos e adicionados comandos reais de produção:
 
 ---
 
-## 💡 Vantagens da Nova Estrutura
+## Vantagens da Nova Estrutura
 
 ### Modularidade
-- ✅ Fácil de navegar
-- ✅ Encontrar comandos rapidamente
-- ✅ Manutenção simplificada
-- ✅ Atualização por categoria
+-  Fácil de navegar
+-  Encontrar comandos rapidamente
+-  Manutenção simplificada
+-  Atualização por categoria
 
 ### Organização
-- ✅ Por categoria funcional
-- ✅ Por nível de conhecimento
-- ✅ Por tipo de tarefa
-- ✅ Links cruzados
+-  Por categoria funcional
+-  Por nível de conhecimento
+-  Por tipo de tarefa
+-  Links cruzados
 
 ### Usabilidade
-- ✅ Índice principal claro
-- ✅ Navegação entre documentos
-- ✅ Comandos mais usados destacados
-- ✅ Exemplos práticos
+-  Índice principal claro
+-  Navegação entre documentos
+-  Comandos mais usados destacados
+-  Exemplos práticos
 
 ### Escalabilidade
-- ✅ Fácil adicionar novos comandos
-- ✅ Fácil criar novas categorias
-- ✅ Fácil manter atualizado
-- ✅ Fácil contribuir
+-  Fácil adicionar novos comandos
+-  Fácil criar novas categorias
+-  Fácil manter atualizado
+-  Fácil contribuir
 
 ---
 
-## 📝 Template para Novos Documentos
+## Template para Novos Documentos
 
 Ao criar os documentos restantes, use este template:
 
 ```markdown
-# 🔧 Título do Documento
+# Título do Documento
 
 Breve descrição do conteúdo.
 
 ---
 
-## 📋 Índice
+## Índice
 
 1. [Seção 1](#seção-1)
 2. [Seção 2](#seção-2)
@@ -253,7 +253,7 @@ comando aqui
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Documento Anterior](arquivo-anterior.md)
 - [→ Próximo Documento](proximo-arquivo.md)
@@ -266,7 +266,7 @@ comando aqui
 
 ---
 
-## 🤝 Contribuindo
+## Contribuindo
 
 Para adicionar novos comandos ou melhorias:
 
@@ -278,7 +278,7 @@ Para adicionar novos comandos ou melhorias:
 
 ---
 
-## 📞 Suporte
+## Suporte
 
 Este guia é baseado em:
 - Experiência prática em ambientes de produção

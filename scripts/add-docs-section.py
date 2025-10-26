@@ -153,7 +153,7 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
 def generate_docs_section(links: List[Tuple[str, str]]) -> str:
     """Gera a seção de documentação oficial com links que abrem em nova aba."""
     lines = [
-        "## 📚 Documentação Oficial",
+        "## Documentação Oficial",
         "",
         "Consulte a documentação oficial do OpenShift 4.19 da Red Hat:",
         ""
@@ -176,34 +176,34 @@ def add_docs_section(file_path: Path, force: bool = False) -> bool:
     filename = file_path.name
     
     if filename not in DOCS_MAP:
-        print(f"  ⚠️  Sem mapeamento de documentação para {filename}")
+        print(f"  Sem mapeamento de documentação para {filename}")
         return False
     
     try:
         content = file_path.read_text(encoding='utf-8')
     except Exception as e:
-        print(f"  ❌ ERRO ao ler {filename}: {e}")
+        print(f"  ERRO ao ler {filename}: {e}")
         return False
     
     # Verificar se já tem a seção
-    if "## 📚 Documentação Oficial" in content and not force:
-        print(f"  ℹ️  Seção de documentação já existe (use --force para sobrescrever)")
+    if "## Documentação Oficial" in content and not force:
+        print(f"  Seção de documentação já existe (use --force para sobrescrever)")
         return False
     
     # Se force=True, remove seção existente primeiro
-    if force and "## 📚 Documentação Oficial" in content:
+    if force and "## Documentação Oficial" in content:
         # Remove seção existente e separadores extras
-        pattern = r'---\s*\n\s*---\s*\n\s*---\s*\n\s*## 📚 Documentação Oficial.*?(?=\n---\s*\n\s*## 📖 Navegação|\Z)'
+        pattern = r'---\s*\n\s*---\s*\n\s*---\s*\n\s*## Documentação Oficial.*?(?=\n---\s*\n\s*## Navegação|\Z)'
         content = re.sub(pattern, '', content, flags=re.DOTALL)
         # Também limpa pattern simples
-        pattern = r'## 📚 Documentação Oficial.*?(?=\n---\s*\n\s*## 📖 Navegação|\Z)'
+        pattern = r'## Documentação Oficial.*?(?=\n---\s*\n\s*## Navegação|\Z)'
         content = re.sub(pattern, '', content, flags=re.DOTALL)
     
     # Gerar nova seção
     docs_section = generate_docs_section(DOCS_MAP[filename])
     
     # Inserir antes da seção de Navegação
-    nav_pattern = r'(---\s*\n\s*## 📖 Navegação)'
+    nav_pattern = r'(---\s*\n\s*## Navegação)'
     
     if re.search(nav_pattern, content):
         new_content = re.sub(
@@ -227,12 +227,12 @@ def add_docs_section(file_path: Path, force: bool = False) -> bool:
             new_content = content.rstrip() + '\n\n---\n\n' + docs_section
     
     if new_content == content:
-        print(f"  ❌ Não foi possível adicionar seção")
+        print(f"  Não foi possível adicionar seção")
         return False
     
     # Salvar
     file_path.write_text(new_content, encoding='utf-8')
-    print(f"  ✓ Seção de documentação adicionada ({len(DOCS_MAP[filename])} links)")
+    print(f"  Seção de documentação adicionada ({len(DOCS_MAP[filename])} links)")
     return True
 
 
@@ -263,13 +263,13 @@ def main():
     added_count = 0
     
     for md_file in md_files:
-        print(f"📄 {md_file.name}")
+        print(f"{md_file.name}")
         if add_docs_section(md_file, args.force):
             added_count += 1
         print()
     
     print("=" * 60)
-    print(f"✅ Concluído! {added_count} seções adicionadas/atualizadas")
+    print(f"Concluído! {added_count} seções adicionadas/atualizadas")
 
 
 if __name__ == "__main__":

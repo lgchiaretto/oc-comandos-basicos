@@ -1,23 +1,23 @@
-# 🔍 Field Selectors e Filtros Avançados
+# Field Selectors e Filtros Avançados
 
 Este documento contém comandos avançados usando field selectors, label selectors e filtros complexos para buscar e filtrar recursos no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🎯 Field Selectors Básicos](#field-selectors-basicos)
-2. [🚀 Field Selectors Avançados](#field-selectors-avancados)
-3. [🏷 ️ Label Selectors](#label-selectors)
-4. [🔗 Combinação de Filtros](#combinacao-de-filtros)
-5. [🔎 Filtros com GREP](#filtros-com-grep)
-6. [📊 Ordenação e Paginação](#ordenacao-e-paginacao)
-7. [💡 Padrões Úteis](#padroes-uteis)
-8. [🛠 ️ Troubleshooting com Filtros](#troubleshooting-com-filtros)
-9. [📚 Recursos Adicionais](#recursos-adicionais)
+1. [ Field Selectors Básicos](#field-selectors-basicos)
+2. [ Field Selectors Avançados](#field-selectors-avancados)
+3. [  Label Selectors](#label-selectors)
+4. [ Combinação de Filtros](#combinacao-de-filtros)
+5. [ Filtros com GREP](#filtros-com-grep)
+6. [ Ordenação e Paginação](#ordenacao-e-paginacao)
+7. [ Padrões Úteis](#padroes-uteis)
+8. [  Troubleshooting com Filtros](#troubleshooting-com-filtros)
+9. [ Recursos Adicionais](#recursos-adicionais)
 ---
 
-## 🎯 Field Selectors Básicos
+## Field Selectors Básicos
 
 ### Filtrar Pods por Status
 ```bash
@@ -90,7 +90,7 @@ oc get nodes --field-selector spec.unschedulable=false
 
 ---
 
-## 🚀 Field Selectors Avançados
+## Field Selectors Avançados
 
 ### CSR (Certificate Signing Requests)
 ```bash ignore-test
@@ -137,7 +137,7 @@ oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.nam
 
 ---
 
-## 🏷️ Label Selectors
+## Label Selectors
 
 ### Seleção por Label
 ```bash
@@ -209,7 +209,7 @@ oc get pods -l deployment=test-app
 
 ---
 
-## 🔗 Combinação de Filtros
+## Combinação de Filtros
 
 ### Field Selector + Label Selector
 ```bash
@@ -245,7 +245,7 @@ oc get events --field-selector=type=Warning,involvedObject.namespace=development
 
 ---
 
-## 🔎 Filtros com GREP 
+## Filtros com GREP 
 
 ### Filtros Básicos com GREP
 ```bash
@@ -297,7 +297,7 @@ oc get pods -A | grep -E -v "Running|Completed" | grep -E -v "NAME"
 
 ---
 
-## 📊 Ordenação e Paginação
+## Ordenação e Paginação
 
 ### Ordenar por Campos
 ```bash
@@ -354,35 +354,35 @@ oc adm top nodes --no-headers | sort -k3 -nr
 
 ---
 
-## 💡 Padrões Úteis
+## Padrões Úteis
 
 ### Health Checks Rápidos
 ```bash
 # Verificar se há pods com problemas
 if oc get pods -A | grep -E -v "Running|Completed" | grep -v NAME; then
-  echo "⚠️  Pods com problemas encontrados!"
+  echo "  Pods com problemas encontrados!"
 else
-  echo "✅ Todos os pods estão OK"
+  echo " Todos os pods estão OK"
 fi
 ```
 
 ```bash ignore-test
 # Verificar CSRs pendentes
 if oc get csr | grep -q Pending; then
-  echo "⚠️  CSRs pendentes encontrados!"
+  echo "  CSRs pendentes encontrados!"
   oc get csr | grep Pending
 else
-  echo "✅ Nenhum CSR pendente"
+  echo " Nenhum CSR pendente"
 fi
 ```
 
 ```bash
 # Verificar cluster operators
 if oc get co | grep -v "True.*False.*False" | grep -v NAME; then
-  echo "⚠️  Cluster Operators com problemas!"
+  echo "  Cluster Operators com problemas!"
   oc get co | grep -v "True.*False.*False" | grep -v NAME
 else
-  echo "✅ Todos os Cluster Operators estão OK"
+  echo " Todos os Cluster Operators estão OK"
 fi
 ```
 
@@ -425,7 +425,7 @@ oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 
 ---
 
-## 🛠️ Troubleshooting com Filtros
+## Troubleshooting com Filtros
 
 ### Encontrar Pods com Problemas Específicos
 ```bash
@@ -470,13 +470,13 @@ oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E
 
 ---
 
-## 📚 Recursos Adicionais
+## Recursos Adicionais
 
 - **Field Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors/
 - **Label Selectors**: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -485,7 +485,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Voltar para Comandos Customizados](23-comandos-customizados.md)
 - [→ Próximo: Formatação de Output](25-formatacao-output.md)

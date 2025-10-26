@@ -1,19 +1,19 @@
-# 🔒 Segurança e RBAC
+# Segurança e RBAC
 
 Este documento contém comandos para gerenciar segurança, permissões e RBAC no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [👥 RBAC Básico](#rbac-basico)
-2. [🎭 Roles e RoleBindings](#roles-e-rolebindings)
-3. [🤖 Service Accounts](#service-accounts)
-4. [🛡 ️ Security Context Constraints (SCC)](#security-context-constraints-scc)
-5. [📜 Policies e Auditoria](#policies-e-auditoria)
+1. [ RBAC Básico](#rbac-basico)
+2. [ Roles e RoleBindings](#roles-e-rolebindings)
+3. [ Service Accounts](#service-accounts)
+4. [  Security Context Constraints (SCC)](#security-context-constraints-scc)
+5. [ Policies e Auditoria](#policies-e-auditoria)
 ---
 
-## 👥 RBAC Básico
+## RBAC Básico
 
 ### Verificar Permissões
 ```bash ignore-test
@@ -68,7 +68,7 @@ oc describe user chiaretto
 
 ---
 
-## 🎭 Roles e RoleBindings
+## Roles e RoleBindings
 
 ### Cluster Roles
 ```bash
@@ -184,7 +184,7 @@ oc describe rolebinding admin
 
 ---
 
-## 🤖 Service Accounts
+## Service Accounts
 
 ### Gerenciar Service Accounts
 ```bash
@@ -248,7 +248,7 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 
 ---
 
-## 🛡️ Security Context Constraints (SCC)
+## Security Context Constraints (SCC)
 
 ### Listar e Ver SCCs
 ```bash
@@ -328,7 +328,7 @@ oc get pod test-app -o yaml | grep -A 10 securityContext
 
 ---
 
-## 📜 Policies e Auditoria
+## Policies e Auditoria
 
 ### Audit Logs
 ```bash ignore-test
@@ -388,7 +388,7 @@ oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -398,7 +398,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Troubleshooting de Storage](15-troubleshooting-storage.md)
 - [→ Próximo: Cluster Operators](17-cluster-operators.md)

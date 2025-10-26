@@ -1,4 +1,4 @@
-# 📜 Scripts de Validação e Testes
+# Scripts de Validação e Testes
 
 Este diretório contém os scripts principais para validação e gerenciamento dos testes de comandos sugeridos nesse repositório.
 
@@ -6,7 +6,7 @@ Scripts são destinados exclusivamente ao desenvolvimento deste projeto — não
 
 ---
 
-## 📁 Arquivos Principais
+## Arquivos Principais
 
 ### `test-commands.sh`
 Script principal de validação que executa todos os módulos de teste.
@@ -30,7 +30,7 @@ Script principal de validação que executa todos os módulos de teste.
 
 ---
 
-## 🎯 Exemplos de Uso
+## Exemplos de Uso
 
 ### Executar todos os módulos (01-30)
 ```bash
@@ -82,7 +82,7 @@ Script principal de validação que executa todos os módulos de teste.
 
 ---
 
-## 📦 Estratégias de Teste por Blocos Temáticos
+## Estratégias de Teste por Blocos Temáticos
 
 ### Bloco 1 - Essenciais (01-03)
 Autenticação, projetos, aplicações
@@ -146,7 +146,7 @@ Backup/restore, patching, jobs, operators
 
 ---
 
-## ⚡ Execução Rápida em 3 Etapas
+## Execução Rápida em 3 Etapas
 
 ### 1. Testar os essenciais primeiro
 ```bash
@@ -165,7 +165,7 @@ Backup/restore, patching, jobs, operators
 
 ---
 
-## 🛠️ Outros Scripts
+## Outros Scripts
 
 ### `cleanup-test-project.sh`
 Remove projetos de teste criados durante a validação.
@@ -185,7 +185,7 @@ python3 scripts/generate-all-tests.py [--verbose]
 - `--verbose` ou `-v`: Mostra informações detalhadas durante a geração
 
 ### `fix-indexes.py`
-Corrige automaticamente os índices (## 📋 Índice) em todos os arquivos markdown.
+Corrige automaticamente os índices (##  Índice) em todos os arquivos markdown.
 Gera índice apenas com seções principais (##), ignorando subseções (###).
 
 ```bash
@@ -196,10 +196,10 @@ python3 scripts/fix-indexes.py [--verbose]
 - `--verbose` ou `-v`: Mostra as seções detectadas em cada arquivo
 
 **Características:**
-- ✅ Detecta apenas seções de nível 2 (##)
-- ✅ Ignora subseções (###)
-- ✅ Remove acentos nas âncoras
-- ✅ Gera links funcionais automaticamente
+-  Detecta apenas seções de nível 2 (##)
+-  Ignora subseções (###)
+-  Remove acentos nas âncoras
+-  Gera links funcionais automaticamente
 
 ### `add-docs-section.py`
 Adiciona ou atualiza a seção de Documentação Oficial do OpenShift 4.19 em todos os arquivos markdown.
@@ -212,11 +212,11 @@ python3 scripts/add-docs-section.py [--force]
 - `--force` ou `-f`: Sobrescreve seção existente
 
 **Características:**
-- ✅ Links contextualizados por tema (2-3 links relevantes por módulo)
-- ✅ Documentação oficial da Red Hat OpenShift 4.19
-- ✅ Inserção automática antes da navegação
-- ✅ Links abrem em nova aba (`target="_blank"`)
-- ✅ Links específicos para cada componente (CLI, Nodes, Networking, Storage, Operators, etc.)
+-  Links contextualizados por tema (2-3 links relevantes por módulo)
+-  Documentação oficial da Red Hat OpenShift 4.19
+-  Inserção automática antes da navegação
+-  Links abrem em nova aba (`target="_blank"`)
+-  Links específicos para cada componente (CLI, Nodes, Networking, Storage, Operators, etc.)
 
 ### `find-duplicates.py`
 Analisa e identifica comandos duplicados entre os arquivos markdown.
@@ -236,13 +236,13 @@ python3 scripts/analyze-duplicates.py
 
 ---
 
-## ⚠️ Regras Importantes
+## Regras Importantes
 
-### ❌ Não permitido
+### Não permitido
 - Combinar `--module` com `--start-module` ou `--end-module`
 - Executar sem autenticação no cluster (`oc login` primeiro)
 
-### ✅ Recomendado
+### Recomendado
 - Use `--verbose` para debugar falhas específicas
 - Use `--stop-on-error` em ambientes críticos
 - Use `--cleanup` para limpar recursos após os testes
@@ -251,7 +251,7 @@ python3 scripts/analyze-duplicates.py
 
 ---
 
-## 📊 Relatórios
+## Relatórios
 
 Após a execução, o script gera:
 
@@ -261,22 +261,22 @@ Após a execução, o script gera:
 
 ---
 
-## 🔍 Verificação de Pré-requisitos
+## Verificação de Pré-requisitos
 
 Antes de executar, o script verifica:
-- ✅ OpenShift CLI (`oc`) instalado
-- ✅ Autenticação ativa no cluster
-- ✅ Permissões básicas (criar pods)
+-  OpenShift CLI (`oc`) instalado
+-  Autenticação ativa no cluster
+-  Permissões básicas (criar pods)
 
 ---
 
-## 📝 Exemplos de Output
+## Exemplos de Output
 
 ### Sucesso
 ```
-╔════════════════════════════════════════════════════════════════╗
-║                    RELATÓRIO DE VALIDAÇÃO                      ║
-╚════════════════════════════════════════════════════════════════╝
+
+                    RELATÓRIO DE VALIDAÇÃO                      
+
 
 Total de testes: 150
 Passou: 148
@@ -294,7 +294,7 @@ Taxa de sucesso: 98.67%
 
 ---
 
-## 🆘 Ajuda
+## Ajuda
 
 Para ver todas as opções disponíveis:
 ```bash

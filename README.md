@@ -1,10 +1,10 @@
-# 📚 Guia Completo de Comandos do OpenShift
+# Guia Completo de Comandos do OpenShift
 
 Este é um guia abrangente de comandos do OpenShift (OCP) organizado por categoria, incluindo comandos básicos e avançados para troubleshooting e administração.
 
 ---
 
-## 🎓 Como Usar Este Guia
+## Como Usar Este Guia
 
 ### Para Iniciantes
 Comece pelos documentos essenciais (1-6) para entender os conceitos básicos do OpenShift.
@@ -20,7 +20,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
 
 ---
 
-## 📋 Categorias de Comandos
+## Categorias de Comandos
 
 ### Por Recurso
 - **Pods**: Documentos 4, 13
@@ -43,15 +43,15 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
 
 ---
 
-## ⚠️ Importante
+## Importante
 
 > **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
 > 
 ---
 
-## 📖 Índice de Documentos
+## Índice de Documentos
 
-### 🎯 Comandos Essenciais
+### Comandos Essenciais
 1. [**Autenticação e Configuração**](01-autenticacao-configuracao.md)
    - Login/Logout
    - Configuração do cliente
@@ -67,7 +67,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
    - Gerenciar deployments
    - Build e deploy
 
-### 🐳 Recursos e Workloads
+### Recursos e Workloads
 4. [**Pods e Containers**](04-pods-containers.md)
    - Listar e descrever pods
    - Executar comandos
@@ -83,7 +83,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
    - Routes e ingress
    - TLS e certificados
 
-### 🔧 Configuração
+### Configuração
 7. [**ConfigMaps e Secrets**](07-configmaps-secrets.md)
    - Criar e gerenciar ConfigMaps
    - Secrets e credenciais
@@ -94,7 +94,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
    - Storage Classes
    - Volumes e montagens
 
-### 🏗️ Build e CI/CD
+### Build e CI/CD
 9. [**Builds e ImageStreams**](09-builds-images.md)
    - Build configs
    - ImageStreams
@@ -105,7 +105,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Mirror de imagens
     - Catalog mirror
 
-### 📊 Observabilidade
+### Observabilidade
 11. [**Monitoramento e Logs**](11-monitoramento-logs.md)
     - Logs de pods e builds
     - Eventos
@@ -116,7 +116,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Must-gather para diferentes operadores
     - Inspecionar namespaces
 
-### 🔍 Troubleshooting
+### Troubleshooting
 13. [**Troubleshooting de Pods**](13-troubleshooting-pods.md)
     - Debug de pods
     - Problemas comuns
@@ -132,7 +132,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Permissões
     - Storage classes
 
-### 👥 Segurança e RBAC
+### Segurança e RBAC
 16. [**Usuários e Permissões**](16-usuarios-permissoes.md)
     - Service Accounts
     - Roles e RoleBindings
@@ -148,7 +148,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Adicionar SCCs
     - Troubleshooting SCC
 
-### 🚀 Administração Avançada
+### Administração Avançada
 19. [**Cluster Operators**](19-cluster-operators.md)
     - Status dos operators
     - Troubleshooting
@@ -169,7 +169,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Ingress/Egress
     - SDN troubleshooting
 
-### 🛠️ Comandos Utilitários
+### Comandos Utilitários
 23. [**Comandos Customizados com AWK, JQ e GREP**](23-comandos-customizados.md)
     - Scripts com awk
     - Filtros com jq
@@ -191,7 +191,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
     - Templates de projeto
     - Templates de login
 
-### 🔄 Operações e Manutenção
+### Operações e Manutenção
 27. [**Backup e Restore**](27-backup-restore.md)
     - Exportar recursos
     - Backup de etcd
@@ -214,7 +214,7 @@ Vá direto para os documentos de troubleshooting (13-15) e must-gather (12).
 
 ---
 
-## 🔍 Busca Rápida por Comando
+## Busca Rápida por Comando
 
 ### Comandos Mais Usados
 
@@ -243,7 +243,7 @@ oc get events --field-selector type=Warning
 
 ---
 
-## 💡 Dicas Gerais
+## Dicas Gerais
 
 ### Watch Commands
 ```bash
@@ -256,19 +256,19 @@ oc get events --watch
 
 ---
 
-## 📚 Recursos Adicionais
+## Recursos Adicionais
 
 - **Documentação Oficial**: https://docs.redhat.com/en/documentation/openshift_container_platform/
 
 ---
 
-## 📝 Contribuindo
+## Contribuindo
 
 Este guia é baseado em experiência prática e comandos reais. Se você tiver sugestões ou novos comandos úteis, sinta-se à vontade para contribuir!
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - **Próximo**: [Autenticação e Configuração →](01-autenticacao-configuracao.md)
 - **Ver todos os documentos**: Lista acima

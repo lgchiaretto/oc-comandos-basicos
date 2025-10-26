@@ -1,20 +1,20 @@
-# 🌐 Troubleshooting de Rede
+# Troubleshooting de Rede
 
 Este documento contém comandos para diagnosticar problemas de rede no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔍 Diagnóstico Básico](#diagnostico-basico)
-2. [🔌 Services e Endpoints](#services-e-endpoints)
-3. [🛣 ️ Routes e Ingress](#routes-e-ingress)
-4. [🕸 ️ SDN/OVN](#sdnovn)
-5. [🔤 DNS](#dns)
-6. [🛠 ️ Ferramentas de Debug](#ferramentas-de-debug)
+1. [ Diagnóstico Básico](#diagnostico-basico)
+2. [ Services e Endpoints](#services-e-endpoints)
+3. [  Routes e Ingress](#routes-e-ingress)
+4. [  SDN/OVN](#sdnovn)
+5. [ DNS](#dns)
+6. [  Ferramentas de Debug](#ferramentas-de-debug)
 ---
 
-## 🔍 Diagnóstico Básico
+## Diagnóstico Básico
 
 ### Conectividade de Pod
 ```bash
@@ -80,7 +80,7 @@ oc describe pod test-app | grep -i network
 
 ---
 
-## 🔌 Services e Endpoints
+## Services e Endpoints
 
 ### Verificar Services
 ```bash
@@ -145,7 +145,7 @@ oc get pods --show-labels
 
 ---
 
-## 🛣️ Routes e Ingress
+## Routes e Ingress
 
 ### Troubleshoot Routes
 ```bash
@@ -217,7 +217,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 
 ---
 
-## 🕸️ SDN/OVN
+## SDN/OVN
 
 ### Verificar Rede do Cluster
 ```bash
@@ -287,7 +287,7 @@ oc logs -n openshift-multus <multus-pod>
 
 ---
 
-## 🔤 DNS
+## DNS
 
 ### Diagnóstico DNS
 ```bash
@@ -352,7 +352,7 @@ oc exec <pod> -- nslookup kubernetes.default.svc.cluster.local
 
 ---
 
-## 🛠️ Ferramentas de Debug
+## Ferramentas de Debug
 
 ### Pod de Debug de Rede
 ```bash ignore-test
@@ -397,7 +397,7 @@ tcpdump -i any -w /tmp/capture.pcap
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -406,7 +406,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Troubleshooting de Pods](13-troubleshooting-pods.md)
 - [→ Próximo: Troubleshooting de Storage](15-troubleshooting-storage.md)

@@ -1,20 +1,20 @@
-# 🚀 Gerenciamento de Aplicações
+# Gerenciamento de Aplicações
 
 Este documento contém comandos para criar e gerenciar aplicações no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🆕 Criação de Aplicações](#criacao-de-aplicacoes)
-2. [🔧 Gerenciamento](#gerenciamento)
-3. [📊 Informações e Status](#informacoes-e-status)
-4. [🔄 Atualização de Imagens](#atualizacao-de-imagens)
-5. [🔐 Permissões e Validações](#permissoes-e-validacoes)
+1. [ Criação de Aplicações](#criacao-de-aplicacoes)
+2. [ Gerenciamento](#gerenciamento)
+3. [ Informações e Status](#informacoes-e-status)
+4. [ Atualização de Imagens](#atualizacao-de-imagens)
+5. [ Permissões e Validações](#permissoes-e-validacoes)
 6. [⏳ Aguardar Condições](#aguardar-condicoes)
 ---
 
-## 🆕 Criação de Aplicações
+## Criação de Aplicações
 
 ### A partir de Imagem Docker
 ```bash ignore-test
@@ -102,7 +102,7 @@ oc new-app . --name=test-app
 
 ---
 
-## 🔧 Gerenciamento
+## Gerenciamento
 
 ### Listar Recursos
 ```bash
@@ -183,7 +183,7 @@ oc create route edge --service=test-app
 
 ---
 
-## 📊 Informações e Status
+## Informações e Status
 
 ### Status do Projeto
 ```bash
@@ -212,7 +212,7 @@ oc describe deployment test-app -n development
 
 ---
 
-## 🔄 Atualização de Imagens
+## Atualização de Imagens
 
 ### Atualizar Imagem do Deployment
 ```bash
@@ -242,7 +242,7 @@ oc patch deployment test-app -n development --type=merge -p '{"spec":{"template"
 
 ---
 
-## 🔐 Permissões e Validações
+## Permissões e Validações
 
 ### Verificar Permissões
 ```bash
@@ -285,7 +285,7 @@ oc wait --for=condition=available --timeout=60s deployment/test-app
 oc wait --for=condition=available --timeout=60s deployment/test-app -n development
 ```
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -295,7 +295,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Projetos](02-projetos.md)
 - [→ Próximo: Pods e Containers](04-pods-containers.md)

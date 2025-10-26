@@ -1,10 +1,10 @@
-# 🚀 Guia Rápido de Início - OpenShift
+# Guia Rápido de Início - OpenShift
 
 Este é um guia rápido para você começar a usar os comandos do OpenShift imediatamente!
 
 ---
 
-## ⚡ Top 20 Comandos Mais Usados
+## Top 20 Comandos Mais Usados
 
 ### 1. Login e Contexto
 ```bash
@@ -113,7 +113,7 @@ oc create secret generic test-app --from-literal=key=value
 
 ---
 
-## 🔥 Comandos de Emergência
+## Comandos de Emergência
 
 ### Troubleshooting Rápido
 ```bash
@@ -154,7 +154,7 @@ oc adm uncordon <node-name>
 
 ---
 
-## 📚 Onde Encontrar Cada Tipo de Comando
+## Onde Encontrar Cada Tipo de Comando
 
 ### Para Iniciantes
 1. **[README.md](README.md)** - Comece aqui! Índice completo
@@ -176,7 +176,7 @@ oc adm uncordon <node-name>
 
 ---
 
-## 🎯 Fluxos de Trabalho Comuns
+## Fluxos de Trabalho Comuns
 
 ### Deploy de Nova Aplicação
 ```bash
@@ -236,7 +236,7 @@ oc get nodes
 
 ---
 
-## 🔧 Ferramentas Complementares
+## Ferramentas Complementares
 
 ### JQ - Processar JSON
 ```bash
@@ -267,7 +267,7 @@ source ~/.bashrc
 
 ---
 
-## 📖 Próximos Passos
+## Próximos Passos
 
 1. **Explore o [README.md](README.md)** - Índice completo com 30 categorias
 2. **Leia [ESTRUTURA.md](ESTRUTURA.md)** - Entenda a organização do guia
@@ -276,28 +276,28 @@ source ~/.bashrc
 
 ---
 
-## ⚠️ Dicas Importantes
+## Dicas Importantes
 
 ### Segurança
-- ⚠️ Nunca execute comandos `delete` ou `drain` em produção sem ter certeza
-- ✅ Sempre teste em ambiente de desenvolvimento primeiro
-- ✅ Faça backup antes de mudanças críticas
+-  Nunca execute comandos `delete` ou `drain` em produção sem ter certeza
+-  Sempre teste em ambiente de desenvolvimento primeiro
+-  Faça backup antes de mudanças críticas
 
 ### Boas Práticas
-- 📝 Use `oc describe` antes de deletar recursos
-- 📝 Sempre verifique o namespace correto com `oc project`
-- 📝 Use `--dry-run=client -o yaml` para ver o que será criado
-- 📝 Mantenha aliases organizados e documentados
+-  Use `oc describe` antes de deletar recursos
+-  Sempre verifique o namespace correto com `oc project`
+-  Use `--dry-run=client -o yaml` para ver o que será criado
+-  Mantenha aliases organizados e documentados
 
 ### Performance
-- ⚡ Use `--field-selector` para filtrar no servidor
-- ⚡ Use `-o name` quando só precisar dos nomes
-- ⚡ Use `--no-headers` em scripts
-- ⚡ Combine com `grep` e `awk` para processamento local
+-  Use `--field-selector` para filtrar no servidor
+-  Use `-o name` quando só precisar dos nomes
+-  Use `--no-headers` em scripts
+-  Combine com `grep` e `awk` para processamento local
 
 ---
 
-## 🆘 Ajuda Rápida
+## Ajuda Rápida
 
 ### Comando não funciona?
 ```bash
@@ -331,7 +331,7 @@ oc get pods -A | grep <parte-do-nome>
 
 ---
 
-## 📞 Links Úteis
+## Links Úteis
 
 - **Documentação Oficial**: https://docs.redhat.com/en/documentation/openshift_container_platform/
 - **Índice Principal**: [README.md](README.md)

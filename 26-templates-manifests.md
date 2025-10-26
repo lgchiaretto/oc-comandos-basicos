@@ -1,18 +1,18 @@
-# 📄 Templates e Manifests
+# Templates e Manifests
 
 Este documento contém comandos para trabalhar com templates e manifests do OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [📋 Templates](#templates)
-2. [⚙ ️ Processing Templates](#processing-templates)
-3. [🔢 Parameters](#parameters)
-4. [📤 Export e Manifests](#export-e-manifests)
+1. [ Templates](#templates)
+2. [  Processing Templates](#processing-templates)
+3. [ Parameters](#parameters)
+4. [ Export e Manifests](#export-e-manifests)
 ---
 
-## 📋 Templates
+## Templates
 
 ### Listar Templates
 ```bash
@@ -199,7 +199,7 @@ EOF
 
 ---
 
-## ⚙️ Processing Templates
+## Processing Templates
 
 ### Processar Template
 ```bash ignore-test
@@ -267,7 +267,7 @@ oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc creat
 
 ---
 
-## 🔢 Parameters
+## Parameters
 
 ### Tipos de Parâmetros
 ```bash ignore-test
@@ -326,7 +326,7 @@ parameters:
 
 ---
 
-## 📤 Export e Manifests
+## Export e Manifests
 
 ### Export de Recursos
 ```bash ignore-test
@@ -430,7 +430,7 @@ oc apply -k app/overlays/dev/
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -439,7 +439,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Output e Formatação](25-output-formatacao.md)
 - [→ Próximo: Backup e Disaster Recovery](27-backup-disaster-recovery.md)

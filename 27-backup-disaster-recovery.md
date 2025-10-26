@@ -1,21 +1,21 @@
-# 🔄 Backup e Disaster Recovery
+# Backup e Disaster Recovery
 
 Este documento contém estratégias e comandos para backup e recuperação de desastres no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [💼 Backup de Aplicações](#backup-de-aplicacoes)
-2. [💾 Backup de Dados](#backup-de-dados)
-3. [🚨 Disaster Recovery](#disaster-recovery)
+1. [ Backup de Aplicações](#backup-de-aplicacoes)
+2. [ Backup de Dados](#backup-de-dados)
+3. [ Disaster Recovery](#disaster-recovery)
 4. [Backups Configurados](#backups-configurados)
 5. [Documentação](#documentacao)
 6. [Testes](#testes)
 7. [Armazenamento](#armazenamento)
 ---
 
-## 💼 Backup de Aplicações
+## Backup de Aplicações
 
 ### Velero - Backup Tool
 ```bash ignore-test
@@ -73,7 +73,7 @@ EOF
 ```
 ---
 
-## 💾 Backup de Dados
+## Backup de Dados
 
 ### Backup de PVCs
 ```bash ignore-test
@@ -184,7 +184,7 @@ oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 
 ---
 
-## 🚨 Disaster Recovery
+## Disaster Recovery
 
 ### Preparação para DR
 ```bash ignore-test
@@ -288,7 +288,7 @@ oc get all
 ---
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -297,7 +297,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Templates e Manifests](26-templates-manifests.md)
 - [→ Próximo: Patch e Edit](28-patch-edit.md)

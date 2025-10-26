@@ -38,18 +38,18 @@ This repository is a **comprehensive Portuguese-language reference guide** for O
 ### Document Structure Pattern
 Every numbered document follows this template:
 ```markdown
-# 🎯 [Topic Title]
+# [Topic Title]
 
 Brief description of the topic
 
 ---
 
-## 📋 Índice
+## Índice
 [Table of contents with anchor links]
 
 ---
 
-## 🔧 [Section Title]
+## [Section Title]
 
 ### [Subsection]
 ```bash
@@ -63,7 +63,7 @@ oc specific-example
 
 ### Key Patterns
 - **Language**: All documentation is in Portuguese (Brazil)
-- **Emojis**: Used consistently for visual navigation (🔐 for auth, 🐳 for pods, 🛠️ for utilities, etc.)
+- **Clean formatting**: No emojis - keep documentation clean and accessible
 - **Code blocks**: Always use triple backticks with `bash` language identifier
 - **Comments**: Every command includes explanatory comments starting with `#`
 - **Examples**: "Exemplo" or "Exemplo prático" labels practical use cases
@@ -82,7 +82,7 @@ oc specific-example
 2. Place command under the most specific relevant section heading
 3. Add explanatory comment above the command
 4. Provide a practical example with real-world context
-5. Maintain consistent emoji usage and formatting
+5. Maintain consistent clean formatting without emojis
 
 ### When Creating New Documents
 1. Follow the numbering scheme (01-30) established in README.md
@@ -115,7 +115,7 @@ Common troubleshooting workflows are distributed across specialized docs:
 
 When assisting users:
 1. **Respect the Portuguese language** - maintain all text in Portuguese unless explicitly asked otherwise
-2. **Preserve existing formatting** - keep emojis, code block styles, and structural patterns
+2. **Preserve existing formatting** - keep code block styles and structural patterns clean, without emojis
 3. **Cross-reference appropriately** - mention related documents when commands span multiple topics
 4. **Real-world context** - commands in this guide are production-tested; preserve practical examples
 5. **Modular mindset** - avoid creating massive single files; distribute content across the 30-document structure

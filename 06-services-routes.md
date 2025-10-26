@@ -1,17 +1,17 @@
-# 🌐 Services e Routes
+# Services e Routes
 
 Este documento contém comandos para gerenciar services e routes no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔌 Services](#services)
-2. [🔍 Investigação de Conectividade](#investigacao-de-conectividade)
-3. [🛣 ️ Routes](#routes)
+1. [ Services](#services)
+2. [ Investigação de Conectividade](#investigacao-de-conectividade)
+3. [  Routes](#routes)
 ---
 
-## 🔌 Services
+## Services
 
 ### Básico
 ```bash
@@ -48,7 +48,7 @@ oc delete svc test-app
 oc get endpoints test-app
 ```
 
-## 🔍 Investigação de Conectividade
+## Investigação de Conectividade
 
 
 ### Descrever Endpoints
@@ -72,7 +72,7 @@ oc describe endpoints test-app -n development
 
 ---
 
-## 🛣️ Routes
+## Routes
 
 ### Criar Routes
 ```bash ignore-test
@@ -151,7 +151,7 @@ oc get routes -o wide
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -161,7 +161,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Deployments](05-deployments-scaling.md)
 - [→ Próximo: ConfigMaps e Secrets](07-configmaps-secrets.md)

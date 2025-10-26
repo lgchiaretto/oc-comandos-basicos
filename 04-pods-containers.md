@@ -1,23 +1,23 @@
-# 🐳 Pods e Containers
+# Pods e Containers
 
 Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [📊 Listagem e Informações](#listagem-e-informacoes)
-2. [🔧 Gerenciamento de Pods](#gerenciamento-de-pods)
-3. [💻 Interação com Pods](#interacao-com-pods)
-4. [🔍 Debug e Troubleshooting](#debug-e-troubleshooting)
-5. [📝 Logs](#logs)
-6. [📋 Monitoramento e Eventos](#monitoramento-e-eventos)
+1. [ Listagem e Informações](#listagem-e-informacoes)
+2. [ Gerenciamento de Pods](#gerenciamento-de-pods)
+3. [ Interação com Pods](#interacao-com-pods)
+4. [ Debug e Troubleshooting](#debug-e-troubleshooting)
+5. [ Logs](#logs)
+6. [ Monitoramento e Eventos](#monitoramento-e-eventos)
 ---
 
-## 📊 Listagem e Informações
+## Listagem e Informações
 
 
-## 🔧 Gerenciamento de Pods
+## Gerenciamento de Pods
 
 ### Criar e Deletar
 
@@ -136,7 +136,7 @@ oc wait --for=condition=Ready pod/my-pod
 
 ---
 
-## 💻 Interação com Pods
+## Interação com Pods
 
 ### Acessar Shell
 ```bash ignore-test
@@ -218,7 +218,7 @@ oc scale deployment test-app --replicas=2
 ```
 ---
 
-## 🔍 Debug e Troubleshooting
+## Debug e Troubleshooting
 
 ### Debug Interativo
 ```bash ignore-test
@@ -265,7 +265,7 @@ oc describe pod my-pod | grep -A 10 "Events:"
 
 ---
 
-## 📝 Logs
+## Logs
 
 ### Ver Logs
 ```bash ignore-test
@@ -304,7 +304,7 @@ oc logs my-pod --since=1h
 oc logs -l app=test-app
 ```
 
-## 📋 Monitoramento e Eventos
+## Monitoramento e Eventos
 
 ### Ver Eventos
 ```bash
@@ -323,7 +323,7 @@ oc get events -n development --sort-by='.lastTimestamp' | head -10
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -333,7 +333,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Aplicações](03-aplicacoes.md)
 - [→ Próximo: Deployments e Scaling](05-deployments-scaling.md)

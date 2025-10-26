@@ -12,7 +12,7 @@ from typing import List, Tuple
 def extract_main_sections(content: str) -> List[Tuple[str, str, str]]:
     """Extrai apenas seções principais (## Título) do markdown.
     
-    Retorna lista de tuplas (emoji, titulo, anchor).
+    Retorna lista de tuplas (titulo, anchor).
     Ignora subseções (###) e seções especiais.
     """
     sections = []
@@ -25,18 +25,10 @@ def extract_main_sections(content: str) -> List[Tuple[str, str, str]]:
         full_title = match.group(1).strip()
         
         # Ignorar seções especiais
-        if any(x in full_title for x in ['📋 Índice', '📖 Navegação', '📚 Documentação']):
+        if any(x in full_title for x in ['Índice', 'Navegação', 'Documentação']):
             continue
         
-        # Separar emoji do título
-        emoji = ''
         title = full_title
-        
-        # Regex para capturar emoji no início (Unicode range)
-        emoji_match = re.match(r'^([\U0001F300-\U0001F9FF\U00002600-\U000027BF\U0001F000-\U0001F02F]+)\s*(.*)', full_title)
-        if emoji_match:
-            emoji = emoji_match.group(1)
-            title = emoji_match.group(2).strip()
         
         # Gerar anchor (lowercase, sem acentos, hífens)
         anchor = title.lower()
@@ -55,23 +47,21 @@ def extract_main_sections(content: str) -> List[Tuple[str, str, str]]:
         anchor = re.sub(r'-+', '-', anchor)
         anchor = anchor.strip('-')
         
-        sections.append((emoji, title, anchor))
+        sections.append((title, anchor))
     
     return sections
 
 
-def generate_index(sections: List[Tuple[str, str, str]]) -> str:
+def generate_index(sections: List[Tuple[str, str]]) -> str:
     """Gera o conteúdo do índice a partir das seções."""
     if not sections:
         return ""
     
-    lines = ["## 📋 Índice\n"]
+    lines = ["## Índice\n"]
     
-    for i, (emoji, title, anchor) in enumerate(sections, 1):
-        # Formato: 1. [🔧 Título](#anchor)
-        # Inclui emoji no texto do link, mas anchor sem emoji
-        emoji_part = f"{emoji} " if emoji else ""
-        lines.append(f"{i}. [{emoji_part}{title}](#{anchor})")
+    for i, (title, anchor) in enumerate(sections, 1):
+        # Formato: 1. [Título](#anchor)
+        lines.append(f"{i}. [{title}](#{anchor})")
     
     return '\n'.join(lines)
 
@@ -84,30 +74,30 @@ def fix_index_in_file(file_path: Path, verbose: bool = False) -> bool:
     try:
         content = file_path.read_text(encoding='utf-8')
     except Exception as e:
-        print(f"  ❌ ERRO ao ler {file_path.name}: {e}")
+        print(f"  ERRO ao ler {file_path.name}: {e}")
         return False
     
     # Extrair seções principais
     sections = extract_main_sections(content)
     
     if not sections:
-        print(f"  ⚠️  Nenhuma seção principal encontrada")
+        print(f"  AVISO:  Nenhuma seção principal encontrada")
         return False
     
     if verbose:
-        print(f"  Seções encontradas: {[s[1] for s in sections]}")
+        print(f"  Seções encontradas: {[s[0] for s in sections]}")
     
     # Gerar novo índice
     new_index = generate_index(sections)
     
     # Pattern para encontrar o índice existente
-    # Procura por "## 📋 Índice" até a próxima linha com "---"
+    # Procura por "## Índice" até a próxima linha com "---"
     # Inclui a linha com "---" para manter separador após índice
-    index_pattern = r'## 📋 Índice\n.*?\n---'
+    index_pattern = r'## Índice\n.*?\n---'
     
     # Verificar se índice existe
     if not re.search(index_pattern, content, re.DOTALL):
-        print(f"  ⚠️  Índice não encontrado no arquivo")
+        print(f"  AVISO:  Índice não encontrado no arquivo")
         return False
     
     # Substituir índice (adiciona --- no final)
@@ -122,10 +112,10 @@ def fix_index_in_file(file_path: Path, verbose: bool = False) -> bool:
     # Salvar apenas se houve mudança
     if new_content != content:
         file_path.write_text(new_content, encoding='utf-8')
-        print(f"  ✓ Índice corrigido ({len(sections)} seções)")
+        print(f"  OK Índice corrigido ({len(sections)} seções)")
         return True
     else:
-        print(f"  ℹ️  Índice já está correto")
+        print(f"  INFO:  Índice já está correto")
         return False
 
 
@@ -155,13 +145,13 @@ def main():
     fixed_count = 0
     
     for md_file in md_files:
-        print(f"📄 {md_file.name}")
+        print(f"{md_file.name}")
         if fix_index_in_file(md_file, args.verbose):
             fixed_count += 1
         print()
     
     print("=" * 60)
-    print(f"✅ Concluído! {fixed_count} índices corrigidos")
+    print(f"Concluído! {fixed_count} índices corrigidos")
 
 
 if __name__ == "__main__":

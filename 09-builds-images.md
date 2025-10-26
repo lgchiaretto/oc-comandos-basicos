@@ -1,18 +1,18 @@
-# 🏗️ Builds e ImageStreams
+# Builds e ImageStreams
 
 Este documento contém comandos para gerenciar builds e imagens no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔧 BuildConfigs](#buildconfigs)
-2. [🏭 Builds](#builds)
-3. [🔧 Gerenciamento de Builds](#gerenciamento-de-builds)
-4. [🖼 ️ ImageStreams](#imagestreams)
+1. [ BuildConfigs](#buildconfigs)
+2. [ Builds](#builds)
+3. [ Gerenciamento de Builds](#gerenciamento-de-builds)
+4. [  ImageStreams](#imagestreams)
 ---
 
-## 🔧 BuildConfigs
+## BuildConfigs
 
 ### Criar e Gerenciar
 ```bash
@@ -65,7 +65,7 @@ oc describe bc s2i-chiaretto | grep Triggered
 
 ---
 
-## 🏭 Builds
+## Builds
 
 ### Executar e Monitorar
 ```bash
@@ -112,7 +112,7 @@ oc get builds --sort-by=.metadata.creationTimestamp
 ```
 
 
-## 🔧 Gerenciamento de Builds
+## Gerenciamento de Builds
 
 ### Cancelar Build
 ```bash ignore-test
@@ -164,7 +164,7 @@ oc start-build --from-build=s2i-chiaretto-2
 
 ---
 
-## 🖼️ ImageStreams
+## ImageStreams
 
 ### Gerenciar ImageStreams
 ```bash
@@ -237,7 +237,7 @@ oc delete istag s2i-chiaretto:<tag>
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -247,7 +247,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Storage](08-storage.md)
 - [→ Próximo: Registry](10-registry-imagens.md)

@@ -114,10 +114,10 @@ class DuplicateFinder:
     def report_duplicates(self, duplicates: Dict[str, List[tuple]]) -> None:
         """Gera relatório de comandos duplicados."""
         if not duplicates:
-            print("\n✓ Nenhum comando duplicado encontrado!")
+            print("\nOK Nenhum comando duplicado encontrado!")
             return
         
-        print(f"\n⚠️  {len(duplicates)} comandos duplicados encontrados:\n")
+        print(f"\nAVISO:  {len(duplicates)} comandos duplicados encontrados:\n")
         print("=" * 80)
         
         # Agrupa por número de arquivos
@@ -137,7 +137,7 @@ class DuplicateFinder:
                 print()
         
         print("=" * 80)
-        print("\n💡 Sugestões:")
+        print("\nDICA: Sugestões:")
         print("1. Revisar comandos muito comuns (get, describe) - podem ser legítimos")
         print("2. Comandos específicos duplicados devem ficar no contexto mais apropriado")
         print("3. Considerar criar referências cruzadas em vez de duplicar")
@@ -164,7 +164,7 @@ class DuplicateFinder:
                 
                 f.write(f'"{cmd}","{files_str}",{count},{action}\n')
         
-        print(f"\n📄 Relatório CSV gerado: {csv_file}")
+        print(f"\n Relatório CSV gerado: {csv_file}")
 
 
 def main():

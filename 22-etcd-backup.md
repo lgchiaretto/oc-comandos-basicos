@@ -1,17 +1,17 @@
-# 💾 Etcd e Backup
+# Etcd e Backup
 
 Este documento contém comandos para gerenciar etcd e realizar backups do cluster OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔍 Etcd Status](#etcd-status)
-2. [💾 Backup do Cluster](#backup-do-cluster)
-3. [🔄 Restore](#restore)
+1. [ Etcd Status](#etcd-status)
+2. [ Backup do Cluster](#backup-do-cluster)
+3. [ Restore](#restore)
 ---
 
-## 🔍 Etcd Status
+## Etcd Status
 
 ### Verificar Etcd
 ```bash
@@ -81,7 +81,7 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 
 ---
 
-## 💾 Backup do Cluster
+## Backup do Cluster
 
 ### Backup Manual do Etcd
 ```bash ignore-test
@@ -117,17 +117,17 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 
 ### Script Automatizado de Backup
 
-> ℹ️ Para um backup automatizado do cluster, acesse:
+> ℹ Para um backup automatizado do cluster, acesse:
 >
 > https://github.com/lgchiaretto/openshift4-backup-automation
 
 ---
 
-## 🔄 Restore
+## Restore
 
 ### Restore do Etcd
 ```bash ignore-test
-# ⚠️ ATENÇÃO: Restore é procedimento crítico!
+# ATENÇÃO: Restore é procedimento crítico!
 # Sempre consulte documentação oficial antes de fazer restore
 # Para rodar o restore você obrigatoriamente precisa ter acesso a um dos 
 # masters seja por SSH ou 'oc debug'
@@ -145,7 +145,7 @@ oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm list
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -154,7 +154,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Cluster Version e Updates](21-cluster-version-updates.md)
 - [→ Próximo: Comandos Customizados](23-comandos-customizados.md)

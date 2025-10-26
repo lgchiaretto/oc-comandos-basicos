@@ -1,18 +1,18 @@
-# ✏️ Patch e Edit
+# Patch e Edit
 
 Este documento contém comandos para editar e fazer patch em recursos do OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [✏ ️ Edit](#edit)
-2. [🔧 Patch](#patch)
-3. [⚙ ️ Set Commands](#set-commands)
-4. [🔄 Replace](#replace)
+1. [  Edit](#edit)
+2. [ Patch](#patch)
+3. [  Set Commands](#set-commands)
+4. [ Replace](#replace)
 ---
 
-## ✏️ Edit
+## Edit
 
 ### Edit Básico
 ```bash ignore-test
@@ -66,7 +66,7 @@ oc replace -f /tmp/deploy.yaml --force
 
 ---
 
-## 🔧 Patch
+## Patch
 
 ### Patch Types
 
@@ -280,7 +280,7 @@ done
 
 ---
 
-## ⚙️ Set Commands
+## Set Commands
 
 ### Set Image
 ```bash ignore-test
@@ -471,7 +471,7 @@ oc set selector svc/test-app app=newapp
 
 ---
 
-## 🔄 Replace
+## Replace
 
 ### Replace vs Apply
 ```bash ignore-test
@@ -518,7 +518,7 @@ oc replace -f resource.yaml --dry-run=client
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -527,7 +527,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Backup e Disaster Recovery](27-backup-disaster-recovery.md)
 - [→ Próximo: Jobs e CronJobs](29-jobs-cronjobs.md)

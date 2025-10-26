@@ -102,11 +102,11 @@ def main():
     csv_file = base_dir / "duplicates-report.csv"
     
     if not csv_file.exists():
-        print("\n❌ Arquivo duplicates-report.csv não encontrado.")
+        print("\nERRO: Arquivo duplicates-report.csv não encontrado.")
         print("Execute primeiro: python3 scripts/find-duplicates.py")
         return
     
-    print(f"\n📄 Analisando: {csv_file}\n")
+    print(f"\n Analisando: {csv_file}\n")
     
     # Lê o CSV
     with open(csv_file, 'r', encoding='utf-8') as f:
@@ -130,25 +130,25 @@ def main():
             priority = get_priority_file(cmd)
             consolidar.append((cmd, files, priority))
     
-    print("\n📊 Resumo de Ações:")
+    print("\n Resumo de Ações:")
     print("-" * 80)
     for action, count in sorted(actions.items()):
         print(f"  {action}: {count} comandos")
     
-    print(f"\n\n🎯 Comandos que devem ser CONSOLIDADOS ({len(consolidar)}):")
+    print(f"\n\n Comandos que devem ser CONSOLIDADOS ({len(consolidar)}):")
     print("-" * 80)
     
     for cmd, files, priority in sorted(consolidar, key=lambda x: len(x[1]), reverse=True):
         print(f"\nComando: {cmd[:70]}...")
         print(f"Aparece em {len(files)} arquivos: {', '.join(files[:3])}{'...' if len(files) > 3 else ''}")
         if priority:
-            print(f"✓ Manter em: {priority}")
+            print(f"OK Manter em: {priority}")
             print(f"✗ Remover de: {', '.join([f for f in files if f != priority])}")
         else:
-            print(f"⚠️  SEM PRIORIDADE DEFINIDA - Revisar manualmente")
+            print(f"AVISO:  SEM PRIORIDADE DEFINIDA - Revisar manualmente")
     
     print("\n" + "=" * 80)
-    print("\n💡 Próximos Passos:")
+    print("\nDICA: Próximos Passos:")
     print("1. Revise o arquivo duplicates-report.csv")
     print("2. Identifique comandos que devem ser mantidos em múltiplos contextos")
     print("3. Para comandos que devem ser removidos, edite manualmente os arquivos")

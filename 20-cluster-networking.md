@@ -1,18 +1,18 @@
-# 🌐 Cluster Networking
+# Cluster Networking
 
 Este documento contém comandos para configuração e troubleshooting de rede do cluster OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [⚙ ️ Configuração de Rede](#configuracao-de-rede)
-2. [🌐 Ingress Controllers](#ingress-controllers)
-3. [🛡 ️ Network Policies](#network-policies)
-4. [🔧 Configurações Avançadas](#configuracoes-avancadas)
+1. [  Configuração de Rede](#configuracao-de-rede)
+2. [ Ingress Controllers](#ingress-controllers)
+3. [  Network Policies](#network-policies)
+4. [ Configurações Avançadas](#configuracoes-avancadas)
 ---
 
-## ⚙️ Configuração de Rede
+## Configuração de Rede
 
 ### Visualizar Configuração
 ```bash
@@ -72,7 +72,7 @@ oc get pods -o wide -A
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 ```
 
-## 🌐 Ingress Controllers
+## Ingress Controllers
 
 
 ### Listar Ingress Controllers
@@ -95,7 +95,7 @@ oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ```
 ---
 
-## 🛡️ Network Policies
+## Network Policies
 
 ### Criar Network Policies
 ```bash
@@ -208,7 +208,7 @@ oc delete networkpolicy test-app
 ```
 
 
-## 🔧 Configurações Avançadas
+## Configurações Avançadas
 
 ### Multus - Múltiplas Interfaces
 ```bash
@@ -243,7 +243,7 @@ EOF
 ```bash
 # Usar em pod
 # annotations:
-#   k8s.v1.cni.cncf.io/networks: macvlan-conf
+# k8s.v1.cni.cncf.io/networks: macvlan-conf
 ```
 
 ### MTU Configuration
@@ -295,7 +295,7 @@ done
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -305,7 +305,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Certificados CSR](19-certificados-csr.md)
 - [→ Próximo: Cluster Version e Updates](21-cluster-version-updates.md)

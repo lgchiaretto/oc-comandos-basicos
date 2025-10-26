@@ -1,25 +1,25 @@
-# 📁 Gerenciamento de Projetos
+# Gerenciamento de Projetos
 
 Este documento contém comandos para criar, listar e gerenciar projetos (namespaces) no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [💡 Conceitos](#conceitos)
-2. [🆕 Criação e Listagem](#criacao-e-listagem)
-3. [🔧 Gerenciamento](#gerenciamento)
-4. [🎯 Node Selectors](#node-selectors)
-5. [🔧 Gerenciamento de Projetos](#gerenciamento-de-projetos)
-6. [📄 Templates de Projeto](#templates-de-projeto)
-7. [📊 Informações e Status](#informacoes-e-status)
-8. [🔍 Busca e Filtros](#busca-e-filtros)
-9. [🛡 ️ Segurança e Permissões](#seguranca-e-permissoes)
-10. [🎓 Exemplos Práticos](#exemplos-praticos)
-11. [💡 Boas Práticas](#boas-praticas)
+1. [ Conceitos](#conceitos)
+2. [ Criação e Listagem](#criacao-e-listagem)
+3. [ Gerenciamento](#gerenciamento)
+4. [ Node Selectors](#node-selectors)
+5. [ Gerenciamento de Projetos](#gerenciamento-de-projetos)
+6. [ Templates de Projeto](#templates-de-projeto)
+7. [ Informações e Status](#informacoes-e-status)
+8. [ Busca e Filtros](#busca-e-filtros)
+9. [  Segurança e Permissões](#seguranca-e-permissoes)
+10. [ Exemplos Práticos](#exemplos-praticos)
+11. [ Boas Práticas](#boas-praticas)
 ---
 
-## 💡 Conceitos
+## Conceitos
 
 ### O que é um Projeto?
 Projetos no OpenShift são similares a namespaces do Kubernetes, mas com funcionalidades adicionais:
@@ -30,7 +30,7 @@ Projetos no OpenShift são similares a namespaces do Kubernetes, mas com funcion
 
 ---
 
-## 🆕 Criação e Listagem
+## Criação e Listagem
 
 ### Listar Projetos
 ```bash
@@ -87,7 +87,7 @@ oc project
 
 ---
 
-## 🔧 Gerenciamento
+## Gerenciamento
 
 ### Descrever e Inspecionar
 ```bash
@@ -170,11 +170,11 @@ oc delete project development --wait=true
 oc delete project development production
 ```
 
-> ⚠️ **CUIDADO:** este comando deleta *todos* os recursos do projeto!
+>  **CUIDADO:** este comando deleta *todos* os recursos do projeto!
 
 ---
 
-## 🎯 Node Selectors
+## Node Selectors
 
 ### Criar Projeto com Node Selector
 ```bash ignore-test
@@ -211,7 +211,7 @@ oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/nod
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
 ```
 
-## 🔧 Gerenciamento de Projetos
+## Gerenciamento de Projetos
 
 
 ### Labels em Namespaces
@@ -252,7 +252,7 @@ oc get sa -n development
 
 ---
 
-## 📄 Templates de Projeto
+## Templates de Projeto
 
 ### Criar Template de Projeto Customizado
 ```bash ignore-test
@@ -276,8 +276,8 @@ oc create -f /tmp/template.yaml -n openshift-config
 oc edit project.config.openshift.io/cluster
 # Adicionar:
 # spec:
-#   projectRequestTemplate:
-#     name: project-request
+# projectRequestTemplate:
+# name: project-request
 ```
 
 ### Template com Quotas e Limites
@@ -310,7 +310,7 @@ parameters:
 
 ---
 
-## 📊 Informações e Status
+## Informações e Status
 
 ### Ver Recursos do Projeto
 ```bash
@@ -359,7 +359,7 @@ oc status --suggest
 
 ---
 
-## 🔍 Busca e Filtros
+## Busca e Filtros
 
 ### Filtrar Projetos
 ```bash
@@ -400,7 +400,7 @@ oc get projects -o json > /tmp/all-projects.json
 
 ---
 
-## 🛡️ Segurança e Permissões
+## Segurança e Permissões
 
 ### Verificar Permissões
 ```bash
@@ -430,7 +430,7 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 
 ---
 
-## 🎓 Exemplos Práticos
+## Exemplos Práticos
 
 ### Criar Ambiente Completo
 ```bash ignore-test
@@ -487,28 +487,28 @@ sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -
 ---
 
 
-## 💡 Boas Práticas
+## Boas Práticas
 
 ### Nomenclatura
-- ✅ Use nomes descritivos: `app-production`, `api-dev`
-- ✅ Inclua ambiente no nome: `myapp-dev`, `myapp-qa`, `myapp-prod`
-- ✅ Use labels para categorização: `env=prod`, `team=backend`
-- ✅ Evite nomes genéricos: `test`, `temp`, `proj1`
+-  Use nomes descritivos: `app-production`, `api-dev`
+-  Inclua ambiente no nome: `myapp-dev`, `myapp-qa`, `myapp-prod`
+-  Use labels para categorização: `env=prod`, `team=backend`
+-  Evite nomes genéricos: `test`, `temp`, `proj1`
 
 ### Organização
-- ✅ Crie projetos separados por ambiente
-- ✅ Use quotas para limitar recursos
-- ✅ Configure network policies para isolamento
-- ✅ Documente o propósito em annotations
+-  Crie projetos separados por ambiente
+-  Use quotas para limitar recursos
+-  Configure network policies para isolamento
+-  Documente o propósito em annotations
 
 ### Segurança
-- ✅ Limite quem pode criar projetos
-- ✅ Use RBAC para controlar acesso
-- ✅ Revise permissões regularmente
-- ✅ Delete projetos não utilizados
+-  Limite quem pode criar projetos
+-  Use RBAC para controlar acesso
+-  Revise permissões regularmente
+-  Delete projetos não utilizados
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -517,7 +517,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Autenticação](01-autenticacao-configuracao.md)
 - [→ Próximo: Aplicações](03-aplicacoes.md)

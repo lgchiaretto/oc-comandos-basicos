@@ -1,23 +1,23 @@
-# 🛠️ Comandos Customizados com AWK, JQ, GREP e Pipes
+# Comandos Customizados com AWK, JQ, GREP e Pipes
 
 Este documento contém comandos avançados do OpenShift combinados com ferramentas Unix para automação e análise de dados.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔧 Comandos com AWK](#comandos-com-awk)
-2. [📊 Comandos com JQ](#comandos-com-jq)
-3. [🔍 Comandos com GREP](#comandos-com-grep)
-4. [🔄 Pipes Complexos](#pipes-complexos)
-5. [🤖 Automação e Scripts](#automacao-e-scripts)
-6. [📈 Análise de Cluster Operators](#analise-de-cluster-operators)
-7. [🔐 Extração de Certificados](#extracao-de-certificados)
-8. [💡 Dicas e Truques](#dicas-e-truques)
-9. [📚 Recursos Adicionais](#recursos-adicionais)
+1. [ Comandos com AWK](#comandos-com-awk)
+2. [ Comandos com JQ](#comandos-com-jq)
+3. [ Comandos com GREP](#comandos-com-grep)
+4. [ Pipes Complexos](#pipes-complexos)
+5. [ Automação e Scripts](#automacao-e-scripts)
+6. [ Análise de Cluster Operators](#analise-de-cluster-operators)
+7. [ Extração de Certificados](#extracao-de-certificados)
+8. [ Dicas e Truques](#dicas-e-truques)
+9. [ Recursos Adicionais](#recursos-adicionais)
 ---
 
-## 🔧 Comandos com AWK
+## Comandos com AWK
 
 ### CSR Management com AWK
 ```bash ignore-test
@@ -99,7 +99,7 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 
 ---
 
-## 📊 Comandos com JQ
+## Comandos com JQ
 
 ### Análise de Cluster Operators
 ```bash ignore-test
@@ -207,7 +207,7 @@ oc adm must-gather \
 
 ---
 
-## 🔍 Comandos com GREP 
+## Comandos com GREP 
 
 ### Filtros Complexos
 ```bash
@@ -302,7 +302,7 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 
 ---
 
-## 🔄 Pipes Complexos
+## Pipes Complexos
 
 ### Análise de API Requests
 ```bash ignore-test
@@ -366,7 +366,7 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 
 ---
 
-## 🤖 Automação e Scripts
+## Automação e Scripts
 
 ### Loop para Coletar Logs
 ```bash ignore-test
@@ -434,7 +434,7 @@ done
 
 ---
 
-## 📈 Análise de Cluster Operators
+## Análise de Cluster Operators
 
 ### Status Completo
 ```bash
@@ -472,7 +472,7 @@ oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}
 
 ---
 
-## 🔐 Extração de Certificados
+## Extração de Certificados
 
 ### Extrair e Analisar Certificados
 ```bash ignore-test
@@ -498,7 +498,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 
 ---
 
-## 💡 Dicas e Truques
+## Dicas e Truques
 
 ### Combinando Comandos
 ```bash
@@ -536,14 +536,14 @@ echo "=== Non-Ready Nodes ===" && oc get nodes | grep -v "Ready"
 
 ---
 
-## 📚 Recursos Adicionais
+## Recursos Adicionais
 
 - **JQ Manual**: https://stedolan.github.io/jq/manual/
 - **AWK Tutorial**: https://www.gnu.org/software/gawk/manual/
 - **GREP Guide**: https://www.gnu.org/software/grep/manual/
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -552,7 +552,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Voltar para Networking](22-networking.md)
 - [→ Próximo: Field Selectors](24-field-selectors.md)

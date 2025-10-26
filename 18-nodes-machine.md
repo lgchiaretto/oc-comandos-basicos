@@ -1,18 +1,18 @@
-# 🖥️ Nodes e Machine Config
+# Nodes e Machine Config
 
 Este documento contém comandos para gerenciar nodes e configurações de máquina no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🖥 ️ Gerenciar Nodes](#gerenciar-nodes)
-2. [⚙ ️ Machine Config](#machine-config)
-3. [🏭 Machine Sets](#machine-sets)
-4. [🔧 Node Maintenance](#node-maintenance)
+1. [  Gerenciar Nodes](#gerenciar-nodes)
+2. [  Machine Config](#machine-config)
+3. [ Machine Sets](#machine-sets)
+4. [ Node Maintenance](#node-maintenance)
 ---
 
-## 🖥️ Gerenciar Nodes
+## Gerenciar Nodes
 
 ### Listar e Verificar
 ```bash
@@ -147,7 +147,7 @@ oc debug node/<node-name> -- chroot /host <comando>
 
 ---
 
-## ⚙️ Machine Config
+## Machine Config
 
 ### MachineConfigs
 ```bash
@@ -273,7 +273,7 @@ oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
 
 ---
 
-## 🏭 Machine Sets
+## Machine Sets
 
 ### Gerenciar MachineSets
 ```bash
@@ -341,7 +341,7 @@ oc get nodes
 
 ---
 
-## 🔧 Node Maintenance
+## Node Maintenance
 
 ### Atualizar Node
 ```bash ignore-test
@@ -425,7 +425,7 @@ oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.t
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -435,7 +435,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Cluster Operators](17-cluster-operators.md)
 - [→ Próximo: Certificados CSR](19-certificados-csr.md)

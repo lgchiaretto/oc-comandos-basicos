@@ -1,18 +1,18 @@
-# 🔐 Certificados e CSR
+# Certificados e CSR
 
 Este documento contém comandos para gerenciar certificados e Certificate Signing Requests no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [📝 CSR (Certificate Signing Requests)](#csr-certificate-signing-requests)
-2. [🔒 Certificados do Cluster](#certificados-do-cluster)
-3. [🌐 Certificados de API](#certificados-de-api)
-4. [🔧 Troubleshooting](#troubleshooting)
+1. [ CSR (Certificate Signing Requests)](#csr-certificate-signing-requests)
+2. [ Certificados do Cluster](#certificados-do-cluster)
+3. [ Certificados de API](#certificados-de-api)
+4. [ Troubleshooting](#troubleshooting)
 ---
 
-## 📝 CSR (Certificate Signing Requests)
+## CSR (Certificate Signing Requests)
 
 ### Visualizar CSRs
 ```bash
@@ -90,7 +90,7 @@ oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | 
 
 ---
 
-## 🔒 Certificados do Cluster
+## Certificados do Cluster
 
 ### API Server Certificates
 ```bash
@@ -164,7 +164,7 @@ oc get secret <secret-name>
 
 ---
 
-## 🌐 Certificados de API
+## Certificados de API
 
 ### Custom API Certificates
 ```bash ignore-test
@@ -195,7 +195,7 @@ oc patch oauths cluster --type=merge -p '{"spec":{"componentRoutes":[{"hostname"
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Problemas com Certificados
 ```bash ignore-test
@@ -297,7 +297,7 @@ oc get csr -o json | jq -r '.items[] | select(.metadata.creationTimestamp < "'$(
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -306,7 +306,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Nodes e Machine](18-nodes-machine.md)
 - [→ Próximo: Cluster Networking](20-cluster-networking.md)

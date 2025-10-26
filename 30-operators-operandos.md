@@ -1,18 +1,18 @@
-# 🔮 Operators e Operandos
+# Operators e Operandos
 
 Este documento contém comandos para gerenciar Operators e seus Operandos (Custom Resources) no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🎯 Operator Lifecycle Manager (OLM)](#operator-lifecycle-manager-olm)
-2. [📦 Instalando Operators](#instalando-operators)
-3. [🎨 Custom Resources (Operandos)](#custom-resources-operandos)
-4. [🔧 Troubleshooting Operators](#troubleshooting-operators)
+1. [ Operator Lifecycle Manager (OLM)](#operator-lifecycle-manager-olm)
+2. [ Instalando Operators](#instalando-operators)
+3. [ Custom Resources (Operandos)](#custom-resources-operandos)
+4. [ Troubleshooting Operators](#troubleshooting-operators)
 ---
 
-## 🎯 Operator Lifecycle Manager (OLM)
+## Operator Lifecycle Manager (OLM)
 
 ### Componentes do OLM
 ```bash
@@ -117,7 +117,7 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 
 ---
 
-## 📦 Instalando Operators
+## Instalando Operators
 
 ### Passo a Passo Completo
 ```bash ignore-test
@@ -273,7 +273,7 @@ EOF
 
 ---
 
-## 🎨 Custom Resources (Operandos)
+## Custom Resources (Operandos)
 
 ### Listar CRDs
 ```bash
@@ -392,7 +392,7 @@ oc get <cr-type> <name>
 
 ---
 
-## 🔧 Troubleshooting Operators
+## Troubleshooting Operators
 
 ### CSV (ClusterServiceVersion)
 ```bash
@@ -569,7 +569,7 @@ oc delete namespace <namespace>
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -579,7 +579,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Jobs e CronJobs](29-jobs-cronjobs.md)
 - [↑ Índice Principal](README.md)

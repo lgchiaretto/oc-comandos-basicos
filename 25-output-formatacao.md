@@ -1,19 +1,19 @@
-# 🎨 Output e Formatação
+# Output e Formatação
 
 Este documento contém comandos para formatar e extrair informações específicas usando jsonpath, go-template, jq e outras ferramentas.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔍 Jsonpath](#jsonpath)
-2. [📝 Go-Template](#go-template)
-3. [🔧 JQ - JSON Processor](#jq-json-processor)
-4. [📊 Custom Columns](#custom-columns)
-5. [🎨 Formatação de Saída](#formatacao-de-saida)
+1. [ Jsonpath](#jsonpath)
+2. [ Go-Template](#go-template)
+3. [ JQ - JSON Processor](#jq-json-processor)
+4. [ Custom Columns](#custom-columns)
+5. [ Formatação de Saída](#formatacao-de-saida)
 ---
 
-## 🔍 Jsonpath
+## Jsonpath
 
 ### Básico
 ```bash ignore-test
@@ -104,7 +104,7 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\tCPU:"}{.spec.conta
 
 ---
 
-## 📝 Go-Template
+## Go-Template
 
 ### Sintaxe Básica
 ```bash
@@ -163,7 +163,7 @@ oc get pods -o go-template-file=/tmp/pod-template.tmpl
 
 ---
 
-## 🔧 JQ - JSON Processor
+## JQ - JSON Processor
 
 ### Instalação e Uso Básico
 ```bash
@@ -250,7 +250,7 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 
 ---
 
-## 📊 Custom Columns
+## Custom Columns
 
 ### Formato Custom-Columns
 ```bash
@@ -312,7 +312,7 @@ oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 
 ---
 
-## 🎨 Formatação de Saída
+## Formatação de Saída
 
 ### Outputs Nativos
 ```bash
@@ -397,7 +397,7 @@ alias okpf='oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.pha
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -406,7 +406,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Etcd e Backup](22-etcd-backup.md)
 - [→ Próximo: Templates e Manifests](26-templates-manifests.md)

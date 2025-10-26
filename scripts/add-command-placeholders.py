@@ -189,10 +189,10 @@ def process_markdown_file(filepath):
     if changes_made > 0:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.writelines(new_lines)
-        print(f"  ✅ {changes_made} placeholders adicionados")
+        print(f"  OK: {changes_made} placeholders adicionados")
         return changes_made
     else:
-        print(f"  ℹ️  Nenhuma mudança necessária")
+        print(f"  INFO:  Nenhuma mudança necessária")
         return 0
 
 
@@ -209,18 +209,18 @@ def main():
     ])
     
     if not markdown_files:
-        print("❌ Nenhum arquivo markdown encontrado!")
+        print("ERRO: Nenhum arquivo markdown encontrado!")
         return 1
     
-    print(f"📝 Encontrados {len(markdown_files)} arquivos markdown\n")
+    print(f" Encontrados {len(markdown_files)} arquivos markdown\n")
     
     total_changes = 0
     for md_file in markdown_files:
         changes = process_markdown_file(md_file)
         total_changes += changes
     
-    print(f"\n✅ Processamento concluído!")
-    print(f"📊 Total de placeholders adicionados: {total_changes}")
+    print(f"\nOK: Processamento concluído!")
+    print(f" Total de placeholders adicionados: {total_changes}")
     
     return 0
 

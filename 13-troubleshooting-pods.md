@@ -1,18 +1,18 @@
-# 🐛 Troubleshooting de Pods
+# Troubleshooting de Pods
 
 Este documento contém comandos para diagnosticar problemas com pods no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔍 Diagnóstico Básico](#diagnostico-basico)
-2. [🚨 Pods com Problemas](#pods-com-problemas)
-3. [🔧 Debug de Containers](#debug-de-containers)
-4. [🩹 Problemas Comuns](#problemas-comuns)
+1. [ Diagnóstico Básico](#diagnostico-basico)
+2. [ Pods com Problemas](#pods-com-problemas)
+3. [ Debug de Containers](#debug-de-containers)
+4. [ Problemas Comuns](#problemas-comuns)
 ---
 
-## 🔍 Diagnóstico Básico
+## Diagnóstico Básico
 
 ### Verificar Status
 ```bash
@@ -81,7 +81,7 @@ oc logs my-pod --tail=100
 
 ---
 
-## 🚨 Pods com Problemas
+## Pods com Problemas
 
 ### ImagePullBackOff
 ```bash ignore-test
@@ -205,7 +205,7 @@ oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminate
 
 ---
 
-## 🔧 Debug de Containers
+## Debug de Containers
 
 ### Debug Interativo
 ```bash ignore-test
@@ -280,7 +280,7 @@ curl http://localhost:8080
 
 ---
 
-## 🩹 Problemas Comuns
+## Problemas Comuns
 
 ### Volumes e Mounts
 ```bash
@@ -382,7 +382,7 @@ oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -392,7 +392,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Must-Gather](12-must-gather.md)
 - [→ Próximo: Troubleshooting de Rede](14-troubleshooting-rede.md)

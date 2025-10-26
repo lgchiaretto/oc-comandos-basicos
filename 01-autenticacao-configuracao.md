@@ -1,19 +1,19 @@
-# 🔐 Autenticação e Configuração
+# Autenticação e Configuração
 
 Este documento contém comandos essenciais para autenticação e configuração do cliente OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🔑 Login e Logout](#login-e-logout)
-2. [🔍 Informações do Cluster](#informacoes-do-cluster)
-3. [⚙ ️ Configuração do Cliente](#configuracao-do-cliente)
-4. [🔄 Contextos](#contextos)
-5. [📝 Boas Práticas](#boas-praticas)
+1. [ Login e Logout](#login-e-logout)
+2. [ Informações do Cluster](#informacoes-do-cluster)
+3. [  Configuração do Cliente](#configuracao-do-cliente)
+4. [ Contextos](#contextos)
+5. [ Boas Práticas](#boas-praticas)
 ---
 
-## 🔑 Login e Logout
+## Login e Logout
 
 ### Login Básico
 ```bash ignore-test
@@ -75,7 +75,7 @@ oc logout && rm -f ~/.kube/config
 
 ---
 
-## 🔍 Informações do Cluster
+## Informações do Cluster
 
 
 ### Listar API Resources
@@ -115,7 +115,7 @@ oc api-versions | grep apps
 oc api-versions | grep -v "/"
 ```
 
-## ⚙️ Configuração do Cliente
+## Configuração do Cliente
 
 ### Versão e Informações
 ```bash
@@ -156,7 +156,7 @@ oc config set-context --current --namespace=development
 ```
 ---
 
-## 🔄 Contextos
+## Contextos
 
 ### Listar e Gerenciar Contextos
 ```bash
@@ -220,24 +220,24 @@ export KUBECONFIG=/path/to/config1:/path/to/config2
 ```
 ---
 
-## 📝 Boas Práticas
+## Boas Práticas
 
 ### Segurança
-- ✅ Nunca compartilhe seu token de acesso
-- ✅ Use `oc login` ao invés de guardar token em scripts
-- ✅ Faça logout ao terminar, especialmente em máquinas compartilhadas
+-  Nunca compartilhe seu token de acesso
+-  Use `oc login` ao invés de guardar token em scripts
+-  Faça logout ao terminar, especialmente em máquinas compartilhadas
 
 ### Organização
-- ✅ Use contextos descritivos (dev, qa, prod) mesmo em clusters distintos
-- ✅ Mantenha múltiplos kubeconfigs separados por ambiente
+-  Use contextos descritivos (dev, qa, prod) mesmo em clusters distintos
+-  Mantenha múltiplos kubeconfigs separados por ambiente
 
 ### Troubleshooting
-- ✅ Use `oc whoami` para verificar autenticação
-- ✅ Use `oc config view` para ver configuração atual
-- ✅ Use `-v=8` para debug detalhado
+-  Use `oc whoami` para verificar autenticação
+-  Use `oc config view` para ver configuração atual
+-  Use `-v=8` para debug detalhado
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -247,7 +247,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [→ Próximo: Projetos](02-projetos.md)
 - [↑ Índice Principal](README.md)

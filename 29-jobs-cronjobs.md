@@ -4,14 +4,14 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [🏃 Jobs](#jobs)
+1. [ Jobs](#jobs)
 2. [⏰ CronJobs](#cronjobs)
-3. [🔧 Troubleshooting](#troubleshooting)
+3. [ Troubleshooting](#troubleshooting)
 ---
 
-## 🏃 Jobs
+## Jobs
 
 ### Criar Jobs
 ```bash
@@ -273,7 +273,7 @@ concurrencyPolicy: Replace
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Debug de Jobs
 ```bash ignore-test
@@ -390,7 +390,7 @@ spec:
 EOF
 ```
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -399,7 +399,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Patch e Edit](28-patch-edit.md)
 - [→ Próximo: Operators e Operandos](30-operators-operandos.md)

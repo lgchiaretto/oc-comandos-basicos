@@ -1,18 +1,18 @@
-# 📊 Monitoramento e Logs
+# Monitoramento e Logs
 
 Este documento contém comandos para monitoramento, métricas e logs no OpenShift.
 
 ---
 
-## 📋 Índice
+## Índice
 
-1. [📝 Logs](#logs)
-2. [🔔 Eventos](#eventos)
-3. [📈 Métricas e Top](#metricas-e-top)
-4. [🔥 Prometheus e Alertas](#prometheus-e-alertas)
+1. [ Logs](#logs)
+2. [ Eventos](#eventos)
+3. [ Métricas e Top](#metricas-e-top)
+4. [ Prometheus e Alertas](#prometheus-e-alertas)
 ---
 
-## 📝 Logs
+## Logs
 
 ### Logs de Pods
 ```bash
@@ -76,7 +76,7 @@ oc adm node-logs <nome-do-node> -u crio
 
 ---
 
-## 🔔 Eventos
+## Eventos
 
 ### Visualizar Eventos
 ```bash
@@ -121,7 +121,7 @@ oc get events
 
 ---
 
-## 📈 Métricas e Top
+## Métricas e Top
 
 ### Uso de Recursos
 ```bash
@@ -180,7 +180,7 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.container
 
 ---
 
-## 🔥 Prometheus e Alertas
+## Prometheus e Alertas
 
 ### Acessar Prometheus
 ```bash
@@ -249,7 +249,7 @@ EOF
 ```
 
 
-## 📚 Documentação Oficial
+## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
@@ -259,7 +259,7 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-## 📖 Navegação
+## Navegação
 
 - [← Anterior: Registry](10-registry-imagens.md)
 - [→ Próximo: Must-Gather](12-must-gather.md)
