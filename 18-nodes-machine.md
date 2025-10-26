@@ -428,13 +428,16 @@ oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.t
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/machine_management" target="_blank">Machine management</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes" target="_blank">Nodes - Working with nodes</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration - Configuring nodes</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/machine_management">Machine management</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes">Nodes - Working with nodes</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration">Post-installation configuration</a>
+---
 
 ---
 

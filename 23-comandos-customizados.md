@@ -546,12 +546,14 @@ echo "=== Non-Ready Nodes ===" && oc get nodes | grep -v "Ready"
 - **GREP Guide**: https://www.gnu.org/software/grep/manual/
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools" target="_blank">CLI Tools - Using the OpenShift CLI</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/extending-the-openshift-cli" target="_blank">CLI Tools - Extending the OpenShift CLI</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools">CLI Tools - Using the OpenShift CLI</a>
+---
 
 ---
 

@@ -400,12 +400,15 @@ tcpdump -i any -w /tmp/capture.pcap
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking" target="_blank">Networking - Troubleshooting network issues</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support" target="_blank">Support - Troubleshooting</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking">Networking - Troubleshooting network issues</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support">Support - Troubleshooting</a>
+---
 
 ---
 

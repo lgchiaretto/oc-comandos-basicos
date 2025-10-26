@@ -326,13 +326,15 @@ oc get events -n development --sort-by='.lastTimestamp' | head -10
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods" target="_blank">Nodes - Working with pods</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/containers" target="_blank">Nodes - Working with containers</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications" target="_blank">Building applications</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes">Nodes</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications">Building applications</a>
+---
 
 ---
 

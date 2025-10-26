@@ -5,8 +5,13 @@ em cada arquivo markdown.
 """
 
 import re
+import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
+from urllib.request import urlopen, Request
+from urllib.error import URLError, HTTPError
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # Mapeamento de arquivo para links de documentação relevantes
@@ -22,18 +27,16 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     ],
     "03-aplicacoes.md": [
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
-        ("Application development", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/applications"),
         ("Developer CLI (odo)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/developer-cli-odo"),
     ],
     "04-pods-containers.md": [
-        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
-        ("Nodes - Working with containers", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/containers"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "05-deployments-scaling.md": [
         ("Building applications - Deployments", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/deployments"),
-        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "06-services-routes.md": [
         ("Networking - Configuring ingress", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-ingress"),
@@ -41,38 +44,34 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
         ("Networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
     ],
     "07-configmaps-secrets.md": [
-        ("Nodes - ConfigMaps", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/configmaps"),
-        ("Nodes - Secrets", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/secrets"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
         ("Security and compliance", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
     ],
     "08-storage.md": [
         ("Storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage"),
-        ("Storage - Persistent storage", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/persistent-storage"),
         ("Storage - Dynamic provisioning", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/dynamic-provisioning"),
     ],
     "09-builds-images.md": [
-        ("CI/CD - Builds", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cicd/builds"),
+        ("CI/CD - Builds", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
         ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
         ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "10-registry-imagens.md": [
         ("Registry - Integrated OpenShift image registry", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry"),
-        ("Images - Managing images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
-        ("Images - Image streams", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images/image-streams"),
+        ("Images", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images"),
     ],
     "11-monitoramento-logs.md": [
         ("Monitoring - Monitoring overview", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring"),
         ("Logging", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/logging"),
-        ("Nodes - Viewing system event information", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/viewing-system-event-information"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
     ],
     "12-must-gather.md": [
         ("Support - Gathering data about your cluster", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
-        ("Support - Remote health monitoring", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/remote-health-monitoring"),
     ],
     "13-troubleshooting-pods.md": [
         ("Support - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support"),
-        ("Nodes - Working with pods", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/pods"),
-        ("Building applications - Troubleshooting", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications/troubleshooting"),
+        ("Nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
+        ("Building applications", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/building_applications"),
     ],
     "14-troubleshooting-rede.md": [
         ("Networking - Troubleshooting network issues", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
@@ -85,17 +84,16 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     "16-seguranca-rbac.md": [
         ("Authentication and authorization", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization"),
         ("Security and compliance - Managing security context constraints", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
-        ("Post-installation configuration - Configuring RBAC", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "17-cluster-operators.md": [
         ("Operators - Understanding Operators", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators"),
-        ("Operators - Cluster Operators reference", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/cluster-operators-reference"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "18-nodes-machine.md": [
         ("Machine management", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/machine_management"),
         ("Nodes - Working with nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes"),
-        ("Post-installation configuration - Configuring nodes", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "19-certificados-csr.md": [
         ("Security and compliance - Certificate management", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance"),
@@ -104,19 +102,18 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     "20-cluster-networking.md": [
         ("Networking - Understanding networking", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking"),
         ("Networking - Multiple networks", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/multiple-networks"),
-        ("Post-installation configuration - Cluster capabilities", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "21-cluster-version-updates.md": [
-        ("Updating clusters", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Updating clusters", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/updating_clusters"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "22-etcd-backup.md": [
         ("Backup and restore - Backing up etcd", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "23-comandos-customizados.md": [
         ("CLI Tools - Using the OpenShift CLI", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools"),
-        ("CLI Tools - Extending the OpenShift CLI", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/extending-the-openshift-cli"),
     ],
     "24-field-selectors.md": [
         ("CLI Tools - OpenShift CLI (oc)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc"),
@@ -132,7 +129,7 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
     ],
     "27-backup-disaster-recovery.md": [
         ("Backup and restore", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore"),
-        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration"),
+        ("Post-installation configuration", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration"),
     ],
     "28-patch-edit.md": [
         ("CLI Tools - OpenShift CLI (oc)", "https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/cli_tools/openshift-cli-oc"),
@@ -150,6 +147,146 @@ DOCS_MAP: Dict[str, List[Tuple[str, str]]] = {
 }
 
 
+def validate_url(url: str, timeout: int = 10) -> Tuple[bool, str]:
+    """Valida se uma URL está acessível.
+    
+    Retorna (sucesso, mensagem)
+    """
+    try:
+        # Criar request com headers para evitar bloqueios
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
+        }
+        req = Request(url, headers=headers)
+        
+        # Tenta abrir a URL
+        with urlopen(req, timeout=timeout) as response:
+            status = response.status
+            if status == 200:
+                return True, f"OK (200)"
+            else:
+                return False, f"Status {status}"
+    
+    except HTTPError as e:
+        return False, f"HTTP Error {e.code}: {e.reason}"
+    except URLError as e:
+        return False, f"URL Error: {e.reason}"
+    except Exception as e:
+        return False, f"Erro: {str(e)}"
+
+
+def validate_all_urls(docs_map: Dict[str, List[Tuple[str, str]]], 
+                     verbose: bool = False,
+                     max_workers: int = 10) -> Dict[str, List[Tuple[str, str, bool, str]]]:
+    """Valida todas as URLs no mapeamento usando paralelização.
+    
+    Args:
+        docs_map: Dicionário com mapeamento de arquivos para URLs
+        verbose: Se True, mostra detalhes de cada validação
+        max_workers: Número de threads paralelas (padrão: 10)
+    
+    Retorna dict: filename -> [(title, url, valid, message)]
+    """
+    # Preparar lista de todas as URLs para validar
+    url_list = []
+    for filename, links in sorted(docs_map.items()):
+        for title, url in links:
+            url_list.append((filename, title, url))
+    
+    total_urls = len(url_list)
+    completed = 0
+    results_dict = {filename: [] for filename in docs_map.keys()}
+    
+    print(f"\nValidando {total_urls} URLs (paralelizando {max_workers} por vez)...")
+    print("=" * 60)
+    
+    # Usar ThreadPoolExecutor para paralelizar as validações
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Submeter todas as tarefas
+        future_to_url = {
+            executor.submit(validate_url, url): (filename, title, url)
+            for filename, title, url in url_list
+        }
+        
+        # Processar resultados conforme completam
+        for future in as_completed(future_to_url):
+            filename, title, url = future_to_url[future]
+            completed += 1
+            
+            try:
+                valid, message = future.result()
+                results_dict[filename].append((title, url, valid, message))
+                
+                if verbose:
+                    print(f"[{completed}/{total_urls}] {url}")
+                    if valid:
+                        print(f"  ✅ {message}")
+                    else:
+                        print(f"  ❌ {message}")
+                else:
+                    # Mostrar progresso compacto
+                    print(f"[{completed}/{total_urls}] Validando URLs...", end='\r')
+                
+                # Mostrar erros imediatamente
+                if not valid and not verbose:
+                    print(f"\n  ❌ ERRO: {title}")
+                    print(f"     Arquivo: {filename}")
+                    print(f"     URL: {url}")
+                    print(f"     Razão: {message}")
+                    print(f"[{completed}/{total_urls}] Validando URLs...", end='\r')
+                    
+            except Exception as e:
+                print(f"\n  ❌ EXCEÇÃO ao validar {url}: {str(e)}")
+                results_dict[filename].append((title, url, False, f"Exceção: {str(e)}"))
+    
+    print("\n" + "=" * 60)
+    return results_dict
+
+
+def print_validation_summary(results: Dict[str, List[Tuple[str, str, bool, str]]]):
+    """Imprime sumário da validação."""
+    total = 0
+    valid = 0
+    invalid = 0
+    errors_by_file = {}
+    
+    for filename, url_results in results.items():
+        file_errors = []
+        for title, url, is_valid, message in url_results:
+            total += 1
+            if is_valid:
+                valid += 1
+            else:
+                invalid += 1
+                file_errors.append((title, url, message))
+        
+        if file_errors:
+            errors_by_file[filename] = file_errors
+    
+    print("\n" + "=" * 60)
+    print("SUMÁRIO DA VALIDAÇÃO")
+    print("=" * 60)
+    print(f"Total de URLs: {total}")
+    print(f"✅ Válidas: {valid}")
+    print(f"❌ Inválidas: {invalid}")
+    
+    if errors_by_file:
+        print("\n" + "=" * 60)
+        print("URLS COM PROBLEMAS")
+        print("=" * 60)
+        
+        for filename, errors in sorted(errors_by_file.items()):
+            print(f"\n{filename}:")
+            for title, url, message in errors:
+                print(f"  ❌ {title}")
+                print(f"     URL: {url}")
+                print(f"     Erro: {message}")
+    
+    print("\n" + "=" * 60)
+    
+    return invalid == 0
+
+
 def generate_docs_section(links: List[Tuple[str, str]]) -> str:
     """Gera a seção de documentação oficial com links que abrem em nova aba."""
     lines = [
@@ -161,7 +298,7 @@ def generate_docs_section(links: List[Tuple[str, str]]) -> str:
     
     for title, url in links:
         # Usa HTML para forçar abertura em nova aba
-        lines.append(f'- <a href="{url}" target="_blank">{title}</a>')
+        lines.append(f'- <a href="{url}">{title}</a>')
     
     lines.append("")
     return '\n'.join(lines)
@@ -243,12 +380,41 @@ def main():
     parser = argparse.ArgumentParser(description='Adiciona seção de documentação oficial')
     parser.add_argument('-f', '--force', action='store_true', 
                         help='Sobrescreve seção existente')
+    parser.add_argument('--validate-only', action='store_true',
+                        help='Apenas valida URLs sem modificar arquivos')
+    parser.add_argument('--skip-validation', action='store_true',
+                        help='Pula validação de URLs (não recomendado)')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='Mostra detalhes de cada validação')
+    parser.add_argument('--workers', type=int, default=10,
+                        help='Número de threads paralelas para validação (padrão: 10)')
     args = parser.parse_args()
     
     base_dir = Path(__file__).parent.parent
     
     print("Adicionar Seções de Documentação Oficial")
     print("=" * 60)
+    
+    # Validar URLs primeiro (a menos que seja pulado)
+    if not args.skip_validation:
+        validation_results = validate_all_urls(DOCS_MAP, verbose=args.verbose, max_workers=args.workers)
+        all_valid = print_validation_summary(validation_results)
+        
+        if not all_valid:
+            print("\n⚠️  AVISO: Algumas URLs estão inválidas!")
+            print("Verifique os links acima e corrija-os no arquivo.")
+            
+            if not args.validate_only:
+                response = input("\nDeseja continuar mesmo assim? (s/N): ").strip().lower()
+                if response not in ['s', 'sim', 'y', 'yes']:
+                    print("Operação cancelada.")
+                    sys.exit(1)
+        else:
+            print("\n✅ Todas as URLs foram validadas com sucesso!")
+        
+        # Se apenas validação, sair aqui
+        if args.validate_only:
+            sys.exit(0 if all_valid else 1)
     
     # Encontrar arquivos markdown numerados
     md_files = []

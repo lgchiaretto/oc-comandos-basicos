@@ -194,13 +194,15 @@ oc adm prune builds --keep-younger-than=48h --confirm
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry" target="_blank">Registry - Integrated OpenShift image registry</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images" target="_blank">Images - Managing images</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images/image-streams" target="_blank">Images - Image streams</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/registry">Registry - Integrated OpenShift image registry</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images">Images</a>
+---
 
 ---
 

@@ -252,13 +252,16 @@ EOF
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring" target="_blank">Monitoring - Monitoring overview</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/logging" target="_blank">Logging</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes/viewing-system-event-information" target="_blank">Nodes - Viewing system event information</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/monitoring">Monitoring - Monitoring overview</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/logging">Logging</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/nodes">Nodes</a>
+---
 
 ---
 

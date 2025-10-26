@@ -298,13 +298,16 @@ done
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking" target="_blank">Networking - Understanding networking</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/multiple-networks" target="_blank">Networking - Multiple networks</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration - Cluster capabilities</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking">Networking - Understanding networking</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/multiple-networks">Networking - Multiple networks</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration">Post-installation configuration</a>
+---
 
 ---
 

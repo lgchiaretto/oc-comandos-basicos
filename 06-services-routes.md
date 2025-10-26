@@ -154,13 +154,16 @@ oc get routes -o wide
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-ingress" target="_blank">Networking - Configuring ingress</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-routes" target="_blank">Networking - Configuring routes</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking" target="_blank">Networking</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-ingress">Networking - Configuring ingress</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking/configuring-routes">Networking - Configuring routes</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/networking">Networking</a>
+---
 
 ---
 

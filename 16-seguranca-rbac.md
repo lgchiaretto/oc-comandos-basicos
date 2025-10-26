@@ -391,13 +391,16 @@ oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization" target="_blank">Authentication and authorization</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance" target="_blank">Security and compliance - Managing security context constraints</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration - Configuring RBAC</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization">Authentication and authorization</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/security_and_compliance">Security and compliance - Managing security context constraints</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration">Post-installation configuration</a>
+---
 
 ---
 

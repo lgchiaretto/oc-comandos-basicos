@@ -166,12 +166,14 @@ chmod +x /tmp/quick-diag.sh
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support" target="_blank">Support - Gathering data about your cluster</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support/remote-health-monitoring" target="_blank">Support - Remote health monitoring</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/support">Support - Gathering data about your cluster</a>
+---
 
 ---
 

@@ -447,13 +447,15 @@ oc get installplan -n <namespace> -o json | jq -r '.items[] | select(.spec.appro
 ```
 
 
+
+
 ## Documentação Oficial
 
 Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators" target="_blank">Operators - Understanding Operators</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators/cluster-operators-reference" target="_blank">Operators - Cluster Operators reference</a>
-- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/post_installation_configuration" target="_blank">Post-installation configuration</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/operators">Operators - Understanding Operators</a>
+- <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration">Post-installation configuration</a>
+---
 
 ---
 
