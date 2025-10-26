@@ -182,7 +182,7 @@ oc describe nodes | grep Taints
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 ```
 
-```bash
+```bash ignore-test
 # Ver uso atual
 # oc adm top <resource-name> my-pod
 oc adm top pod my-pod

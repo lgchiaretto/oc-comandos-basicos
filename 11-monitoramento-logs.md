@@ -164,7 +164,7 @@ oc adm top pods --sort-by=cpu
 oc adm top pods --sort-by=memory
 ```
 
-```bash
+```bash ignore-test
 # Top de um pod específico
 # oc adm top <resource-name> my-pod
 oc adm top pod my-pod

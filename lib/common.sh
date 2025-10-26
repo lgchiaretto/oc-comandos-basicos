@@ -18,9 +18,15 @@ STATE_FILE="${STATE_FILE:-/tmp/oc-test-state-$$}"
 # Arquivo de log (para execuções standalone)
 LOG_FILE="${LOG_FILE:-/tmp/test-module-$(date +%Y%m%d-%H%M%S).log}"
 
+# Arquivo de falhas (rastreia testes que falharam)
+FAILURES_FILE="${FAILURES_FILE:-/tmp/oc-test-failures-$$}"
+
 # Variáveis de controle
 VERBOSE="${VERBOSE:-0}"
 STOP_ON_ERROR="${STOP_ON_ERROR:-0}"
+
+# Modulo atual sendo executado (para rastrear falhas)
+CURRENT_MODULE="${CURRENT_MODULE:-Unknown}"
 
 # Inicializar arquivo de estado se não existir
 if [ ! -f "$STATE_FILE" ]; then
@@ -100,6 +106,12 @@ run_test() {
         else
             log_error "$description"
             log_error "  Comando: $command"
+            
+            # Registrar falha no arquivo de falhas
+            if [ -n "$FAILURES_FILE" ]; then
+                echo "$CURRENT_MODULE|$description|$command" >> "$FAILURES_FILE"
+            fi
+            
             if [ -n "$output" ]; then
                 echo -e "${BLUE}[DEBUG]${NC} Saída do comando:" | tee -a "$LOG_FILE"
                 echo "$output" | sed 's/^/  /' | tee -a "$LOG_FILE"
@@ -125,6 +137,12 @@ run_test() {
         else
             log_error "$description"
             log_error "  Comando: $command"
+            
+            # Registrar falha no arquivo de falhas
+            if [ -n "$FAILURES_FILE" ]; then
+                echo "$CURRENT_MODULE|$description|$command" >> "$FAILURES_FILE"
+            fi
+            
             FAILED_TESTS=$((FAILED_TESTS + 1))
             save_state
             
@@ -150,6 +168,8 @@ section_header() {
 # Exportar variáveis e funções para subshells
 export STATE_FILE
 export LOG_FILE
+export FAILURES_FILE
+export CURRENT_MODULE
 export VERBOSE
 export STOP_ON_ERROR
 export -f log_info log_success log_warning log_error log_skip run_test section_header save_state

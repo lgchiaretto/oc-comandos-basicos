@@ -46,11 +46,15 @@ END_MODULE=""
 STATE_FILE="/tmp/oc-test-state-$$"
 LOG_FILE="/tmp/test-commands-$(date +%Y%m%d-%H%M%S).log"
 TIMING_FILE="/tmp/oc-test-timing-$$"
+FAILURES_FILE="/tmp/oc-test-failures-$$"
 
 # Inicializar arquivo de estado
 echo "TOTAL_TESTS=0" > "$STATE_FILE"
 echo "PASSED_TESTS=0" >> "$STATE_FILE"
 echo "FAILED_TESTS=0" >> "$STATE_FILE"
+
+# Inicializar arquivo de falhas
+> "$FAILURES_FILE"
 
 echo "Cleaning up and regenerating test artifacts..."
 rm -rf tests/ && ./scripts/generate-all-tests.py
@@ -121,6 +125,7 @@ export STOP_ON_ERROR
 export LOG_FILE
 export STATE_FILE
 export TIMING_FILE
+export FAILURES_FILE
 
 # Validar combinações de parâmetros
 if [ -n "$SPECIFIC_MODULE" ] && { [ -n "$START_MODULE" ] || [ -n "$END_MODULE" ]; }; then
@@ -177,6 +182,7 @@ cleanup() {
     
     # Remover arquivos de estado
     rm -f "$STATE_FILE"
+    rm -f "$FAILURES_FILE"
     
     log_success "Limpeza concluída"
 }
@@ -197,6 +203,9 @@ run_test_module() {
     
     # Tornar o script executável
     chmod +x "$test_script"
+    
+    # Exportar o nome do modulo atual para rastreamento de falhas
+    export CURRENT_MODULE="$module_name"
     
     # Registrar tempo de início do modulo
     local module_start=$(date +%s)
@@ -381,6 +390,35 @@ if [ -f "$TIMING_FILE" ]; then
     
     # Limpar arquivo de timing
     rm -f "$TIMING_FILE"
+fi
+
+echo ""
+
+# Exibir resumo de falhas se houver
+if [ $FAILED_TESTS -gt 0 ] && [ -f "$FAILURES_FILE" ] && [ -s "$FAILURES_FILE" ]; then
+    echo "╔════════════════════════════════════════════════════════════════╗"
+    echo "║                    RESUMO DE FALHAS                            ║"
+    echo "╚════════════════════════════════════════════════════════════════╝"
+    echo ""
+    
+    printf "%-40s %-50s\n" "Módulo" "Teste que Falhou"
+    echo "────────────────────────────────────────────────────────────────────────────────────────────"
+    
+    # Ler arquivo de falhas e exibir
+    while IFS='|' read -r module description command; do
+        # Truncar descrição se for muito longa
+        if [ ${#description} -gt 47 ]; then
+            description="${description:0:44}..."
+        fi
+        printf "%-40s %-50s\n" "$module" "$description"
+    done < "$FAILURES_FILE"
+    
+    echo "────────────────────────────────────────────────────────────────────────────────────────────"
+    echo ""
+    echo -e "${YELLOW}Dica:${NC} Use --verbose para ver detalhes dos erros ou consulte o log: $LOG_FILE"
+    
+    # Limpar arquivo de falhas
+    rm -f "$FAILURES_FILE"
 fi
 
 echo ""
