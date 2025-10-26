@@ -617,12 +617,17 @@ oc get pv
 ```bash
 # Verificar persistent volume claims
 oc get pvc -A
-```ch -n 30 'oc adm top nodes'
+```
 
 # Verificar pods com maior uso de recursos
+
+```bash
 oc adm top pods -A --sort-by=memory
+```
 
 # Verificar storage
+
+```bash
 oc get pv
 oc get pvc -A
 ```
