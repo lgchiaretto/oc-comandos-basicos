@@ -6,9 +6,9 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 
 ## Índice
 
-1. [ Scaling](#scaling)
-2. [ Atualizações e Rollbacks](#atualizacoes-e-rollbacks)
-3. [ ReplicaSets](#replicasets)
+1. [Scaling](#scaling)
+2. [Atualizações e Rollbacks](#atualizações e rollbacks)
+3. [ReplicaSets](#replicasets)
 ---
 
 ## Scaling

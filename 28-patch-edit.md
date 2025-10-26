@@ -6,10 +6,10 @@ Este documento contém comandos para editar e fazer patch em recursos do OpenShi
 
 ## Índice
 
-1. [  Edit](#edit)
-2. [ Patch](#patch)
-3. [  Set Commands](#set-commands)
-4. [ Replace](#replace)
+1. [Edit](#edit)
+2. [Patch](#patch)
+3. [Set Commands](#set commands)
+4. [Replace](#replace)
 ---
 
 ## Edit

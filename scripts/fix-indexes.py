@@ -32,20 +32,20 @@ def extract_main_sections(content: str) -> List[Tuple[str, str, str]]:
         
         # Gerar anchor (lowercase, sem acentos, hífens)
         anchor = title.lower()
-        # Remove acentos
-        anchor = re.sub(r'[àáâãäå]', 'a', anchor)
-        anchor = re.sub(r'[èéêë]', 'e', anchor)
-        anchor = re.sub(r'[ìíîï]', 'i', anchor)
-        anchor = re.sub(r'[òóôõö]', 'o', anchor)
-        anchor = re.sub(r'[ùúûü]', 'u', anchor)
-        anchor = re.sub(r'[ç]', 'c', anchor)
-        # Remove caracteres especiais
-        anchor = re.sub(r'[^a-z0-9\s-]', '', anchor)
-        # Substitui espaços por hífens
-        anchor = re.sub(r'\s+', '-', anchor)
-        # Remove hífens duplicados
-        anchor = re.sub(r'-+', '-', anchor)
-        anchor = anchor.strip('-')
+        ## Remove acentos
+        #anchor = re.sub(r'[àáâãäå]', 'a', anchor)
+        #anchor = re.sub(r'[èéêë]', 'e', anchor)
+        #anchor = re.sub(r'[ìíîï]', 'i', anchor)
+        #anchor = re.sub(r'[òóôõö]', 'o', anchor)
+        #anchor = re.sub(r'[ùúûü]', 'u', anchor)
+        #anchor = re.sub(r'[ç]', 'c', anchor)
+        ## Remove caracteres especiais
+        #anchor = re.sub(r'[^a-z0-9\s-]', '', anchor)
+        ## Substitui espaços por hífens
+        #anchor = re.sub(r'\s+', '-', anchor)
+        ## Remove hífens duplicados
+        #anchor = re.sub(r'-+', '-', anchor)
+        #anchor = anchor.strip('-')
         
         sections.append((title, anchor))
     

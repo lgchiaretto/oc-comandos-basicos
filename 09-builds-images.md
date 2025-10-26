@@ -6,10 +6,10 @@ Este documento contém comandos para gerenciar builds e imagens no OpenShift.
 
 ## Índice
 
-1. [ BuildConfigs](#buildconfigs)
-2. [ Builds](#builds)
-3. [ Gerenciamento de Builds](#gerenciamento-de-builds)
-4. [  ImageStreams](#imagestreams)
+1. [BuildConfigs](#buildconfigs)
+2. [Builds](#builds)
+3. [Gerenciamento de Builds](#gerenciamento de builds)
+4. [ImageStreams](#imagestreams)
 ---
 
 ## BuildConfigs

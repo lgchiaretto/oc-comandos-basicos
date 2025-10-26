@@ -6,12 +6,12 @@ Este documento contém comandos para criar e gerenciar aplicações no OpenShift
 
 ## Índice
 
-1. [ Criação de Aplicações](#criacao-de-aplicacoes)
-2. [ Gerenciamento](#gerenciamento)
-3. [ Informações e Status](#informacoes-e-status)
-4. [ Atualização de Imagens](#atualizacao-de-imagens)
-5. [ Permissões e Validações](#permissoes-e-validacoes)
-6. [⏳ Aguardar Condições](#aguardar-condicoes)
+1. [Criação de Aplicações](#criação de aplicações)
+2. [Gerenciamento](#gerenciamento)
+3. [Informações e Status](#informações e status)
+4. [Atualização de Imagens](#atualização de imagens)
+5. [Permissões e Validações](#permissões e validações)
+6. [⏳ Aguardar Condições](#⏳ aguardar condições)
 ---
 
 ## Criação de Aplicações

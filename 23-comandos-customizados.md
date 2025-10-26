@@ -6,15 +6,15 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 
 ## Índice
 
-1. [ Comandos com AWK](#comandos-com-awk)
-2. [ Comandos com JQ](#comandos-com-jq)
-3. [ Comandos com GREP](#comandos-com-grep)
-4. [ Pipes Complexos](#pipes-complexos)
-5. [ Automação e Scripts](#automacao-e-scripts)
-6. [ Análise de Cluster Operators](#analise-de-cluster-operators)
-7. [ Extração de Certificados](#extracao-de-certificados)
-8. [ Dicas e Truques](#dicas-e-truques)
-9. [ Recursos Adicionais](#recursos-adicionais)
+1. [Comandos com AWK](#comandos com awk)
+2. [Comandos com JQ](#comandos com jq)
+3. [Comandos com GREP](#comandos com grep)
+4. [Pipes Complexos](#pipes complexos)
+5. [Automação e Scripts](#automação e scripts)
+6. [Análise de Cluster Operators](#análise de cluster operators)
+7. [Extração de Certificados](#extração de certificados)
+8. [Dicas e Truques](#dicas e truques)
+9. [Recursos Adicionais](#recursos adicionais)
 ---
 
 ## Comandos com AWK

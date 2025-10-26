@@ -6,9 +6,9 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 
 ## Índice
 
-1. [ ConfigMaps](#configmaps)
-2. [ Secrets](#secrets)
-3. [ Usando em Pods](#usando-em-pods)
+1. [ConfigMaps](#configmaps)
+2. [Secrets](#secrets)
+3. [Usando em Pods](#usando em pods)
 ---
 
 ## ConfigMaps

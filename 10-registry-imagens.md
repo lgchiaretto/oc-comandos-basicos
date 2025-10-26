@@ -6,10 +6,10 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 
 ## Índice
 
-1. [ Registry Interno](#registry-interno)
-2. [ Push e Pull de Imagens](#push-e-pull-de-imagens)
-3. [ Image Mirroring](#image-mirroring)
-4. [ Image Pruning](#image-pruning)
+1. [Registry Interno](#registry interno)
+2. [Push e Pull de Imagens](#push e pull de imagens)
+3. [Image Mirroring](#image mirroring)
+4. [Image Pruning](#image pruning)
 ---
 
 ## Registry Interno
