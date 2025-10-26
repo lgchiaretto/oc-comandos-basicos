@@ -98,10 +98,10 @@ oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My a
 
 ```bash ignore-test
 # Atualizar imagem
-oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"<container-name>","image":"new-image:tag"}]}}}}'
+oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"new-image:tag"}]}}}}'
 ```
 
-```bash
+```bash ignore-test
 # Múltiplos campos
 # oc patch deployment <deployment-name> --type merge -p '
 oc patch deployment test-app --type merge -p '
@@ -127,13 +127,13 @@ oc patch deployment test-app --type merge -p '
 ```
 
 #### JSON Patch
-```bash ignore-test
+```bash
 # Replace elemento
 # oc patch deployment <deployment-name> --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
 oc patch deployment test-app --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
 ```
 
-```bash
+```bash ignore-test
 # Múltiplas operações
 # oc patch deployment <deployment-name> --type json -p='[
 oc patch deployment test-app --type json -p='[
@@ -245,20 +245,20 @@ oc patch route test-app -p '{"spec":{"to":{"name":"new-service"}}}'
 ```
 
 #### HPA
-```bash
+```bash inore-test
 # Min/Max replicas
 # oc patch hpa <resource-name>app -p '{"spec":{"minReplicas":2,"maxReplicas":10}}'
 oc patch hpa test-app -p '{"spec":{"minReplicas":2,"maxReplicas":10}}'
 ```
 
-```bash
+```bash ignore-test
 # Target CPU
 # oc patch hpa <resource-name>app -p '{"spec":{"targetCPUUtilizationPercentage":70}}'
 oc patch hpa test-app -p '{"spec":{"targetCPUUtilizationPercentage":70}}'
 ```
 
 ### Patch em Lote
-```bash
+```bash ignore-test
 # Patch múltiplos deployments
 for deploy in $(oc get deploy -o name); do
   oc patch $deploy -p '{"metadata":{"labels":{"env":"production"}}}'
@@ -267,7 +267,7 @@ done
 
 ```bash
 # Patch todos os deployments com label
-oc get deploy -l app=myapp -o name | xargs -I {} oc patch {} -p '{"spec":{"replicas":3}}'
+oc get deploy -l env=production -o name | xargs -I {} oc patch {} -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash ignore-test
@@ -285,16 +285,16 @@ done
 ### Set Image
 ```bash ignore-test
 # Deployment
-oc set image deployment/test-app <container-name>=<new-image>:<tag>
+oc set image deployment/test-app httpd=<new-image>:<tag>
 ```
 
-```bash
+```bash ignore-test
 # Exemplo
-# oc set image <resource-name>/myapp myapp=myapp:v2.0
-oc set image deployment/myapp myapp=myapp:v2.0
+# oc set image <resource-name>/test-app test-app=test-app:v2.0
+oc set image deployment/test-app test-app=test-app:v2.0
 ```
 
-```bash
+```bash ignore-test
 # Múltiplos containers
 # oc set image <resource-name>/test-app container1=image1:v2 container2=image2:v2
 oc set image deployment/test-app container1=image1:v2 container2=image2:v2
@@ -302,7 +302,7 @@ oc set image deployment/test-app container1=image1:v2 container2=image2:v2
 
 ```bash ignore-test
 # DeploymentConfig
-oc set image dc/test-app <container-name>=<new-image>
+oc set image dc/test-app httpd=<new-image>
 ```
 
 ```bash ignore-test
@@ -331,13 +331,7 @@ oc set resources deployment/test-app --requests=cpu=100m,memory=128Mi
 
 ```bash ignore-test
 # Container específico
-oc set resources deployment/test-app -c=<container-name> --limits=cpu=200m,memory=256Mi
-```
-
-```bash
-# Remover limits
-# oc set resources <resource-name>/test-app --limits=cpu=0,memory=0
-oc set resources deployment/test-app --limits=cpu=0,memory=0
+oc set resources deployment/test-app -c=httpd --limits=cpu=200m,memory=256Mi
 ```
 
 ### Set Env
@@ -399,13 +393,13 @@ oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeC
 
 ```bash
 # EmptyDir
-# oc set volume <resource-name>/test-app --add --name=tmp-vol --type=emptyDir --mount-path=/tmp
-oc set volume deployment/test-app --add --name=tmp-vol --type=emptyDir --mount-path=/tmp
+# oc set volume <resource-name>/test-app --add --name=data-vol --type=emptyDir --mount-path=/data
+oc set volume deployment/test-app --add --name=data-vol --type=emptyDir --mount-path=/data
 ```
 
-```bash ignore-test
+```bash
 # Remover volume
-oc set volume deployment/test-app --remove --name=<volume-name>
+oc set volume deployment/test-app --remove --name=data-vol
 ```
 
 ```bash
@@ -428,15 +422,15 @@ oc set probe deployment/test-app --readiness --get-url=http://:8080/ready --peri
 ```
 
 ```bash
-# TCP probe
-# oc set probe <resource-name>/test-app --liveness --open-tcp=8080 --timeout-seconds=1
-oc set probe deployment/test-app --liveness --open-tcp=8080 --timeout-seconds=1
+# Exec probe
+# oc set probe <resource-name>/test-app --liveness -- cat /tmp/healthy
+oc set probe deployment/test-app --liveness -- cat /tmp/healthy
 ```
 
 ```bash
-# Exec probe
-# oc set probe <resource-name>/test-app --liveness --exec -- cat /tmp/healthy
-oc set probe deployment/test-app --liveness --exec -- cat /tmp/healthy
+# TCP probe
+# oc set probe <resource-name>/test-app --liveness --open-tcp=8080 --timeout-seconds=1
+oc set probe deployment/test-app --liveness --open-tcp=8080 --timeout-seconds=1
 ```
 
 ```bash
@@ -450,26 +444,26 @@ oc set probe deployment/test-app --readiness --remove
 ### Set ServiceAccount
 ```bash ignore-test
 # Definir ServiceAccount
-oc set serviceaccount deployment/test-app <sa-name>
+oc set serviceaccount deployment/test-app test-app
 ```
 
 ```bash
 # Exemplo
-# oc set serviceaccount <serviceaccount-name>/myapp mysa
-oc set serviceaccount deployment/myapp mysa
+# oc set serviceaccount <serviceaccount-name>/test-app test-app
+oc set serviceaccount deployment/test-app test-app
 ```
 
 ### Set Selector
 ```bash
 # Service selector
-# oc set selector <resource-name>/test-app app=myapp,tier=frontend
-oc set selector svc/test-app app=myapp,tier=frontend
+# oc set selector <resource-name>/test-app app=test-app,tier=frontend
+oc set selector svc/test-app app=test-app,tier=frontend
 ```
 
 ```bash
 # Overwrite
-# oc set selector <resource-name>/test-app app=newapp --overwrite
-oc set selector svc/test-app app=newapp --overwrite
+# oc set selector <resource-name>/test-app app=newapp
+oc set selector svc/test-app app=newapp
 ```
 
 ---
@@ -477,27 +471,27 @@ oc set selector svc/test-app app=newapp --overwrite
 ## 🔄 Replace
 
 ### Replace vs Apply
-```bash
+```bash ignore-test
 # Apply (merge)
 oc apply -f resource.yaml
 ```
 
-```bash
+```bash ignore-test
 # Replace (substitui completamente)
 oc replace -f resource.yaml
 ```
 
-```bash
+```bash ignore-test
 # Replace com force (deleta e recria)
 oc replace -f resource.yaml --force
 ```
 
-```bash
+```bash ignore-test
 # Replace de stdin
 cat resource.yaml | oc replace -f -
 ```
 
-```bash
+```bash ignore-test
 # Get, edit, replace
 oc get deployment/test-app -o yaml > /tmp/deploy.yaml
 vi /tmp/deploy.yaml
@@ -505,17 +499,17 @@ oc replace -f /tmp/deploy.yaml
 ```
 
 ### Replace em Massa
-```bash
+```bash ignore-test
 # Replace múltiplos recursos
 oc replace -f directory/
 ```
 
-```bash
+```bash ignore-test
 # Replace recursivo
 oc replace -f directory/ -R
 ```
 
-```bash
+```bash ignore-test
 # Replace com dry-run
 oc replace -f resource.yaml --dry-run=client
 ```

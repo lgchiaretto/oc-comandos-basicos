@@ -59,7 +59,7 @@ oc logs <nome-do-pod>
 
 ```bash ignore-test
 # Logs de container específico
-oc logs <nome-do-pod> -c <container-name>
+oc logs <nome-do-pod> -c httpd
 ```
 
 ```bash ignore-test
