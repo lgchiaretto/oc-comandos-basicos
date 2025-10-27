@@ -295,18 +295,6 @@ Para mais informações sobre os testes, consulte [`scripts/README.md`](scripts/
 
 ---
 
-## Contribuindo
-
-Este guia é baseado em experiência prática e comandos reais testados em produção. Se você tiver sugestões ou novos comandos úteis, sinta-se à vontade para contribuir!
-
-### Como Contribuir
-1. Adicione ou modifique comandos nos documentos apropriados
-2. Atualize os testes correspondentes em `tests/XX-topic/test.sh`
-3. Execute a suíte de testes: `./scripts/test-commands.sh`
-4. Submeta um pull request
-
----
-
 ## Navegação
 
 - **Início Rápido**: [Top 20 Comandos →](INICIO-RAPIDO.md)
