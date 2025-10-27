@@ -281,7 +281,7 @@ oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.
 
 **Executar comando dentro do pod especificado**
 
-```bash ignore-test
+```bash
 oc exec my-pod -- ip link show eth0
 ```
 
@@ -294,7 +294,7 @@ oc get nodes -o wide
 
 **Aplicar configuração do arquivo YAML/JSON ao cluster**
 
-```bash ignore-test
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: apps/v1
 kind: DaemonSet

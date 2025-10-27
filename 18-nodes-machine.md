@@ -230,8 +230,8 @@ oc get mcp worker
 
 **Descrever pool**
 
-```bash ignore-test
-oc describe mcp <pool-name>
+```bash
+oc describe mcp worker
 ```
 
 **Ver progresso de update**
@@ -242,8 +242,8 @@ oc get mcp
 
 **Ver qual MC está sendo aplicado**
 
-```bash ignore-test
-oc get mcp <pool-name> -o jsonpath='{.status.configuration.name}'
+```bash
+oc get mcp worker -o jsonpath='{.status.configuration.name}'
 ```
 
 ### Criar MachineConfig
@@ -270,7 +270,7 @@ spec:
 EOF
 ```
 
-* Exemplo: adicionar registry inseguro
+**Adicionar registry inseguro**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -296,20 +296,20 @@ EOF
 ### Pause de Updates
 **Pausar MachineConfigPool**
 
-```bash ignore-test
-oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":true}}'
+```bash
+oc patch mcp worker --type merge -p '{"spec":{"paused":true}}'
 ```
 
 **Despausar**
 
-```bash ignore-test
-oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":false}}'
+```bash
+oc patch mcp worker --type merge -p '{"spec":{"paused":false}}'
 ```
 
 **Ver se está pausado**
 
-```bash ignore-test
-oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
+```bash
+oc get mcp worker -o jsonpath='{.spec.paused}'
 ```
 
 ---
@@ -408,10 +408,6 @@ oc adm cordon <node-name>
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ```
 
-```bash
-# 3. Aplicar updates (MachineConfig ou manual)
-# Node vai reiniciar automaticamente se MachineConfig mudou
-```
 **Listar todos os nodes do cluster**
 
 ```bash
@@ -467,25 +463,25 @@ oc get node <node-name> -o json | jq '.status.conditions'
 
 **Exibir nodes em formato JSON**
 
-```bash ignore-test
+```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
 **Exibir nodes em formato JSON**
 
-```bash ignore-test
+```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
 **Exibir nodes em formato JSON**
 
-```bash ignore-test
+```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
 **Exibir nodes em formato JSON**
 
-```bash ignore-test
+```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'
 ```
 
