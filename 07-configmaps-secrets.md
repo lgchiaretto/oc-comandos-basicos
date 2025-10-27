@@ -31,13 +31,13 @@ oc get cm
 oc create configmap test-app --from-literal=chave=valor
 ```
 
-**De arquivo**
+**Criar novo configmap apartir de um arquivo**
 
 ```bash ignore-test
 oc create configmap test-app --from-file=<arquivo>
 ```
 
-**De diretório**
+**Criar novo configmap apartir de um diretório**
 
 ```bash ignore-test
 oc create configmap test-app --from-file=<diretorio>/
@@ -114,7 +114,7 @@ oc describe configmap test-app -n development
 oc create secret generic test-app --from-literal=chave=valor
 ```
 
-**De arquivo**
+**Criar novo secret apartir de um arquivo**
 
 ```bash ignore-test
 oc create secret generic test-app --from-file=<arquivo>
