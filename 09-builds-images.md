@@ -27,7 +27,6 @@ oc get bc
 
 **Exibir detalhes completos do buildconfig**
 
-**Exemplo:** `oc describe bc <buildconfig-name>`
 
 ```bash
 oc describe bc s2i-chiaretto
@@ -54,7 +53,6 @@ oc logs -f bc/s2i-chiaretto
 ### Triggers
 **Adicionar webhook trigger**
 
-**Exemplo:** `oc set triggers <resource-name>/s2i-chiaretto --from-github`
 **oc set triggers <resource-name>/s2i-chiaretto --from-webhook**
 
 ```bash
@@ -64,7 +62,6 @@ oc set triggers bc/s2i-chiaretto --from-webhook
 
 **Remover triggers**
 
-**Exemplo:** `oc set triggers <resource-name>/s2i-chiaretto --remove-all`
 
 ```bash
 oc set triggers bc/s2i-chiaretto --remove-all
@@ -72,7 +69,6 @@ oc set triggers bc/s2i-chiaretto --remove-all
 
 **Exibir detalhes completos do buildconfig**
 
-**Exemplo:** `oc describe bc <buildconfig-name> | grep Triggered`
 
 ```bash
 oc describe bc s2i-chiaretto | grep Triggered
@@ -109,7 +105,6 @@ oc get builds
 
 **Ver status de build específico**
 
-**Exemplo:** `oc get build <build-name>`
 
 ```bash ignore-test
 oc get build s2i-chiaretto-2
@@ -117,7 +112,6 @@ oc get build s2i-chiaretto-2
 
 **Cancelar build em execução**
 
-**Exemplo:** `oc cancel-build <build-name>`
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto-2
@@ -125,7 +119,6 @@ oc cancel-build s2i-chiaretto-2
 
 **Deletar o build especificado**
 
-**Exemplo:** `oc delete build <build-name>`
 
 ```bash ignore-test
 oc delete build s2i-chiaretto-2
@@ -143,7 +136,6 @@ oc get builds --sort-by=.metadata.creationTimestamp
 ### Cancelar Build
 **Cancelar build em execução**
 
-**Exemplo:** `oc cancel-build <build-name>`
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto-2
@@ -151,7 +143,6 @@ oc cancel-build s2i-chiaretto-2
 
 **Em namespace específico**
 
-**Exemplo:** `oc cancel-build s2i-chiaretto -n <namespace>`
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto -n development
@@ -172,7 +163,6 @@ oc logs -l buildconfig=s2i-chiaretto --tail=20
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> -l buildconfig=s2i-chiaretto --tail=20`
 
 ```bash
 oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
@@ -182,7 +172,6 @@ oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 ### Debug de Builds
 **Exibir detalhes completos do build**
 
-**Exemplo:** `oc describe build <build-name>`
 
 ```bash ignore-test
 oc describe build s2i-chiaretto-2
@@ -214,7 +203,6 @@ oc get is
 
 **Exibir detalhes completos do imagestream**
 
-**Exemplo:** `oc describe is <imagestream-name>`
 
 ```bash
 oc describe is s2i-chiaretto
@@ -222,7 +210,6 @@ oc describe is s2i-chiaretto
 
 **Exibir imagestream "s2i-chiaretto" em formato JSON**
 
-**Exemplo:** `oc get is <imagestream-name> -o jsonpath='{.spec.tags[*].name}'`
 
 ```bash
 oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
@@ -230,7 +217,6 @@ oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
 
 **Criar novo recurso**
 
-**Exemplo:** `oc create imagestream <imagestream-name>`
 
 ```bash ignore-test
 oc create imagestream s2i-chiaretto
@@ -244,7 +230,6 @@ oc import-image s2i-chiaretto --from=<registry>/<image>:<tag> --confirm
 
 **Deletar o imagestream especificado**
 
-**Exemplo:** `oc delete is <imagestream-name>`
 
 ```bash ignore-test
 oc delete is s2i-chiaretto
@@ -252,7 +237,6 @@ oc delete is s2i-chiaretto
 
 **Exibir imagestream "s2i-chiaretto" em formato JSON**
 
-**Exemplo:** `oc get is <imagestream-name> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'`
 
 ```bash ignore-test
 oc get is s2i-chiaretto -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
@@ -268,7 +252,6 @@ oc get istag
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe istag <istag-name>:<tag>`
 
 ```bash ignore-test
 oc describe istag s2i-chiaretto:latest

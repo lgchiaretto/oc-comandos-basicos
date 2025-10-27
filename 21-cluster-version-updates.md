@@ -26,7 +26,6 @@ oc get clusterversion
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe clusterversion <resource-name>`
 
 ```bash
 oc describe clusterversion version

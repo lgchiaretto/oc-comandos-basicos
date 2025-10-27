@@ -135,7 +135,6 @@ oc get pods -n openshift-cluster-version
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> deployments/cluster-version-operator --tail=100`
 
 ```bash
 oc logs -n openshift-cluster-version deployments/cluster-version-operator --tail=100
@@ -143,7 +142,6 @@ oc logs -n openshift-cluster-version deployments/cluster-version-operator --tail
 
 **Acompanhar logs em tempo real do pod**
 
-**Exemplo:** `oc logs -n <namespace> deployments/cluster-version-operator -f`
 
 ```bash ignore-test
 oc logs -n openshift-cluster-version deployments/cluster-version-operator -f
@@ -244,7 +242,6 @@ done
 
 **Exibir cluster operator "machine-config" em formato YAML**
 
-**Exemplo:** `oc get co <resource-name>config -o yaml`
 
 ```bash
 oc get co machine-config -o yaml
@@ -390,7 +387,6 @@ oc get mc <mc-name> -o yaml
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> -l app=openshift-kube-apiserver --tail=100`
 
 ```bash
 oc logs -n openshift-kube-apiserver -l app=openshift-kube-apiserver --tail=100
@@ -398,7 +394,6 @@ oc logs -n openshift-kube-apiserver -l app=openshift-kube-apiserver --tail=100
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> -l app=etcd --tail=100`
 
 ```bash
 oc logs -n openshift-etcd -l app=etcd --tail=100
@@ -406,7 +401,6 @@ oc logs -n openshift-etcd -l app=etcd --tail=100
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> -l k8s-app=machine-config-operator --tail=100`
 
 ```bash
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-operator --tail=100
@@ -414,7 +408,6 @@ oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-operator 
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> -l k8s-app=machine-config-daemon --tail=50`
 
 ```bash
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --tail=50
@@ -526,7 +519,6 @@ oc get limitranges -A
 
 **Verificar uso de recursos nos nodes**
 
-**Exemplo:** `oc adm top <resource-name>`
 
 ```bash
 oc adm top nodes
@@ -596,7 +588,6 @@ oc get co | grep -i false
 
 **Exibir últimas N linhas dos logs**
 
-**Exemplo:** `oc logs -n <namespace> deployment/cluster-version-operator --tail=200`
 
 ```bash
 oc logs -n openshift-cluster-version deployment/cluster-version-operator --tail=200
@@ -624,7 +615,6 @@ oc get events -A --sort-by='.lastTimestamp' | tail -100
 
 **Capacidade dos nodes**
 
-**Exemplo:** `oc adm top <resource-name>`
 
 ```bash
 oc adm top nodes

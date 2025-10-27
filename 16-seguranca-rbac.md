@@ -72,7 +72,6 @@ oc get identities
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe user <username>`
 
 ```bash
 oc describe user chiaretto
@@ -91,7 +90,6 @@ oc get clusterroles
 
 **Exibir cluster role "admin" em formato YAML**
 
-**Exemplo:** `oc get clusterrole <role-name> -o yaml`
 **oc get clusterrole <role-name> -o yaml**
 **oc get clusterrole <role-name> -o yaml**
 
@@ -109,7 +107,6 @@ oc describe clusterrole <nome-da-role>
 
 **Exibir detalhes completos do cluster role**
 
-**Exemplo:** `oc describe clusterrole <role-name> | grep -A 50 PolicyRule`
 
 ```bash
 oc describe clusterrole admin | grep -A 50 PolicyRule
@@ -130,7 +127,6 @@ oc create role test-app --verb=<verbos> --resource=<recursos>
 
 **Exemplo**
 
-**Exemplo:** `oc create role <role-name> --verb=get,list,watch --resource=pods`
 
 ```bash
 oc create role pod-reader --verb=get,list,watch --resource=pods
@@ -138,7 +134,6 @@ oc create role pod-reader --verb=get,list,watch --resource=pods
 
 **Abrir editor para modificar recurso interativamente**
 
-**Exemplo:** `oc edit role <role-name>`
 
 ```bash ignore-test
 oc edit role pod-reader
@@ -146,7 +141,6 @@ oc edit role pod-reader
 
 **Deletar o role especificado**
 
-**Exemplo:** `oc delete role <role-name>`
 
 ```bash
 oc delete role pod-reader
@@ -213,7 +207,6 @@ oc adm policy remove-role-from-user <role> <username>
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe rolebinding <rolebinding-name>`
 
 ```bash
 oc describe rolebinding admin
@@ -233,7 +226,6 @@ oc get sa
 
 **Criar novo recurso**
 
-**Exemplo:** `oc create serviceaccount <serviceaccount-name>`
 
 ```bash
 oc create serviceaccount test-app
@@ -241,7 +233,6 @@ oc create serviceaccount test-app
 
 **Exibir detalhes completos do serviceaccount**
 
-**Exemplo:** `oc describe sa <serviceaccount-name>`
 
 ```bash
 oc describe sa test-app
@@ -249,7 +240,6 @@ oc describe sa test-app
 
 **Exibir serviceaccount "test-app" em formato JSON**
 
-**Exemplo:** `oc get sa <serviceaccount-name> -o jsonpath='{.secrets[*].name}'`
 
 ```bash ignore-test
 oc get sa test-app -o jsonpath='{.secrets[*].name}'
@@ -257,7 +247,6 @@ oc get sa test-app -o jsonpath='{.secrets[*].name}'
 
 **Deletar o serviceaccount especificado**
 
-**Exemplo:** `oc delete sa <serviceaccount-name>`
 
 ```bash ignore-test
 oc delete sa test-app
@@ -272,7 +261,6 @@ oc adm policy add-role-to-user <role> system:serviceaccount:development:test-app
 
 **Exemplo: dar role edit**
 
-**Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:development:test-app`
 
 ```bash
 oc adm policy add-role-to-user edit system:serviceaccount:development:test-app
@@ -286,7 +274,6 @@ oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:
 
 **Usar SA em deployment**
 
-**Exemplo:** `oc set serviceaccount <serviceaccount-name>/test-app test-app`
 
 ```bash ignore-test
 oc set serviceaccount deployment/test-app test-app
@@ -294,7 +281,6 @@ oc set serviceaccount deployment/test-app test-app
 
 **Exibir recurso "test-app" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'`
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
@@ -321,7 +307,6 @@ oc get scc anyuid -o yaml
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe scc <resource-name>`
 
 ```bash
 oc describe scc restricted
@@ -335,7 +320,6 @@ oc get pod test-app -o yaml | grep scc
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe scc <resource-name> | grep Users`
 
 ```bash
 oc describe scc restricted | grep Users
@@ -344,9 +328,7 @@ oc describe scc restricted | grep Users
 ### Adicionar Permissões SCC
 **Exemplos comuns e use com moderação**
 
-**Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>`
 
-**Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>`
 
 ```bash
 oc adm policy add-scc-to-user anyuid system:serviceaccount:development:test-app
@@ -355,7 +337,6 @@ oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-
 
 **Adicionar grupo**
 
-**Exemplo:** `oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"`
 
 ```bash
 oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
@@ -363,7 +344,6 @@ oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=
 
 **Remover SCC de grupo**
 
-**Exemplo:** `oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"`
 
 ```bash
 oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
@@ -371,7 +351,6 @@ oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiarett
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe scc <resource-name>`
 
 ```bash
 oc describe scc restricted
@@ -380,7 +359,6 @@ oc describe scc restricted
 ### Troubleshoot SCC
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -i scc`
 
 ```bash
 oc describe pod test-app | grep -i scc
@@ -394,7 +372,6 @@ oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 
 **Listar recurso de todos os namespaces do cluster**
 
-**Exemplo:** `oc get pod <resource-name>app -o yaml | grep -A 10 securityContext`
 
 ```bash ignore-test
 oc get pod test-app -o yaml | grep -A 10 securityContext

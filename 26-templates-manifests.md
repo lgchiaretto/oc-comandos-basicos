@@ -363,7 +363,6 @@ oc get pod test-app -o yaml > /tmp/pod.yaml
 
 **Exibir recurso "test-app" em formato YAML**
 
-**Exemplo:** `oc get deployment <deployment-name> -o yaml > /tmp/deployment.yaml`
 
 ```bash
 oc get deployment test-app -o yaml > /tmp/deployment.yaml
@@ -371,7 +370,6 @@ oc get deployment test-app -o yaml > /tmp/deployment.yaml
 
 **Exibir service "test-app" em formato YAML**
 
-**Exemplo:** `oc get svc <service-name> -o yaml > /tmp/service.yaml>`
 
 ```bash
 oc get svc test-app -o yaml > /tmp/service.yaml
@@ -379,7 +377,6 @@ oc get svc test-app -o yaml > /tmp/service.yaml
 
 **Exibir route "test-app" em formato YAML**
 
-**Exemplo:** `oc get route <route-name> -o yaml > /tmp/route.yaml`
 
 ```bash
 oc get route test-app -o yaml > /tmp/route.yaml
@@ -417,7 +414,6 @@ EOF
 
 **Exibir recurso "test-app" em formato YAML**
 
-**Exemplo:** `oc get deployment <deployment-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml`
 **oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml**
 
 ```bash

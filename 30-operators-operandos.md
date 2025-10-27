@@ -44,7 +44,6 @@ oc get pods -n openshift-operator-lifecycle-manager -l app=packageserver
 
 **Status do OLM**
 
-**Exemplo:** `oc get clusteroperator <resource-name>`
 **oc get clusteroperator <resource-name>**
 **oc get clusteroperator <resource-name>**
 
@@ -63,7 +62,6 @@ oc get catalogsources -n openshift-marketplace
 
 **Principais catalogs**
 
-**Exemplo:** `oc get catalogsource <resource-name>operators -n <namespace>`
 **oc get catalogsource <resource-name>operators -n <namespace>**
 **oc get catalogsource <resource-name>operators -n <namespace>**
 **oc get catalogsource <resource-name>marketplace -n <namespace>**
@@ -77,7 +75,6 @@ oc get catalogsource redhat-marketplace -n openshift-marketplace
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe catalogsource <resource-name>operators -n <namespace>`
 
 ```bash
 oc describe catalogsource redhat-operators -n openshift-marketplace
@@ -85,7 +82,6 @@ oc describe catalogsource redhat-operators -n openshift-marketplace
 
 **Exibir recurso "redhat-operators" em formato JSON**
 
-**Exemplo:** `oc get catalogsource <resource-name>operators -n <namespace> -o jsonpath='{.spec.image}'`
 
 ```bash
 oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
@@ -112,7 +108,6 @@ oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe packagemanifest <resource-name>operator -n <namespace>`
 
 ```bash
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
@@ -120,7 +115,6 @@ oc describe packagemanifest local-storage-operator -n openshift-marketplace
 
 **Exibir recurso "local-storage-operator" em formato JSON**
 
-**Exemplo:** `oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[*].name}'`
 
 ```bash ignore-test
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
@@ -128,7 +122,6 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 
 **Exibir recurso "local-storage-operator" em formato JSON**
 
-**Exemplo:** `oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'`
 
 ```bash ignore-test
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
@@ -136,7 +129,6 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 
 **Exibir recurso "local-storage-operator" em formato JSON**
 
-**Exemplo:** `oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.defaultChannel}'`
 
 ```bash
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
@@ -208,7 +200,6 @@ oc get pods -n <operator-namespace>
 ### Exemplo: Elasticsearch Operator
 **Criar novo recurso**
 
-**Exemplo:** `oc create namespace <namespace-name>`
 
 ```bash ignore-test
 oc create namespace openshift-operators-redhat
@@ -335,7 +326,6 @@ oc get crd | grep ingresscontrollers
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe crd <resource-name>.operator.openshift.io`
 
 ```bash
 oc describe crd ingresscontrollers.operator.openshift.io
@@ -343,7 +333,6 @@ oc describe crd ingresscontrollers.operator.openshift.io
 
 **Exibir recurso "ingresscontrollers.operator.openshift.io" em formato YAML**
 
-**Exemplo:** `oc get crd <resource-name>.operator.openshift.io -o yaml`
 
 ```bash
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
@@ -351,7 +340,6 @@ oc get crd ingresscontrollers.operator.openshift.io -o yaml
 
 **Exibir recurso "ingresscontrollers.operator.openshift.io" em formato JSON**
 
-**Exemplo:** `oc get crd <resource-name>.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'`
 
 ```bash
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
@@ -583,7 +571,6 @@ oc describe installplan <plan> -n <namespace>
 
 **Exibir logs do pod especificado**
 
-**Exemplo:** `oc logs -n <namespace> deployment/olm-operator`
 **oc logs -n <namespace> deployment/catalog-operator**
 
 ```bash

@@ -52,7 +52,6 @@ oc get pvc -o jsonpath='{.items[?(@.status.phase=="Pending")].metadata.name}'
 
 **Exibir detalhes completos do persistent volume claim**
 
-**Exemplo:** `oc describe pvc <resource-name>`
 
 ```bash
 oc describe pvc test-app
@@ -66,7 +65,6 @@ oc get events --field-selector involvedObject.name=test-app
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'`
 
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
@@ -74,7 +72,6 @@ oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'`
 
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
@@ -120,7 +117,6 @@ oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 ### Pending PVC
 **Exibir detalhes completos do persistent volume claim**
 
-**Exemplo:** `oc describe pvc <resource-name> | grep -A 10 Events`
 
 ```bash
 oc describe pvc test-app | grep -A 10 Events
@@ -208,7 +204,6 @@ oc get pods -A | grep csi
 ### Volume Não Monta
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -A 10 Volumes`
 
 ```bash
 oc describe pod my-pod | grep -A 10 Volumes
@@ -228,7 +223,6 @@ oc get pvc
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'`
 
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
@@ -247,7 +241,6 @@ df -h
 ### ReadOnly Filesystem
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.accessModes}'`
 
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.accessModes}'
@@ -255,7 +248,6 @@ oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 
 **Verificar access mode do PV**
 
-**Exemplo:** `oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'`
 
 ```bash ignore-test
 oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
@@ -263,7 +255,6 @@ oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'`
 **oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'**
 
 ```bash ignore-test
@@ -280,7 +271,6 @@ oc exec my-pod -- df -h
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'`
 
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
@@ -288,7 +278,6 @@ oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-**Exemplo:** `oc patch pvc <resource-name>app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'`
 
 ```bash
 oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
@@ -302,7 +291,6 @@ oc get sc <storage-class> -o jsonpath='{.allowVolumeExpansion}'
 
 **Exibir detalhes completos do persistent volume claim**
 
-**Exemplo:** `oc describe pvc <resource-name>`
 
 ```bash
 oc describe pvc test-app
@@ -317,7 +305,6 @@ oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolume
 
 **Deletar recurso forçadamente (sem período de espera)**
 
-**Exemplo:** `oc delete pod <resource-name>pod --grace-period=0 --force`
 
 ```bash ignore-test
 oc delete pod my-pod --grace-period=0 --force
@@ -325,7 +312,6 @@ oc delete pod my-pod --grace-period=0 --force
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-**Exemplo:** `oc patch pvc <resource-name>app -p '{"metadata":{"finalizers":null}}'`
 
 ```bash
 oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
@@ -333,7 +319,6 @@ oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.metadata.finalizers}'`
 
 ```bash
 oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
@@ -395,7 +380,6 @@ oc get pods -n openshift-local-storage
 
 **Exibir logs de todos os pods que correspondem ao label**
 
-**Exemplo:** `oc logs -n <namespace> -l name=local-storage-operator`
 
 ```bash
 oc logs -n openshift-local-storage -l name=local-storage-operator

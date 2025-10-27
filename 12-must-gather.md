@@ -95,7 +95,6 @@ oc adm inspect nodes --dest-dir=/tmp/inspect
 
 **Inspecionar e coletar informações de recursos específicos**
 
-**Exemplo:** `oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect`
 
 ```bash ignore-test
 oc adm inspect deployment/test-app --dest-dir=/tmp/inspect

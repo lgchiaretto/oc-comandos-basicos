@@ -150,7 +150,6 @@ EOF
 
 **Aguardar condição específica do recurso**
 
-**Exemplo:** `oc wait --for=condition=ready pod/<pod-name>`
 
 ```bash ignore-test
 oc wait --for=condition=ready pod/backup-pod
@@ -170,7 +169,6 @@ oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 
 **Deletar o recurso especificado**
 
-**Exemplo:** `oc delete pod <resource-name>`
 
 ```bash ignore-test
 oc delete pod backup-pod

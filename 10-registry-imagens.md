@@ -32,7 +32,6 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 
 **Ver status do registry**
 
-**Exemplo:** `oc get clusteroperator <resource-name>`
 
 ```bash
 oc get clusteroperator image-registry
@@ -104,7 +103,6 @@ docker pull <registry-interno>/<projeto>/test-app:<tag>
 
 **Exibir imagestream "s2i-chiaretto" em formato YAML**
 
-**Exemplo:** `oc get is <imagestream-name> -o yaml`
 
 ```bash
 oc get is s2i-chiaretto -o yaml
@@ -175,7 +173,6 @@ oc adm prune images --confirm
 
 **Dry-run (sem deletar)**
 
-**Exemplo:** `oc adm prune <resource-name>`
 
 ```bash ignore-test
 oc adm prune images

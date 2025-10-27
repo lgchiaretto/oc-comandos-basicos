@@ -69,7 +69,6 @@ oc apply -f pod.yaml
 
 **Deletar o recurso especificado**
 
-**Exemplo:** `oc delete pod <resource-name>`
 
 ```bash ignore-test
 oc delete pod my-pod
@@ -77,7 +76,6 @@ oc delete pod my-pod
 
 **Deletar recurso forçadamente (sem período de espera)**
 
-**Exemplo:** `oc delete pod <resource-name>pod --grace-period=0 --force`
 
 ```bash ignore-test
 oc delete pod my-pod --grace-period=0 --force
@@ -122,7 +120,6 @@ oc get pods -l app=test-app
 
 **Listar pods em um projeto específico**
 
-**Exemplo:** `oc get pods -n <namespace>`
 
 ```bash
 oc get pods -n development
@@ -136,7 +133,6 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name>`
 
 ```bash
 oc describe pod my-pod
@@ -144,7 +140,6 @@ oc describe pod my-pod
 
 **Exibir recurso "my-pod" em formato YAML**
 
-**Exemplo:** `oc get pod <resource-name>pod -o yaml`
 
 ```bash
 oc get pod my-pod -o yaml
@@ -152,7 +147,6 @@ oc get pod my-pod -o yaml
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o json`
 
 ```bash
 oc get pod my-pod -o json
@@ -160,7 +154,6 @@ oc get pod my-pod -o json
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.phase}'`
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.phase}'
@@ -168,7 +161,6 @@ oc get pod my-pod -o jsonpath='{.status.phase}'
 
 **Aguardar pod ficar no estado Ready**
 
-**Exemplo:** `oc wait --for=condition=Ready pod/<pod-name>`
 
 ```bash
 oc wait --for=condition=Ready pod/my-pod
@@ -199,7 +191,6 @@ oc exec -it my-pod -- /bin/date
 
 **Executar comando em container específico do pod**
 
-**Exemplo:** `oc exec my-pod -c <container-name> -- /bin/date`
 
 ```bash
 oc exec my-pod -c my-container -- /bin/date
@@ -247,7 +238,6 @@ oc cp ./config.json mypod:/etc/config/config.json
 ### Reiniciar Pods
 **Reiniciar deployment (recria todos os pods)**
 
-**Exemplo:** `oc rollout restart <resource-name>/test-app`
 
 ```bash
 oc rollout restart deployment/test-app
@@ -255,7 +245,6 @@ oc rollout restart deployment/test-app
 
 **Deletar o recurso especificado**
 
-**Exemplo:** `oc delete pod <resource-name>`
 
 ```bash ignore-test
 oc delete pod my-pod
@@ -263,14 +252,12 @@ oc delete pod my-pod
 
 **Escalar deployment para zero (parar todos os pods)**
 
-**Exemplo:** `oc scale deployment <deployment-name> --replicas=0`
 
 ```bash
 oc scale deployment test-app --replicas=0
 ```
 **Ajustar número de réplicas do deployment/replicaset**
 
-**Exemplo:** `oc scale deployment <deployment-name> --replicas=2`
 
 ```bash
 oc scale deployment test-app --replicas=2
@@ -282,7 +269,6 @@ oc scale deployment test-app --replicas=2
 ### Debug Interativo
 **Criar cópia de pod para debug interativo**
 
-**Exemplo:** `oc debug pod/<pod-name>`
 
 ```bash ignore-test
 oc debug pod/my-pod
@@ -290,7 +276,6 @@ oc debug pod/my-pod
 
 **Criar pod de debug com imagem customizada**
 
-**Exemplo:** `oc debug pod/<pod-name> --image=quay.io/chiaretto/netshoot`
 
 ```bash ignore-test
 oc debug pod/my-pod-debug --image=quay.io/chiaretto/netshoot
@@ -329,7 +314,6 @@ oc get pods --field-selector=status.phase=Failed
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -A 10 "Events:"`
 
 ```bash
 oc describe pod my-pod | grep -A 10 "Events:"
@@ -354,7 +338,6 @@ oc logs -f my-pod
 
 **Exibir logs de container específico do pod**
 
-**Exemplo:** `oc logs my-pod -c <container-name>`
 
 ```bash ignore-test
 oc logs my-pod -c my-container

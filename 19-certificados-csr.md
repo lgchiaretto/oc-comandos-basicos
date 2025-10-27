@@ -143,7 +143,6 @@ oc get secret -n openshift-ingress
 
 **Exibir secret "apps-cert" em formato YAML**
 
-**Exemplo:** `oc get secret <secret-name> -n <namespace> -o yaml`
 
 ```bash
 oc get secret apps-cert -n openshift-ingress -o yaml
@@ -151,7 +150,6 @@ oc get secret apps-cert -n openshift-ingress -o yaml
 
 **Exibir secret "apps-cert" em formato JSON**
 
-**Exemplo:** `oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout`
 
 ```bash
 oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
@@ -164,7 +162,6 @@ oc create secret tls custom-certs --cert=<cert-file> --key=<key-file> -n openshi
 ```
 
 
-**Exemplo:** `oc patch ingresscontroller default -n <namespace> --type=merge -p '{"spec":{"defaultCertificate":{"name":"apps-cert"}}}'`
 
 ```bash
 oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p '{"spec":{"defaultCertificate":{"name":"apps-cert"}}}'
@@ -263,7 +260,6 @@ oc get configmap -n openshift-config-managed
 
 **Exibir recurso "default-ingress-cert" em formato YAML**
 
-**Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
 
 ```bash
 oc get configmap default-ingress-cert -n openshift-config-managed -o yaml

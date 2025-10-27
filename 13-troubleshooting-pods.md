@@ -44,7 +44,6 @@ oc get pods --field-selector=status.phase=Pending
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name>`
 
 ```bash
 oc describe pod my-pod
@@ -58,7 +57,6 @@ oc get events --field-selector involvedObject.name=my-pod
 
 **Exibir recurso "my-pod" em formato YAML**
 
-**Exemplo:** `oc get pod <resource-name>pod -o yaml`
 
 ```bash
 oc get pod my-pod -o yaml
@@ -73,7 +71,6 @@ oc logs my-pod
 
 **Exibir logs de container específico do pod**
 
-**Exemplo:** `oc logs my-pod -c <container-name>`
 
 ```bash ignore-test
 oc logs my-pod -c httpd
@@ -104,7 +101,6 @@ oc logs my-pod --tail=100
 ### ImagePullBackOff
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -A 10 Events`
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Events
@@ -124,7 +120,6 @@ oc debug node/<node-name> -- chroot /host podman pull <image>
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.spec.containers[0].image}'`
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
@@ -139,7 +134,6 @@ oc logs my-pod --previous
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -i "exit code"`
 
 ```bash ignore-test
 oc describe pod my-pod | grep -i "exit code"
@@ -147,7 +141,6 @@ oc describe pod my-pod | grep -i "exit code"
 
 **Listar recurso de todos os namespaces do cluster**
 
-**Exemplo:** `oc get pod <resource-name>pod -o yaml | grep -A 10 livenessProbe`
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
@@ -155,7 +148,6 @@ oc get pod my-pod -o yaml | grep -A 10 livenessProbe
 
 **Desabilitar probes temporariamente**
 
-**Exemplo:** `oc set probe <resource-name>/test-app --liveness --remove`
 **oc set probe <resource-name>/test-app --readiness --remove**
 
 ```bash
@@ -165,7 +157,6 @@ oc set probe deployment/test-app --readiness --remove
 
 **Criar cópia de pod para debug interativo**
 
-**Exemplo:** `oc debug deployment/<deployment-name>`
 
 ```bash ignore-test
 oc debug deployment/test-app
@@ -174,7 +165,6 @@ oc debug deployment/test-app
 ### Pending (Não Agendado)
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -A 20 Events`
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 20 Events
@@ -182,7 +172,6 @@ oc describe pod my-pod | grep -A 20 Events
 
 **Listar recurso de todos os namespaces do cluster**
 
-**Exemplo:** `oc get pod <resource-name>pod -o yaml | grep -A 5 resources`
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 5 resources
@@ -190,7 +179,6 @@ oc get pod my-pod -o yaml | grep -A 5 resources
 
 **Ver capacidade dos nodes**
 
-**Exemplo:** `oc adm top <resource-name>`
 
 ```bash
 oc adm top nodes
@@ -204,7 +192,6 @@ oc get nodes
 
 **Exibir recurso "my-pod" em formato YAML**
 
-**Exemplo:** `oc get pod <resource-name>pod -o yaml | grep nodeSelector`
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep nodeSelector
@@ -219,7 +206,6 @@ oc describe nodes | grep Taints
 ### OOMKilled
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'`
 
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
@@ -227,7 +213,6 @@ oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 
 **Ver uso atual**
 
-**Exemplo:** `oc adm top <resource-name> my-pod`
 
 ```bash ignore-test
 oc adm top pod my-pod
@@ -235,7 +220,6 @@ oc adm top pod my-pod
 
 **Definir/atualizar requests e limits de recursos**
 
-**Exemplo:** `oc set resources <resource-name>/test-app --limits=memory=2Gi`
 
 ```bash
 oc set resources deployment/test-app --limits=memory=2Gi
@@ -243,7 +227,6 @@ oc set resources deployment/test-app --limits=memory=2Gi
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.containerStatuses[0].restartCount}'`
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
@@ -251,7 +234,6 @@ oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'`
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
@@ -264,7 +246,6 @@ oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminate
 ### Debug Interativo
 **Criar cópia de pod para debug interativo**
 
-**Exemplo:** `oc debug pod/<pod-name>`
 
 ```bash ignore-test
 oc debug pod/my-pod
@@ -272,7 +253,6 @@ oc debug pod/my-pod
 
 **Criar cópia de pod para debug interativo**
 
-**Exemplo:** `oc debug deployment/<deployment-name>`
 
 ```bash ignore-test
 oc debug deployment/test-app
@@ -327,7 +307,6 @@ oc exec my-pod -- ls -la /path
 ### Port Forward para Debug
 **Forward de porta**
 
-**Exemplo:** `oc port-forward my-pod <pod-name>:8080`
 
 ```bash ignore-test
 oc port-forward my-pod 8080:8080
@@ -335,7 +314,6 @@ oc port-forward my-pod 8080:8080
 
 **Múltiplas portas**
 
-**Exemplo:** `oc port-forward my-pod <pod-name>:8080 9090:9090`
 
 ```bash ignore-test
 oc port-forward my-pod 8080:8080 9090:9090
@@ -343,7 +321,6 @@ oc port-forward my-pod 8080:8080 9090:9090
 
 **Em background**
 
-**Exemplo:** `oc port-forward my-pod <pod-name>:8080 &`
 
 ```bash ignore-test
 oc port-forward my-pod 8080:8080 &
@@ -368,7 +345,6 @@ oc get pvc
 
 **Exibir detalhes completos do persistent volume claim**
 
-**Exemplo:** `oc describe pvc <resource-name>`
 
 ```bash ignore-test
 oc describe pvc test-app
@@ -376,7 +352,6 @@ oc describe pvc test-app
 
 **Exibir detalhes completos do recurso**
 
-**Exemplo:** `oc describe pod <resource-name> | grep -A 10 Mounts`
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Mounts
@@ -391,7 +366,6 @@ oc exec my-pod -- ls -la /mount/path
 ### ConfigMaps e Secrets
 **Exibir configmap "test-app" em formato YAML**
 
-**Exemplo:** `oc get cm <configmap-name> -o yaml`
 
 ```bash
 oc get cm test-app -o yaml
@@ -399,7 +373,6 @@ oc get cm test-app -o yaml
 
 **Exibir secret "test-app" em formato YAML**
 
-**Exemplo:** `oc get secret <secret-name> -o yaml`
 
 ```bash
 oc get secret test-app -o yaml
@@ -407,7 +380,6 @@ oc get secret test-app -o yaml
 
 **Definir/atualizar variáveis de ambiente no recurso**
 
-**Exemplo:** `oc set env <resource-name>/test-app --list`
 
 ```bash ignore-test
 oc set env pod/test-app --list
@@ -428,7 +400,6 @@ oc get svc
 
 **Endpoints do service**
 
-**Exemplo:** `oc get endpoints <resource-name>`
 
 ```bash
 oc get endpoints test-app
@@ -448,7 +419,6 @@ oc exec my-pod -- nslookup <service-name>
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'`
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.status.podIP}'
@@ -463,7 +433,6 @@ oc get sa
 
 **Exibir recurso "my-pod" em formato YAML**
 
-**Exemplo:** `oc get pod <resource-name>pod -o yaml | grep scc`
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep scc
@@ -477,7 +446,6 @@ oc adm policy who-can <verbo> <recurso>
 
 **Exibir recurso "my-pod" em formato JSON**
 
-**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.spec.securityContext.runAsUser}'`
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'
