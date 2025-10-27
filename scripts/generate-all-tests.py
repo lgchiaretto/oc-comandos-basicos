@@ -60,6 +60,9 @@ class TestGenerator:
         commands = []
         ignored_count = 0
         
+        # Split content in lines for easier processing
+        lines = content.split('\n')
+        
         # Encontra todos os blocos de código bash
         for block in re.finditer(self.BASH_BLOCK_PATTERN, content, re.DOTALL):
             # Ignora blocos marcados com 'ignore-test'
@@ -72,17 +75,42 @@ class TestGenerator:
                         ignored_count += 1
                 continue
             
+            # Try to find description in bold text before the code block
+            # Look for pattern: **Description text**
+            block_start_pos = block.start()
+            
+            # Find the line number of the block start
+            preceding_text = content[:block_start_pos]
+            preceding_lines = preceding_text.split('\n')
+            
+            # Look backwards for a line with **text**
+            description_from_markdown = None
+            for i in range(len(preceding_lines) - 1, max(0, len(preceding_lines) - 5), -1):
+                line = preceding_lines[i].strip()
+                # Match: **Some description text**
+                desc_match = re.match(r'^\*\*(.+?)\*\*$', line)
+                if desc_match:
+                    description_from_markdown = desc_match.group(1).strip()
+                    break
+            
             # Processa comandos do bloco
-            block_cmds, block_ignored = self._process_code_block(block.group(1))
+            block_cmds, block_ignored = self._process_code_block(
+                block.group(1), 
+                default_description=description_from_markdown
+            )
             commands.extend(block_cmds)
             ignored_count += block_ignored
         
         return commands, ignored_count
     
-    def _process_code_block(self, block_content: str) -> Tuple[List[Tuple[str, str]], int]:
+    def _process_code_block(self, block_content: str, default_description: str = None) -> Tuple[List[Tuple[str, str]], int]:
         """Processa um bloco de código e extrai comandos válidos.
 
         Retorna (commands, ignored_count_in_block).
+        
+        Args:
+            block_content: Conteúdo do bloco de código
+            default_description: Descrição extraída do markdown (texto em negrito antes do bloco)
         """
         commands = []
         comment = None
@@ -155,7 +183,15 @@ class TestGenerator:
 
                 # Validate command (use the first non-empty line for validation)
                 first_cmd_line = full_cmd.split('\n', 1)[0].strip()
-                desc = comment or self._extract_description(first_cmd_line)
+                
+                # Priority: comment from code > default_description > auto-extracted
+                if comment:
+                    desc = comment
+                elif default_description:
+                    desc = default_description
+                else:
+                    desc = self._extract_description(first_cmd_line)
+                
                 commands.append((desc, full_cmd))
                 comment = None
                 i = j
