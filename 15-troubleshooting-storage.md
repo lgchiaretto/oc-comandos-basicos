@@ -132,14 +132,14 @@ oc get sc
 
 **Verificar se StorageClass existe**
 
-```bash ignore-test
-oc get sc <storage-class-name>
+```bash
+oc get sc ocs-storagecluster-ceph-rbd
 ```
 
 **Ver provisioner**
 
-```bash ignore-test
-oc get sc <storage-class-name> -o jsonpath='{.provisioner}'
+```bash
+oc get sc ocs-storagecluster-ceph-rbd -o jsonpath='{.provisioner}'
 ```
 
 ---
@@ -156,8 +156,8 @@ oc get sc
 
 **Descrever StorageClass**
 
-```bash ignore-test
-oc describe sc <nome-da-sc>
+```bash
+oc describe sc ocs-storagecluster-ceph-rbd
 ```
 
 **Exibir storageclass em formato JSON**
@@ -249,7 +249,7 @@ oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 
 **oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'**
 
-```bash ignore-test
+```bash
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
@@ -257,7 +257,7 @@ oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ### Volume Full (Cheio)
 **Executar comando dentro do pod especificado**
 
-```bash ignore-test
+```bash
 oc exec my-pod -- df -h
 ```
 
@@ -275,8 +275,8 @@ oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}
 
 **Verificar se expansão é permitida**
 
-```bash ignore-test
-oc get sc <storage-class> -o jsonpath='{.allowVolumeExpansion}'
+```bash
+oc get sc ocs-storagecluster-ceph-rbd -o jsonpath='{.allowVolumeExpansion}'
 ```
 
 **Exibir detalhes completos do persistent volume claim**
@@ -288,7 +288,7 @@ oc describe pvc test-app
 ### PVC Stuck Terminating
 **Exibir pods em formato JSON**
 
-```bash ignore-test
+```bash
 oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolumeClaim.claimName=="test-app") | .metadata.name'
 ```
 
@@ -450,12 +450,6 @@ chroot /host
 
 ```bash ignore-test
 ls -la /var/lib/kubelet/pods/
-```
-
-**Ver PVs montados**
-
-```bash ignore-test
-ls -la /var/lib/origin/openshift.local.volumes/
 ```
 
 **Verificar permissões**

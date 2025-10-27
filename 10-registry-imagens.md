@@ -6,13 +6,22 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 
 ## Índice
 
-1. [Índice](#índice)
-2. [Registry Interno](#registry-interno)
-3. [Push e Pull de Imagens](#push-e-pull-de-imagens)
-4. [Image Mirroring](#image-mirroring)
-5. [Image Pruning](#image-pruning)
-6. [Documentação Oficial](#documentação-oficial)
-7. [Navegação](#navegação)
+- [Registry e Gestão de Imagens](#registry-e-gestão-de-imagens)
+  - [Índice](#índice)
+  - [Registry Interno](#registry-interno)
+    - [Acessar Registry](#acessar-registry)
+    - [Habilitar Registry e adicionar PVC](#habilitar-registry-e-adicionar-pvc)
+  - [Push e Pull de Imagens](#push-e-pull-de-imagens)
+    - [Push de Imagens](#push-de-imagens)
+    - [Pull de Imagens](#pull-de-imagens)
+  - [Image Mirroring](#image-mirroring)
+    - [Configurar Mirroring](#configurar-mirroring)
+    - [Mirror com oc-mirror](#mirror-com-oc-mirror)
+  - [Image Pruning](#image-pruning)
+    - [Limpeza de Imagens](#limpeza-de-imagens)
+    - [Limpeza de Builds](#limpeza-de-builds)
+  - [Documentação Oficial](#documentação-oficial)
+  - [Navegação](#navegação)
 ---
 
 ## Registry Interno
@@ -36,25 +45,24 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 oc get clusteroperator image-registry
 ```
 
-### Configurar Registry
+### Habilitar Registry e adicionar PVC 
 **Aplicar modificação parcial ao recurso usando patch**
 
 ```bash
-oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"defaultRoute":true}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
 ```
 
-**Ver route criada**
-
-```bash
-oc get route -n openshift-image-registry
-```
-
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao recurso usando patch para adicionar um disco ao registry com a storageclass default**
 
 ```bash
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"storage":{"pvc":{"claim":""}}}}'
 ```
 
+**Ver pods image registry criado**
+
+```bash
+oc get pods -n openshift-image-registry
+```
 ---
 
 ## Push e Pull de Imagens
@@ -63,13 +71,13 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 **Tag para registry interno**
 
 ```bash ignore-test
-docker tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
+podman tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 **Push para registry interno**
 
 ```bash ignore-test
-docker push <registry-interno>/<projeto>/test-app:<tag>
+podman push <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 **Usando Podman**
@@ -97,7 +105,7 @@ oc secrets link default <secret-name> --for=pull
 **Pull de registry interno**
 
 ```bash ignore-test
-docker pull <registry-interno>/<projeto>/test-app:<tag>
+podman pull <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 **Exibir imagestream "s2i-chiaretto" em formato YAML**
