@@ -18,50 +18,38 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 ## Templates
 
 ### Listar Templates
-```markdown
 **Ação:** Templates do projeto atual
-```
 
 ```bash
 oc get templates
 ```
 
-```markdown
 **Ação:** Listar templates disponíveis no namespace openshift
-```
 
 ```bash
 oc get templates -n openshift
 ```
 
-```markdown
 **Ação:** Descrever template
-```
 
 ```bash ignore-test
 oc describe template <template-name> -n openshift
 ```
 
-```markdown
 **Ação:** Ver YAML do template
-```
 
 ```bash ignore-test
 oc get template <template-name> -n openshift -o yaml
 ```
 
-```markdown
 **Ação:** Buscar templates disponíveis
-```
 
 ```bash ignore-test
 oc get templates -n openshift | grep <keyword>
 ```
 
 ### Criar Template
-```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
-```
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -106,9 +94,7 @@ EOF
 ```
 
 ### Template Completo
-```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
-```
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -226,75 +212,57 @@ EOF
 ## Processing Templates
 
 ### Processar Template
-```markdown
 **Ação:** Process e display (não cria recursos)
-```
 
 ```bash ignore-test
 oc process <template-name>
 ```
 
-```markdown
 **Ação:** Com parâmetros
-```
 
 ```bash ignore-test
 oc process <template-name> -p APP_NAME=test-app -p REPLICAS=3
 ```
 
-```markdown
 **Ação:** Process e create
-```
 
 ```bash ignore-test
 oc process <template-name> -p APP_NAME=test-app | oc create -f -
 ```
 
-```markdown
 **Ação:** De um template no openshift namespace
-```
 
 ```bash ignore-test
 oc process -n openshift <template-name> -p PARAM=value | oc create -f -
 ```
 
-```markdown
 **Ação:** Criar novo recurso
-```
 
 ```bash ignore-test
 oc process -f template.yaml -p APP_NAME=test-app | oc create -f -
 ```
 
 ### Ver Parâmetros
-```markdown
 **Ação:** Listar parâmetros de um template
-```
 
 ```bash ignore-test
 oc process <template-name> --parameters
 ```
 
-```markdown
 **Ação:** De template no openshift namespace
-```
 
 ```bash ignore-test
 oc process -n openshift <template-name> --parameters
 ```
 
-```markdown
 **Ação:** Formato mais legível
-```
 
 ```bash ignore-test
 oc process -n openshift <template-name> --parameters | column -t
 ```
 
 ### Usar Arquivo de Parâmetros
-```markdown
 **Ação:** Criar arquivo de parâmetros
-```
 
 ```bash
 cat > /tmp/params.env << EOF
@@ -306,17 +274,13 @@ DB_NAME=production
 EOF
 ```
 
-```markdown
 **Ação:** Usar com template
-```
 
 ```bash ignore-test
 oc process <template-name> --param-file=/tmp/params.env | oc create -f -
 ```
 
-```markdown
 **Ação:** Ou combinar arquivo + override
-```
 
 ```bash ignore-test
 oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc create -f -
@@ -327,9 +291,7 @@ oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc creat
 ## Parameters
 
 ### Tipos de Parâmetros
-```markdown
 **Ação:** Parâmetro obrigatório
-```
 
 ```bash ignore-test
 parameters:
@@ -337,9 +299,7 @@ parameters:
   required: true
 ```
 
-```markdown
 **Ação:** Com valor default
-```
 
 ```bash ignore-test
 parameters:
@@ -347,9 +307,7 @@ parameters:
   value: "1"
 ```
 
-```markdown
 **Ação:** Com generate (senha aleatória, por exemplo)
-```
 
 ```bash ignore-test
 parameters:
@@ -360,10 +318,8 @@ parameters:
   from: "[a-zA-Z0-9]{16}"
 ```
 
-```markdown
 **Ação:** Com validation regex
 * (validation é aplicada no processing)
-```
 
 ```bash ignore-test
 parameters:
@@ -373,9 +329,7 @@ parameters:
 ```
 
 ### Generate Values
-```markdown
 **Ação:** Gerar valores aleatórios
-```
 
 ```bash ignore-test
 parameters:
@@ -401,68 +355,52 @@ parameters:
 ## Export e Manifests
 
 ### Export de Recursos
-```markdown
 **Ação:** oc get pod <resource-name>app -o yaml > /tmp/pod.yaml
-```
 
 ```bash ignore-test
 oc get pod test-app -o yaml > /tmp/pod.yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato YAML
 **Exemplo:** `oc get deployment <deployment-name> -o yaml > /tmp/deployment.yaml`
-```
 
 ```bash
 oc get deployment test-app -o yaml > /tmp/deployment.yaml
 ```
 
-```markdown
 **Ação:** Exibir service "test-app" em formato YAML
 **Exemplo:** `oc get svc <service-name> -o yaml > /tmp/service.yaml>`
-```
 
 ```bash
 oc get svc test-app -o yaml > /tmp/service.yaml
 ```
 
-```markdown
 **Ação:** Exibir route "test-app" em formato YAML
 **Exemplo:** `oc get route <route-name> -o yaml > /tmp/route.yaml`
-```
 
 ```bash
 oc get route test-app -o yaml > /tmp/route.yaml
 ```
 
-```markdown
 **Ação:** Exibir deployments em formato YAML
-```
 
 ```bash
 oc get deployments -o yaml > /tmp/all-deployments.yaml
 ```
 
 ### Criar Template de Recursos Existentes
-```markdown
 **Ação:** Listar recurso filtrados por label
-```
 
 ```bash
 oc get deployment,svc,route -l app=test-app -o yaml
 ```
-```markdown
 **Ação:** oc create template <resource-name>template --dry-run=client -o yaml > /tmp/test-app-template.yaml
-```
 
 ```bash ignore-test
 oc create template test-app-template --dry-run=client -o yaml > /tmp/test-app-template.yaml
 ```
 
-```markdown
 **Ação:** Ou manualmente
-```
 
 ```bash
 cat > /tmp/app-template.yaml << 'EOF'
@@ -474,11 +412,9 @@ objects:
 EOF
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato YAML
 **Exemplo:** `oc get deployment <deployment-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml`
 **Ação:** oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
-```
 
 ```bash
 oc get deployment test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
@@ -492,17 +428,13 @@ oc get svc test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 ```
 
 ### Manifests e Kustomize
-```markdown
 **Ação:** Estrutura Kustomize
-```
 
 ```bash ignore-test
 mkdir -p app/{base,overlays/{dev,prod}}
 ```
 
-```markdown
 **Ação:** Base
-```
 
 ```bash ignore-test
 cat > app/base/kustomization.yaml << EOF

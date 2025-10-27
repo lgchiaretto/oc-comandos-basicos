@@ -17,81 +17,63 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 ## ConfigMaps
 
 ### Criar ConfigMaps
-```markdown
 **Ação:** Listar ConfigMaps
-```
 
 ```bash
 oc get configmaps
 oc get cm
 ```
 
-```markdown
 **Ação:** Criar novo recurso
 **Exemplo:** `oc create configmap <configmap-name> --from-literal=chave=valor`
-```
 
 ```bash
 oc create configmap test-app --from-literal=chave=valor
 ```
 
-```markdown
 **Ação:** De arquivo
-```
 
 ```bash ignore-test
 oc create configmap test-app --from-file=<arquivo>
 ```
 
-```markdown
 **Ação:** De diretório
-```
 
 ```bash ignore-test
 oc create configmap test-app --from-file=<diretorio>/
 ```
 
-```markdown
 **Ação:** Exibir configmap "test-app" em formato YAML
 **Exemplo:** `oc get cm <configmap-name> -o yaml`
-```
 
 ```bash
 oc get cm test-app -o yaml
 ```
 
-```markdown
 **Ação:** Abrir editor para modificar recurso interativamente
 **Exemplo:** `oc edit cm <configmap-name>`
-```
 
 ```bash ignore-test
 oc edit cm test-app
 ```
 
-```markdown
 **Ação:** Deletar o configmap especificado
 **Exemplo:** `oc delete cm <configmap-name>`
-```
 
 ```bash
 oc delete cm test-app
 ```
 
 ### Exemplos Avançados
-```markdown
 **Ação:** Criar novo configmap
 **Exemplo:** `oc create cm <configmap-name>`
-```
 
 ```bash
 oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
 ```
 
-```markdown
 **Ação:** Exibir configmap "test-app" em formato JSON
 **Exemplo:** `oc get cm <configmap-name> -o jsonpath='{.data}'`
-```
 
 ```bash
 oc get cm test-app -o jsonpath='{.data}'
@@ -101,28 +83,22 @@ oc get cm test-app -o jsonpath='{.data}'
 
 
 ### Descrever ConfigMap
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe configmap <configmap-name>`
-```
 
 ```bash
 oc describe configmap test-app
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe configmap <configmap-name> -n <namespace>`
-```
 
 ```bash
 oc describe configmap test-app -n development
 ```
 
-```markdown
 **Ação:** Exemplo prático
 **Exemplo:** `oc describe configmap <configmap-name> -n <namespace>`
-```
 
 ```bash
 oc describe configmap test-app -n development
@@ -131,27 +107,21 @@ oc describe configmap test-app -n development
 ## Secrets
 
 ### Criar Secrets
-```markdown
 **Ação:** Criar novo secret
 **Exemplo:** `oc create secret <secret-name> test-app --from-literal=chave=valor`
-```
 
 ```bash
 oc create secret generic test-app --from-literal=chave=valor
 ```
 
-```markdown
 **Ação:** De arquivo
-```
 
 ```bash ignore-test
 oc create secret generic test-app --from-file=<arquivo>
 ```
 
-```markdown
 **Ação:** Criar novo secret
 **Exemplo:** `oc create secret <secret-name> test-app \`
-```
 
 ```bash ignore-test
 oc create secret docker-registry test-app \
@@ -161,106 +131,82 @@ oc create secret docker-registry test-app \
   --docker-email=<email>
 ```
 
-```markdown
 **Ação:** Secret TLS
-```
 
 ```bash ignore-test
 oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 
-```markdown
 **Ação:** Listar todos os secrets do namespace atual
-```
 
 ```bash
 oc get secrets
 ```
 
-```markdown
 **Ação:** Exibir secret "test-app" em formato YAML
 **Exemplo:** `oc get secret <secret-name> -o yaml`
-```
 
 ```bash
 oc get secret test-app -o yaml
 ```
 
-```markdown
 **Ação:** Exibir secret "test-app" em formato JSON
 **Exemplo:** `oc get secret <secret-name> -o jsonpath='{.data.chave}' | base64 -d`
-```
 
 ```bash
 oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
 ```
 
-```markdown
 **Ação:** Abrir editor para modificar recurso interativamente
 **Exemplo:** `oc edit secret <secret-name>`
-```
 
 ```bash ignore-test
 oc edit secret test-app
 ```
 
-```markdown
 **Ação:** Deletar o secret especificado
 **Exemplo:** `oc delete secret <secret-name>`
-```
 
 ```bash ignore-test
 oc delete secret test-app
 ```
 
 ### Descrever Secret
-```markdown
 **Ação:** Exibir detalhes completos do secret
 **Exemplo:** `oc describe secret <secret-name>`
-```
 
 ```bash
 oc describe secret test-app
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do secret
 **Exemplo:** `oc describe secret <secret-name> -n <namespace>`
-```
 
 ```bash
 oc describe secret test-app -n development
 ```
 
-```markdown
 **Ação:** Exemplo prático
 **Exemplo:** `oc describe secret <secret-name> -n <namespace>`
-```
 
 ```bash
 oc describe secret test-app -n development
 ```
 
 ### Link Secrets
-```markdown
 **Ação:** Linkar secret à service account
-```
 
 ```bash ignore-test
 oc secrets link <service-account> <nome-do-secret>
 ```
 
-```markdown
 **Ação:** Linkar para pull de imagens
-```
 
 ```bash ignore-test
 oc secrets link default <pull-secret> --for=pull
 ```
 
-```markdown
 **Ação:** Linkar para mount
-```
 
 ```bash ignore-test
 oc secrets link <service-account> <nome-do-secret> --for=mount
@@ -271,47 +217,37 @@ oc secrets link <service-account> <nome-do-secret> --for=mount
 ## Usando em Pods
 
 ### Como Variáveis de Ambiente
-```markdown
 **Ação:** Definir/atualizar variáveis de ambiente no recurso
 **Exemplo:** `oc set env <resource-name>/test-app --from=configmap/test-app`
-```
 
 ```bash
 oc set env deployment/test-app --from=configmap/test-app
 ```
 
-```markdown
 **Ação:** Definir/atualizar variáveis de ambiente no recurso
 **Exemplo:** `oc set env <resource-name>/test-app --from=secret/test-app`
-```
 
 ```bash
 oc set env deployment/test-app --from=secret/test-app
 ```
 
-```markdown
 **Ação:** Definir/atualizar variáveis de ambiente no recurso
 **Exemplo:** `oc set env <resource-name>/test-app minhachave=valor --from=configmap/test-app`
-```
 
 ```bash
 oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ```
 
 ### Como Volumes
-```markdown
 **Ação:** Patch deployment para montar ConfigMap
 **Exemplo:** `oc set volume <resource-name>/test-app`
-```
 
 ```bash
 oc set volume --add --type=configmap deployment/test-app --configmap-name test-app --mount-path=/config
 ```
 
-```markdown
 **Ação:** Montar Secret
 **Exemplo:** `oc set volume <resource-name>/test-app`
-```
 
 ```bash
 oc set volume --add --type=secret deployment/test-app --secret-name test-app --mount-path=/test-app-secret

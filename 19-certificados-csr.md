@@ -18,116 +18,88 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 ## CSR (Certificate Signing Requests)
 
 ### Visualizar CSRs
-```markdown
 **Ação:** Listar Certificate Signing Requests pendentes
-```
 
 ```bash
 oc get csr
 ```
 
-```markdown
 **Ação:** CSRs pendentes
-```
 
 ```bash ignore-test
 oc get csr | grep Pending
 ```
 
-```markdown
 **Ação:** Listar certificate signing request com informações detalhadas
-```
 
 ```bash
 oc get csr -o wide
 ```
 
-```markdown
 **Ação:** Ver CSR específico
-```
 
 ```bash ignore-test
 oc describe csr <csr-name>
 ```
 
-```markdown
 **Ação:** Ver certificado em CSR
-```
 
 ```bash ignore-test
 oc get csr <csr-name> -o jsonpath='{.spec.request}' | base64 -d | openssl req -text -noout
 ```
 
 ### Aprovar CSRs
-```markdown
 **Ação:** Aprovar CSR específico
-```
 
 ```bash ignore-test
 oc adm certificate approve <csr-name>
 ```
 
-```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
-```
 
 ```bash ignore-test
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
-```markdown
 **Ação:** Exibir certificate signing request em formato JSON
-```
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
 ```
 
-```markdown
 **Ação:** Exibir certificate signing request em formato JSON
-```
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:node:worker")) | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
 ### Negar CSRs
-```markdown
 **Ação:** Negar CSR
-```
 
 ```bash ignore-test
 oc adm certificate deny <csr-name>
 ```
 
-```markdown
 **Ação:** Deletar CSR
-```
 
 ```bash ignore-test
 oc delete csr <csr-name>
 ```
 
 ### Monitorar CSRs
-```markdown
 **Ação:** Listar Certificate Signing Requests pendentes
-```
 
 ```bash
 oc get csr
 ```
 
-```markdown
 **Ação:** Listar certificate signing request ordenados por campo específico
-```
 
 ```bash
 oc get csr --sort-by='.metadata.creationTimestamp'
 ```
 
-```markdown
 **Ação:** Exibir certificate signing request em formato JSON
-```
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | uniq -c
@@ -138,109 +110,83 @@ oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | 
 ## Certificados do Cluster
 
 ### API Server Certificates
-```markdown
 **Ação:** Ver certificados do API server
-```
 
 ```bash
 oc get secret -n openshift-kube-apiserver
 ```
 
-```markdown
 **Ação:** Certificado do serving
-```
 
 ```bash
 oc get secret -n openshift-kube-apiserver | grep serving
 ```
 
-```markdown
 **Ação:** Ver validade do certificado
-```
 
 ```bash ignore-test
 oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
-```markdown
 **Ação:** Ver detalhes do certificado
-```
 
 ```bash ignore-test
 oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
 ```
 
 ### Ingress Certificates
-```markdown
 **Ação:** Certificado padrão do ingress
-```
 
 ```bash
 oc get secret -n openshift-ingress
 ```
 
-```markdown
 **Ação:** Exibir secret "apps-cert" em formato YAML
 **Exemplo:** `oc get secret <secret-name> -n <namespace> -o yaml`
-```
 
 ```bash
 oc get secret apps-cert -n openshift-ingress -o yaml
 ```
 
-```markdown
 **Ação:** Exibir secret "apps-cert" em formato JSON
 **Exemplo:** `oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout`
-```
 
 ```bash
 oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
-```markdown
 **Ação:** Substituir certificado do ingress
-```
 
 ```bash ignore-test
 oc create secret tls custom-certs --cert=<cert-file> --key=<key-file> -n openshift-ingress
 ```
 
-```markdown
 **Exemplo:** `oc patch ingresscontroller default -n <namespace> --type=merge -p '{"spec":{"defaultCertificate":{"name":"apps-cert"}}}'`
-```
 
 ```bash
 oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p '{"spec":{"defaultCertificate":{"name":"apps-cert"}}}'
 ```
 
 ### Service Serving Certificates
-```markdown
 **Ação:** Listar recurso filtrados por campo específico
-```
 
 ```bash
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 
-```markdown
 **Ação:** Ver secret específico
-```
 
 ```bash ignore-test
 oc get secret <secret-name> -o yaml
 ```
 
-```markdown
 **Ação:** Anotar service para gerar certificado automático
-```
 
 ```bash ignore-test
 oc annotate service <service-name> service.beta.openshift.io/serving-cert-secret-name=<secret-name>
 ```
 
-```markdown
 **Ação:** Verificar certificado gerado
-```
 
 ```bash ignore-test
 oc get secret <secret-name>
@@ -251,42 +197,32 @@ oc get secret <secret-name>
 ## Certificados de API
 
 ### Custom API Certificates
-```markdown
 **Ação:** Configurar certificado customizado para API
-```
 
 ```bash ignore-test
 oc create secret tls api-certs --cert=<cert-file> --key=<key-file> -n openshift-config
 ```
 
-```markdown
 **Ação:** Aplicar certificado
-```
 
 ```bash ignore-test
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts":{"namedCertificates":[{"names":["<api-hostname>"],"servingCertificate":{"name":"api-certs"}}]}}}'
 ```
 
-```markdown
 **Ação:** Exibir recurso "cluster" em formato YAML
-```
 
 ```bash
 oc get apiserver cluster -o yaml
 ```
 
 ### OAuth Certificates
-```markdown
 **Ação:** Configurar certificado para OAuth
-```
 
 ```bash ignore-test
 oc create secret tls oauth-certs --cert=<cert-file> --key=<key-file> -n openshift-config
 ```
 
-```markdown
 **Ação:** Aplicar
-```
 
 ```bash ignore-test
 oc patch oauths cluster --type=merge -p '{"spec":{"componentRoutes":[{"hostname":"<oauth-hostname>","name":"oauth-openshift","namespace":"openshift-authentication","servingCertKeyPairSecret":{"name":"oauth-certs"}}]}}'
@@ -297,9 +233,7 @@ oc patch oauths cluster --type=merge -p '{"spec":{"componentRoutes":[{"hostname"
 ## Troubleshooting
 
 ### Problemas com Certificados
-```markdown
 **Ação:** Verificar expiração de todos os certificados importantes
-```
 
 ```bash ignore-test
 for ns in openshift-kube-apiserver openshift-ingress openshift-authentication; do
@@ -312,26 +246,20 @@ for ns in openshift-kube-apiserver openshift-ingress openshift-authentication; d
 done
 ```
 
-```markdown
 **Ação:** Verificar certificado de um pod
-```
 
 ```bash ignore-test
 oc exec my-pod -- openssl s_client -connect <host>:<port> -showcerts
 ```
 
-```markdown
 **Ação:** Verificar trust bundle
-```
 
 ```bash
 oc get configmap -n openshift-config-managed
 ```
 
-```markdown
 **Ação:** Exibir recurso "default-ingress-cert" em formato YAML
 **Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
-```
 
 ```bash
 oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
@@ -342,75 +270,57 @@ oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 # Certificados são renovados automaticamente
 # Forçar renovação deletando secrets (serão recriados)
 ```
-```markdown
 * CUIDADO: Isso pode causar downtime!
-```
 
 ```bash ignore-test
 oc delete secret <secret-name> -n <namespace>
 ```
 
-```markdown
 **Ação:** Aguardar recreação
-```
 
 ```bash ignore-test
 oc get secret <secret-name> -n <namespace>
 ```
 
-```markdown
 **Ação:** Verificar novo certificado
-```
 
 ```bash ignore-test
 oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
 ### CSR Não Aprovado Automaticamente
-```markdown
 **Ação:** Ver por que CSR não foi aprovado
-```
 
 ```bash ignore-test
 oc describe csr <csr-name>
 ```
 
-```markdown
 **Ação:** Verificar CSR signer
-```
 
 ```bash ignore-test
 oc get csr <csr-name> -o jsonpath='{.spec.signerName}'
 ```
 
-```markdown
 **Ação:** Verificar usages
-```
 
 ```bash ignore-test
 oc get csr <csr-name> -o jsonpath='{.spec.usages}'
 ```
 
-```markdown
 **Ação:** Ver username que criou
-```
 
 ```bash ignore-test
 oc get csr <csr-name> -o jsonpath='{.spec.username}'
 ```
 
-```markdown
 **Ação:** Logs do cluster-signing-controller
-```
 
 ```bash ignore-test
 oc logs -n openshift-kube-controller-manager <pod-name> | grep csr
 ```
 
 ### Bulk CSR Operations
-```markdown
 **Ação:** Script para aprovar CSRs de nodes periodicamente
-```
 
 ```bash ignore-test
 cat > /tmp/approve-csrs.sh << 'EOF'
@@ -428,9 +338,7 @@ chmod +x /tmp/approve-csrs.sh
 /tmp/approve-csrs.sh &
 ```
 
-```markdown
 **Ação:** Exibir certificate signing request em formato JSON
-```
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.metadata.creationTimestamp < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete csr

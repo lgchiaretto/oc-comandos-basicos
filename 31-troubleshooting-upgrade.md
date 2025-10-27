@@ -22,28 +22,22 @@ Comandos para diagnosticar e resolver problemas durante upgrades do OpenShift Co
 
 ### Verificar motivo dos nodes não sairem de SchedulingDisabled
 
-```markdown
 **Ação:** Verificar se tem anotações no node (analise se  currentConfig está ok, verifique se não tem nenhuma anotação do Machine Config Operator)
 * Esse é importante se o seu node está há muito tempo em SchedulingDisabled e não continua o upgrade
-```
 
 ```bash ignore-test
 oc describe node <node-name> | awk '/^Annotations:/ {flag=1} flag && /^[A-Z]/ && !/^Annotations:/ {flag=0} flag'
 ```
 
-```markdown
 **Ação:** Verificar se tem pods prendendo o node (analise se tem pods que não são OCP ou pods do OCP que usam algum tipo de PVC)
 * Esse é importante se o seu node está há muito tempo em SchedulingDisabled e não continua o upgrade
-```
 
 ```bash ignore-test
 oc describe node <node-name> | awk '/Non-terminated Pods:/{flag=1;next}/Allocated resources:/{flag=0}flag'
 ```
 
-```markdown
 **Ação:** Analise os logs do machine-config-daemon (MCD) do node que esta travado
 * substituir <node-name> pelo node travado
-```
 
 ```bash ignore-test
 oc logs -n openshift-machine-config-operator $(oc get pods -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --field-selector spec.nodeName=<node-name> -o jsonpath='{.items[0].metadata.name}')
@@ -51,33 +45,25 @@ oc logs -n openshift-machine-config-operator $(oc get pods -n openshift-machine-
 
 ### Versão e Canal Atual
 
-```markdown
 **Ação:** Exibir versão e status de atualização do cluster
-```
 
 ```bash
 oc get clusterversion
 ```
 
-```markdown
 **Ação:** Exibir recurso "version" em formato YAML
-```
 
 ```bash
 oc get clusterversion version -o yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
@@ -85,33 +71,25 @@ oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
 
 ### Status do Upgrade
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")]}{"\n"}' | jq
 ```
 
-```markdown
 **Ação:** Verificar se há upgrade disponível
-```
 
 ```bash
 oc adm upgrade
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
@@ -119,33 +97,25 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 
 ### Condições de Saúde
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o json | jq '.items[0].status.conditions'
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Available")]}{"\n"}' | jq
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Failing")]}{"\n"}' | jq
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="RetrieveUpdatesFailing")]}{"\n"}' | jq
@@ -157,35 +127,27 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Retri
 
 ### Status do CVO
 
-```markdown
 **Ação:** Verificar pod do Cluster Version Operator
-```
 
 ```bash
 oc get pods -n openshift-cluster-version
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> deployments/cluster-version-operator --tail=100`
-```
 
 ```bash
 oc logs -n openshift-cluster-version deployments/cluster-version-operator --tail=100
 ```
 
-```markdown
 **Ação:** Acompanhar logs em tempo real do pod
 **Exemplo:** `oc logs -n <namespace> deployments/cluster-version-operator -f`
-```
 
 ```bash ignore-test
 oc logs -n openshift-cluster-version deployments/cluster-version-operator -f
 ```
 
-```markdown
 **Ação:** Verificar recursos do CVO
-```
 
 ```bash
 oc get all -n openshift-cluster-version
@@ -193,25 +155,19 @@ oc get all -n openshift-cluster-version
 
 ### Overrides do CVO
 
-```markdown
 **Ação:** Exibir recurso "version" em formato JSON
-```
 
 ```bash
 oc get clusterversion version -o json | jq '.spec.overrides'
 ```
 
-```markdown
 **Ação:** Exibir recurso "version" em formato JSON
-```
 
 ```bash
 oc get clusterversion version -o jsonpath='{.spec.overrides[*].name}{"\n"}'
 ```
 
-```markdown
 **Ação:** Aplicar JSON patch ao recurso
-```
 
 ```bash ignore-test
 oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/overrides"}]'
@@ -223,41 +179,31 @@ oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/ov
 
 ### Status Geral dos Operadores
 
-```markdown
 **Ação:** Listar status de todos os cluster operators
-```
 
 ```bash
 oc get co
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
-```
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
-```
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
-```
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 ```
 
-```markdown
 **Ação:** Operadores com problemas (resumo)
-```
 
 ```bash
 oc get co | grep -v "True.*False.*False"
@@ -265,25 +211,19 @@ oc get co | grep -v "True.*False.*False"
 
 ### Análise Detalhada de Operadores
 
-```markdown
 * Exemplo: Verificar authentication operator
-```
 
 ```bash
 oc get co authentication -o yaml
 ```
 
-```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
-```
 
 ```bash
 oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}{"\n"}'
 ```
 
-```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
-```
 
 ```bash
 oc get co authentication -o jsonpath='Atual: {.status.versions[0].version}{"\n"}Desejada: {.status.desiredVersion}{"\n"}'
@@ -291,9 +231,7 @@ oc get co authentication -o jsonpath='Atual: {.status.versions[0].version}{"\n"}
 
 ### Operadores Críticos para Upgrade
 
-```markdown
 **Ação:** Verificar operadores essenciais
-```
 
 ```bash
 for op in kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver etcd machine-config; do
@@ -302,18 +240,14 @@ for op in kube-apiserver kube-controller-manager kube-scheduler openshift-apiser
 done
 ```
 
-```markdown
 **Ação:** Exibir cluster operator "machine-config" em formato YAML
 **Exemplo:** `oc get co <resource-name>config -o yaml`
-```
 
 ```bash
 oc get co machine-config -o yaml
 ```
 
-```markdown
 **Ação:** Exibir cluster operator "network" em formato YAML
-```
 
 ```bash
 oc get co network -o yaml
@@ -325,33 +259,25 @@ oc get co network -o yaml
 
 ### Status dos Nodes
 
-```markdown
 **Ação:** Listar todos os nodes do cluster
-```
 
 ```bash
 oc get nodes
 ```
 
-```markdown
 **Ação:** Nodes que não estão Ready
-```
 
 ```bash
 oc get nodes | grep -v Ready
 ```
 
-```markdown
 **Ação:** Listar nodes exibindo todas as labels
-```
 
 ```bash
 oc get nodes --show-labels
 ```
 
-```markdown
 **Ação:** Verificar condições de um node
-```
 
 ```bash ignore-test
 oc describe node <node-name> | grep -A 10 Conditions
@@ -359,25 +285,19 @@ oc describe node <node-name> | grep -A 10 Conditions
 
 ### Versões dos Nodes
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
-```
 
 ```bash
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
-```
 
 ```bash
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.osImage}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Listar nodes com informações detalhadas
-```
 
 ```bash
 oc get nodes -o wide
@@ -389,41 +309,31 @@ oc get nodes -o wide
 
 ### Status dos MCPs
 
-```markdown
 **Ação:** Listar Machine Config Pools
-```
 
 ```bash
 oc get mcp
 ```
 
-```markdown
 **Ação:** Exibir recurso "master" em formato YAML
-```
 
 ```bash
 oc get mcp master -o yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso "worker" em formato YAML
-```
 
 ```bash
 oc get mcp worker -o yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name'
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
@@ -431,25 +341,19 @@ oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.typ
 
 ### Progresso da Atualização dos MCPs
 
-```markdown
 **Ação:** Exibir recurso "worker" em formato JSON
-```
 
 ```bash
 oc get mcp worker -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
 ```
 
-```markdown
 **Ação:** Exibir recurso "master" em formato JSON
-```
 
 ```bash
 oc get mcp master -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
 ```
 
-```markdown
 **Ação:** Listar machines que ainda não foram atualizadas
-```
 
 ```bash
 oc get machines -n openshift-machine-api
@@ -457,25 +361,19 @@ oc get machines -n openshift-machine-api
 
 ### Machine Configs
 
-```markdown
 **Ação:** Listar todas as machine configs
-```
 
 ```bash
 oc get mc
 ```
 
-```markdown
 **Ação:** Exibir recurso "worker" em formato JSON
-```
 
 ```bash
 oc get mcp worker -o jsonpath='{.status.configuration.name}{"\n"}'
 ```
 
-```markdown
 **Ação:** Comparar machine configs
-```
 
 ```bash ignore-test
 oc get mc <mc-name> -o yaml
@@ -487,37 +385,29 @@ oc get mc <mc-name> -o yaml
 
 ### Logs dos Componentes Críticos
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> -l app=openshift-kube-apiserver --tail=100`
-```
 
 ```bash
 oc logs -n openshift-kube-apiserver -l app=openshift-kube-apiserver --tail=100
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> -l app=etcd --tail=100`
-```
 
 ```bash
 oc logs -n openshift-etcd -l app=etcd --tail=100
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> -l k8s-app=machine-config-operator --tail=100`
-```
 
 ```bash
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-operator --tail=100
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> -l k8s-app=machine-config-daemon --tail=50`
-```
 
 ```bash
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --tail=50
@@ -525,25 +415,19 @@ oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --
 
 ### Events do Cluster
 
-```markdown
 **Ação:** Listar eventos de todos os namespaces do cluster
-```
 
 ```bash
 oc get events -A --sort-by='.lastTimestamp' | tail -50
 ```
 
-```markdown
 **Ação:** Listar eventos de todos os namespaces do cluster
-```
 
 ```bash
 oc get events -A --field-selector type=Warning
 ```
 
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
-```
 
 ```bash
 oc get events -n openshift-cluster-version --sort-by='.lastTimestamp'
@@ -551,25 +435,19 @@ oc get events -n openshift-cluster-version --sort-by='.lastTimestamp'
 
 ### Must-Gather para Upgrade
 
-```markdown
 **Ação:** Coletar dados de diagnóstico em diretório específico
-```
 
 ```bash ignore-test
 oc adm must-gather --dest-dir=/tmp/must-gather-upgrade
 ```
 
-```markdown
 **Ação:** Coletar dados de diagnóstico em diretório específico
-```
 
 ```bash ignore-test
 oc adm must-gather --image=$(oc adm release info --image-for=network-tools) --dest-dir=/tmp/must-gather-network
 ```
 
-```markdown
 **Ação:** Coletar dados de diagnóstico em diretório específico
-```
 
 ```bash ignore-test
 oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/tmp/must-gather-etcd
@@ -581,25 +459,19 @@ oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/t
 
 ### Verificar Bloqueios de Upgrade
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
-```
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Upgradeable")]}{"\n"}' | jq
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
-```
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | .metadata.name'
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
-```
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | {name: .metadata.name, reason: .status.conditions[] | select(.type=="Upgradeable") | .reason, message: .status.conditions[] | select(.type=="Upgradeable") | .message}'
@@ -607,33 +479,25 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 
 ### Recursos que Impedem Upgrade
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
-```
 
 ```bash
 oc get pods -A | grep -E 'Error|CrashLoopBackOff|ImagePullBackOff'
 ```
 
-```markdown
 **Ação:** Listar persistent volume claim de todos os namespaces do cluster
-```
 
 ```bash
 oc get pvc -A | grep Pending
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
-```
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
-```
 
 ```bash ignore-test
 oc get pods -A | grep Evicted
@@ -641,26 +505,20 @@ oc get pods -A | grep Evicted
 
 ### Resource Quota e Limits
 
-```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
-```
 
 ```bash
 oc get resourcequotas -A
 ```
 
-```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
-```
 
 ```bash
 oc get limitranges -A
 ```
 
-```markdown
 **Ação:** Verificar uso de recursos nos nodes
 **Exemplo:** `oc adm top <resource-name>`
-```
 
 ```bash
 oc adm top nodes
@@ -678,17 +536,13 @@ Em caso de falha, não tente reverter o processoee o procedimento correto é abr
         
 ### Limpeza de Recursos Problemáticos
 
-```markdown
 **Ação:** Deletar o pods especificado
-```
 
 ```bash ignore-test
 oc delete pods -A --field-selector=status.phase=Failed
 ```
 
-```markdown
 **Ação:** Deletar o recurso especificado
-```
 
 ```bash ignore-test
 oc delete jobs -A --field-selector=status.successful=1
@@ -700,41 +554,31 @@ oc delete jobs -A --field-selector=status.successful=1
 
 ### 1. Verificações Iniciais
 
-```markdown
 **Ação:** Exibir versão e status de atualização do cluster
-```
 
 ```bash
 oc get clusterversion
 ```
 
-```markdown
 **Ação:** Listar status de todos os cluster operators
-```
 
 ```bash
 oc get co
 ```
 
-```markdown
 **Ação:** Listar todos os nodes do cluster
-```
 
 ```bash
 oc get nodes
 ```
 
-```markdown
 **Ação:** Verificar machine config pools
-```
 
 ```bash
 oc get mcp
 ```
 
-```markdown
 **Ação:** Verificar se há operadores degraded
-```
 
 ```bash
 oc get co | grep -i false
@@ -742,34 +586,26 @@ oc get co | grep -i false
 
 ### 2. Análise de Logs
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> deployment/cluster-version-operator --tail=200`
-```
 
 ```bash
 oc logs -n openshift-cluster-version deployment/cluster-version-operator --tail=200
 ```
 
-```markdown
 **Ação:** Exibir cluster operator "authentication" em formato YAML
-```
 
 ```bash ignore-test
 oc get co authentication -o yaml
 ```
 
-```markdown
 **Ação:** Logs de pods específicos
-```
 
 ```bash ignore-test
 oc logs -n <namespace> <pod-name> --tail=100
 ```
 
-```markdown
 **Ação:** Listar eventos de todos os namespaces do cluster
-```
 
 ```bash
 oc get events -A --sort-by='.lastTimestamp' | tail -100
@@ -777,26 +613,20 @@ oc get events -A --sort-by='.lastTimestamp' | tail -100
 
 ### 3. Verificação de Recursos
 
-```markdown
 **Ação:** Capacidade dos nodes
 **Exemplo:** `oc adm top <resource-name>`
-```
 
 ```bash
 oc adm top nodes
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
-```
 
 ```bash
 oc get pods -A | grep -v Running | grep -v Completed
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do nodes
-```
 
 ```bash
 oc describe nodes | grep -A 5 "Allocated resources"
@@ -804,33 +634,25 @@ oc describe nodes | grep -A 5 "Allocated resources"
 
 ### 4. Ações Corretivas Comuns
 
-```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
-```
 
 ```bash ignore-test
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
-```markdown
 **Ação:** Reiniciar pods problemáticos
-```
 
 ```bash ignore-test
 oc delete pod -n <namespace> <pod-name>
 ```
 
-```markdown
 **Ação:** Verificar MCPs
-```
 
 ```bash
 oc get mcp
 ```
 
-```markdown
 **Ação:** Descrever MCP específico
-```
 
 ```bash ignore-test
 oc describe mcp <mcp-name>
@@ -838,55 +660,41 @@ oc describe mcp <mcp-name>
 
 ### Watch em Tempo Real
 
-```markdown
 **Ação:** Monitorar cluster version
-```
 
 ```bash ignore-test
 watch 'oc get clusterversion'
 ```
 
-```markdown
 **Ação:** Monitorar cluster operators
-```
 
 ```bash ignore-test
 watch 'oc get co'
 ```
 
-```markdown
 **Ação:** Monitorar nodes
-```
 
 ```bash ignore-test
 watch 'oc get nodes'
 ```
 
-```markdown
 **Ação:** Monitorar MCPs
-```
 
 ```bash ignore-test
 watch 'oc get mcp'
 ```
 
-```markdown
 **Ação:** Monitorar progresso geral
-```
 
 ```bash ignore-test
 watch -n 10 'echo "=== CLUSTER VERSION ===" && oc get clusterversion && echo "\n=== OPERATORS ===" && oc get co | grep -v "True.*False.*False" && echo "\n=== MCPS ===" && oc get mcp && echo "\n=== NODES ===" && oc get nodes'
 ```
-```markdown
 **Ação:** Monitorar cluster version
-```
 
 ```bash ignore-test
 watch 'oc get clusterversion'
 ```
-```markdown
 **Ação:** Monitorar cluster operators
-```
 
 ```bash ignore-test
 watch 'oc get co'
@@ -899,33 +707,25 @@ watch 'oc get nodes'
 
 ### Monitoramento de Métricas
 
-```markdown
 **Ação:** Verificar uso de CPU/Memory nos nodes
-```
 
 ```bash ignore-test
 watch -n 30 'oc adm top nodes'
 ```
 
-```markdown
 **Ação:** Verificar pods com maior uso de recursos
-```
 
 ```bash
 oc adm top pods -A --sort-by=memory
 ```
 
-```markdown
 **Ação:** Listar todos os Persistent Volumes do cluster
-```
 
 ```bash
 oc get pv
 ```
 
-```markdown
 **Ação:** Listar persistent volume claim de todos os namespaces do cluster
-```
 
 ```bash
 oc get pvc -A

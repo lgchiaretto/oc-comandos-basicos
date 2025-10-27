@@ -36,80 +36,62 @@ Projetos no OpenShift são similares a namespaces do Kubernetes, mas com funcion
 ## Criação e Listagem
 
 ### Listar Projetos
-```markdown
 **Ação:** Listar projetos aos quais você tem acesso
-```
 
 ```bash
 oc projects
 ```
 
-```markdown
 **Ação:** Listar todos os projetos do cluster
-```
 
 ```bash
 oc get projects
 ```
 
 
-```markdown
 **Ação:** Listar projetos exibindo todas as labels
-```
 
 ```bash ignore-test
 oc get projects --show-labels
 ```
 
 ### Criar Projetos
-```markdown
 **Ação:** Criar novo projeto (namespace) no cluster
 **Exemplo:** `oc new-project <project-name>`
-```
 
 ```bash
 oc new-project development
 ```
 
-```markdown
 **Ação:** Exibir o projeto (namespace) atual
-```
 
 ```bash
 oc project
 ```
 
-```markdown
 **Ação:** Criar novo projeto com descrição e nome de exibição
 **Exemplo:** `oc new-project <project-name> --description="Minha descrição" --display-name="Nome de Exibição"`
-```
 
 ```bash
 oc new-project production --description="Minha descrição" --display-name="Nome de Exibição"
 ```
 
 ### Trocar entre Projetos
-```markdown
 **Ação:** Trocar para o projeto especificado
 **Exemplo:** `oc project <project-name>`
-```
 
 ```bash
 oc project development
 ```
 
-```markdown
 **Ação:** Exemplo
 **Exemplo:** `oc project <project-name>`
-```
 
 ```bash ignore-test
 oc project production
 ```
 
-```markdown
 **Ação:** Exibir o projeto (namespace) atual
-```
 
 ```bash
 oc project
@@ -120,120 +102,94 @@ oc project
 ## Gerenciamento
 
 ### Descrever e Inspecionar
-```markdown
 **Ação:** Exibir detalhes completos do projeto
 **Exemplo:** `oc describe project <project-name>`
-```
 
 ```bash
 oc describe project development
 ```
 
-```markdown
 **Ação:** Exibir projeto "development" em formato YAML
 **Exemplo:** `oc get project <project-name> -o yaml`
-```
 
 ```bash
 oc get project development -o yaml
 ```
 
-```markdown
 **Ação:** Exibir projeto "development" em formato JSON
 **Exemplo:** `oc get project <project-name> -o json`
-```
 
 ```bash
 oc get project development -o json
 ```
 
-```markdown
 **Ação:** Exibir projeto "development" em formato YAML
 **Exemplo:** `oc get project <project-name> -o yaml > /tmp/projeto.yaml`
-```
 
 ```bash
 oc get project development -o yaml > /tmp/projeto.yaml
 ```
 
 ### Editar Projetos
-```markdown
 **Ação:** Abrir editor para modificar recurso interativamente
 **Exemplo:** `oc edit project <project-name>`
-```
 
 ```bash ignore-test
 oc edit project development
 ```
 
-```markdown
 **Ação:** Adicionar nova label ao recurso
 **Exemplo:** `oc label namespace <namespace-name> test-validation=true`
-```
 
 ```bash
 oc label namespace development test-validation=true pod-security.kubernetes.io/enforce=privileged
 ```
 
-```markdown
 **Ação:** Atualizar label existente com novo valor
 **Exemplo:** `oc label namespace <namespace-name> test-validation=true --overwrite`
-```
 
 ```bash
 oc label namespace production test-validation=true pod-security.kubernetes.io/enforce=privileged --overwrite
 ```
 
-```markdown
 **Ação:** Adicionar annotation ao recurso
 **Exemplo:** `oc annotate namespace <namespace-name> description="Meu projeto"`
-```
 
 ```bash
 oc annotate namespace development description="Meu projeto"
 ```
 
-```markdown
 **Ação:** Remover label do recurso
 **Exemplo:** `oc label namespace <namespace-name> env-`
-```
 
 ```bash
 oc label namespace development env-
 ```
 
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 **Exemplo:** `oc patch namespace <namespace-name> -p '{"metadata":{"labels":{"tier":"frontend"}}}'`
-```
 
 ```bash
 oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 ```
 
 ### Deletar Projetos
-```markdown
 **Ação:** Deletar o projeto especificado
 **Exemplo:** `oc delete project <project-name>`
-```
 
 ```bash ignore-test
 oc delete project development
 ```
 
-```markdown
 **Ação:** Deletar o projeto especificado
 **Exemplo:** `oc delete project <project-name> --wait=true`
-```
 
 ```bash ignore-test
 oc delete project development --wait=true
 ```
 
-```markdown
 **Ação:** Deletar o projeto especificado
 **Exemplo:** `oc delete project <project-name> production`
-```
 
 ```bash ignore-test
 oc delete project development production
@@ -246,53 +202,41 @@ oc delete project development production
 ## Node Selectors
 
 ### Criar Projeto com Node Selector
-```markdown
 **Ação:** Criar projeto com node selector para ambiente
-```
 
 ```bash ignore-test
 oc new-project <nome> --node-selector='env=prd'
 ```
 
-```markdown
 **Ação:** Criar projeto sem node selector (permite qualquer node)
-```
 
 ```bash ignore-test
 oc new-project <nome> --node-selector=""
 ```
 
-```markdown
 **Ação:** Criar projeto com node selector específico por hostname
-```
 
 ```bash ignore-test
 oc new-project <nome> --node-selector="kubernetes.io/hostname=<hostname>"
 ```
 
-```markdown
 **Ação:** Exemplo prático
 **Exemplo:** `oc new-project <project-name> --node-selector='env=production'`
-```
 
 ```bash ignore-test
 oc new-project production --node-selector='env=production'
 ```
 
 ### Modificar Node Selector Existente
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 **Exemplo:** `oc patch namespace <namespace-name> -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'`
-```
 
 ```bash
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'
 ```
 
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 **Exemplo:** `oc patch namespace <namespace-name> -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'`
-```
 
 ```bash
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
@@ -302,53 +246,41 @@ oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/nod
 
 
 ### Labels em Namespaces
-```markdown
 **Ação:** Adicionar labels ao namespace
-```
 
 ```bash ignore-test
 oc label namespace development <key>=<value>
 ```
 
-```markdown
 **Ação:** Atualizar label existente com novo valor
 **Exemplo:** `oc label namespace <namespace-name> env=development validation=true --overwrite`
-```
 
 ```bash
 oc label namespace development env=development validation=true --overwrite
 ```
 
 ### Annotations em Namespaces
-```markdown
 **Ação:** Adicionar annotation ao namespace
-```
 
 ```bash ignore-test
 oc annotate namespace development <key>='<value>'
 ```
 
-```markdown
 **Ação:** Atualizar annotation existente com novo valor
 **Exemplo:** `oc annotate namespace <namespace-name> test-maintainer='test-team' --overwrite`
-```
 
 ```bash
 oc annotate namespace development test-maintainer='test-team' --overwrite
 ```
 
 ### Listar Service Accounts
-```markdown
 **Ação:** Listar todas as ServiceAccounts do namespace
-```
 
 ```bash
 oc get sa
 ```
 
-```markdown
 **Ação:** Em projeto específico
-```
 
 ```bash
 oc get sa -n development
@@ -360,38 +292,30 @@ oc get sa -n development
 ## Templates de Projeto
 
 ### Criar Template de Projeto Customizado
-```markdown
 **Ação:** Gerar template padrão
-```
 
 ```bash ignore-test
 oc adm create-bootstrap-project-template -o yaml > /tmp/template.yaml
 ```
 
-```markdown
 **Ação:** Editar template
-```
 
 ```bash ignore-test
 vim /tmp/template.yaml
 ```
 
-```markdown
 **Ação:** Criar novo recurso
 **Exemplo:** `oc create -f /tmp/template.yaml -n <namespace>`
-```
 
 ```bash ignore-test
 oc create -f /tmp/template.yaml -n openshift-config
 ```
 
-```markdown
 **Ação:** Abrir editor para modificar recurso interativamente
 * Adicionar:
 * spec:
 * projectRequestTemplate:
 * name: project-request
-```
 
 ```bash ignore-test
 oc edit project.config.openshift.io/cluster
@@ -430,25 +354,19 @@ parameters:
 ## Informações e Status
 
 ### Ver Recursos do Projeto
-```markdown
 **Ação:** Listar todos os recursos principais do namespace
-```
 
 ```bash
 oc get all
 ```
 
-```markdown
 **Ação:** Listar recursos específicos
-```
 
 ```bash
 oc get pods,svc,routes
 ```
 
-```markdown
 **Ação:** Listar quotas de recursos do namespace atual
-```
 
 ```bash
 oc get quota
@@ -458,9 +376,7 @@ oc get quota
 oc describe quota
 ```
 
-```markdown
 **Ação:** Listar limit ranges configurados no namespace
-```
 
 ```bash
 oc get limitrange
@@ -470,26 +386,20 @@ oc get limitrange
 oc describe limitrange
 ```
 
-```markdown
 **Ação:** Listar políticas de rede configuradas no namespace
-```
 
 ```bash
 oc get networkpolicy
 ```
 
 ### Status do Projeto
-```markdown
 **Ação:** Exibir visão geral dos recursos do projeto atual
-```
 
 ```bash
 oc status
 ```
 
-```markdown
 **Ação:** Exibir status com sugestões de ações
-```
 
 ```bash
 oc status --suggest
@@ -500,58 +410,44 @@ oc status --suggest
 ## Busca e Filtros
 
 ### Filtrar Projetos
-```markdown
 **Ação:** Projetos com nome contendo string
-```
 
 ```bash
 oc get projects | grep dev
 ```
 
-```markdown
 **Ação:** Exibir projetos em formato JSON
-```
 
 ```bash ignore-test
 oc get projects -o jsonpath='{.items[?(@.status.phase=="Active")].metadata.name}'
 ```
 
-```markdown
 **Ação:** Exibir projetos em formato JSON
-```
 
 ```bash ignore-test
 oc get projects -o jsonpath='{.items[?(@.status.phase=="Terminating")].metadata.name}'
 ```
 
 ### Análise de Projetos
-```markdown
 **Ação:** Contar total de projetos
-```
 
 ```bash
 oc get projects --no-headers | wc -l
 ```
 
-```markdown
 **Ação:** Listar projetos ordenados por campo específico
-```
 
 ```bash
 oc get projects --sort-by='.metadata.creationTimestamp'
 ```
 
-```markdown
 **Ação:** Listar projetos filtrados por label
-```
 
 ```bash
 oc get projects -l env=development
 ```
 
-```markdown
 **Ação:** Exibir projetos em formato JSON
-```
 
 ```bash
 oc get projects -o json > /tmp/all-projects.json
@@ -562,41 +458,31 @@ oc get projects -o json > /tmp/all-projects.json
 ## Segurança e Permissões
 
 ### Verificar Permissões
-```markdown
 **Ação:** Verificar se usuário tem permissão para executar ação específica
-```
 
 ```bash
 oc auth can-i create projects
 ```
 
-```markdown
 **Ação:** Listar vinculações de roles no namespace atual
-```
 
 ```bash
 oc get rolebindings
 ```
 
-```markdown
 **Ação:** Listar roles customizados do namespace
-```
 
 ```bash
 oc get roles
 ```
 
-```markdown
 **Ação:** Adicionar usuário ao projeto
-```
 
 ```bash ignore-test
 oc adm policy add-role-to-user admin <usuario> -n <projeto>
 ```
 
-```markdown
 **Ação:** Remover usuário do projeto
-```
 
 ```bash ignore-test
 oc adm policy remove-role-from-user admin <usuario> -n <projeto>
@@ -607,10 +493,8 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ## Exemplos Práticos
 
 ### Criar Ambiente Completo
-```markdown
 **Ação:** Criar novo projeto (namespace) no cluster
 **Exemplo:** `oc new-project <project-name> \`
-```
 
 ```bash ignore-test
 oc new-project meu-app-dev \
@@ -618,18 +502,14 @@ oc new-project meu-app-dev \
   --display-name="Meu App - DEV"
 ```
 
-```markdown
 **Ação:** Adicionar nova label ao recurso
 **Exemplo:** `oc label project <project-name> env=dev tier=backend team=devops`
-```
 
 ```bash ignore-test
 oc label project meu-app-dev env=dev tier=backend team=devops
 ```
 
-```markdown
 **Ação:** Criar novo recurso
-```
 
 ```bash ignore-test
 cat <<EOF | oc create -f -
@@ -645,35 +525,27 @@ spec:
 EOF
 ```
 
-```markdown
 **Ação:** Listar quotas de recursos do namespace atual
-```
 
 ```bash ignore-test
 oc get quota
 ```
 
 ### Migração entre Projetos
-```markdown
 **Ação:** Exibir recurso em formato YAML
-```
 
 ```bash ignore-test
 oc get all -n projeto-origem -o yaml > recursos.yaml
 ```
 
-```markdown
 **Ação:** Criar novo projeto (namespace) no cluster
 **Exemplo:** `oc new-project <project-name>`
-```
 
 ```bash ignore-test
 oc new-project projeto-destino
 ```
 
-```markdown
 **Ação:** Criar novo recurso
-```
 
 ```bash ignore-test
 sed 's/projeto-origem/projeto-destino/g' recursos.yaml | oc create -f -

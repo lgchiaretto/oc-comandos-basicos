@@ -18,51 +18,39 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 ## Registry Interno
 
 ### Acessar Registry
-```markdown
 **Ação:** Ver URL do registry interno
-```
 
 ```bash
 oc get route -n openshift-image-registry
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato YAML
-```
 
 ```bash
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 ```
 
-```markdown
 **Ação:** Ver status do registry
 **Exemplo:** `oc get clusteroperator <resource-name>`
-```
 
 ```bash
 oc get clusteroperator image-registry
 ```
 
 ### Configurar Registry
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
-```
 
 ```bash
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"defaultRoute":true}}'
 ```
 
-```markdown
 **Ação:** Ver route criada
-```
 
 ```bash
 oc get route -n openshift-image-registry
 ```
 
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
-```
 
 ```bash
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"storage":{"pvc":{"claim":""}}}}'
@@ -73,33 +61,25 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 ## Push e Pull de Imagens
 
 ### Push de Imagens
-```markdown
 **Ação:** Tag para registry interno
-```
 
 ```bash ignore-test
 docker tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```markdown
 **Ação:** Push para registry interno
-```
 
 ```bash ignore-test
 docker push <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```markdown
 **Ação:** Usando Podman
-```
 
 ```bash ignore-test
 podman push <imagem> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```markdown
 **Ação:** Criar secret para registry externo
-```
 
 ```bash ignore-test
 oc create secret docker-registry <secret-name> \
@@ -108,35 +88,27 @@ oc create secret docker-registry <secret-name> \
   --docker-password=<pass>
 ```
 
-```markdown
 **Ação:** Linkar secret para pull
-```
 
 ```bash ignore-test
 oc secrets link default <secret-name> --for=pull
 ```
 
 ### Pull de Imagens
-```markdown
 **Ação:** Pull de registry interno
-```
 
 ```bash ignore-test
 docker pull <registry-interno>/<projeto>/test-app:<tag>
 ```
 
-```markdown
 **Ação:** Exibir imagestream "s2i-chiaretto" em formato YAML
 **Exemplo:** `oc get is <imagestream-name> -o yaml`
-```
 
 ```bash
 oc get is s2i-chiaretto -o yaml
 ```
 
-```markdown
 **Ação:** Importar imagem externa
-```
 
 ```bash ignore-test
 oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
@@ -147,17 +119,13 @@ oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 ## Image Mirroring
 
 ### Configurar Mirroring
-```markdown
 **Ação:** Ver ImageContentSourcePolicy
-```
 
 ```bash
 oc get imagecontentsourcepolicy
 ```
 
-```markdown
 **Ação:** Criar ICSP para mirror
-```
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -173,26 +141,20 @@ spec:
 EOF
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato YAML
-```
 
 ```bash
 oc get imagecontentsourcepolicy -o yaml
 ```
 
 ### Mirror com oc-mirror
-```markdown
 **Ação:** Mirror de operator catalogs
-```
 
 ```bash ignore-test
 oc mirror --config=imageset-config.yaml docker://<mirror-registry>
 ```
 
-```markdown
 **Ação:** Ver resultados do mirror
-```
 
 ```bash ignore-test
 oc mirror list operators --catalog=<catalog-image>
@@ -203,75 +165,57 @@ oc mirror list operators --catalog=<catalog-image>
 ## Image Pruning
 
 ### Limpeza de Imagens
-```markdown
 **Ação:** Executar image pruner manual
-```
 
 ```bash ignore-test
 oc adm prune images --confirm
 ```
 
-```markdown
 **Ação:** Dry-run (sem deletar)
 **Exemplo:** `oc adm prune <resource-name>`
-```
 
 ```bash ignore-test
 oc adm prune images
 ```
 
-```markdown
 **Ação:** Prune de imagens antigas
-```
 
 ```bash ignore-test
 oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato YAML
-```
 
 ```bash
 oc get imagepruner/cluster -o yaml
 ```
 
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
-```
 
 ```bash
 oc patch imagepruners.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"schedule":"0 0 * * *","suspend":false,"keepTagRevisions":3}}'
 ```
 
-```markdown
 **Ação:** Ver jobs de pruning
-```
 
 ```bash
 oc get jobs -n openshift-image-registry
 ```
 
 ### Limpeza de Builds
-```markdown
 **Ação:** Prune de builds antigos
-```
 
 ```bash ignore-test
 oc adm prune builds --confirm
 ```
 
-```markdown
 **Ação:** Manter apenas N builds
-```
 
 ```bash ignore-test
 oc adm prune builds --keep-complete=5 --keep-failed=1 --confirm
 ```
 
-```markdown
 **Ação:** Prune por idade
-```
 
 ```bash ignore-test
 oc adm prune builds --keep-younger-than=48h --confirm

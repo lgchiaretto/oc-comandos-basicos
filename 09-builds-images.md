@@ -18,73 +18,57 @@ Este documento contém comandos para gerenciar builds e imagens no OpenShift.
 ## BuildConfigs
 
 ### Criar e Gerenciar
-```markdown
 **Ação:** Listar BuildConfigs
-```
 
 ```bash
 oc get buildconfig
 oc get bc
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do buildconfig
 **Exemplo:** `oc describe bc <buildconfig-name>`
-```
 
 ```bash
 oc describe bc s2i-chiaretto
 ```
 
-```markdown
 **Ação:** Editar BuildConfig
-```
 
 ```bash ignore-test
 oc edit bc <nome-do-bc>
 ```
 
-```markdown
 **Ação:** Deletar BuildConfig
-```
 
 ```bash ignore-test
 oc delete bc <nome-do-bc>
 ```
 
-```markdown
 **Ação:** Acompanhar logs em tempo real do pod
-```
 
 ```bash ignore-test
 oc logs -f bc/s2i-chiaretto
 ```
 
 ### Triggers
-```markdown
 **Ação:** Adicionar webhook trigger
 **Exemplo:** `oc set triggers <resource-name>/s2i-chiaretto --from-github`
 **Ação:** oc set triggers <resource-name>/s2i-chiaretto --from-webhook
-```
 
 ```bash
 oc set triggers bc/s2i-chiaretto --from-github
 oc set triggers bc/s2i-chiaretto --from-webhook
 ```
 
-```markdown
 **Ação:** Remover triggers
 **Exemplo:** `oc set triggers <resource-name>/s2i-chiaretto --remove-all`
-```
 
 ```bash
 oc set triggers bc/s2i-chiaretto --remove-all
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do buildconfig
 **Exemplo:** `oc describe bc <buildconfig-name> | grep Triggered`
-```
 
 ```bash
 oc describe bc s2i-chiaretto | grep Triggered
@@ -95,68 +79,52 @@ oc describe bc s2i-chiaretto | grep Triggered
 ## Builds
 
 ### Executar e Monitorar
-```markdown
 **Ação:** Iniciar novo build
-```
 
 ```bash
 oc start-build s2i-chiaretto
 ```
 
-```markdown
 **Ação:** Build de diretório local
-```
 
 ```bash ignore-test
 oc start-build <nome-do-bc> --from-dir=.
 ```
 
-```markdown
 **Ação:** Build de arquivo local
-```
 
 ```bash ignore-test
 oc start-build <nome-do-bc> --from-file=Dockerfile
 ```
 
-```markdown
 **Ação:** Listar todos os builds do projeto
-```
 
 ```bash
 oc get builds
 ```
 
-```markdown
 **Ação:** Ver status de build específico
 **Exemplo:** `oc get build <build-name>`
-```
 
 ```bash ignore-test
 oc get build s2i-chiaretto-2
 ```
 
-```markdown
 **Ação:** Cancelar build em execução
 **Exemplo:** `oc cancel-build <build-name>`
-```
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto-2
 ```
 
-```markdown
 **Ação:** Deletar o build especificado
 **Exemplo:** `oc delete build <build-name>`
-```
 
 ```bash ignore-test
 oc delete build s2i-chiaretto-2
 ```
 
-```markdown
 **Ação:** Listar recurso ordenados por campo específico
-```
 
 ```bash
 oc get builds --sort-by=.metadata.creationTimestamp
@@ -166,45 +134,35 @@ oc get builds --sort-by=.metadata.creationTimestamp
 ## Gerenciamento de Builds
 
 ### Cancelar Build
-```markdown
 **Ação:** Cancelar build em execução
 **Exemplo:** `oc cancel-build <build-name>`
-```
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto-2
 ```
 
-```markdown
 **Ação:** Em namespace específico
 **Exemplo:** `oc cancel-build s2i-chiaretto -n <namespace>`
-```
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto -n development
 ```
 
 ### Logs de BuildConfig
-```markdown
 **Ação:** Exibir logs de todos os pods que correspondem ao label
-```
 
 ```bash
 oc logs -l buildconfig=s2i-chiaretto
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
-```
 
 ```bash
 oc logs -l buildconfig=s2i-chiaretto --tail=20
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 **Exemplo:** `oc logs -n <namespace> -l buildconfig=s2i-chiaretto --tail=20`
-```
 
 ```bash
 oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
@@ -212,26 +170,20 @@ oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 
 
 ### Debug de Builds
-```markdown
 **Ação:** Exibir detalhes completos do build
 **Exemplo:** `oc describe build <build-name>`
-```
 
 ```bash ignore-test
 oc describe build s2i-chiaretto-2
 ```
 
-```markdown
 **Ação:** Listar eventos filtrados por campo específico
-```
 
 ```bash ignore-test
 oc get events --field-selector involvedObject.name=s2i-chiaretto-2
 ```
 
-```markdown
 **Ação:** Tentar build novamente
-```
 
 ```bash ignore-test
 oc start-build --from-build=s2i-chiaretto-2
@@ -242,106 +194,82 @@ oc start-build --from-build=s2i-chiaretto-2
 ## ImageStreams
 
 ### Gerenciar ImageStreams
-```markdown
 **Ação:** Listar ImageStreams
-```
 
 ```bash
 oc get imagestream
 oc get is
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do imagestream
 **Exemplo:** `oc describe is <imagestream-name>`
-```
 
 ```bash
 oc describe is s2i-chiaretto
 ```
 
-```markdown
 **Ação:** Exibir imagestream "s2i-chiaretto" em formato JSON
 **Exemplo:** `oc get is <imagestream-name> -o jsonpath='{.spec.tags[*].name}'`
-```
 
 ```bash
 oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
 ```
 
-```markdown
 **Ação:** Criar novo recurso
 **Exemplo:** `oc create imagestream <imagestream-name>`
-```
 
 ```bash ignore-test
 oc create imagestream s2i-chiaretto
 ```
 
-```markdown
 **Ação:** Importar imagem externa
-```
 
 ```bash ignore-test
 oc import-image s2i-chiaretto --from=<registry>/<image>:<tag> --confirm
 ```
 
-```markdown
 **Ação:** Deletar o imagestream especificado
 **Exemplo:** `oc delete is <imagestream-name>`
-```
 
 ```bash ignore-test
 oc delete is s2i-chiaretto
 ```
 
-```markdown
 **Ação:** Exibir imagestream "s2i-chiaretto" em formato JSON
 **Exemplo:** `oc get is <imagestream-name> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'`
-```
 
 ```bash ignore-test
 oc get is s2i-chiaretto -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 ```
 
 ### ImageStreamTags
-```markdown
 **Ação:** Listar tags
-```
 
 ```bash
 oc get imagestreamtag
 oc get istag
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe istag <istag-name>:<tag>`
-```
 
 ```bash ignore-test
 oc describe istag s2i-chiaretto:latest
 ```
 
-```markdown
 **Ação:** Criar tag
-```
 
 ```bash ignore-test
 oc tag <source-is>:<source-tag> <dest-is>:<dest-tag>
 ```
 
-```markdown
 **Ação:** Tag de imagem externa
-```
 
 ```bash ignore-test
 oc tag <external-image> <is>:<tag>
 ```
 
-```markdown
 **Ação:** Deletar tag
-```
 
 ```bash ignore-test
 oc delete istag s2i-chiaretto:<tag>
