@@ -6,19 +6,12 @@ Este documento contém comandos para gerenciar etcd e realizar backups do cluste
 
 ## Índice
 
-- [Etcd e Backup](#etcd-e-backup)
-  - [Índice](#índice)
-  - [Etcd Status](#etcd-status)
-    - [Verificar Etcd](#verificar-etcd)
-    - [Etcd Health Check](#etcd-health-check)
-  - [Backup do Cluster](#backup-do-cluster)
-    - [Backup Manual do Etcd](#backup-manual-do-etcd)
-    - [Script Automatizado de Backup](#script-automatizado-de-backup)
-  - [Restore](#restore)
-    - [Restore do Etcd](#restore-do-etcd)
-    - [Limpar Alarmes](#limpar-alarmes)
-  - [Documentação Oficial](#documentação-oficial)
-  - [Navegação](#navegação)
+1. [Índice](#índice)
+2. [Etcd Status](#etcd-status)
+3. [Backup do Cluster](#backup-do-cluster)
+4. [Restore](#restore)
+5. [Documentação Oficial](#documentação-oficial)
+6. [Navegação](#navegação)
 ---
 
 ## Etcd Status
@@ -183,7 +176,6 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration">Post-installation configuration</a>
 ---
 
----
 
 ## Navegação
 

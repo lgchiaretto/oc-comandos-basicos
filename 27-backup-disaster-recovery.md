@@ -10,12 +10,8 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 2. [Backup de Aplicações](#backup-de-aplicações)
 3. [Backup de Dados](#backup-de-dados)
 4. [Disaster Recovery](#disaster-recovery)
-5. [Backups Configurados](#backups-configurados)
-6. [Documentação](#documentação)
-7. [Testes](#testes)
-8. [Armazenamento](#armazenamento)
-9. [Documentação Oficial](#documentação-oficial)
-10. [Navegação](#navegação)
+5. [Documentação Oficial](#documentação-oficial)
+6. [Navegação](#navegação)
 ---
 
 ## Backup de Aplicações
@@ -313,10 +309,6 @@ oc apply -f /tmp/routes.yaml
 oc get all
 ```
 
-
----
-
-
 ---
 
 ## Documentação Oficial
@@ -325,7 +317,6 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/backup_and_restore">Backup and restore</a>
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/postinstallation_configuration">Post-installation configuration</a>
----
 
 ---
 

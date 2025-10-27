@@ -285,7 +285,6 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/images">Images - ImageStreams</a>
 ---
 
----
 
 ## Navegação
 

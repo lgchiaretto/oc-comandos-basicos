@@ -458,7 +458,6 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 - <a href="https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/authentication_and_authorization/understanding-and-creating-service-accounts">Service Accounts</a>
 ---
 
----
 
 ## Navegação
 
