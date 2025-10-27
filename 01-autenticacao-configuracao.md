@@ -19,7 +19,6 @@ Este documento contém comandos essenciais para autenticação e configuração 
 ## Login e Logout
 
 ### Login Básico
-```markdown
 **Ação:** Login no cluster OpenShift
 ```
 
@@ -27,7 +26,6 @@ Este documento contém comandos essenciais para autenticação e configuração 
 oc login <url-do-cluster>
 ```
 
-```markdown
 **Ação:** Login com usuário e senha
 ```
 
@@ -35,7 +33,6 @@ oc login <url-do-cluster>
 oc login <url-do-cluster> -u <usuario> -p <senha>
 ```
 
-```markdown
 **Ação:** Login com token
 ```
 
@@ -43,7 +40,6 @@ oc login <url-do-cluster> -u <usuario> -p <senha>
 oc login --token=<token> --server=<url-do-cluster>
 ```
 
-```markdown
 **Ação:** Exemplo prático
 ```
 
@@ -52,7 +48,6 @@ oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```
 
 ### Verificar Autenticação
-```markdown
 **Ação:** Exibir o nome do usuário autenticado atualmente
 ```
 
@@ -60,7 +55,6 @@ oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 oc whoami
 ```
 
-```markdown
 **Ação:** Exibir o token de autenticação do usuário atual
 ```
 
@@ -68,7 +62,6 @@ oc whoami
 oc whoami -t
 ```
 
-```markdown
 **Ação:** Exibir o contexto atual do kubeconfig
 ```
 
@@ -76,7 +69,6 @@ oc whoami -t
 oc whoami --show-context
 ```
 
-```markdown
 **Ação:** Exibir a URL da console web do cluster
 ```
 
@@ -84,7 +76,6 @@ oc whoami --show-context
 oc whoami --show-console
 ```
 
-```markdown
 **Ação:** Exibir a URL do servidor API conectado
 ```
 
@@ -93,7 +84,6 @@ oc whoami --show-server
 ```
 
 ### Logout
-```markdown
 **Ação:** Fazer logout
 ```
 
@@ -101,7 +91,6 @@ oc whoami --show-server
 oc logout
 ```
 
-```markdown
 **Ação:** Fazer logout e limpar contexto
 ```
 
@@ -115,7 +104,6 @@ oc logout && rm -f ~/.kube/config
 
 
 ### Listar API Resources
-```markdown
 **Ação:** Listar todos os recursos da API disponíveis no cluster
 ```
 
@@ -123,7 +111,6 @@ oc logout && rm -f ~/.kube/config
 oc api-resources
 ```
 
-```markdown
 **Ação:** Filtrar por verbo
 ```
 
@@ -131,7 +118,6 @@ oc api-resources
 oc api-resources --verbs=list,get
 ```
 
-```markdown
 **Ação:** Filtrar por grupo de API
 ```
 
@@ -139,7 +125,6 @@ oc api-resources --verbs=list,get
 oc api-resources --api-group=apps
 ```
 
-```markdown
 **Ação:** Ver recursos com alias
 ```
 
@@ -148,7 +133,6 @@ oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 ```
 
 ### Listar API Versions
-```markdown
 **Ação:** Listar todas as versões de API disponíveis
 ```
 
@@ -156,7 +140,6 @@ oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 oc api-versions
 ```
 
-```markdown
 **Ação:** Ver versões específicas do grupo
 ```
 
@@ -164,7 +147,6 @@ oc api-versions
 oc api-versions | grep apps
 ```
 
-```markdown
 **Ação:** Ver versões do core
 ```
 
@@ -175,7 +157,6 @@ oc api-versions | grep -v "/"
 ## Configuração do Cliente
 
 ### Versão e Informações
-```markdown
 **Ação:** Exibir versão do cliente oc e do servidor OpenShift
 ```
 
@@ -183,7 +164,6 @@ oc api-versions | grep -v "/"
 oc version
 ```
 
-```markdown
 **Ação:** Exibir informações básicas do cluster
 ```
 
@@ -191,7 +171,6 @@ oc version
 oc cluster-info
 ```
 
-```markdown
 **Ação:** Ver informações do servidor
 ```
 
@@ -200,7 +179,6 @@ oc cluster-info dump
 ```
 
 ### Configuração
-```markdown
 **Ação:** Exibir configuração atual do kubeconfig
 ```
 
@@ -208,7 +186,6 @@ oc cluster-info dump
 oc config view
 ```
 
-```markdown
 **Ação:** Exibir configuração com credenciais (cuidado!)
 ```
 
@@ -216,7 +193,6 @@ oc config view
 oc config view --raw
 ```
 
-```markdown
 **Ação:** Exibir conteúdo do arquivo de configuração do kubectl/oc
 ```
 
@@ -225,7 +201,6 @@ cat ~/.kube/config
 ```
 
 ### Namespace Padrão
-```markdown
 **Ação:** Definir namespace padrão para o contexto atual
 ```
 
@@ -237,7 +212,6 @@ oc config set-context --current --namespace=development
 ## Contextos
 
 ### Listar e Gerenciar Contextos
-```markdown
 **Ação:** Listar todos os contextos disponíveis
 ```
 
@@ -245,7 +219,6 @@ oc config set-context --current --namespace=development
 oc config get-contexts
 ```
 
-```markdown
 **Ação:** Exibir o contexto atual do kubeconfig
 ```
 
@@ -253,7 +226,6 @@ oc config get-contexts
 oc config current-context
 ```
 
-```markdown
 **Ação:** Trocar de contexto
 ```
 
@@ -261,7 +233,6 @@ oc config current-context
 oc config use-context <nome-do-contexto>
 ```
 
-```markdown
 **Ação:** Renomear contexto
 ```
 
@@ -269,7 +240,6 @@ oc config use-context <nome-do-contexto>
 oc config rename-context <nome-antigo> <nome-novo>
 ```
 
-```markdown
 **Ação:** Deletar contexto
 ```
 
@@ -278,7 +248,6 @@ oc config delete-context <nome-do-contexto>
 ```
 
 ### Criar Contextos Customizados
-```markdown
 **Ação:** Criar novo contexto
 ```
 
@@ -289,7 +258,6 @@ oc config set-context <nome-do-contexto> \
   --namespace=<namespace>
 ```
 
-```markdown
 **Ação:** Exemplo
 ```
 
@@ -300,7 +268,6 @@ oc config set-context dev-context \
   --namespace=development
 ```
 
-```markdown
 **Ação:** Criar contexto para o cluster
 ```
 
@@ -311,7 +278,6 @@ oc config set-context <contexto> \
 ```
 
 ### Variáveis de Ambiente
-```markdown
 **Ação:** Definir KUBECONFIG customizado
 ```
 
@@ -319,7 +285,6 @@ oc config set-context <contexto> \
 export KUBECONFIG=/path/to/kubeconfig
 ```
 
-```markdown
 **Ação:** Múltiplos kubeconfigs
 ```
 

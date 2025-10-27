@@ -18,7 +18,6 @@ Este documento contém comandos para gerenciar versão e atualizações do clust
 ## Cluster Version
 
 ### Ver Versão Atual
-```markdown
 **Ação:** Exibir versão e status de atualização do cluster
 ```
 
@@ -26,7 +25,6 @@ Este documento contém comandos para gerenciar versão e atualizações do clust
 oc get clusterversion
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe clusterversion <resource-name>`
 ```
@@ -35,7 +33,6 @@ oc get clusterversion
 oc describe clusterversion version
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -43,7 +40,6 @@ oc describe clusterversion version
 oc get clusterversion -o jsonpath='{.items[0].status.desired.version}{"\n"}'
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -51,7 +47,6 @@ oc get clusterversion -o jsonpath='{.items[0].status.desired.version}{"\n"}'
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq .
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -60,7 +55,6 @@ oc get clusterversion -o jsonpath='{.items[0].spec.clusterID}{"\n"}'
 ```
 
 ### Status do Cluster
-```markdown
 **Ação:** Exibir recurso "version" em formato YAML
 ```
 
@@ -68,7 +62,6 @@ oc get clusterversion -o jsonpath='{.items[0].spec.clusterID}{"\n"}'
 oc get clusterversion version -o yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -76,7 +69,6 @@ oc get clusterversion version -o yaml
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -84,7 +76,6 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
 ```
 
-```markdown
 **Ação:** Percentage de update
 ```
 
@@ -92,7 +83,6 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 oc adm upgrade
 ```
 
-```markdown
 **Ação:** Exibir versão e status de atualização do cluster
 ```
 
@@ -105,7 +95,6 @@ oc get clusterversion
 ## Updates
 
 ### Verificar Updates Disponíveis
-```markdown
 **Ação:** Ver updates disponíveis
 ```
 
@@ -113,7 +102,6 @@ oc get clusterversion
 oc adm upgrade
 ```
 
-```markdown
 **Ação:** Listar todas as versões disponíveis
 ```
 
@@ -121,7 +109,6 @@ oc adm upgrade
 oc adm upgrade --to-latest=false
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -130,7 +117,6 @@ oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
 ### Iniciar Update
-```markdown
 **Ação:** Update para última versão do canal
 ```
 
@@ -138,7 +124,6 @@ oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 oc adm upgrade --to-latest=true
 ```
 
-```markdown
 **Ação:** Update para versão específica
 ```
 
@@ -146,7 +131,6 @@ oc adm upgrade --to-latest=true
 oc adm upgrade --to=<version>
 ```
 
-```markdown
 **Ação:** Exemplo
 ```
 
@@ -154,7 +138,6 @@ oc adm upgrade --to=<version>
 oc adm upgrade --to=4.14.15
 ```
 
-```markdown
 **Ação:** Update forçado (não recomendado)
 ```
 
@@ -163,7 +146,6 @@ oc adm upgrade --to=<version> --force --allow-upgrade-with-warnings
 ```
 
 ### Monitorar Update
-```markdown
 **Ação:** Status do update
 ```
 
@@ -171,7 +153,6 @@ oc adm upgrade --to=<version> --force --allow-upgrade-with-warnings
 oc get clusterversion
 ```
 
-```markdown
 **Ação:** Listar status de todos os cluster operators
 ```
 
@@ -179,7 +160,6 @@ oc get clusterversion
 oc get co
 ```
 
-```markdown
 **Ação:** Operators com problema
 ```
 
@@ -187,7 +167,6 @@ oc get co
 oc get co | grep -v "True.*False.*False"
 ```
 
-```markdown
 **Ação:** Logs de um operator específico
 ```
 
@@ -195,7 +174,6 @@ oc get co | grep -v "True.*False.*False"
 oc logs -n <operator-namespace> <operator-pod>
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 ```
 
@@ -203,7 +181,6 @@ oc logs -n <operator-namespace> <operator-pod>
 oc describe clusterversion
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -216,7 +193,6 @@ oc get clusterversion -o json | jq '.items[0].status.history'
 ## Update Channels
 
 ### Ver e Mudar Channel
-```markdown
 **Ação:** Exibir recurso "version" em formato JSON
 ```
 
@@ -231,7 +207,6 @@ oc get clusterversion version -o jsonpath='{.spec.channel}{"\n"}'
 # - eus-4.14 (Extended Update Support)
 # - candidate-4.14
 ```
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 ```
 
@@ -239,7 +214,6 @@ oc get clusterversion version -o jsonpath='{.spec.channel}{"\n"}'
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"stable-4.14"}}'
 ```
 
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 ```
 
@@ -247,7 +221,6 @@ oc patch clusterversion version --type merge -p '{"spec":{"channel":"stable-4.14
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.14"}}'
 ```
 
-```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 ```
 
@@ -255,7 +228,6 @@ oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.14"}
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.14"}}'
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -263,7 +235,6 @@ oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.14"}}
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
-```markdown
 **Ação:** Ver novos updates disponíveis
 ```
 
@@ -272,7 +243,6 @@ oc adm upgrade
 ```
 
 ### Upstream Update Server
-```markdown
 **Ação:** Exibir recurso "version" em formato JSON
 ```
 
@@ -280,7 +250,6 @@ oc adm upgrade
 oc get clusterversion version -o jsonpath='{.spec.upstream}{"\n"}'
 ```
 
-```markdown
 **Ação:** Configurar upstream customizado (disconnected)
 ```
 
@@ -293,7 +262,6 @@ oc patch clusterversion version --type merge -p '{"spec":{"upstream":"<update-se
 ## Troubleshooting Updates
 
 ### Update Stuck ou Falhando
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 ```
 
@@ -301,7 +269,6 @@ oc patch clusterversion version --type merge -p '{"spec":{"upstream":"<update-se
 oc describe clusterversion
 ```
 
-```markdown
 **Ação:** Ver qual operator está com problema
 ```
 
@@ -309,7 +276,6 @@ oc describe clusterversion
 oc get co | grep -v "True.*False.*False"
 ```
 
-```markdown
 **Ação:** Descrever operator problemático
 ```
 
@@ -317,7 +283,6 @@ oc get co | grep -v "True.*False.*False"
 oc describe co <operator-name>
 ```
 
-```markdown
 **Ação:** Ver mensagem de erro
 ```
 
@@ -325,7 +290,6 @@ oc describe co <operator-name>
 oc get co <operator-name> -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}{"\n"}'
 ```
 
-```markdown
 **Ação:** Ver pods do operator
 ```
 
@@ -333,7 +297,6 @@ oc get co <operator-name> -o jsonpath='{.status.conditions[?(@.type=="Degraded")
 oc get pods -n <operator-namespace>
 ```
 
-```markdown
 **Ação:** Logs do operator
 ```
 
@@ -341,7 +304,6 @@ oc get pods -n <operator-namespace>
 oc logs -n <operator-namespace> <pod-name>
 ```
 
-```markdown
 **Ação:** Ver eventos
 ```
 
@@ -355,7 +317,6 @@ oc get events -n <operator-namespace> --sort-by='.lastTimestamp'
 # Mas pode-se deletar ClusterVersion para "congelar"
 # NÃO RECOMENDADO EM PRODUÇÃO!
 ```
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -368,7 +329,6 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 # OpenShift NÃO suporta rollback
 # Se update falhar, o cluster permanece na versão atual
 ```
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -385,7 +345,6 @@ echo "Desired: $(oc get clusterversion -o jsonpath='{.items[0].status.desired.ve
 ```
 
 ### Update Prerequisites
-```markdown
 **Ação:** Verificar saúde antes de update
 ```
 
@@ -414,7 +373,6 @@ echo -e "\n=== MachineConfigPools ==="
 oc get mcp
 ```
 
-```markdown
 **Ação:** Script de verificação
 ```
 
@@ -425,7 +383,6 @@ echo "=== Pre-Update Health Check ==="
 echo ""
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -434,7 +391,6 @@ DEGRADED=$(oc get co -o json | jq -r '.items[] | select(.status.conditions[] | s
 echo "Degraded Operators: $DEGRADED"
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -443,7 +399,6 @@ NOT_READY=$(oc get nodes -o json | jq -r '.items[] | select(.status.conditions[]
 echo "Not Ready Nodes: $NOT_READY"
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -452,7 +407,6 @@ BAD_PODS=$(oc get pods -A --field-selector=status.phase!=Running,status.phase!=S
 echo "Non-Running Pods: $BAD_PODS"
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -479,7 +433,6 @@ chmod +x /tmp/pre-update-check.sh
 ```
 
 ### Cincinnati Graph
-```markdown
 **Ação:** Exibir recurso "version" em formato JSON
 ```
 

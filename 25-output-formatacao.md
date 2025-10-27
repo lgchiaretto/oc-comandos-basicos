@@ -19,7 +19,6 @@ Este documento contém comandos para formatar e extrair informações específic
 ## Jsonpath
 
 ### Básico
-```markdown
 **Ação:** Exibir recurso "test-app" em formato JSON
 **Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.metadata.name}'`
 ```
@@ -28,7 +27,6 @@ Este documento contém comandos para formatar e extrair informações específic
 oc get pod test-app -o jsonpath='{.metadata.name}'
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato JSON
 **Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'`
 ```
@@ -37,7 +35,6 @@ oc get pod test-app -o jsonpath='{.metadata.name}'
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -45,7 +42,6 @@ oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 oc get pods -o jsonpath='{.items[*].metadata.name}'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -53,7 +49,6 @@ oc get pods -o jsonpath='{.items[*].metadata.name}'
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato JSON
 **Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.spec.containers[0].image}'`
 ```
@@ -62,7 +57,6 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 oc get pod test-app -o jsonpath='{.spec.containers[0].image}'
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato JSON
 **Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.spec.containers[*].name}'`
 ```
@@ -72,7 +66,6 @@ oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 ```
 
 ### Filtros e Condições
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -80,7 +73,6 @@ oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 oc get pods -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -88,7 +80,6 @@ oc get pods -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}'
 oc get pods -o jsonpath='{.items[?(@.status.containerStatuses[0].restartCount>0)].metadata.name}'
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -96,7 +87,6 @@ oc get pods -o jsonpath='{.items[?(@.status.containerStatuses[0].restartCount>0)
 oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status=="True")]}{.metadata.name}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -104,7 +94,6 @@ oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status=="True
 oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status!="True")]}{.metadata.name}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir persistent volume claim em formato JSON
 ```
 
@@ -113,7 +102,6 @@ oc get pvc -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
 ### Exemplos Práticos
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -121,7 +109,6 @@ oc get pvc -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.podIP}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -129,7 +116,6 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.podIP}{
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.containers[*].image}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -137,7 +123,6 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.container
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.node-role\.kubernetes\.io/worker}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir persistent volume em formato JSON
 ```
 
@@ -145,7 +130,6 @@ oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labe
 oc get pv -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.claimRef.name}{"\n"}{end}'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -158,7 +142,6 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\tCPU:"}{.spec.conta
 ## Go-Template
 
 ### Sintaxe Básica
-```markdown
 **Ação:** Template simples
 ```
 
@@ -166,7 +149,6 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\tCPU:"}{.spec.conta
 oc get pods -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
 ```
 
-```markdown
 **Ação:** Com formatação
 ```
 
@@ -174,7 +156,6 @@ oc get pods -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
 oc get pods -o go-template='{{range .items}}{{.metadata.name}}{{"\t"}}{{.status.phase}}{{"\n"}}{{end}}'
 ```
 
-```markdown
 **Ação:** Condicionais
 ```
 
@@ -183,7 +164,6 @@ oc get pods -o go-template='{{range .items}}{{if eq .status.phase "Running"}}{{.
 ```
 
 ### Templates Complexos
-```markdown
 **Ação:** Template com if/else
 ```
 
@@ -191,7 +171,6 @@ oc get pods -o go-template='{{range .items}}{{if eq .status.phase "Running"}}{{.
 oc get pods -o go-template='{{range .items}}{{.metadata.name}}: {{if .status.containerStatuses}}{{(index .status.containerStatuses 0).ready}}{{else}}N/A{{end}}{{"\n"}}{{end}}'
 ```
 
-```markdown
 **Ação:** Funções built-in
 ```
 
@@ -199,7 +178,6 @@ oc get pods -o go-template='{{range .items}}{{.metadata.name}}: {{if .status.con
 oc get pods -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
 ```
 
-```markdown
 **Ação:** Template com tabela
 ```
 
@@ -208,7 +186,6 @@ oc get pods -o go-template='NAME{{"\t"}}STATUS{{"\t"}}IP{{"\n"}}{{range .items}}
 ```
 
 ### Template em Arquivo
-```markdown
 **Ação:** Criar template file
 ```
 
@@ -228,7 +205,6 @@ Pod: {{.metadata.name}}
 EOF
 ```
 
-```markdown
 **Ação:** Usar template
 ```
 
@@ -245,7 +221,6 @@ oc get pods -o go-template-file=/tmp/pod-template.tmpl
 # Instalar jq (se não estiver instalado)
 # sudo dnf install jq -y
 ```
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -253,7 +228,6 @@ oc get pods -o go-template-file=/tmp/pod-template.tmpl
 oc get pods -o json | jq .
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -261,7 +235,6 @@ oc get pods -o json | jq .
 oc get pods -o json | jq '.'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -269,7 +242,6 @@ oc get pods -o json | jq '.'
 oc get pods -o json | jq '.items[].metadata.name'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -278,7 +250,6 @@ oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadat
 ```
 
 ### Filtros Avançados
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -286,7 +257,6 @@ oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadat
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) \(.status.phase)"'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -294,7 +264,6 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) \(.status.phase)"'
 oc get pods -o json | jq '[.items[] | {name: .metadata.name, phase: .status.phase}]'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -302,7 +271,6 @@ oc get pods -o json | jq '[.items[] | {name: .metadata.name, phase: .status.phas
 oc get pods -o json | jq '.items | length'
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -310,7 +278,6 @@ oc get pods -o json | jq '.items | length'
 oc get pods -A -o json | jq -r 'group_by(.metadata.namespace) | .[] | "\(.[0].metadata.namespace): \(length) pods"'
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -319,7 +286,6 @@ oc get pods -o json | jq '.items | sort_by(.metadata.creationTimestamp)'
 ```
 
 ### Exemplos Práticos com JQ
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -327,7 +293,6 @@ oc get pods -o json | jq '.items | sort_by(.metadata.creationTimestamp)'
 oc get pods -A -o json | jq -r '.items[] | select(.status.phase != "Running" and .status.phase != "Succeeded") | "\(.metadata.namespace)/\(.metadata.name): \(.status.phase)"'
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -335,7 +300,6 @@ oc get pods -A -o json | jq -r '.items[] | select(.status.phase != "Running" and
 oc get pods -A -o json | jq -r '.items[] | "\(.status.containerStatuses[0].restartCount) \(.metadata.namespace)/\(.metadata.name)"' | sort -rn | head -10
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -343,7 +307,6 @@ oc get pods -A -o json | jq -r '.items[] | "\(.status.containerStatuses[0].resta
 oc get nodes -o json | jq -r '.items[] | "\(.metadata.name): \(.status.addresses[] | select(.type=="InternalIP") | .address)"'
 ```
 
-```markdown
 **Ação:** Listar persistent volume claim de todos os namespaces do cluster
 ```
 
@@ -351,7 +314,6 @@ oc get nodes -o json | jq -r '.items[] | "\(.metadata.name): \(.status.addresses
 oc get pvc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name): \(.spec.resources.requests.storage)"'
 ```
 
-```markdown
 **Ação:** Listar service de todos os namespaces do cluster
 ```
 
@@ -359,7 +321,6 @@ oc get pvc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.na
 oc get svc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name): \(.spec.clusterIP)"'
 ```
 
-```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -372,7 +333,6 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 ## Custom Columns
 
 ### Formato Custom-Columns
-```markdown
 **Ação:** Listar pods com colunas customizadas
 ```
 
@@ -380,7 +340,6 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase
 ```
 
-```markdown
 **Ação:** Listar pods com colunas customizadas
 ```
 
@@ -388,7 +347,6 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP,NODE:.spec.nodeName
 ```
 
-```markdown
 **Ação:** Listar pods com colunas customizadas
 ```
 
@@ -396,7 +354,6 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase --no-headers
 ```
 
-```markdown
 **Ação:** Listar nodes com colunas customizadas
 ```
 
@@ -404,7 +361,6 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase --no-head
 oc get nodes -o custom-columns=NAME:.metadata.name,STATUS:.status.conditions[?(@.type==\"Ready\")].status,VERSION:.status.nodeInfo.kubeletVersion
 ```
 
-```markdown
 **Ação:** Listar persistent volume claim com colunas customizadas
 ```
 
@@ -412,7 +368,6 @@ oc get nodes -o custom-columns=NAME:.metadata.name,STATUS:.status.conditions[?(@
 oc get pvc -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,VOLUME:.spec.volumeName,CAPACITY:.spec.resources.requests.storage
 ```
 
-```markdown
 **Ação:** Listar service com colunas customizadas
 ```
 
@@ -421,7 +376,6 @@ oc get svc -o custom-columns=NAME:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spe
 ```
 
 ### Custom-Columns Complexas
-```markdown
 **Ação:** Listar deployment com colunas customizadas
 ```
 
@@ -429,7 +383,6 @@ oc get svc -o custom-columns=NAME:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spe
 oc get deploy -o custom-columns=NAME:.metadata.name,DESIRED:.spec.replicas,CURRENT:.status.replicas,READY:.status.readyReplicas,UP-TO-DATE:.status.updatedReplicas
 ```
 
-```markdown
 **Ação:** Listar pods com colunas customizadas
 ```
 
@@ -437,7 +390,6 @@ oc get deploy -o custom-columns=NAME:.metadata.name,DESIRED:.spec.replicas,CURRE
 oc get pods -o custom-columns=NAME:.metadata.name,CPU_REQ:.spec.containers[0].resources.requests.cpu,MEM_REQ:.spec.containers[0].resources.requests.memory,CPU_LIM:.spec.containers[0].resources.limits.cpu,MEM_LIM:.spec.containers[0].resources.limits.memory
 ```
 
-```markdown
 **Ação:** Em arquivo
 ```
 
@@ -461,7 +413,6 @@ oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 ## Formatação de Saída
 
 ### Outputs Nativos
-```markdown
 **Ação:** Listar pods com informações adicionais (node, IP, etc)
 ```
 
@@ -469,7 +420,6 @@ oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 oc get pods -o wide
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato YAML
 **Exemplo:** `oc get pod <resource-name>app -o yaml`
 ```
@@ -478,7 +428,6 @@ oc get pods -o wide
 oc get pod test-app -o yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato JSON
 **Exemplo:** `oc get pod <resource-name>app -o json`
 ```
@@ -487,7 +436,6 @@ oc get pod test-app -o yaml
 oc get pod test-app -o json
 ```
 
-```markdown
 **Ação:** Name only
 ```
 
@@ -495,7 +443,6 @@ oc get pod test-app -o json
 oc get pods -o name
 ```
 
-```markdown
 **Ação:** Sem headers
 ```
 
@@ -504,7 +451,6 @@ oc get pods --no-headers
 ```
 
 ### Combinações Úteis
-```markdown
 **Ação:** Pods com AWK
 ```
 
@@ -512,7 +458,6 @@ oc get pods --no-headers
 oc get pods --no-headers | awk '{print $1}'
 ```
 
-```markdown
 **Ação:** Nodes com grep e awk
 ```
 
@@ -520,7 +465,6 @@ oc get pods --no-headers | awk '{print $1}'
 oc get nodes --no-headers | grep Ready | awk '{print $1}'
 ```
 
-```markdown
 **Ação:** Listar pods ordenados por campo específico
 ```
 
@@ -528,7 +472,6 @@ oc get nodes --no-headers | grep Ready | awk '{print $1}'
 oc get pods --sort-by=.metadata.creationTimestamp
 ```
 
-```markdown
 **Ação:** Listar pods ordenados por campo específico
 ```
 
@@ -536,7 +479,6 @@ oc get pods --sort-by=.metadata.creationTimestamp
 oc get pods --sort-by=.metadata.name
 ```
 
-```markdown
 **Ação:** Listar pods mostrando todas as labels associadas
 ```
 
@@ -544,7 +486,6 @@ oc get pods --sort-by=.metadata.name
 oc get pods --show-labels
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -552,7 +493,6 @@ oc get pods --show-labels
 oc get pods -l app=myapp
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -561,7 +501,6 @@ oc get pods -A --sort-by=.metadata.namespace
 ```
 
 ### Aliases Úteis
-```markdown
 **Ação:** Adicionar ao ~/.bashrc
 ```
 
@@ -576,7 +515,6 @@ alias okpj='oc get pods -o json'
 alias okpy='oc get pods -o yaml'
 ```
 
-```markdown
 **Ação:** Listar recurso com colunas customizadas
 ```
 

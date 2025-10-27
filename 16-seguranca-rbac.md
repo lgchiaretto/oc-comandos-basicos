@@ -19,7 +19,6 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 ## RBAC Básico
 
 ### Verificar Permissões
-```markdown
 **Ação:** Quem pode fazer determinada ação
 **Ação:** oc adm policy <resource-name> get pods
 **Ação:** oc adm policy <resource-name> delete projects
@@ -33,7 +32,6 @@ oc adm policy who-can get pods
 oc adm policy who-can delete projects
 ```
 
-```markdown
 **Ação:** Verificar minhas permissões
 ```
 
@@ -43,7 +41,6 @@ oc auth can-i create pods
 oc auth can-i delete projects
 ```
 
-```markdown
 **Ação:** Como outro usuário
 ```
 
@@ -51,7 +48,6 @@ oc auth can-i delete projects
 oc auth can-i get pods --as=<usuario>
 ```
 
-```markdown
 **Ação:** Verificar se usuário tem permissão para executar ação específica
 ```
 
@@ -60,7 +56,6 @@ oc auth can-i --list
 ```
 
 ### Usuários e Grupos
-```markdown
 **Ação:** Listar usuários
 ```
 
@@ -68,7 +63,6 @@ oc auth can-i --list
 oc get users
 ```
 
-```markdown
 **Ação:** Listar grupos
 ```
 
@@ -76,7 +70,6 @@ oc get users
 oc get groups
 ```
 
-```markdown
 **Ação:** Ver identidades
 ```
 
@@ -84,7 +77,6 @@ oc get groups
 oc get identities
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe user <username>`
 ```
@@ -98,7 +90,6 @@ oc describe user chiaretto
 ## Roles e RoleBindings
 
 ### Cluster Roles
-```markdown
 **Ação:** Listar ClusterRoles
 ```
 
@@ -106,7 +97,6 @@ oc describe user chiaretto
 oc get clusterroles
 ```
 
-```markdown
 **Ação:** Exibir cluster role "admin" em formato YAML
 **Exemplo:** `oc get clusterrole <role-name> -o yaml`
 **Ação:** oc get clusterrole <role-name> -o yaml
@@ -119,7 +109,6 @@ oc get clusterrole edit -o yaml
 oc get clusterrole view -o yaml
 ```
 
-```markdown
 **Ação:** Descrever ClusterRole
 ```
 
@@ -127,7 +116,6 @@ oc get clusterrole view -o yaml
 oc describe clusterrole <nome-da-role>
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do cluster role
 **Exemplo:** `oc describe clusterrole <role-name> | grep -A 50 PolicyRule`
 ```
@@ -137,7 +125,6 @@ oc describe clusterrole admin | grep -A 50 PolicyRule
 ```
 
 ### Roles (Namespace)
-```markdown
 **Ação:** Listar roles customizados do namespace
 ```
 
@@ -145,7 +132,6 @@ oc describe clusterrole admin | grep -A 50 PolicyRule
 oc get roles
 ```
 
-```markdown
 **Ação:** Criar Role customizada
 ```
 
@@ -153,7 +139,6 @@ oc get roles
 oc create role test-app --verb=<verbos> --resource=<recursos>
 ```
 
-```markdown
 **Ação:** Exemplo
 **Exemplo:** `oc create role <role-name> --verb=get,list,watch --resource=pods`
 ```
@@ -162,7 +147,6 @@ oc create role test-app --verb=<verbos> --resource=<recursos>
 oc create role pod-reader --verb=get,list,watch --resource=pods
 ```
 
-```markdown
 **Ação:** Abrir editor para modificar recurso interativamente
 **Exemplo:** `oc edit role <role-name>`
 ```
@@ -171,7 +155,6 @@ oc create role pod-reader --verb=get,list,watch --resource=pods
 oc edit role pod-reader
 ```
 
-```markdown
 **Ação:** Deletar o role especificado
 **Exemplo:** `oc delete role <role-name>`
 ```
@@ -181,7 +164,6 @@ oc delete role pod-reader
 ```
 
 ### ClusterRoleBindings
-```markdown
 **Ação:** Listar ClusterRoleBindings
 ```
 
@@ -189,7 +171,6 @@ oc delete role pod-reader
 oc get clusterrolebindings
 ```
 
-```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -197,7 +178,6 @@ oc get clusterrolebindings
 oc get clusterrolebinding -o json | jq -r '.items[] | select(.roleRef.name=="cluster-admin") | .metadata.name'
 ```
 
-```markdown
 **Ação:** Adicionar usuário como cluster-admin
 ```
 
@@ -205,7 +185,6 @@ oc get clusterrolebinding -o json | jq -r '.items[] | select(.roleRef.name=="clu
 oc adm policy add-cluster-role-to-user cluster-admin <username>
 ```
 
-```markdown
 **Ação:** Remover cluster-admin
 ```
 
@@ -213,7 +192,6 @@ oc adm policy add-cluster-role-to-user cluster-admin <username>
 oc adm policy remove-cluster-role-from-user cluster-admin <username>
 ```
 
-```markdown
 **Ação:** Adicionar grupo
 ```
 
@@ -222,7 +200,6 @@ oc adm policy add-cluster-role-to-group cluster-admin <groupname>
 ```
 
 ### RoleBindings (Namespace)
-```markdown
 **Ação:** Listar vinculações de roles no namespace atual
 ```
 
@@ -230,7 +207,6 @@ oc adm policy add-cluster-role-to-group cluster-admin <groupname>
 oc get rolebindings
 ```
 
-```markdown
 **Ação:** Adicionar role a usuário no namespace
 ```
 
@@ -241,7 +217,6 @@ oc adm policy add-role-to-user edit <username>
 oc adm policy add-role-to-user view <username>
 ```
 
-```markdown
 **Ação:** Adicionar role a grupo
 ```
 
@@ -249,7 +224,6 @@ oc adm policy add-role-to-user view <username>
 oc adm policy add-role-to-group <role> <groupname>
 ```
 
-```markdown
 **Ação:** Remover role
 ```
 
@@ -257,7 +231,6 @@ oc adm policy add-role-to-group <role> <groupname>
 oc adm policy remove-role-from-user <role> <username>
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe rolebinding <rolebinding-name>`
 ```
@@ -271,7 +244,6 @@ oc describe rolebinding admin
 ## Service Accounts
 
 ### Gerenciar Service Accounts
-```markdown
 **Ação:** Listar Service Accounts
 ```
 
@@ -280,7 +252,6 @@ oc get serviceaccounts
 oc get sa
 ```
 
-```markdown
 **Ação:** Criar novo recurso
 **Exemplo:** `oc create serviceaccount <serviceaccount-name>`
 ```
@@ -289,7 +260,6 @@ oc get sa
 oc create serviceaccount test-app
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do serviceaccount
 **Exemplo:** `oc describe sa <serviceaccount-name>`
 ```
@@ -298,7 +268,6 @@ oc create serviceaccount test-app
 oc describe sa test-app
 ```
 
-```markdown
 **Ação:** Exibir serviceaccount "test-app" em formato JSON
 **Exemplo:** `oc get sa <serviceaccount-name> -o jsonpath='{.secrets[*].name}'`
 ```
@@ -307,7 +276,6 @@ oc describe sa test-app
 oc get sa test-app -o jsonpath='{.secrets[*].name}'
 ```
 
-```markdown
 **Ação:** Deletar o serviceaccount especificado
 **Exemplo:** `oc delete sa <serviceaccount-name>`
 ```
@@ -317,7 +285,6 @@ oc delete sa test-app
 ```
 
 ### Usar Service Accounts
-```markdown
 **Ação:** Adicionar role a Service Account
 ```
 
@@ -325,7 +292,6 @@ oc delete sa test-app
 oc adm policy add-role-to-user <role> system:serviceaccount:development:test-app
 ```
 
-```markdown
 **Ação:** Exemplo: dar role edit
 **Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:development:test-app`
 ```
@@ -334,7 +300,6 @@ oc adm policy add-role-to-user <role> system:serviceaccount:development:test-app
 oc adm policy add-role-to-user edit system:serviceaccount:development:test-app
 ```
 
-```markdown
 **Ação:** ClusterRole para SA
 ```
 
@@ -342,7 +307,6 @@ oc adm policy add-role-to-user edit system:serviceaccount:development:test-app
 oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:test-app
 ```
 
-```markdown
 **Ação:** Usar SA em deployment
 **Exemplo:** `oc set serviceaccount <serviceaccount-name>/test-app test-app`
 ```
@@ -351,7 +315,6 @@ oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:
 oc set serviceaccount deployment/test-app test-app
 ```
 
-```markdown
 **Ação:** Exibir recurso "test-app" em formato JSON
 **Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'`
 ```
@@ -365,7 +328,6 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 ## Security Context Constraints (SCC)
 
 ### Listar e Ver SCCs
-```markdown
 **Ação:** Listar SCCs
 ```
 
@@ -373,7 +335,6 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 oc get scc
 ```
 
-```markdown
 **Ação:** Exibir recurso "restricted" em formato YAML
 ```
 
@@ -383,7 +344,6 @@ oc get scc privileged -o yaml
 oc get scc anyuid -o yaml
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe scc <resource-name>`
 ```
@@ -398,7 +358,6 @@ oc describe scc restricted
 oc get pod test-app -o yaml | grep scc
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe scc <resource-name> | grep Users`
 ```
@@ -408,7 +367,6 @@ oc describe scc restricted | grep Users
 ```
 
 ### Adicionar Permissões SCC
-```markdown
 **Ação:** Exemplos comuns e use com moderação
 **Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>`
 **Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>`
@@ -419,7 +377,6 @@ oc adm policy add-scc-to-user anyuid system:serviceaccount:development:test-app
 oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-app
 ```
 
-```markdown
 **Ação:** Adicionar grupo
 **Exemplo:** `oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"`
 ```
@@ -428,7 +385,6 @@ oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-
 oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 ```
 
-```markdown
 **Ação:** Remover SCC de grupo
 **Exemplo:** `oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"`
 ```
@@ -437,7 +393,6 @@ oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=
 oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe scc <resource-name>`
 ```
@@ -447,7 +402,6 @@ oc describe scc restricted
 ```
 
 ### Troubleshoot SCC
-```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe pod <resource-name> | grep -i scc`
 ```
@@ -456,7 +410,6 @@ oc describe scc restricted
 oc describe pod test-app | grep -i scc
 ```
 
-```markdown
 **Ação:** Ver eventos relacionados a SCC
 ```
 
@@ -464,7 +417,6 @@ oc describe pod test-app | grep -i scc
 oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 ```
 
-```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get pod <resource-name>app -o yaml | grep -A 10 securityContext`
 ```
@@ -478,7 +430,6 @@ oc get pod test-app -o yaml | grep -A 10 securityContext
 ## Policies e Auditoria
 
 ### Audit Logs
-```markdown
 **Ação:** Ver audit logs (em node)
 ```
 
@@ -490,7 +441,6 @@ cat /var/log/openshift-apiserver/audit.log
 cat /var/log/kube-apiserver/audit.log
 ```
 
-```markdown
 **Ação:** Buscar ações de usuário específico
 ```
 
@@ -499,7 +449,6 @@ grep <username> /var/log/openshift-apiserver/audit.log
 ```
 
 ### OAuth e Autenticação
-```markdown
 **Ação:** Exibir recurso "cluster" em formato YAML
 ```
 
@@ -507,7 +456,6 @@ grep <username> /var/log/openshift-apiserver/audit.log
 oc get oauth cluster -o yaml
 ```
 
-```markdown
 **Ação:** Exibir recurso "cluster" em formato JSON
 ```
 
@@ -515,7 +463,6 @@ oc get oauth cluster -o yaml
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
 ```
 
-```markdown
 **Ação:** Ver pods do OAuth
 ```
 
@@ -523,7 +470,6 @@ oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
 oc get pods -n openshift-authentication
 ```
 
-```markdown
 **Ação:** Logs do OAuth
 ```
 
@@ -532,7 +478,6 @@ oc logs -n openshift-authentication <oauth-pod>
 ```
 
 ### Secrets de TLS
-```markdown
 **Ação:** Listar recurso filtrados por campo específico
 ```
 
@@ -540,7 +485,6 @@ oc logs -n openshift-authentication <oauth-pod>
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 
-```markdown
 **Ação:** Ver certificado
 ```
 
@@ -548,7 +492,6 @@ oc get secrets --field-selector type=kubernetes.io/tls
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
 ```
 
-```markdown
 **Ação:** Verificar validade
 ```
 
@@ -556,7 +499,6 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
-```markdown
 **Ação:** Criar secret TLS
 ```
 

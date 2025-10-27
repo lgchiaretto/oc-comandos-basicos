@@ -18,7 +18,6 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 ## Must-Gather Básico
 
 ### Coletar Dados do Cluster
-```markdown
 **Ação:** Coletar dados de diagnóstico completo do cluster
 ```
 
@@ -26,7 +25,6 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 oc adm must-gather
 ```
 
-```markdown
 **Ação:** Coletar dados de diagnóstico em diretório específico
 ```
 
@@ -34,7 +32,6 @@ oc adm must-gather
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-```markdown
 **Ação:** Coletar dados de diagnóstico completo do cluster
 ```
 
@@ -42,7 +39,6 @@ oc adm must-gather --dest-dir=/tmp/must-gather
 oc adm must-gather -v=4
 ```
 
-```markdown
 **Ação:** Coletar dados de diagnóstico em diretório específico
 ```
 
@@ -50,7 +46,6 @@ oc adm must-gather -v=4
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-```markdown
 **Ação:** Ver pods do must-gather
 ```
 
@@ -59,7 +54,6 @@ oc get pods -n openshift-must-gather-*
 ```
 
 ### Coleta por Tempo
-```markdown
 **Ação:** Coletar logs a partir de período específico
 ```
 
@@ -67,7 +61,6 @@ oc get pods -n openshift-must-gather-*
 oc adm must-gather --since 2h
 ```
 
-```markdown
 **Ação:** Executar o pod do must-gather no node <node-name>
 ```
 
@@ -89,7 +82,6 @@ https://access.redhat.com/solutions/5459251
 ## Inspect
 
 ### Inspecionar Recursos
-```markdown
 **Ação:** Inspect de namespace completo
 ```
 
@@ -97,7 +89,6 @@ https://access.redhat.com/solutions/5459251
 oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 ```
 
-```markdown
 **Ação:** Coletar informações de debug de todos os cluster operators
 ```
 
@@ -105,7 +96,6 @@ oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 oc adm inspect clusteroperators --dest-dir=/tmp/inspect
 ```
 
-```markdown
 **Ação:** Coletar informações de debug de todos os nodes
 ```
 
@@ -113,7 +103,6 @@ oc adm inspect clusteroperators --dest-dir=/tmp/inspect
 oc adm inspect nodes --dest-dir=/tmp/inspect
 ```
 
-```markdown
 **Ação:** Inspecionar e coletar informações de recursos específicos
 **Exemplo:** `oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect`
 ```
@@ -122,7 +111,6 @@ oc adm inspect nodes --dest-dir=/tmp/inspect
 oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
 ```
 
-```markdown
 **Ação:** Inspect com logs
 ```
 
@@ -131,7 +119,6 @@ oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 ```
 
 ### Múltiplos Recursos
-```markdown
 **Ação:** Inspecionar e coletar informações de recursos específicos
 ```
 
@@ -143,7 +130,6 @@ oc adm inspect \
   --dest-dir=/tmp/inspect
 ```
 
-```markdown
 **Ação:** Inspecionar e coletar informações de recursos específicos
 ```
 
@@ -156,7 +142,6 @@ oc adm inspect ns -A --dest-dir=/tmp/inspect
 ## Diagnósticos Rápidos
 
 ### Verificações Básicas
-```markdown
 **Ação:** Listar status de todos os cluster operators
 ```
 
@@ -166,7 +151,6 @@ oc get nodes
 oc get clusterversion
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -174,7 +158,6 @@ oc get clusterversion
 oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -182,7 +165,6 @@ oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
 oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 ```
 
-```markdown
 **Ação:** Listar eventos de todos os namespaces do cluster
 ```
 
@@ -190,7 +172,6 @@ oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 ```
 
-```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -199,7 +180,6 @@ oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.t
 ```
 
 ### Coleta Rápida
-```markdown
 **Ação:** Script de diagnóstico rápido
 ```
 

@@ -23,7 +23,6 @@ Este documento contém comandos avançados usando field selectors, label selecto
 ## Field Selectors Básicos
 
 ### Filtrar Pods por Status
-```markdown
 **Ação:** Listar pods filtrados por campo específico
 ```
 
@@ -31,7 +30,6 @@ Este documento contém comandos avançados usando field selectors, label selecto
 oc get pods --field-selector=status.phase=Running
 ```
 
-```markdown
 **Ação:** Listar pods em estado Pending (aguardando)
 ```
 
@@ -39,7 +37,6 @@ oc get pods --field-selector=status.phase=Running
 oc get pods --field-selector=status.phase=Pending
 ```
 
-```markdown
 **Ação:** Listar pods que falharam
 ```
 
@@ -47,7 +44,6 @@ oc get pods --field-selector=status.phase=Pending
 oc get pods --field-selector=status.phase=Failed
 ```
 
-```markdown
 **Ação:** Listar pods que não estão em estado Running
 ```
 
@@ -55,7 +51,6 @@ oc get pods --field-selector=status.phase=Failed
 oc get pods --field-selector=status.phase!=Running
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por campo específico
 ```
 
@@ -64,7 +59,6 @@ oc get pods --field-selector=status.phase=Succeeded
 ```
 
 ### Filtrar por Namespace
-```markdown
 **Ação:** Listar pods filtrados por campo específico
 ```
 
@@ -72,7 +66,6 @@ oc get pods --field-selector=status.phase=Succeeded
 oc get pods --field-selector=metadata.namespace=default
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -81,7 +74,6 @@ oc get pods -A --field-selector=metadata.namespace=default,metadata.namespace=ku
 ```
 
 ### Filtrar Eventos
-```markdown
 **Ação:** Listar apenas eventos do tipo Warning
 ```
 
@@ -89,7 +81,6 @@ oc get pods -A --field-selector=metadata.namespace=default,metadata.namespace=ku
 oc get events --field-selector type=Warning
 ```
 
-```markdown
 **Ação:** Listar eventos filtrados por campo específico
 ```
 
@@ -97,7 +88,6 @@ oc get events --field-selector type=Warning
 oc get events --field-selector type=Normal
 ```
 
-```markdown
 **Ação:** Eventos de um recurso específico
 ```
 
@@ -105,7 +95,6 @@ oc get events --field-selector type=Normal
 oc get events --field-selector involvedObject.name=<pod-name>
 ```
 
-```markdown
 **Ação:** Eventos de um namespace
 ```
 
@@ -114,7 +103,6 @@ oc get events --field-selector involvedObject.namespace=<namespace>
 ```
 
 ### Filtrar Nodes
-```markdown
 **Ação:** Listar nodes filtrados por campo específico
 ```
 
@@ -122,7 +110,6 @@ oc get events --field-selector involvedObject.namespace=<namespace>
 oc get nodes --field-selector spec.unschedulable=true
 ```
 
-```markdown
 **Ação:** Listar nodes filtrados por campo específico
 ```
 
@@ -135,7 +122,6 @@ oc get nodes --field-selector spec.unschedulable=false
 ## Field Selectors Avançados
 
 ### CSR (Certificate Signing Requests)
-```markdown
 **Ação:** CSRs pendentes
 ```
 
@@ -143,7 +129,6 @@ oc get nodes --field-selector spec.unschedulable=false
 oc get csr | grep -i Pending
 ```
 
-```markdown
 **Ação:** Listar Certificate Signing Requests pendentes
 ```
 
@@ -151,7 +136,6 @@ oc get csr | grep -i Pending
 oc get csr
 ```
 
-```markdown
 **Ação:** Listar todos os CSRs pendentes (alternativa)
 ```
 
@@ -160,7 +144,6 @@ oc get csr | grep Pending
 ```
 
 ### Builds
-```markdown
 **Ação:** Listar recurso filtrados por campo específico
 ```
 
@@ -168,7 +151,6 @@ oc get csr | grep Pending
 oc get builds --field-selector status!=Complete
 ```
 
-```markdown
 **Ação:** Listar recurso filtrados por campo específico
 ```
 
@@ -176,7 +158,6 @@ oc get builds --field-selector status!=Complete
 oc get builds --field-selector status=Complete
 ```
 
-```markdown
 **Ação:** Listar recurso filtrados por campo específico
 ```
 
@@ -185,7 +166,6 @@ oc get builds --field-selector status=Failed
 ```
 
 ### Services
-```markdown
 **Ação:** Exibir service em formato JSON
 ```
 
@@ -193,7 +173,6 @@ oc get builds --field-selector status=Failed
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='LoadBalancer')]}{.metadata.name}{'\n'}{end}"
 ```
 
-```markdown
 **Ação:** Exibir service em formato JSON
 ```
 
@@ -206,7 +185,6 @@ oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.nam
 ## Label Selectors
 
 ### Seleção por Label
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -214,7 +192,6 @@ oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.nam
 oc get pods -l app=nginx
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -222,7 +199,6 @@ oc get pods -l app=nginx
 oc get pods -l app=nginx,tier=frontend
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -230,7 +206,6 @@ oc get pods -l app=nginx,tier=frontend
 oc get pods -l app
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -238,7 +213,6 @@ oc get pods -l app
 oc get pods -l '!app'
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -246,7 +220,6 @@ oc get pods -l '!app'
 oc get pods -l 'env in (dev,qa)'
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -255,7 +228,6 @@ oc get pods -l 'env notin (prod)'
 ```
 
 ### Label Selectors Complexos
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -263,7 +235,6 @@ oc get pods -l 'env notin (prod)'
 oc get pods -l 'deployment=test-app,tier!=frontend'
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -271,7 +242,6 @@ oc get pods -l 'deployment=test-app,tier!=frontend'
 oc get pods -l 'deployment=test-app'
 ```
 
-```markdown
 **Ação:** Listar pods exibindo todas as labels
 ```
 
@@ -280,7 +250,6 @@ oc get pods --show-labels | grep "deployment=test-app"
 ```
 
 ### Labels em Diferentes Recursos
-```markdown
 **Ação:** Listar deployments filtrados por label
 ```
 
@@ -288,7 +257,6 @@ oc get pods --show-labels | grep "deployment=test-app"
 oc get deployments -l app=test-app
 ```
 
-```markdown
 **Ação:** Listar service filtrados por label
 ```
 
@@ -296,7 +264,6 @@ oc get deployments -l app=test-app
 oc get svc -l app=test-app
 ```
 
-```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
@@ -304,7 +271,6 @@ oc get svc -l app=test-app
 oc get all -l app=test-app
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -317,7 +283,6 @@ oc get pods -l deployment=test-app
 ## Combinação de Filtros
 
 ### Field Selector + Label Selector
-```markdown
 **Ação:** Listar pods filtrados por campo específico
 ```
 
@@ -325,7 +290,6 @@ oc get pods -l deployment=test-app
 oc get pods -l app=nginx --field-selector=status.phase=Running
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por campo específico
 ```
 
@@ -333,7 +297,6 @@ oc get pods -l app=nginx --field-selector=status.phase=Running
 oc get pods -l tier=frontend --field-selector=metadata.namespace=production
 ```
 
-```markdown
 **Ação:** Listar pods filtrados por campo específico
 ```
 
@@ -342,7 +305,6 @@ oc get pods -l app=test-app,version=v2 --field-selector=status.phase=Running,met
 ```
 
 ### Múltiplos Field Selectors
-```markdown
 **Ação:** Combinar múltiplas condições
 ```
 
@@ -350,7 +312,6 @@ oc get pods -l app=test-app,version=v2 --field-selector=status.phase=Running,met
 oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -358,7 +319,6 @@ oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 oc get pods -A --field-selector=spec.nodeName=worker-1
 ```
 
-```markdown
 **Ação:** Listar apenas eventos do tipo Warning
 ```
 
@@ -371,7 +331,6 @@ oc get events --field-selector=type=Warning,involvedObject.namespace=development
 ## Filtros com GREP 
 
 ### Filtros Básicos com GREP
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -379,7 +338,6 @@ oc get events --field-selector=type=Warning,involvedObject.namespace=development
 oc get pods -A | grep -E -v "Running|Completed"
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -387,7 +345,6 @@ oc get pods -A | grep -E -v "Running|Completed"
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff|ErrImagePull|Pending"
 ```
 
-```markdown
 **Ação:** Nodes com problemas
 ```
 
@@ -395,7 +352,6 @@ oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff|ErrImagePull|P
 oc get nodes | grep -v "Ready"
 ```
 
-```markdown
 **Ação:** Cluster operators com problemas
 ```
 
@@ -404,7 +360,6 @@ oc get co | grep -v "True.*False.*False"
 ```
 
 ### Filtros Complexos com grep
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -412,7 +367,6 @@ oc get co | grep -v "True.*False.*False"
 oc get pods -A | grep -E "Error|Failed|CrashLoop|ImagePull|Pending|Unknown"
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -421,7 +375,6 @@ oc get pods -A | grep -E "kube-system|openshift-"
 ```
 
 ### Grep Inverso (excluir padrões)
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -429,7 +382,6 @@ oc get pods -A | grep -E "kube-system|openshift-"
 oc get pods -A | grep -E -v "Running|Completed|Succeeded"
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -437,7 +389,6 @@ oc get pods -A | grep -E -v "Running|Completed|Succeeded"
 oc get pods -A | grep -E -v "kube-system|kube-public|openshift-"
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -450,7 +401,6 @@ oc get pods -A | grep -E -v "Running|Completed" | grep -E -v "NAME"
 ## Ordenação e Paginação
 
 ### Ordenar por Campos
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
 ```
 
@@ -458,7 +408,6 @@ oc get pods -A | grep -E -v "Running|Completed" | grep -E -v "NAME"
 oc get events --sort-by='.lastTimestamp'
 ```
 
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
 ```
 
@@ -466,7 +415,6 @@ oc get events --sort-by='.lastTimestamp'
 oc get events --sort-by='.lastTimestamp' | tac
 ```
 
-```markdown
 **Ação:** Listar pods ordenados por campo específico
 ```
 
@@ -474,7 +422,6 @@ oc get events --sort-by='.lastTimestamp' | tac
 oc get pods --sort-by='.metadata.creationTimestamp'
 ```
 
-```markdown
 **Ação:** Listar nodes ordenados por campo específico
 ```
 
@@ -483,7 +430,6 @@ oc get nodes --sort-by='.metadata.name'
 ```
 
 ### Limitar Resultados
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
 ```
 
@@ -491,7 +437,6 @@ oc get nodes --sort-by='.metadata.name'
 oc get events --sort-by='.lastTimestamp' | head -10
 ```
 
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
 ```
 
@@ -499,7 +444,6 @@ oc get events --sort-by='.lastTimestamp' | head -10
 oc get events --sort-by='.lastTimestamp' | tail -10
 ```
 
-```markdown
 **Ação:** Paginação customizada
 ```
 
@@ -508,7 +452,6 @@ oc get pods --chunk-size=50
 ```
 
 ### Ordenar com Sort Unix
-```markdown
 **Ação:** Ordenar pods por uso de CPU
 ```
 
@@ -516,7 +459,6 @@ oc get pods --chunk-size=50
 oc adm top pods --no-headers | sort -k3 -nr
 ```
 
-```markdown
 **Ação:** Ordenar pods por uso de memória
 ```
 
@@ -524,7 +466,6 @@ oc adm top pods --no-headers | sort -k3 -nr
 oc adm top pods --no-headers | sort -k4 -hr
 ```
 
-```markdown
 **Ação:** Ordenar nodes por uso de CPU
 ```
 
@@ -537,7 +478,6 @@ oc adm top nodes --no-headers | sort -k3 -nr
 ## Padrões Úteis
 
 ### Health Checks Rápidos
-```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -549,7 +489,6 @@ else
 fi
 ```
 
-```markdown
 **Ação:** Verificar CSRs pendentes
 ```
 
@@ -562,7 +501,6 @@ else
 fi
 ```
 
-```markdown
 **Ação:** Verificar cluster operators
 ```
 
@@ -576,7 +514,6 @@ fi
 ```
 
 ### Contadores
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -584,7 +521,6 @@ fi
 oc get pods -A --no-headers | awk '{print $4}' | sort | uniq -c
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -592,7 +528,6 @@ oc get pods -A --no-headers | awk '{print $4}' | sort | uniq -c
 oc get pods -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -600,7 +535,6 @@ oc get pods -A --no-headers | awk '{print $1}' | sort | uniq -c
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
-```markdown
 **Ação:** Contar eventos por tipo
 ```
 
@@ -609,7 +543,6 @@ oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 ```
 
 ### Filtros Combinados Complexos
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -617,7 +550,6 @@ oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 oc get pods -A | grep -E "my-app|my-service" | grep -E -v "Running|Completed"
 ```
 
-```markdown
 **Ação:** Nodes com alta utilização de CPU
 ```
 
@@ -625,7 +557,6 @@ oc get pods -A | grep -E "my-app|my-service" | grep -E -v "Running|Completed"
 oc adm top nodes --no-headers | awk 'int($3) > 80 {print $1, $3}'
 ```
 
-```markdown
 **Ação:** Pods usando mais de 80% da memória solicitada
 ```
 
@@ -638,7 +569,6 @@ oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 ## Troubleshooting com Filtros
 
 ### Encontrar Pods com Problemas Específicos
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -646,7 +576,6 @@ oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 oc get pods -A -o wide | awk '$5 > 5 {print $0}'
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -659,7 +588,6 @@ oc get pods -A | grep CrashLoopBackOff
 oc get pods -A | grep ImagePullBackOff
 ```
 
-```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -668,7 +596,6 @@ oc get pods -A --field-selector=status.phase=Pending --sort-by='.metadata.creati
 ```
 
 ### Análise de Recursos
-```markdown
 **Ação:** Listar persistent volume claim de todos os namespaces do cluster
 ```
 
@@ -676,7 +603,6 @@ oc get pods -A --field-selector=status.phase=Pending --sort-by='.metadata.creati
 oc get pvc -A | grep -v Bound
 ```
 
-```markdown
 **Ação:** Services sem endpoints
 ```
 
@@ -688,7 +614,6 @@ for svc in $(oc get svc -o name); do
 done
 ```
 
-```markdown
 **Ação:** Listar routes de todos os namespaces do cluster
 ```
 

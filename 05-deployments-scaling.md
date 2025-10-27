@@ -17,7 +17,6 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 ## Scaling
 
 ### Manual
-```markdown
 **Ação:** Ajustar número de réplicas do deployment/replicaset
 **Exemplo:** `oc scale deployment <deployment-name> --replicas=3`
 ```
@@ -26,7 +25,6 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 oc scale deployment test-app --replicas=3
 ```
 
-```markdown
 **Ação:** Escalar deployment config
 ```
 
@@ -35,7 +33,6 @@ oc scale dc <nome-do-dc> --replicas=<numero>
 ```
 
 ### Autoscaling (HPA)
-```markdown
 **Ação:** Criar Horizontal Pod Autoscaler (HPA) para escalar automaticamente
 **Exemplo:** `oc autoscale deployment <deployment-name> --min=2 --max=10 --cpu-percent=80`
 ```
@@ -44,7 +41,6 @@ oc scale dc <nome-do-dc> --replicas=<numero>
 oc autoscale deployment test-app --min=2 --max=10 --cpu-percent=80
 ```
 
-```markdown
 **Ação:** Listar Horizontal Pod Autoscalers configurados
 ```
 
@@ -52,7 +48,6 @@ oc autoscale deployment test-app --min=2 --max=10 --cpu-percent=80
 oc get hpa
 ```
 
-```markdown
 **Ação:** Exibir detalhes completos do horizontal pod autoscaler
 **Exemplo:** `oc describe hpa <resource-name>`
 ```
@@ -61,7 +56,6 @@ oc get hpa
 oc describe hpa test-app
 ```
 
-```markdown
 **Ação:** Deletar o horizontal pod autoscaler especificado
 **Exemplo:** `oc delete hpa <resource-name>`
 ```
@@ -74,7 +68,6 @@ oc delete hpa test-app
 ## Atualizações e Rollbacks
 
 ### Atualizar Imagem
-```markdown
 **Ação:** Atualizar imagem do container no deployment/pod
 **Exemplo:** `oc set image <resource-name>/test-app httpd=httpd:2.4`
 ```
@@ -83,7 +76,6 @@ oc delete hpa test-app
 oc set image deployment/test-app httpd=httpd:2.4
 ```
 
-```markdown
 **Ação:** Exibir histórico de revisões do deployment
 **Exemplo:** `oc rollout history <resource-name>/test-app`
 ```
@@ -92,7 +84,6 @@ oc set image deployment/test-app httpd=httpd:2.4
 oc rollout history deployment/test-app
 ```
 
-```markdown
 **Ação:** Verificar status do rollout em andamento
 **Exemplo:** `oc rollout status <resource-name>/test-app`
 ```
@@ -102,7 +93,6 @@ oc rollout status deployment/test-app
 ```
 
 ### Pausar e Retomar
-```markdown
 **Ação:** Pausar rollout do deployment (impede novas atualizações)
 **Exemplo:** `oc rollout pause <resource-name>/test-app`
 ```
@@ -111,7 +101,6 @@ oc rollout status deployment/test-app
 oc rollout pause deployment/test-app
 ```
 
-```markdown
 **Ação:** Retomar rollout pausado do deployment
 **Exemplo:** `oc rollout resume <resource-name>/test-app`
 ```
@@ -120,7 +109,6 @@ oc rollout pause deployment/test-app
 oc rollout resume deployment/test-app
 ```
 
-```markdown
 **Ação:** Reiniciar deployment (recria todos os pods)
 **Exemplo:** `oc rollout restart <resource-name>/test-app`
 ```
@@ -130,7 +118,6 @@ oc rollout restart deployment/test-app
 ```
 
 ### Rollback
-```markdown
 **Ação:** Fazer rollback para revisão anterior do deployment
 **Exemplo:** `oc rollout undo <resource-name>/test-app`
 ```
@@ -139,7 +126,6 @@ oc rollout restart deployment/test-app
 oc rollout undo deployment/test-app
 ```
 
-```markdown
 **Ação:** Fazer rollback para revisão específica
 **Exemplo:** `oc rollout undo <resource-name>/test-app --to-revision=1`
 ```
@@ -148,7 +134,6 @@ oc rollout undo deployment/test-app
 oc rollout undo deployment/test-app --to-revision=1
 ```
 
-```markdown
 **Ação:** Exibir detalhes de revisão específica
 **Exemplo:** `oc rollout history <resource-name>/test-app --revision=3`
 ```
@@ -161,7 +146,6 @@ oc rollout history deployment/test-app --revision=3
 
 ## ReplicaSets
 
-```markdown
 **Ação:** Listar todos os ReplicaSets do namespace
 ```
 
@@ -170,7 +154,6 @@ oc get replicasets
 oc get rs
 ```
 
-```markdown
 **Ação:** Descrever replicaset
 ```
 
@@ -178,7 +161,6 @@ oc get rs
 oc describe rs <nome-do-rs>
 ```
 
-```markdown
 **Ação:** Listar replicaset filtrados por label
 ```
 
@@ -186,7 +168,6 @@ oc describe rs <nome-do-rs>
 oc get rs -l app=test-app
 ```
 
-```markdown
 **Ação:** Deletar replicaset
 ```
 

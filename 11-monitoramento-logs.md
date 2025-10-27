@@ -18,7 +18,6 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 ## Logs
 
 ### Logs de Pods
-```markdown
 **Ação:** Exibir logs do pod especificado
 ```
 
@@ -26,7 +25,6 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 oc logs my-pod
 ```
 
-```markdown
 **Ação:** Acompanhar logs em tempo real do pod
 ```
 
@@ -34,7 +32,6 @@ oc logs my-pod
 oc logs -f my-pod
 ```
 
-```markdown
 **Ação:** Exibir logs de container específico do pod
 **Exemplo:** `oc logs my-pod -c <container-name>`
 ```
@@ -43,7 +40,6 @@ oc logs -f my-pod
 oc logs my-pod -c my-container
 ```
 
-```markdown
 **Ação:** Exibir últimas N linhas dos logs
 ```
 
@@ -51,7 +47,6 @@ oc logs my-pod -c my-container
 oc logs my-pod --tail=100
 ```
 
-```markdown
 **Ação:** Exibir logs a partir de um período de tempo
 ```
 
@@ -60,7 +55,6 @@ oc logs my-pod --since=1h
 oc logs my-pod --since-time=2025-01-01T00:00:00Z
 ```
 
-```markdown
 **Ação:** Exibir logs da instância anterior do container (após crash)
 ```
 
@@ -69,7 +63,6 @@ oc logs my-pod --previous
 oc logs my-pod -p
 ```
 
-```markdown
 **Ação:** Exibir logs do pod especificado
 **Exemplo:** `oc logs deployment/<deployment-name>`
 ```
@@ -78,7 +71,6 @@ oc logs my-pod -p
 oc logs deployment/test-app
 ```
 
-```markdown
 **Ação:** Exibir logs do pod especificado
 ```
 
@@ -87,7 +79,6 @@ oc logs my-pod --timestamps
 ```
 
 ### Logs do Cluster
-```markdown
 **Ação:** Logs de node específico
 ```
 
@@ -95,7 +86,6 @@ oc logs my-pod --timestamps
 oc adm node-logs <nome-do-node>
 ```
 
-```markdown
 **Ação:** Logs do journal
 ```
 
@@ -103,7 +93,6 @@ oc adm node-logs <nome-do-node>
 oc adm node-logs <nome-do-node> -u kubelet
 ```
 
-```markdown
 **Ação:** Logs do CRI-O
 ```
 
@@ -116,7 +105,6 @@ oc adm node-logs <nome-do-node> -u crio
 ## Eventos
 
 ### Visualizar Eventos
-```markdown
 **Ação:** Listar eventos do namespace atual
 ```
 
@@ -124,7 +112,6 @@ oc adm node-logs <nome-do-node> -u crio
 oc get events
 ```
 
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
 ```
 
@@ -132,7 +119,6 @@ oc get events
 oc get events --sort-by='.lastTimestamp'
 ```
 
-```markdown
 **Ação:** Eventos de um namespace específico
 ```
 
@@ -140,7 +126,6 @@ oc get events --sort-by='.lastTimestamp'
 oc get events -n <namespace>
 ```
 
-```markdown
 **Ação:** Listar eventos de todos os namespaces do cluster
 ```
 
@@ -148,7 +133,6 @@ oc get events -n <namespace>
 oc get events -A
 ```
 
-```markdown
 **Ação:** Listar eventos filtrados por campo específico
 ```
 
@@ -156,7 +140,6 @@ oc get events -A
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
-```markdown
 **Ação:** Listar apenas eventos do tipo Warning
 ```
 
@@ -164,7 +147,6 @@ oc get events --field-selector involvedObject.name=my-pod
 oc get events --field-selector type=Warning
 ```
 
-```markdown
 **Ação:** Listar eventos ordenados por campo específico
 ```
 
@@ -172,7 +154,6 @@ oc get events --field-selector type=Warning
 oc get events --field-selector involvedObject.kind=Pod --sort-by='.lastTimestamp' | tail -20
 ```
 
-```markdown
 **Ação:** Listar eventos do namespace atual
 ```
 
@@ -185,7 +166,6 @@ oc get events
 ## Métricas e Top
 
 ### Uso de Recursos
-```markdown
 **Ação:** Top nodes (CPU e memória)
 **Exemplo:** `oc adm top <resource-name>`
 ```
@@ -194,7 +174,6 @@ oc get events
 oc adm top nodes
 ```
 
-```markdown
 **Ação:** Top nodes com labels
 ```
 
@@ -202,7 +181,6 @@ oc adm top nodes
 oc adm top nodes --selector=node-role.kubernetes.io/worker=""
 ```
 
-```markdown
 **Ação:** Top pods
 **Exemplo:** `oc adm top <resource-name>`
 ```
@@ -211,7 +189,6 @@ oc adm top nodes --selector=node-role.kubernetes.io/worker=""
 oc adm top pods
 ```
 
-```markdown
 **Ação:** Top pods de todos namespaces
 ```
 
@@ -219,7 +196,6 @@ oc adm top pods
 oc adm top pods -A
 ```
 
-```markdown
 **Ação:** Top pods com containers
 ```
 
@@ -227,7 +203,6 @@ oc adm top pods -A
 oc adm top pods --containers
 ```
 
-```markdown
 **Ação:** Ordenar por CPU
 ```
 
@@ -235,7 +210,6 @@ oc adm top pods --containers
 oc adm top pods --sort-by=cpu
 ```
 
-```markdown
 **Ação:** Ordenar por memória
 ```
 
@@ -243,7 +217,6 @@ oc adm top pods --sort-by=cpu
 oc adm top pods --sort-by=memory
 ```
 
-```markdown
 **Ação:** Top de um pod específico
 **Exemplo:** `oc adm top <resource-name> my-pod`
 ```
@@ -253,7 +226,6 @@ oc adm top pod my-pod
 ```
 
 ### Métricas Detalhadas
-```markdown
 **Ação:** Ver uso atual vs requests/limits
 ```
 
@@ -261,7 +233,6 @@ oc adm top pod my-pod
 oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
 ```
 
-```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -274,7 +245,6 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.container
 ## Prometheus e Alertas
 
 ### Acessar Prometheus
-```markdown
 **Ação:** Ver route do Prometheus
 ```
 
@@ -282,7 +252,6 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.container
 oc get route -n openshift-monitoring
 ```
 
-```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -290,7 +259,6 @@ oc get route -n openshift-monitoring
 oc get prometheusrule -A
 ```
 
-```markdown
 **Ação:** Ver pods do monitoring
 ```
 
@@ -299,7 +267,6 @@ oc get pods -n openshift-monitoring
 ```
 
 ### Configurar Monitoring
-```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -316,7 +283,6 @@ data:
 EOF
 ```
 
-```markdown
 **Ação:** Exibir recurso "cluster-monitoring-config" em formato YAML
 **Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
 ```
@@ -325,7 +291,6 @@ EOF
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
-```markdown
 **Ação:** Ver status do monitoring
 **Exemplo:** `oc get clusteroperator <resource-name>`
 ```
@@ -335,7 +300,6 @@ oc get clusteroperator monitoring
 ```
 
 ### ServiceMonitor
-```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -343,7 +307,6 @@ oc get clusteroperator monitoring
 oc get servicemonitor -A
 ```
 
-```markdown
 **Ação:** Criar ServiceMonitor para app
 ```
 
