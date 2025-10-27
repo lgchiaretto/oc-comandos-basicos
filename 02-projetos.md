@@ -58,7 +58,6 @@ oc get projects --show-labels
 ### Criar Projetos
 **Criar novo projeto (namespace) no cluster**
 
-
 ```bash
 oc new-project development
 ```
@@ -71,7 +70,6 @@ oc project
 
 **Criar novo projeto com descrição e nome de exibição**
 
-
 ```bash
 oc new-project production --description="Minha descrição" --display-name="Nome de Exibição"
 ```
@@ -79,13 +77,11 @@ oc new-project production --description="Minha descrição" --display-name="Nome
 ### Trocar entre Projetos
 **Trocar para o projeto especificado**
 
-
 ```bash
 oc project development
 ```
 
 **Exemplo**
-
 
 ```bash ignore-test
 oc project production
@@ -104,13 +100,11 @@ oc project
 ### Descrever e Inspecionar
 **Exibir detalhes completos do projeto**
 
-
 ```bash
 oc describe project development
 ```
 
 **Exibir projeto "development" em formato YAML**
-
 
 ```bash
 oc get project development -o yaml
@@ -118,13 +112,11 @@ oc get project development -o yaml
 
 **Exibir projeto "development" em formato JSON**
 
-
 ```bash
 oc get project development -o json
 ```
 
 **Exibir projeto "development" em formato YAML**
-
 
 ```bash
 oc get project development -o yaml > /tmp/projeto.yaml
@@ -133,13 +125,11 @@ oc get project development -o yaml > /tmp/projeto.yaml
 ### Editar Projetos
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit project development
 ```
 
 **Adicionar nova label ao recurso**
-
 
 ```bash
 oc label namespace development test-validation=true pod-security.kubernetes.io/enforce=privileged
@@ -147,13 +137,11 @@ oc label namespace development test-validation=true pod-security.kubernetes.io/e
 
 **Atualizar label existente com novo valor**
 
-
 ```bash
 oc label namespace production test-validation=true pod-security.kubernetes.io/enforce=privileged --overwrite
 ```
 
 **Adicionar annotation ao recurso**
-
 
 ```bash
 oc annotate namespace development description="Meu projeto"
@@ -161,13 +149,11 @@ oc annotate namespace development description="Meu projeto"
 
 **Remover label do recurso**
 
-
 ```bash
 oc label namespace development env-
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
@@ -176,20 +162,17 @@ oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 ### Deletar Projetos
 **Deletar o projeto especificado**
 
-
 ```bash ignore-test
 oc delete project development
 ```
 
 **Deletar o projeto especificado**
 
-
 ```bash ignore-test
 oc delete project development --wait=true
 ```
 
 **Deletar o projeto especificado**
-
 
 ```bash ignore-test
 oc delete project development production
@@ -222,7 +205,6 @@ oc new-project <nome> --node-selector="kubernetes.io/hostname=<hostname>"
 
 **Exemplo prático**
 
-
 ```bash ignore-test
 oc new-project production --node-selector='env=production'
 ```
@@ -230,13 +212,11 @@ oc new-project production --node-selector='env=production'
 ### Modificar Node Selector Existente
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
@@ -254,7 +234,6 @@ oc label namespace development <key>=<value>
 
 **Atualizar label existente com novo valor**
 
-
 ```bash
 oc label namespace development env=development validation=true --overwrite
 ```
@@ -267,7 +246,6 @@ oc annotate namespace development <key>='<value>'
 ```
 
 **Atualizar annotation existente com novo valor**
-
 
 ```bash
 oc annotate namespace development test-maintainer='test-team' --overwrite
@@ -305,7 +283,6 @@ vim /tmp/template.yaml
 ```
 
 **Criar novo recurso**
-
 
 ```bash ignore-test
 oc create -f /tmp/template.yaml -n openshift-config
@@ -495,7 +472,6 @@ oc adm policy remove-role-from-user admin <usuario> -n <projeto>
 ### Criar Ambiente Completo
 **Criar novo projeto (namespace) no cluster**
 
-
 ```bash ignore-test
 oc new-project meu-app-dev \
   --description="Ambiente de desenvolvimento" \
@@ -503,7 +479,6 @@ oc new-project meu-app-dev \
 ```
 
 **Adicionar nova label ao recurso**
-
 
 ```bash ignore-test
 oc label project meu-app-dev env=dev tier=backend team=devops
@@ -539,7 +514,6 @@ oc get all -n projeto-origem -o yaml > recursos.yaml
 ```
 
 **Criar novo projeto (namespace) no cluster**
-
 
 ```bash ignore-test
 oc new-project projeto-destino

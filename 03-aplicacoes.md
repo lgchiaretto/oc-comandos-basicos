@@ -46,7 +46,6 @@ oc new-app nginx --name=meu-nginx
 
 **Exemplo com httpd**
 
-
 ```bash
 oc new-app httpd:latest --name=test-app -n development
 ```
@@ -186,7 +185,6 @@ oc delete all --selector app=test-app
 
 **Deletar o recurso especificado**
 
-
 ```bash ignore-test
 oc delete deployment test-app
 ```
@@ -194,20 +192,17 @@ oc delete deployment test-app
 ### Expor Aplicação
 **Criar route para expor service externamente**
 
-
 ```bash ignore-test
 oc expose service test-app
 ```
 
 **Criar route com hostname customizado para o service**
 
-
 ```bash ignore-test
 oc expose service test-app --hostname=app.example.com
 ```
 
 **Criar route com terminação TLS edge (TLS terminado no router)**
-
 
 ```bash
 oc create route edge --service=test-app
@@ -226,7 +221,6 @@ oc status
 
 **Status de um projeto específico**
 
-
 ```bash
 oc status -n development
 ```
@@ -234,13 +228,11 @@ oc status -n development
 ### Descrever Recursos
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe deployment test-app
 ```
 
 **Exibir detalhes completos do recurso**
-
 
 ```bash
 oc describe deployment test-app -n development
@@ -253,13 +245,11 @@ oc describe deployment test-app -n development
 ### Atualizar Imagem do Deployment
 **Atualizar imagem do container no deployment/pod**
 
-
 ```bash
 oc set image deployment/test-app httpd=httpd:2.4 -n development
 ```
 
 **Atualizar imagem do container no deployment/pod**
-
 
 ```bash ignore-test
 oc set image deployment/test-app container1=image1:tag container2=image2:tag
@@ -268,13 +258,11 @@ oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ### Patch de Deployment
 **Aplicar merge patch ao recurso (mescla alterações)**
 
-
 ```bash
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"replicas":3}}'
 ```
 
 **Aplicar merge patch ao recurso (mescla alterações)**
-
 
 ```bash
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"httpd:latest"}]}}}}'
@@ -292,7 +280,6 @@ oc auth can-i create deployments
 ```
 
 **Verificar se usuário tem permissão para executar ação específica**
-
 
 ```bash
 oc auth can-i create deployments -n development
@@ -314,20 +301,17 @@ oc auth can-i get secrets -n development
 ### Wait para Deployment
 **Aguardar deployment ficar disponível**
 
-
 ```bash
 oc wait --for=condition=available deployment/test-app
 ```
 
 **Aguardar deployment ficar disponível**
 
-
 ```bash
 oc wait --for=condition=available --timeout=60s deployment/test-app
 ```
 
 **Aguardar deployment ficar disponível**
-
 
 ```bash
 oc wait --for=condition=available --timeout=60s deployment/test-app -n development

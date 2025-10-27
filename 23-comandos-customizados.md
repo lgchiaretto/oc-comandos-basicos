@@ -166,20 +166,17 @@ oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ### Análise de Applications (ArgoCD)
 **Exibir recurso "workshop-vms-prd" em formato JSON**
 
-
 ```bash
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions}' | jq .
 ```
 
 **Exibir recurso "workshop-gitops-vms-hml" em formato JSON**
 
-
 ```bash
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.spec.syncPolicy}' | jq
 ```
 
 **Exibir recurso "workshop-vms-dev" em formato JSON**
-
 
 ```bash ignore-test
 oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.resources[] | select(.kind == "Pod")'
@@ -188,13 +185,11 @@ oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.re
 ### Análise de ClusterLogForwarder
 **Exibir recurso "instance" em formato JSON**
 
-
 ```bash ignore-test
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 ```
 
 **Exibir recurso "instance" em formato JSON**
-
 
 ```bash
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.filterConditions}' | jq '.'
@@ -303,7 +298,6 @@ oc get all -o yaml | grep 5000
 ### Busca em AdminNetworkPolicy
 **Listar recurso de todos os namespaces do cluster**
 
-
 ```bash
 oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 30 "ingress:" | head -40
 ```
@@ -311,13 +305,11 @@ oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 3
 ### Análise de ArgoCD
 **Listar recurso de todos os namespaces do cluster**
 
-
 ```bash ignore-test
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
 ```
 
 **Listar recurso de todos os namespaces do cluster**
-
 
 ```bash ignore-test
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
@@ -325,13 +317,11 @@ oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | gr
 
 **Listar recurso de todos os namespaces do cluster**
 
-
 ```bash ignore-test
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A 5 -B 5 sync
 ```
 
 **Listar recurso de todos os namespaces do cluster**
-
 
 ```bash ignore-test
 oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 5 "message"
@@ -339,7 +329,6 @@ oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 
 
 ### Filtros em CatalogSource
 **Listar recurso de todos os namespaces do cluster**
-
 
 ```bash
 oc get catalogsource certified-operators -n openshift-marketplace -o yaml | grep -A 10 status:
@@ -358,20 +347,17 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 ### Análise de API Requests
 **Exibir recurso "ingresses.v1beta1.extensions" em formato JSON**
 
-
 ```bash ignore-test
 oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 **Exibir recurso "ingresses.v1beta1.networking.k8s.io" em formato JSON**
 
-
 ```bash ignore-test
 oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 **Exibir recurso "roles.v1beta1.rbac.authorization.k8s.io" em formato JSON**
-
 
 ```bash ignore-test
 oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
@@ -406,20 +392,17 @@ oc get application -A -o yaml | sed '/status:/d'
 ### Verificações Condicionais
 **Verificar se aplicação existe**
 
-
 ```bash
 oc get applications.argoproj.io -n openshift-gitops  || echo "No applications found"
 ```
 
 **Exibir recurso "workshop-gitops-vms-dev" em formato JSON**
 
-
 ```bash
 oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}'  || echo "Application not found"
 ```
 
 **Exibir recurso "workshop-vms-prd" em formato JSON**
-
 
 ```bash ignore-test
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
@@ -531,13 +514,11 @@ oc get apiservice | grep -v True
 
 **Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON**
 
-
 ```bash
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
 **Exibir recurso "v1.packages.operators.coreos.com" em formato JSON**
-
 
 ```bash
 oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text
@@ -561,7 +542,6 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 ```
 
 **Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON**
-
 
 ```bash
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text

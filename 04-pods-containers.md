@@ -59,13 +59,11 @@ oc apply -f pod.yaml
 
 **Deletar o recurso especificado**
 
-
 ```bash ignore-test
 oc delete pod my-pod
 ```
 
 **Deletar recurso forçadamente (sem período de espera)**
-
 
 ```bash ignore-test
 oc delete pod my-pod --grace-period=0 --force
@@ -110,7 +108,6 @@ oc get pods -l app=test-app
 
 **Listar pods em um projeto específico**
 
-
 ```bash
 oc get pods -n development
 ```
@@ -123,13 +120,11 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe pod my-pod
 ```
 
 **Exibir recurso "my-pod" em formato YAML**
-
 
 ```bash
 oc get pod my-pod -o yaml
@@ -137,20 +132,17 @@ oc get pod my-pod -o yaml
 
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash
 oc get pod my-pod -o json
 ```
 
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash
 oc get pod my-pod -o jsonpath='{.status.phase}'
 ```
 
 **Aguardar pod ficar no estado Ready**
-
 
 ```bash
 oc wait --for=condition=Ready pod/my-pod
@@ -180,7 +172,6 @@ oc exec -it my-pod -- /bin/date
 ```
 
 **Executar comando em container específico do pod**
-
 
 ```bash
 oc exec my-pod -c my-container -- /bin/date
@@ -228,13 +219,11 @@ oc cp ./config.json mypod:/etc/config/config.json
 ### Reiniciar Pods
 **Reiniciar deployment (recria todos os pods)**
 
-
 ```bash
 oc rollout restart deployment/test-app
 ```
 
 **Deletar o recurso especificado**
-
 
 ```bash ignore-test
 oc delete pod my-pod
@@ -242,12 +231,10 @@ oc delete pod my-pod
 
 **Escalar deployment para zero (parar todos os pods)**
 
-
 ```bash
 oc scale deployment test-app --replicas=0
 ```
 **Ajustar número de réplicas do deployment/replicaset**
-
 
 ```bash
 oc scale deployment test-app --replicas=2
@@ -259,13 +246,11 @@ oc scale deployment test-app --replicas=2
 ### Debug Interativo
 **Criar cópia de pod para debug interativo**
 
-
 ```bash ignore-test
 oc debug pod/my-pod
 ```
 
 **Criar pod de debug com imagem customizada**
-
 
 ```bash ignore-test
 oc debug pod/my-pod-debug --image=quay.io/chiaretto/netshoot
@@ -304,7 +289,6 @@ oc get pods --field-selector=status.phase=Failed
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe pod my-pod | grep -A 10 "Events:"
 ```
@@ -327,7 +311,6 @@ oc logs -f my-pod
 ```
 
 **Exibir logs de container específico do pod**
-
 
 ```bash ignore-test
 oc logs my-pod -c my-container

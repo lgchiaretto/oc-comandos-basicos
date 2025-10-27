@@ -27,7 +27,6 @@ oc get bc
 
 **Exibir detalhes completos do buildconfig**
 
-
 ```bash
 oc describe bc s2i-chiaretto
 ```
@@ -62,13 +61,11 @@ oc set triggers bc/s2i-chiaretto --from-webhook
 
 **Remover triggers**
 
-
 ```bash
 oc set triggers bc/s2i-chiaretto --remove-all
 ```
 
 **Exibir detalhes completos do buildconfig**
-
 
 ```bash
 oc describe bc s2i-chiaretto | grep Triggered
@@ -105,20 +102,17 @@ oc get builds
 
 **Ver status de build específico**
 
-
 ```bash ignore-test
 oc get build s2i-chiaretto-2
 ```
 
 **Cancelar build em execução**
 
-
 ```bash ignore-test
 oc cancel-build s2i-chiaretto-2
 ```
 
 **Deletar o build especificado**
-
 
 ```bash ignore-test
 oc delete build s2i-chiaretto-2
@@ -136,13 +130,11 @@ oc get builds --sort-by=.metadata.creationTimestamp
 ### Cancelar Build
 **Cancelar build em execução**
 
-
 ```bash ignore-test
 oc cancel-build s2i-chiaretto-2
 ```
 
 **Em namespace específico**
-
 
 ```bash ignore-test
 oc cancel-build s2i-chiaretto -n development
@@ -163,7 +155,6 @@ oc logs -l buildconfig=s2i-chiaretto --tail=20
 
 **Exibir últimas N linhas dos logs**
 
-
 ```bash
 oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 ```
@@ -171,7 +162,6 @@ oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 
 ### Debug de Builds
 **Exibir detalhes completos do build**
-
 
 ```bash ignore-test
 oc describe build s2i-chiaretto-2
@@ -203,20 +193,17 @@ oc get is
 
 **Exibir detalhes completos do imagestream**
 
-
 ```bash
 oc describe is s2i-chiaretto
 ```
 
 **Exibir imagestream "s2i-chiaretto" em formato JSON**
 
-
 ```bash
 oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
 ```
 
 **Criar novo recurso**
-
 
 ```bash ignore-test
 oc create imagestream s2i-chiaretto
@@ -230,13 +217,11 @@ oc import-image s2i-chiaretto --from=<registry>/<image>:<tag> --confirm
 
 **Deletar o imagestream especificado**
 
-
 ```bash ignore-test
 oc delete is s2i-chiaretto
 ```
 
 **Exibir imagestream "s2i-chiaretto" em formato JSON**
-
 
 ```bash ignore-test
 oc get is s2i-chiaretto -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
@@ -251,7 +236,6 @@ oc get istag
 ```
 
 **Exibir detalhes completos do recurso**
-
 
 ```bash ignore-test
 oc describe istag s2i-chiaretto:latest

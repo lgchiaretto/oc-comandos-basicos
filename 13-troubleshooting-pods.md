@@ -44,7 +44,6 @@ oc get pods --field-selector=status.phase=Pending
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe pod my-pod
 ```
@@ -56,7 +55,6 @@ oc get events --field-selector involvedObject.name=my-pod
 ```
 
 **Exibir recurso "my-pod" em formato YAML**
-
 
 ```bash
 oc get pod my-pod -o yaml
@@ -70,7 +68,6 @@ oc logs my-pod
 ```
 
 **Exibir logs de container específico do pod**
-
 
 ```bash ignore-test
 oc logs my-pod -c httpd
@@ -101,7 +98,6 @@ oc logs my-pod --tail=100
 ### ImagePullBackOff
 **Exibir detalhes completos do recurso**
 
-
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Events
 ```
@@ -120,7 +116,6 @@ oc debug node/<node-name> -- chroot /host podman pull <image>
 
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
 ```
@@ -134,13 +129,11 @@ oc logs my-pod --previous
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash ignore-test
 oc describe pod my-pod | grep -i "exit code"
 ```
 
 **Listar recurso de todos os namespaces do cluster**
-
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
@@ -157,7 +150,6 @@ oc set probe deployment/test-app --readiness --remove
 
 **Criar cópia de pod para debug interativo**
 
-
 ```bash ignore-test
 oc debug deployment/test-app
 ```
@@ -165,20 +157,17 @@ oc debug deployment/test-app
 ### Pending (Não Agendado)
 **Exibir detalhes completos do recurso**
 
-
 ```bash ignore-test
 oc describe pod my-pod | grep -A 20 Events
 ```
 
 **Listar recurso de todos os namespaces do cluster**
 
-
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 5 resources
 ```
 
 **Ver capacidade dos nodes**
-
 
 ```bash
 oc adm top nodes
@@ -191,7 +180,6 @@ oc get nodes
 ```
 
 **Exibir recurso "my-pod" em formato YAML**
-
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep nodeSelector
@@ -206,13 +194,11 @@ oc describe nodes | grep Taints
 ### OOMKilled
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 ```
 
 **Ver uso atual**
-
 
 ```bash ignore-test
 oc adm top pod my-pod
@@ -220,20 +206,17 @@ oc adm top pod my-pod
 
 **Definir/atualizar requests e limits de recursos**
 
-
 ```bash
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
 **Exibir recurso "my-pod" em formato JSON**
-
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
@@ -246,13 +229,11 @@ oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminate
 ### Debug Interativo
 **Criar cópia de pod para debug interativo**
 
-
 ```bash ignore-test
 oc debug pod/my-pod
 ```
 
 **Criar cópia de pod para debug interativo**
-
 
 ```bash ignore-test
 oc debug deployment/test-app
@@ -307,20 +288,17 @@ oc exec my-pod -- ls -la /path
 ### Port Forward para Debug
 **Forward de porta**
 
-
 ```bash ignore-test
 oc port-forward my-pod 8080:8080
 ```
 
 **Múltiplas portas**
 
-
 ```bash ignore-test
 oc port-forward my-pod 8080:8080 9090:9090
 ```
 
 **Em background**
-
 
 ```bash ignore-test
 oc port-forward my-pod 8080:8080 &
@@ -345,13 +323,11 @@ oc get pvc
 
 **Exibir detalhes completos do persistent volume claim**
 
-
 ```bash ignore-test
 oc describe pvc test-app
 ```
 
 **Exibir detalhes completos do recurso**
-
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Mounts
@@ -366,20 +342,17 @@ oc exec my-pod -- ls -la /mount/path
 ### ConfigMaps e Secrets
 **Exibir configmap "test-app" em formato YAML**
 
-
 ```bash
 oc get cm test-app -o yaml
 ```
 
 **Exibir secret "test-app" em formato YAML**
 
-
 ```bash
 oc get secret test-app -o yaml
 ```
 
 **Definir/atualizar variáveis de ambiente no recurso**
-
 
 ```bash ignore-test
 oc set env pod/test-app --list
@@ -400,7 +373,6 @@ oc get svc
 
 **Endpoints do service**
 
-
 ```bash
 oc get endpoints test-app
 ```
@@ -419,7 +391,6 @@ oc exec my-pod -- nslookup <service-name>
 
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
@@ -433,7 +404,6 @@ oc get sa
 
 **Exibir recurso "my-pod" em formato YAML**
 
-
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep scc
 ```
@@ -445,7 +415,6 @@ oc adm policy who-can <verbo> <recurso>
 ```
 
 **Exibir recurso "my-pod" em formato JSON**
-
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'

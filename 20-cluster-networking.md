@@ -44,7 +44,6 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
 
 **Ver network operator**
 
-
 ```bash
 oc get clusteroperator network
 ```
@@ -98,14 +97,12 @@ oc get ingresscontroller -n openshift-ingress-operator
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe ingresscontroller -n openshift-ingress-operator default
 ```
 
 ### Escalar Ingress Controller
 **Ajustar número de réplicas do deployment/replicaset**
-
 
 ```bash
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
@@ -123,7 +120,6 @@ oc get netpol
 ```
 
 **Exibir detalhes completos do network policy**
-
 
 ```bash ignore-test
 oc describe networkpolicy test-app
@@ -225,13 +221,11 @@ oc get pods --show-labels
 
 **Exibir detalhes completos do network policy**
 
-
 ```bash ignore-test
 oc describe networkpolicy test-app
 ```
 
 **Deletar o network policy especificado**
-
 
 ```bash ignore-test
 oc delete networkpolicy test-app

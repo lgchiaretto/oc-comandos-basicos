@@ -19,7 +19,6 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 ### Manual
 **Ajustar número de réplicas do deployment/replicaset**
 
-
 ```bash
 oc scale deployment test-app --replicas=3
 ```
@@ -33,7 +32,6 @@ oc scale dc <nome-do-dc> --replicas=<numero>
 ### Autoscaling (HPA)
 **Criar Horizontal Pod Autoscaler (HPA) para escalar automaticamente**
 
-
 ```bash
 oc autoscale deployment test-app --min=2 --max=10 --cpu-percent=80
 ```
@@ -46,13 +44,11 @@ oc get hpa
 
 **Exibir detalhes completos do horizontal pod autoscaler**
 
-
 ```bash
 oc describe hpa test-app
 ```
 
 **Deletar o horizontal pod autoscaler especificado**
-
 
 ```bash
 oc delete hpa test-app
@@ -64,20 +60,17 @@ oc delete hpa test-app
 ### Atualizar Imagem
 **Atualizar imagem do container no deployment/pod**
 
-
 ```bash
 oc set image deployment/test-app httpd=httpd:2.4
 ```
 
 **Exibir histórico de revisões do deployment**
 
-
 ```bash
 oc rollout history deployment/test-app
 ```
 
 **Verificar status do rollout em andamento**
-
 
 ```bash
 oc rollout status deployment/test-app
@@ -86,20 +79,17 @@ oc rollout status deployment/test-app
 ### Pausar e Retomar
 **Pausar rollout do deployment (impede novas atualizações)**
 
-
 ```bash
 oc rollout pause deployment/test-app
 ```
 
 **Retomar rollout pausado do deployment**
 
-
 ```bash
 oc rollout resume deployment/test-app
 ```
 
 **Reiniciar deployment (recria todos os pods)**
-
 
 ```bash
 oc rollout restart deployment/test-app
@@ -108,20 +98,17 @@ oc rollout restart deployment/test-app
 ### Rollback
 **Fazer rollback para revisão anterior do deployment**
 
-
 ```bash
 oc rollout undo deployment/test-app
 ```
 
 **Fazer rollback para revisão específica**
 
-
 ```bash
 oc rollout undo deployment/test-app --to-revision=1
 ```
 
 **Exibir detalhes de revisão específica**
-
 
 ```bash
 oc rollout history deployment/test-app --revision=3

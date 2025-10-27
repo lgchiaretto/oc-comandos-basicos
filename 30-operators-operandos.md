@@ -75,13 +75,11 @@ oc get catalogsource redhat-marketplace -n openshift-marketplace
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe catalogsource redhat-operators -n openshift-marketplace
 ```
 
 **Exibir recurso "redhat-operators" em formato JSON**
-
 
 ```bash
 oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
@@ -108,13 +106,11 @@ oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
 ```
 
 **Exibir recurso "local-storage-operator" em formato JSON**
-
 
 ```bash ignore-test
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
@@ -122,13 +118,11 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 
 **Exibir recurso "local-storage-operator" em formato JSON**
 
-
 ```bash ignore-test
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 ```
 
 **Exibir recurso "local-storage-operator" em formato JSON**
-
 
 ```bash
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
@@ -199,7 +193,6 @@ oc get pods -n <operator-namespace>
 
 ### Exemplo: Elasticsearch Operator
 **Criar novo recurso**
-
 
 ```bash ignore-test
 oc create namespace openshift-operators-redhat
@@ -326,20 +319,17 @@ oc get crd | grep ingresscontrollers
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe crd ingresscontrollers.operator.openshift.io
 ```
 
 **Exibir recurso "ingresscontrollers.operator.openshift.io" em formato YAML**
 
-
 ```bash
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
 ```
 
 **Exibir recurso "ingresscontrollers.operator.openshift.io" em formato JSON**
-
 
 ```bash
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'

@@ -52,7 +52,6 @@ oc get pvc -o jsonpath='{.items[?(@.status.phase=="Pending")].metadata.name}'
 
 **Exibir detalhes completos do persistent volume claim**
 
-
 ```bash
 oc describe pvc test-app
 ```
@@ -65,13 +64,11 @@ oc get events --field-selector involvedObject.name=test-app
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
 ```
 
 **Exibir persistent volume claim "test-app" em formato JSON**
-
 
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
@@ -116,7 +113,6 @@ oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 
 ### Pending PVC
 **Exibir detalhes completos do persistent volume claim**
-
 
 ```bash
 oc describe pvc test-app | grep -A 10 Events
@@ -204,7 +200,6 @@ oc get pods -A | grep csi
 ### Volume Não Monta
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe pod my-pod | grep -A 10 Volumes
 ```
@@ -223,7 +218,6 @@ oc get pvc
 
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
@@ -241,13 +235,11 @@ df -h
 ### ReadOnly Filesystem
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 ```
 
 **Verificar access mode do PV**
-
 
 ```bash ignore-test
 oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
@@ -271,13 +263,11 @@ oc exec my-pod -- df -h
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
@@ -290,7 +280,6 @@ oc get sc <storage-class> -o jsonpath='{.allowVolumeExpansion}'
 ```
 
 **Exibir detalhes completos do persistent volume claim**
-
 
 ```bash
 oc describe pvc test-app
@@ -305,20 +294,17 @@ oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolume
 
 **Deletar recurso forçadamente (sem período de espera)**
 
-
 ```bash ignore-test
 oc delete pod my-pod --grace-period=0 --force
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
 ```
 
 **Exibir persistent volume claim "test-app" em formato JSON**
-
 
 ```bash
 oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
@@ -379,7 +365,6 @@ oc get pods -n openshift-local-storage
 ```
 
 **Exibir logs de todos os pods que correspondem ao label**
-
 
 ```bash
 oc logs -n openshift-local-storage -l name=local-storage-operator

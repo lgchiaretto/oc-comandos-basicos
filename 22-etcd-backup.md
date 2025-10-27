@@ -31,13 +31,11 @@ oc get pods -n openshift-etcd -l app=etcd -o wide
 
 **Status do etcd operator**
 
-
 ```bash
 oc get clusteroperator etcd
 ```
 
 **Exibir detalhes completos do cluster operator**
-
 
 ```bash
 oc describe co etcd

@@ -44,7 +44,6 @@ oc describe node <node-name>
 
 **Ver capacidade e uso**
 
-
 ```bash
 oc adm top nodes
 ```
@@ -219,13 +218,11 @@ oc get mcp
 
 **Master pool**
 
-
 ```bash
 oc get mcp master
 ```
 
 **Worker pool**
-
 
 ```bash
 oc get mcp worker

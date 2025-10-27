@@ -363,20 +363,17 @@ oc get pod test-app -o yaml > /tmp/pod.yaml
 
 **Exibir recurso "test-app" em formato YAML**
 
-
 ```bash
 oc get deployment test-app -o yaml > /tmp/deployment.yaml
 ```
 
 **Exibir service "test-app" em formato YAML**
 
-
 ```bash
 oc get svc test-app -o yaml > /tmp/service.yaml
 ```
 
 **Exibir route "test-app" em formato YAML**
-
 
 ```bash
 oc get route test-app -o yaml > /tmp/route.yaml

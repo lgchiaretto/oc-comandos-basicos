@@ -22,7 +22,6 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ### Conectividade de Pod
 **Exibir recurso "my-pod" em formato JSON**
 
-
 ```bash
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
@@ -67,7 +66,6 @@ oc get networkpolicy
 
 **Exibir detalhes completos do network policy**
 
-
 ```bash ignore-test
 oc describe networkpolicy test-app
 ```
@@ -97,13 +95,11 @@ oc describe pod test-app | grep -i network
 ### Verificar Services
 **Listar todos os services do namespace atual**
 
-
 ```bash
 oc get svc
 ```
 
 **Exibir detalhes completos do service**
-
 
 ```bash
 oc describe svc test-app
@@ -111,13 +107,11 @@ oc describe svc test-app
 
 **Exibir service "test-app" em formato JSON**
 
-
 ```bash
 oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 ```
 
 **Exibir service "test-app" em formato JSON**
-
 
 ```bash
 oc get svc test-app -o jsonpath='{.spec.ports}'
@@ -138,13 +132,11 @@ oc get endpoints
 
 **Endpoints de service específico**
 
-
 ```bash
 oc get endpoints test-app
 ```
 
 **Exibir endpoints "test-app" em formato JSON**
-
 
 ```bash ignore-test
 oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
@@ -152,14 +144,12 @@ oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 
 **Exibir service "test-app" em formato JSON**
 
-
 ```bash ignore-test
 oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
 ```
 
 **Exibir detalhes completos do service**
-
 
 ```bash
 oc describe svc test-app | grep Selector
@@ -179,13 +169,11 @@ oc get routes
 
 **Exibir detalhes completos do route**
 
-
 ```bash
 oc describe route test-app
 ```
 
 **Exibir route "test-app" em formato JSON**
-
 
 ```bash
 oc get route test-app -o jsonpath='{.spec.host}'
@@ -199,13 +187,11 @@ curl -v https://<hostname-da-route>
 
 **Exibir route "test-app" em formato JSON**
 
-
 ```bash
 oc get route test-app -o jsonpath='{.spec.tls}'
 ```
 
 **Exibir route "test-app" em formato JSON**
-
 
 ```bash
 oc get route test-app -o jsonpath='{.spec.to.name}'
@@ -226,7 +212,6 @@ oc get pods -n openshift-ingress
 
 **Exibir logs de todos os pods que correspondem ao label**
 
-
 ```bash
 oc logs -n openshift-ingress -l app=router
 ```
@@ -244,7 +229,6 @@ oc get ingresscontroller -n openshift-ingress-operator
 ```
 
 **Exibir detalhes completos do recurso**
-
 
 ```bash
 oc describe ingresscontroller default -n openshift-ingress-operator
@@ -365,7 +349,6 @@ oc exec my-pod -- cat /etc/resolv.conf
 
 **Verificar DNS operator**
 
-
 ```bash
 oc get clusteroperator dns
 ```
@@ -384,7 +367,6 @@ oc get pods -n openshift-dns
 ```
 
 **Deletar o recurso especificado**
-
 
 ```bash ignore-test
 oc delete pod -n openshift-dns --all

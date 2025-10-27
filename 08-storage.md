@@ -68,7 +68,6 @@ oc get persistentvolumeclaims
 
 **Exibir detalhes completos do persistent volume claim**
 
-
 ```bash ignore-test
 oc describe pvc test-app
 ```
@@ -81,13 +80,11 @@ oc create -f <pvc-definition.yaml>
 
 **Exibir persistent volume claim "test-app" em formato JSON**
 
-
 ```bash ignore-test
 oc get pvc test-app -o jsonpath='{.status.phase}'
 ```
 
 **Deletar o persistent volume claim especificado**
-
 
 ```bash ignore-test
 oc delete pvc test-app
@@ -95,7 +92,6 @@ oc delete pvc test-app
 
 ### Usando em Deployments
 **Adicionar volume PVC a deployment**
-
 
 ```bash ignore-test
 oc set volume deployment/test-app \
@@ -146,13 +142,11 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ### Tipos de Volumes
 **EmptyDir**
 
-
 ```bash
 oc set volume deployment/test-app --add --name=emptydir --type=emptyDir --mount-path=/emptydir
 ```
 
 **HostPath (requer privilégios)**
-
 
 ```bash ignore-test
 oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
@@ -160,13 +154,11 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 
 **Listar volumes de um deployment**
 
-
 ```bash
 oc set volume deployment/test-app
 ```
 
 **Exibir detalhes completos do recurso**
-
 
 ```bash
 oc describe pod my-pod | grep -A 5 Volumes

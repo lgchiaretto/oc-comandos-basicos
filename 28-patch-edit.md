@@ -20,20 +20,17 @@ Este documento contém comandos para editar e fazer patch em recursos do OpenShi
 ### Edit Básico
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit deployment test-app
 ```
 
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit svc test-app
 ```
 
 **Abrir editor para modificar recurso interativamente**
-
 
 ```bash ignore-test
 oc edit cm test-app
@@ -48,14 +45,12 @@ KUBE_EDITOR=vim oc edit deployment test-app
 
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit deployment test-app -n development
 ```
 
 ### Edit em Arquivo Temporário
 **Exibir recurso "test-app" em formato YAML**
-
 
 ```bash ignore-test
 oc get deployment test-app -o yaml > /tmp/deploy.yaml
@@ -84,13 +79,11 @@ oc replace -f /tmp/deploy.yaml --force
 #### Strategic Merge Patch
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch deployment test-app -p '{"spec":{"replicas":3}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
@@ -98,13 +91,11 @@ oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch deployment test-app -p '{"metadata":{"labels":{"env":"production"}}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My app"}}}'
@@ -112,13 +103,11 @@ oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My a
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash ignore-test
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"new-image:tag"}]}}}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash ignore-test
 oc patch deployment test-app --type merge -p '
@@ -146,13 +135,11 @@ oc patch deployment test-app --type merge -p '
 #### JSON Patch
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch deployment test-app --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash ignore-test
 oc patch deployment test-app --type json -p='[
@@ -164,13 +151,11 @@ oc patch deployment test-app --type json -p='[
 #### JSON Merge Patch
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch deployment test-app --type merge -p '{"metadata":{"annotations":{"old-annotation":null}}}'
@@ -181,13 +166,11 @@ oc patch deployment test-app --type merge -p '{"metadata":{"annotations":{"old-a
 #### Deployments
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch deployment test-app -p '{"spec":{"replicas":5}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch deployment test-app -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
@@ -201,13 +184,11 @@ oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"na
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash ignore-test
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","image":"registry.redhat.io/rhel8/httpd-24","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash ignore-test
 oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"LOG_LEVEL","value":"debug"}}]'
@@ -216,20 +197,17 @@ oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template
 #### Services
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash ignore-test
 oc patch svc test-app -p '{"spec":{"ports":[{"port":8080,"targetPort":8080}]}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch svc test-app -p '{"spec":{"type":"NodePort"}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch svc test-app -p '{"spec":{"selector":{"app":"new-app"}}}'
@@ -238,20 +216,17 @@ oc patch svc test-app -p '{"spec":{"selector":{"app":"new-app"}}}'
 #### ConfigMaps
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch cm test-app -p '{"data":{"key1":"new-value"}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch cm test-app --type merge -p '{"data":{"new-key":"new-value"}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash ignore-test
 oc patch cm test-app --type json -p='[{"op":"remove","path":"/data/old-key"}]'
@@ -260,20 +235,17 @@ oc patch cm test-app --type json -p='[{"op":"remove","path":"/data/old-key"}]'
 #### Routes
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch route test-app -p '{"spec":{"host":"new-hostname.example.com"}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash
 oc patch route test-app -p '{"spec":{"tls":{"termination":"edge"}}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash
 oc patch route test-app -p '{"spec":{"to":{"name":"new-service"}}}'
@@ -287,7 +259,6 @@ oc patch hpa test-app -p '{"spec":{"minReplicas":2,"maxReplicas":10}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash ignore-test
 oc patch hpa test-app -p '{"spec":{"targetCPUUtilizationPercentage":70}}'
@@ -330,13 +301,11 @@ oc set image deployment/test-app httpd=<new-image>:<tag>
 
 **Exemplo**
 
-
 ```bash ignore-test
 oc set image deployment/test-app test-app=test-app:v2.0
 ```
 
 **Atualizar imagem do container no deployment/pod**
-
 
 ```bash ignore-test
 oc set image deployment/test-app container1=image1:v2 container2=image2:v2
@@ -350,7 +319,6 @@ oc set image dc/test-app httpd=<new-image>
 
 **Exibir recurso em formato JSON**
 
-
 ```bash ignore-test
 oc get deployment/test-app -o jsonpath='{.spec.template.spec.containers[0].image}'
 ```
@@ -358,13 +326,11 @@ oc get deployment/test-app -o jsonpath='{.spec.template.spec.containers[0].image
 ### Set Resources
 **Definir/atualizar requests e limits de recursos**
 
-
 ```bash
 oc set resources deployment/test-app --limits=cpu=500m,memory=512Mi --requests=cpu=250m,memory=256Mi
 ```
 
 **Definir/atualizar requests e limits de recursos**
-
 
 ```bash
 oc set resources deployment/test-app --limits=cpu=1,memory=1Gi
@@ -372,13 +338,11 @@ oc set resources deployment/test-app --limits=cpu=1,memory=1Gi
 
 **Definir/atualizar requests e limits de recursos**
 
-
 ```bash
 oc set resources deployment/test-app --requests=cpu=100m,memory=128Mi
 ```
 
 **Definir/atualizar requests e limits de recursos**
-
 
 ```bash ignore-test
 oc set resources deployment/test-app -c=httpd --limits=cpu=200m,memory=256Mi
@@ -387,13 +351,11 @@ oc set resources deployment/test-app -c=httpd --limits=cpu=200m,memory=256Mi
 ### Set Env
 **Definir/atualizar variáveis de ambiente no recurso**
 
-
 ```bash
 oc set env deployment/test-app KEY=value
 ```
 
 **Definir/atualizar variáveis de ambiente no recurso**
-
 
 ```bash
 oc set env deployment/test-app KEY1=value1 KEY2=value2
@@ -419,13 +381,11 @@ oc set env deployment/test-app KEY --from=configmap/<cm-name> --keys=specific-ke
 
 **Definir/atualizar variáveis de ambiente no recurso**
 
-
 ```bash
 oc set env deployment/test-app KEY-
 ```
 
 **Definir/atualizar variáveis de ambiente no recurso**
-
 
 ```bash
 oc set env deployment/test-app --list
@@ -446,13 +406,11 @@ oc set volume deployment/test-app --add --name=secret-vol --type=secret --secret
 
 **Adicionar PVC**
 
-
 ```bash ignore-test
 oc set volume deployment/test-app --add --name=data-vol --type=persistentVolumeClaim --claim-name=test-app --mount-path=/data
 ```
 
 **EmptyDir**
-
 
 ```bash
 oc set volume deployment/test-app --add --name=data-vol --type=emptyDir --mount-path=/data
@@ -460,13 +418,11 @@ oc set volume deployment/test-app --add --name=data-vol --type=emptyDir --mount-
 
 **Remover volume**
 
-
 ```bash
 oc set volume deployment/test-app --remove --name=data-vol
 ```
 
 **Listar volumes**
-
 
 ```bash
 oc set volume deployment/test-app
@@ -475,13 +431,11 @@ oc set volume deployment/test-app
 ### Set Probe
 **Liveness probe**
 
-
 ```bash
 oc set probe deployment/test-app --liveness --get-url=http://:8080/health --initial-delay-seconds=30
 ```
 
 **Readiness probe**
-
 
 ```bash
 oc set probe deployment/test-app --readiness --get-url=http://:8080/ready --period-seconds=10
@@ -489,13 +443,11 @@ oc set probe deployment/test-app --readiness --get-url=http://:8080/ready --peri
 
 **Exec probe**
 
-
 ```bash
 oc set probe deployment/test-app --liveness -- cat /tmp/healthy
 ```
 
 **TCP probe**
-
 
 ```bash
 oc set probe deployment/test-app --liveness --open-tcp=8080 --timeout-seconds=1
@@ -513,13 +465,11 @@ oc set probe deployment/test-app --readiness --remove
 ### Set ServiceAccount
 **Definir ServiceAccount**
 
-
 ```bash ignore-test
 oc set serviceaccount deployment/test-app test-app
 ```
 
 **Exemplo**
-
 
 ```bash
 oc set serviceaccount deployment/test-app test-app
@@ -528,13 +478,11 @@ oc set serviceaccount deployment/test-app test-app
 ### Set Selector
 **Service selector**
 
-
 ```bash
 oc set selector svc/test-app app=test-app,tier=frontend
 ```
 
 **Overwrite**
-
 
 ```bash
 oc set selector svc/test-app app=newapp
@@ -570,7 +518,6 @@ cat resource.yaml | oc replace -f -
 ```
 
 **Exibir recurso em formato YAML**
-
 
 ```bash ignore-test
 oc get deployment/test-app -o yaml > /tmp/deploy.yaml

@@ -31,7 +31,6 @@ oc get svc
 
 **Exibir detalhes completos do service**
 
-
 ```bash
 oc describe svc test-app
 ```
@@ -50,13 +49,11 @@ oc create service clusterip test-app --tcp=<porta>:<porta-destino>
 
 **Deletar o service especificado**
 
-
 ```bash ignore-test
 oc delete svc test-app
 ```
 
 **Ver endpoints do service**
-
 
 ```bash
 oc get endpoints test-app
@@ -68,20 +65,17 @@ oc get endpoints test-app
 ### Descrever Endpoints
 **Exibir detalhes completos do endpoints**
 
-
 ```bash
 oc describe endpoints test-app
 ```
 
 **Exibir detalhes completos do endpoints**
 
-
 ```bash
 oc describe endpoints test-app -n development
 ```
 
 **Exemplo prático**
-
 
 ```bash
 oc describe endpoints test-app -n development
@@ -93,7 +87,6 @@ oc describe endpoints test-app -n development
 
 ### Criar Routes
 **Criar route para expor service externamente**
-
 
 ```bash ignore-test
 oc expose service test-app
@@ -107,13 +100,11 @@ oc expose service test-app --hostname=<hostname>
 
 **Criar route com path específico para o service**
 
-
 ```bash ignore-test
 oc expose service test-app --path=/api
 ```
 
 **Criar route com terminação TLS edge (TLS terminado no router)**
-
 
 ```bash ignore-test
 oc create route edge test-app --service=test-app
@@ -121,13 +112,11 @@ oc create route edge test-app --service=test-app
 
 **Criar route passthrough (TLS vai direto ao pod)**
 
-
 ```bash ignore-test
 oc create route passthrough test-app --service=test-app
 ```
 
 **Criar route reencrypt (TLS terminado e re-encriptado)**
-
 
 ```bash ignore-test
 oc create route reencrypt test-app --service=test-app
@@ -147,13 +136,11 @@ oc get routes
 
 **Exibir detalhes completos do route**
 
-
 ```bash
 oc describe route test-app
 ```
 
 **Exibir route "test-app" em formato JSON**
-
 
 ```bash
 oc get route test-app -o jsonpath='{.spec.host}'
@@ -162,13 +149,11 @@ oc get route test-app -o jsonpath='{.spec.host}'
 ### Gerenciar Routes
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit route test-app
 ```
 
 **Deletar o route especificado**
-
 
 ```bash ignore-test
 oc delete route test-app

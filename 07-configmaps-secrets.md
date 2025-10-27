@@ -26,7 +26,6 @@ oc get cm
 
 **Criar novo recurso**
 
-
 ```bash
 oc create configmap test-app --from-literal=chave=valor
 ```
@@ -45,20 +44,17 @@ oc create configmap test-app --from-file=<diretorio>/
 
 **Exibir configmap "test-app" em formato YAML**
 
-
 ```bash
 oc get cm test-app -o yaml
 ```
 
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit cm test-app
 ```
 
 **Deletar o configmap especificado**
-
 
 ```bash
 oc delete cm test-app
@@ -67,13 +63,11 @@ oc delete cm test-app
 ### Exemplos Avançados
 **Criar novo configmap**
 
-
 ```bash
 oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
 ```
 
 **Exibir configmap "test-app" em formato JSON**
-
 
 ```bash
 oc get cm test-app -o jsonpath='{.data}'
@@ -85,20 +79,17 @@ oc get cm test-app -o jsonpath='{.data}'
 ### Descrever ConfigMap
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe configmap test-app
 ```
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe configmap test-app -n development
 ```
 
 **Exemplo prático**
-
 
 ```bash
 oc describe configmap test-app -n development
@@ -108,7 +99,6 @@ oc describe configmap test-app -n development
 
 ### Criar Secrets
 **Criar novo secret**
-
 
 ```bash
 oc create secret generic test-app --from-literal=chave=valor
@@ -121,7 +111,6 @@ oc create secret generic test-app --from-file=<arquivo>
 ```
 
 **Criar novo secret**
-
 
 ```bash ignore-test
 oc create secret docker-registry test-app \
@@ -145,13 +134,11 @@ oc get secrets
 
 **Exibir secret "test-app" em formato YAML**
 
-
 ```bash
 oc get secret test-app -o yaml
 ```
 
 **Exibir secret "test-app" em formato JSON**
-
 
 ```bash
 oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
@@ -159,13 +146,11 @@ oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
 
 **Abrir editor para modificar recurso interativamente**
 
-
 ```bash ignore-test
 oc edit secret test-app
 ```
 
 **Deletar o secret especificado**
-
 
 ```bash ignore-test
 oc delete secret test-app
@@ -174,20 +159,17 @@ oc delete secret test-app
 ### Descrever Secret
 **Exibir detalhes completos do secret**
 
-
 ```bash
 oc describe secret test-app
 ```
 
 **Exibir detalhes completos do secret**
 
-
 ```bash
 oc describe secret test-app -n development
 ```
 
 **Exemplo prático**
-
 
 ```bash
 oc describe secret test-app -n development
@@ -219,20 +201,17 @@ oc secrets link <service-account> <nome-do-secret> --for=mount
 ### Como Variáveis de Ambiente
 **Definir/atualizar variáveis de ambiente no recurso**
 
-
 ```bash
 oc set env deployment/test-app --from=configmap/test-app
 ```
 
 **Definir/atualizar variáveis de ambiente no recurso**
 
-
 ```bash
 oc set env deployment/test-app --from=secret/test-app
 ```
 
 **Definir/atualizar variáveis de ambiente no recurso**
-
 
 ```bash
 oc set env deployment/test-app minhachave=valor --from=configmap/test-app
@@ -241,13 +220,11 @@ oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ### Como Volumes
 **Patch deployment para montar ConfigMap**
 
-
 ```bash
 oc set volume --add --type=configmap deployment/test-app --configmap-name test-app --mount-path=/config
 ```
 
 **Montar Secret**
-
 
 ```bash
 oc set volume --add --type=secret deployment/test-app --secret-name test-app --mount-path=/test-app-secret

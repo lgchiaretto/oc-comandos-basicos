@@ -21,13 +21,11 @@ Este documento contém comandos para formatar e extrair informações específic
 ### Básico
 **Exibir recurso "test-app" em formato JSON**
 
-
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.metadata.name}'
 ```
 
 **Exibir recurso "test-app" em formato JSON**
-
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
@@ -47,13 +45,11 @@ oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 
 **Exibir recurso "test-app" em formato JSON**
 
-
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.containers[0].image}'
 ```
 
 **Exibir recurso "test-app" em formato JSON**
-
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
@@ -373,13 +369,11 @@ oc get pods -o wide
 
 **Exibir recurso "test-app" em formato YAML**
 
-
 ```bash ignore-test
 oc get pod test-app -o yaml
 ```
 
 **Exibir recurso "test-app" em formato JSON**
-
 
 ```bash ignore-test
 oc get pod test-app -o json

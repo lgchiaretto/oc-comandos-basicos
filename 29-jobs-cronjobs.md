@@ -19,7 +19,6 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ### Criar Jobs
 **Criar novo Job para execução única de tarefa**
 
-
 ```bash
 oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
 ```
@@ -73,7 +72,6 @@ oc get jobs
 
 **Exibir detalhes completos do job**
 
-
 ```bash
 oc describe job test-app-job
 ```
@@ -92,13 +90,11 @@ oc get pods -l job-name=test-app-job
 
 **Deletar o job especificado**
 
-
 ```bash
 oc delete job test-app-job
 ```
 
 **Deletar job e aguardar exclusão de recursos dependentes**
-
 
 ```bash ignore-test
 oc delete job test-app --cascade=foreground
@@ -127,7 +123,6 @@ EOF
 ```
 
 **Monitorar**
-
 
 ```bash ignore-test
 oc get job parallel-job
@@ -161,7 +156,6 @@ EOF
 
 ### Criar CronJobs
 **Criar novo Job para execução única de tarefa**
-
 
 ```bash
 oc create cronjob test-app-job --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
@@ -199,7 +193,6 @@ oc get cj
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash ignore-test
 oc describe cronjob test-app-job
 ```
@@ -218,13 +211,11 @@ oc get jobs --sort-by=.metadata.creationTimestamp | grep <cronjob-name> | tail -
 
 **Aplicar modificação parcial ao recurso usando patch**
 
-
 ```bash ignore-test
 oc patch cronjob test-app-job -p '{"spec":{"suspend":true}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
-
 
 ```bash ignore-test
 oc patch cronjob test-app-job -p '{"spec":{"suspend":false}}'
@@ -232,13 +223,11 @@ oc patch cronjob test-app-job -p '{"spec":{"suspend":false}}'
 
 **Deletar o recurso especificado**
 
-
 ```bash
 oc delete cronjob test-app-job
 ```
 
 **Deletar recurso e aguardar exclusão de recursos dependentes**
-
 
 ```bash ignore-test
 oc delete cronjob test-app --cascade=foreground
@@ -306,20 +295,17 @@ concurrencyPolicy: Replace
 ### Debug de Jobs
 **Exibir job "test-app-job" em formato YAML**
 
-
 ```bash ignore-test
 oc get job test-app-job -o yaml
 ```
 
 **Exibir job "test-app-job" em formato JSON**
 
-
 ```bash ignore-test
 oc get job test-app-job -o jsonpath='{.status.conditions}'
 ```
 
 **Exibir detalhes completos do job**
-
 
 ```bash ignore-test
 oc describe job test-app-job
@@ -340,13 +326,11 @@ oc get events --field-selector involvedObject.name=test-app-job
 ### Debug de CronJobs
 **Exibir recurso "test-app-job" em formato YAML**
 
-
 ```bash ignore-test
 oc get cronjob test-app-job -o yaml
 ```
 
 **Exibir recurso "test-app-job" em formato JSON**
-
 
 ```bash ignore-test
 oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'

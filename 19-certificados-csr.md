@@ -143,13 +143,11 @@ oc get secret -n openshift-ingress
 
 **Exibir secret "apps-cert" em formato YAML**
 
-
 ```bash
 oc get secret apps-cert -n openshift-ingress -o yaml
 ```
 
 **Exibir secret "apps-cert" em formato JSON**
-
 
 ```bash
 oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
@@ -160,7 +158,6 @@ oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | ba
 ```bash ignore-test
 oc create secret tls custom-certs --cert=<cert-file> --key=<key-file> -n openshift-ingress
 ```
-
 
 
 ```bash
@@ -259,7 +256,6 @@ oc get configmap -n openshift-config-managed
 ```
 
 **Exibir recurso "default-ingress-cert" em formato YAML**
-
 
 ```bash
 oc get configmap default-ingress-cert -n openshift-config-managed -o yaml

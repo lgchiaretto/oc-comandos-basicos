@@ -32,7 +32,6 @@ oc logs -f my-pod
 
 **Exibir logs de container específico do pod**
 
-
 ```bash
 oc logs my-pod -c my-container
 ```
@@ -58,7 +57,6 @@ oc logs my-pod -p
 ```
 
 **Exibir logs do pod especificado**
-
 
 ```bash
 oc logs deployment/test-app
@@ -149,7 +147,6 @@ oc get events
 ### Uso de Recursos
 **Top nodes (CPU e memória)**
 
-
 ```bash
 oc adm top nodes
 ```
@@ -161,7 +158,6 @@ oc adm top nodes --selector=node-role.kubernetes.io/worker=""
 ```
 
 **Top pods**
-
 
 ```bash ignore-test
 oc adm top pods
@@ -192,7 +188,6 @@ oc adm top pods --sort-by=memory
 ```
 
 **Top de um pod específico**
-
 
 ```bash ignore-test
 oc adm top pod my-pod
@@ -252,13 +247,11 @@ EOF
 
 **Exibir recurso "cluster-monitoring-config" em formato YAML**
 
-
 ```bash ignore-test
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
 **Ver status do monitoring**
-
 
 ```bash
 oc get clusteroperator monitoring

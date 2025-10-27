@@ -58,13 +58,11 @@ watch oc get co
 ### Status Detalhado
 **Exibir detalhes completos do cluster operator**
 
-
 ```bash
 oc describe co authentication
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
-
 
 ```bash
 oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
@@ -72,20 +70,17 @@ oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status
 
 **Exibir cluster operator "authentication" em formato JSON**
 
-
 ```bash
 oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
 
-
 ```bash
 oc get co authentication -o jsonpath='{.status.versions[0].version}'
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
-
 
 ```bash
 oc get co authentication -o jsonpath='{.status.relatedObjects}'
@@ -97,7 +92,6 @@ oc get co authentication -o jsonpath='{.status.relatedObjects}'
 
 ### Diagnosticar Problemas
 **Exibir cluster operator "authentication" em formato JSON**
-
 
 ```bash ignore-test
 oc get co authentication -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
@@ -167,7 +161,6 @@ find . -name "*operator*" -type d
 ### Authentication Operator
 **Status**
 
-
 ```bash
 oc get co authentication
 ```
@@ -193,7 +186,6 @@ oc logs -n openshift-authentication-operator <pod-name>
 ### Ingress Operator
 **Status**
 
-
 ```bash
 oc get co ingress
 ```
@@ -212,13 +204,11 @@ oc get pods -n openshift-ingress
 
 **Exibir logs de todos os pods que correspondem ao label**
 
-
 ```bash
 oc logs -n openshift-ingress -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
 ```
 
 **Exibir detalhes completos do recurso**
-
 
 ```bash
 oc describe ingresscontroller default -n openshift-ingress-operator
@@ -226,7 +216,6 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 
 ### Network Operator
 **Status**
-
 
 ```bash
 oc get co network
@@ -259,7 +248,6 @@ oc logs -n openshift-network-operator <pod-name>
 ### DNS Operator
 **Status**
 
-
 ```bash
 oc get co dns
 ```
@@ -284,7 +272,6 @@ oc logs -n openshift-dns <dns-pod>
 
 ### Image Registry Operator
 **Status**
-
 
 ```bash
 oc get co image-registry
@@ -311,7 +298,6 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.s
 ### Storage Operator
 **Status**
 
-
 ```bash
 oc get co storage
 ```
@@ -337,7 +323,6 @@ oc get sc
 ### Monitoring Operator
 **Status**
 
-
 ```bash
 oc get co monitoring
 ```
@@ -349,7 +334,6 @@ oc get pods -n openshift-monitoring
 ```
 
 **Exibir recurso "cluster-monitoring-config" em formato YAML**
-
 
 ```bash ignore-test
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
@@ -423,7 +407,6 @@ oc get packagemanifests -n openshift-marketplace | grep odf-operator
 
 **Exibir detalhes completos do recurso**
 
-
 ```bash
 oc describe packagemanifest odf-operator -n openshift-marketplace
 ```
@@ -453,7 +436,6 @@ oc get csv -n <namespace>
 
 ### Troubleshoot Operadores OLM
 **Exibir detalhes completos do recurso**
-
 
 ```bash
 oc describe subscription -n openshift-local-storage   local-storage-operator

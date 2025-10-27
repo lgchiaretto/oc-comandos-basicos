@@ -135,13 +135,11 @@ oc get pods -n openshift-cluster-version
 
 **Exibir últimas N linhas dos logs**
 
-
 ```bash
 oc logs -n openshift-cluster-version deployments/cluster-version-operator --tail=100
 ```
 
 **Acompanhar logs em tempo real do pod**
-
 
 ```bash ignore-test
 oc logs -n openshift-cluster-version deployments/cluster-version-operator -f
@@ -241,7 +239,6 @@ done
 ```
 
 **Exibir cluster operator "machine-config" em formato YAML**
-
 
 ```bash
 oc get co machine-config -o yaml
@@ -387,13 +384,11 @@ oc get mc <mc-name> -o yaml
 
 **Exibir últimas N linhas dos logs**
 
-
 ```bash
 oc logs -n openshift-kube-apiserver -l app=openshift-kube-apiserver --tail=100
 ```
 
 **Exibir últimas N linhas dos logs**
-
 
 ```bash
 oc logs -n openshift-etcd -l app=etcd --tail=100
@@ -401,13 +396,11 @@ oc logs -n openshift-etcd -l app=etcd --tail=100
 
 **Exibir últimas N linhas dos logs**
 
-
 ```bash
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-operator --tail=100
 ```
 
 **Exibir últimas N linhas dos logs**
-
 
 ```bash
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --tail=50
@@ -519,7 +512,6 @@ oc get limitranges -A
 
 **Verificar uso de recursos nos nodes**
 
-
 ```bash
 oc adm top nodes
 ```
@@ -588,7 +580,6 @@ oc get co | grep -i false
 
 **Exibir últimas N linhas dos logs**
 
-
 ```bash
 oc logs -n openshift-cluster-version deployment/cluster-version-operator --tail=200
 ```
@@ -614,7 +605,6 @@ oc get events -A --sort-by='.lastTimestamp' | tail -100
 ### 3. Verificação de Recursos
 
 **Capacidade dos nodes**
-
 
 ```bash
 oc adm top nodes
