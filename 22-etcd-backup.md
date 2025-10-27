@@ -24,52 +24,52 @@ Este documento contém comandos para gerenciar etcd e realizar backups do cluste
 ## Etcd Status
 
 ### Verificar Etcd
-**Ação:** Pods do etcd
+**Pods do etcd**
 
 ```bash
 oc get pods -n openshift-etcd
 ```
 
-**Ação:** Listar pods com informações detalhadas
+**Listar pods com informações detalhadas**
 
 ```bash
 oc get pods -n openshift-etcd -l app=etcd -o wide
 ```
 
-**Ação:** Status do etcd operator
+**Status do etcd operator**
 **Exemplo:** `oc get clusteroperator <resource-name>`
 
 ```bash
 oc get clusteroperator etcd
 ```
 
-**Ação:** Exibir detalhes completos do cluster operator
+**Exibir detalhes completos do cluster operator**
 **Exemplo:** `oc describe co <resource-name>`
 
 ```bash
 oc describe co etcd
 ```
 
-**Ação:** Logs do etcd
+**Logs do etcd**
 
 ```bash ignore-test
 oc logs -n openshift-etcd <etcd-pod-name>
 ```
 
-**Ação:** Listar recurso filtrados por label
+**Listar recurso filtrados por label**
 
 ```bash ignore-test
 oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
-**Ação:** Logs do etcd-operator
+**Logs do etcd-operator**
 
 ```bash ignore-test
 oc logs -n openshift-etcd-operator <etcd-operator-pod>
 ```
 
 ### Etcd Health Check
-**Ação:** Listar recurso filtrados por label
+**Listar recurso filtrados por label**
 
 ```bash ignore-test
 oc rsh -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
@@ -83,19 +83,19 @@ etcdctl endpoint status --cluster -w table
 etcdctl member list -w table
 ```
 
-**Ação:** Listar recurso filtrados por label
+**Listar recurso filtrados por label**
 
 ```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl endpoint status --cluster -w table
 ```
 
-**Ação:** Listar recurso filtrados por label
+**Listar recurso filtrados por label**
 
 ```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
 ```
 
-**Ação:** Listar recurso filtrados por label
+**Listar recurso filtrados por label**
 
 ```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl alarm list
@@ -106,7 +106,7 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 ## Backup do Cluster
 
 ### Backup Manual do Etcd
-**Ação:** Conectar a um master node
+**Conectar a um master node**
 
 ```bash ignore-test
 oc debug node/<master-node-name>
@@ -118,26 +118,26 @@ oc debug node/<master-node-name>
 chroot /host
 ```
 
-**Ação:** Executar backup
+**Executar backup**
 
 ```bash ignore-test
 /usr/local/bin/cluster-backup.sh /home/core/backup
 ```
 
-**Ação:** Verificar backup criado
+**Verificar backup criado**
 
 ```bash ignore-test
 ls -lh /home/core/backup/
 ```
 
-**Ação:** Sair do debug
+**Sair do debug**
 
 ```bash ignore-test
 exit
 exit
 ```
 
-**Ação:** Copiar backup do node
+**Copiar backup do node**
 
 ```bash ignore-test
 oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
@@ -163,13 +163,13 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ```
 
 ### Limpar Alarmes
-**Ação:** Se houver alarm de NOSPACE
+**Se houver alarm de NOSPACE**
 
 ```bash ignore-test
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 ```
 
-**Ação:** Verificar
+**Verificar**
 
 ```bash ignore-test
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm list

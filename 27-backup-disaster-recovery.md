@@ -21,7 +21,7 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 ## Backup de Aplicações
 
 ### Velero - Backup Tool
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -38,13 +38,13 @@ spec:
 EOF
 ```
 
-**Ação:** Aguardar instalação
+**Aguardar instalação**
 
 ```bash ignore-test
 oc get csv -n openshift-adp
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -82,7 +82,7 @@ EOF
 ## Backup de Dados
 
 ### Backup de PVCs
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -97,13 +97,13 @@ spec:
 EOF
 ```
 
-**Ação:** Verificar snapshot
+**Verificar snapshot**
 
 ```bash
 oc get volumesnapshot
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash
 cat <<EOF | oc apply -f -
@@ -125,7 +125,7 @@ EOF
 ```
 
 ### Backup Manual de Dados em PVC
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -148,26 +148,26 @@ spec:
 EOF
 ```
 
-**Ação:** Aguardar condição específica do recurso
+**Aguardar condição específica do recurso**
 **Exemplo:** `oc wait --for=condition=ready pod/<pod-name>`
 
 ```bash ignore-test
 oc wait --for=condition=ready pod/backup-pod
 ```
 
-**Ação:** Executar comando dentro do pod especificado
+**Executar comando dentro do pod especificado**
 
 ```bash ignore-test
 oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 ```
 
-**Ação:** Copiar arquivo entre máquina local e pod
+**Copiar arquivo entre máquina local e pod**
 
 ```bash ignore-test
 oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 ```
 
-**Ação:** Deletar o recurso especificado
+**Deletar o recurso especificado**
 **Exemplo:** `oc delete pod <resource-name>`
 
 ```bash ignore-test
@@ -175,25 +175,25 @@ oc delete pod backup-pod
 ```
 
 ### Backup de Database
-**Ação:** MySQL/MariaDB
+**MySQL/MariaDB**
 
 ```bash ignore-test
 oc exec <mysql-pod> -- mysqldump -u root -p<password> --all-databases > mysql-backup.sql
 ```
 
-**Ação:** PostgreSQL
+**PostgreSQL**
 
 ```bash ignore-test
 oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
 ```
 
-**Ação:** MongoDB
+**MongoDB**
 
 ```bash ignore-test
 oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
 ```
 
-**Ação:** Restore (exemplos)
+**Restore (exemplos)**
 
 ```bash ignore-test
 oc exec -i <mysql-pod> -- mysql -u root -p<password> < mysql-backup.sql
@@ -206,14 +206,14 @@ oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 ## Disaster Recovery
 
 ### Preparação para DR
-**Ação:** Checklist de preparação
+**Checklist de preparação**
 
 ```bash ignore-test
 cat > /tmp/dr-checklist.md << 'EOF'
 # Disaster Recovery Checklist
 ```
 
-**Ação:** # Backups Configurados
+**# Backups Configurados**
 
 ```bash ignore-test
 - [ ] Etcd backup diário
@@ -224,7 +224,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] Cluster configuration backup
 ```
 
-**Ação:** # Documentação
+**# Documentação**
 
 ```bash ignore-test
 - [ ] Procedimentos de restore documentados
@@ -234,7 +234,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] RTO/RPO definidos por aplicação
 ```
 
-**Ação:** # Testes
+**# Testes**
 
 ```bash ignore-test
 - [ ] Teste de restore de etcd
@@ -243,7 +243,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] DR drill completo (anual)
 ```
 
-**Ação:** # Armazenamento
+**# Armazenamento**
 
 ```bash ignore-test
 - [ ] Backups em localização offsite
@@ -258,39 +258,39 @@ cat /tmp/dr-checklist.md
 ```
 
 ### Restore de Aplicação
-**Ação:** 1. Restore de namespace
+**1. Restore de namespace**
 
 ```bash ignore-test
 tar xzf namespace-backup-myproject-*.tar.gz
 cd namespace-backup-myproject-*/
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 oc apply -f namespace.yaml
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 oc apply -f secrets.yaml
 oc apply -f configmaps.yaml
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 oc apply -f /tmp/persistentvolumeclaims.yaml
 ```
 
-**Ação:** Listar todos os Persistent Volume Claims do namespace
+**Listar todos os Persistent Volume Claims do namespace**
 
 ```bash ignore-test
 oc get pvc
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 oc apply -f /tmp/serviceaccounts.yaml
@@ -298,7 +298,7 @@ oc apply -f /tmp/roles.yaml
 oc apply -f /tmp/rolebindings.yaml
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 oc apply -f /tmp/deployments.yaml
@@ -307,7 +307,7 @@ oc apply -f /tmp/services.yaml
 oc apply -f /tmp/routes.yaml
 ```
 
-**Ação:** Listar todos os recursos principais do namespace
+**Listar todos os recursos principais do namespace**
 
 ```bash ignore-test
 oc get all

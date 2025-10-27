@@ -18,38 +18,38 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 ## Templates
 
 ### Listar Templates
-**Ação:** Templates do projeto atual
+**Templates do projeto atual**
 
 ```bash
 oc get templates
 ```
 
-**Ação:** Listar templates disponíveis no namespace openshift
+**Listar templates disponíveis no namespace openshift**
 
 ```bash
 oc get templates -n openshift
 ```
 
-**Ação:** Descrever template
+**Descrever template**
 
 ```bash ignore-test
 oc describe template <template-name> -n openshift
 ```
 
-**Ação:** Ver YAML do template
+**Ver YAML do template**
 
 ```bash ignore-test
 oc get template <template-name> -n openshift -o yaml
 ```
 
-**Ação:** Buscar templates disponíveis
+**Buscar templates disponíveis**
 
 ```bash ignore-test
 oc get templates -n openshift | grep <keyword>
 ```
 
 ### Criar Template
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -94,7 +94,7 @@ EOF
 ```
 
 ### Template Completo
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 cat <<EOF | oc apply -f -
@@ -212,57 +212,57 @@ EOF
 ## Processing Templates
 
 ### Processar Template
-**Ação:** Process e display (não cria recursos)
+**Process e display (não cria recursos)**
 
 ```bash ignore-test
 oc process <template-name>
 ```
 
-**Ação:** Com parâmetros
+**Com parâmetros**
 
 ```bash ignore-test
 oc process <template-name> -p APP_NAME=test-app -p REPLICAS=3
 ```
 
-**Ação:** Process e create
+**Process e create**
 
 ```bash ignore-test
 oc process <template-name> -p APP_NAME=test-app | oc create -f -
 ```
 
-**Ação:** De um template no openshift namespace
+**De um template no openshift namespace**
 
 ```bash ignore-test
 oc process -n openshift <template-name> -p PARAM=value | oc create -f -
 ```
 
-**Ação:** Criar novo recurso
+**Criar novo recurso**
 
 ```bash ignore-test
 oc process -f template.yaml -p APP_NAME=test-app | oc create -f -
 ```
 
 ### Ver Parâmetros
-**Ação:** Listar parâmetros de um template
+**Listar parâmetros de um template**
 
 ```bash ignore-test
 oc process <template-name> --parameters
 ```
 
-**Ação:** De template no openshift namespace
+**De template no openshift namespace**
 
 ```bash ignore-test
 oc process -n openshift <template-name> --parameters
 ```
 
-**Ação:** Formato mais legível
+**Formato mais legível**
 
 ```bash ignore-test
 oc process -n openshift <template-name> --parameters | column -t
 ```
 
 ### Usar Arquivo de Parâmetros
-**Ação:** Criar arquivo de parâmetros
+**Criar arquivo de parâmetros**
 
 ```bash
 cat > /tmp/params.env << EOF
@@ -274,13 +274,13 @@ DB_NAME=production
 EOF
 ```
 
-**Ação:** Usar com template
+**Usar com template**
 
 ```bash ignore-test
 oc process <template-name> --param-file=/tmp/params.env | oc create -f -
 ```
 
-**Ação:** Ou combinar arquivo + override
+**Ou combinar arquivo + override**
 
 ```bash ignore-test
 oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc create -f -
@@ -291,7 +291,7 @@ oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc creat
 ## Parameters
 
 ### Tipos de Parâmetros
-**Ação:** Parâmetro obrigatório
+**Parâmetro obrigatório**
 
 ```bash ignore-test
 parameters:
@@ -299,7 +299,7 @@ parameters:
   required: true
 ```
 
-**Ação:** Com valor default
+**Com valor default**
 
 ```bash ignore-test
 parameters:
@@ -307,7 +307,7 @@ parameters:
   value: "1"
 ```
 
-**Ação:** Com generate (senha aleatória, por exemplo)
+**Com generate (senha aleatória, por exemplo)**
 
 ```bash ignore-test
 parameters:
@@ -318,7 +318,7 @@ parameters:
   from: "[a-zA-Z0-9]{16}"
 ```
 
-**Ação:** Com validation regex
+**Com validation regex**
 * (validation é aplicada no processing)
 
 ```bash ignore-test
@@ -329,7 +329,7 @@ parameters:
 ```
 
 ### Generate Values
-**Ação:** Gerar valores aleatórios
+**Gerar valores aleatórios**
 
 ```bash ignore-test
 parameters:
@@ -355,52 +355,52 @@ parameters:
 ## Export e Manifests
 
 ### Export de Recursos
-**Ação:** oc get pod <resource-name>app -o yaml > /tmp/pod.yaml
+**oc get pod <resource-name>app -o yaml > /tmp/pod.yaml**
 
 ```bash ignore-test
 oc get pod test-app -o yaml > /tmp/pod.yaml
 ```
 
-**Ação:** Exibir recurso "test-app" em formato YAML
+**Exibir recurso "test-app" em formato YAML**
 **Exemplo:** `oc get deployment <deployment-name> -o yaml > /tmp/deployment.yaml`
 
 ```bash
 oc get deployment test-app -o yaml > /tmp/deployment.yaml
 ```
 
-**Ação:** Exibir service "test-app" em formato YAML
+**Exibir service "test-app" em formato YAML**
 **Exemplo:** `oc get svc <service-name> -o yaml > /tmp/service.yaml>`
 
 ```bash
 oc get svc test-app -o yaml > /tmp/service.yaml
 ```
 
-**Ação:** Exibir route "test-app" em formato YAML
+**Exibir route "test-app" em formato YAML**
 **Exemplo:** `oc get route <route-name> -o yaml > /tmp/route.yaml`
 
 ```bash
 oc get route test-app -o yaml > /tmp/route.yaml
 ```
 
-**Ação:** Exibir deployments em formato YAML
+**Exibir deployments em formato YAML**
 
 ```bash
 oc get deployments -o yaml > /tmp/all-deployments.yaml
 ```
 
 ### Criar Template de Recursos Existentes
-**Ação:** Listar recurso filtrados por label
+**Listar recurso filtrados por label**
 
 ```bash
 oc get deployment,svc,route -l app=test-app -o yaml
 ```
-**Ação:** oc create template <resource-name>template --dry-run=client -o yaml > /tmp/test-app-template.yaml
+**oc create template <resource-name>template --dry-run=client -o yaml > /tmp/test-app-template.yaml**
 
 ```bash ignore-test
 oc create template test-app-template --dry-run=client -o yaml > /tmp/test-app-template.yaml
 ```
 
-**Ação:** Ou manualmente
+**Ou manualmente**
 
 ```bash
 cat > /tmp/app-template.yaml << 'EOF'
@@ -412,9 +412,9 @@ objects:
 EOF
 ```
 
-**Ação:** Exibir recurso "test-app" em formato YAML
+**Exibir recurso "test-app" em formato YAML**
 **Exemplo:** `oc get deployment <deployment-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml`
-**Ação:** oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
+**oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml**
 
 ```bash
 oc get deployment test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
@@ -428,13 +428,13 @@ oc get svc test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 ```
 
 ### Manifests e Kustomize
-**Ação:** Estrutura Kustomize
+**Estrutura Kustomize**
 
 ```bash ignore-test
 mkdir -p app/{base,overlays/{dev,prod}}
 ```
 
-**Ação:** Base
+**Base**
 
 ```bash ignore-test
 cat > app/base/kustomization.yaml << EOF

@@ -17,41 +17,41 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 ## Scaling
 
 ### Manual
-**Ação:** Ajustar número de réplicas do deployment/replicaset
+**Ajustar número de réplicas do deployment/replicaset**
 **Exemplo:** `oc scale deployment <deployment-name> --replicas=3`
 
 ```bash
 oc scale deployment test-app --replicas=3
 ```
 
-**Ação:** Escalar deployment config
+**Escalar deployment config**
 
 ```bash ignore-test
 oc scale dc <nome-do-dc> --replicas=<numero>
 ```
 
 ### Autoscaling (HPA)
-**Ação:** Criar Horizontal Pod Autoscaler (HPA) para escalar automaticamente
+**Criar Horizontal Pod Autoscaler (HPA) para escalar automaticamente**
 **Exemplo:** `oc autoscale deployment <deployment-name> --min=2 --max=10 --cpu-percent=80`
 
 ```bash
 oc autoscale deployment test-app --min=2 --max=10 --cpu-percent=80
 ```
 
-**Ação:** Listar Horizontal Pod Autoscalers configurados
+**Listar Horizontal Pod Autoscalers configurados**
 
 ```bash
 oc get hpa
 ```
 
-**Ação:** Exibir detalhes completos do horizontal pod autoscaler
+**Exibir detalhes completos do horizontal pod autoscaler**
 **Exemplo:** `oc describe hpa <resource-name>`
 
 ```bash
 oc describe hpa test-app
 ```
 
-**Ação:** Deletar o horizontal pod autoscaler especificado
+**Deletar o horizontal pod autoscaler especificado**
 **Exemplo:** `oc delete hpa <resource-name>`
 
 ```bash
@@ -62,21 +62,21 @@ oc delete hpa test-app
 ## Atualizações e Rollbacks
 
 ### Atualizar Imagem
-**Ação:** Atualizar imagem do container no deployment/pod
+**Atualizar imagem do container no deployment/pod**
 **Exemplo:** `oc set image <resource-name>/test-app httpd=httpd:2.4`
 
 ```bash
 oc set image deployment/test-app httpd=httpd:2.4
 ```
 
-**Ação:** Exibir histórico de revisões do deployment
+**Exibir histórico de revisões do deployment**
 **Exemplo:** `oc rollout history <resource-name>/test-app`
 
 ```bash
 oc rollout history deployment/test-app
 ```
 
-**Ação:** Verificar status do rollout em andamento
+**Verificar status do rollout em andamento**
 **Exemplo:** `oc rollout status <resource-name>/test-app`
 
 ```bash
@@ -84,21 +84,21 @@ oc rollout status deployment/test-app
 ```
 
 ### Pausar e Retomar
-**Ação:** Pausar rollout do deployment (impede novas atualizações)
+**Pausar rollout do deployment (impede novas atualizações)**
 **Exemplo:** `oc rollout pause <resource-name>/test-app`
 
 ```bash
 oc rollout pause deployment/test-app
 ```
 
-**Ação:** Retomar rollout pausado do deployment
+**Retomar rollout pausado do deployment**
 **Exemplo:** `oc rollout resume <resource-name>/test-app`
 
 ```bash
 oc rollout resume deployment/test-app
 ```
 
-**Ação:** Reiniciar deployment (recria todos os pods)
+**Reiniciar deployment (recria todos os pods)**
 **Exemplo:** `oc rollout restart <resource-name>/test-app`
 
 ```bash
@@ -106,21 +106,21 @@ oc rollout restart deployment/test-app
 ```
 
 ### Rollback
-**Ação:** Fazer rollback para revisão anterior do deployment
+**Fazer rollback para revisão anterior do deployment**
 **Exemplo:** `oc rollout undo <resource-name>/test-app`
 
 ```bash
 oc rollout undo deployment/test-app
 ```
 
-**Ação:** Fazer rollback para revisão específica
+**Fazer rollback para revisão específica**
 **Exemplo:** `oc rollout undo <resource-name>/test-app --to-revision=1`
 
 ```bash
 oc rollout undo deployment/test-app --to-revision=1
 ```
 
-**Ação:** Exibir detalhes de revisão específica
+**Exibir detalhes de revisão específica**
 **Exemplo:** `oc rollout history <resource-name>/test-app --revision=3`
 
 ```bash
@@ -131,26 +131,26 @@ oc rollout history deployment/test-app --revision=3
 
 ## ReplicaSets
 
-**Ação:** Listar todos os ReplicaSets do namespace
+**Listar todos os ReplicaSets do namespace**
 
 ```bash
 oc get replicasets
 oc get rs
 ```
 
-**Ação:** Descrever replicaset
+**Descrever replicaset**
 
 ```bash ignore-test
 oc describe rs <nome-do-rs>
 ```
 
-**Ação:** Listar replicaset filtrados por label
+**Listar replicaset filtrados por label**
 
 ```bash
 oc get rs -l app=test-app
 ```
 
-**Ação:** Deletar replicaset
+**Deletar replicaset**
 
 ```bash ignore-test
 oc delete rs <nome-do-rs>

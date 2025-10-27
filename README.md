@@ -225,13 +225,13 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 
 ### Comandos Mais Usados
 
-**Ação:** Listar pods com problemas
-**Ação:** Aprovar todos os CSRs pendentes
-**Ação:** Ver cluster operators com problemas
-**Ação:** Must-gather básico
-**Ação:** Ver logs de um pod crasheado
-**Ação:** Debug de um node
-**Ação:** Listar eventos de erro
+**Listar pods com problemas**
+**Aprovar todos os CSRs pendentes**
+**Ver cluster operators com problemas**
+**Must-gather básico**
+**Ver logs de um pod crasheado**
+**Debug de um node**
+**Listar eventos de erro**
 
 ```bash
 oc get pods -A | grep -E -v "Running|Completed"
@@ -254,8 +254,8 @@ oc get events --field-selector type=Warning
 ## Dicas Gerais
 
 ### Watch Commands
-**Ação:** Ver pods em tempo real
-**Ação:** Ver eventos em tempo real
+**Ver pods em tempo real**
+**Ver eventos em tempo real**
 
 ```bash
 watch -n 2 oc get pods

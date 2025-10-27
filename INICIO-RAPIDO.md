@@ -7,9 +7,9 @@ Este é um guia rápido para você começar a usar os comandos do OpenShift imed
 ## Top 20 Comandos Mais Usados
 
 ### 1. Login e Contexto
-**Ação:** Login no cluster
-**Ação:** Ver usuário atual
-**Ação:** Ver projeto atual
+**Login no cluster**
+**Ver usuário atual**
+**Ver projeto atual**
 
 ```bash
 oc login <url> -u <usuario> -p <senha>
@@ -20,9 +20,9 @@ oc project
 ```
 
 ### 2. Listar Recursos
-**Ação:** Listar pods
-**Ação:** Listar tudo
-**Ação:** Listar pods com problemas
+**Listar pods**
+**Listar tudo**
+**Listar pods com problemas**
 
 ```bash
 oc get pods
@@ -33,10 +33,10 @@ oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ### 3. Debug de Pods
-**Ação:** Ver logs
-**Ação:** Logs em tempo real
-**Ação:** Logs de pod crasheado
-**Ação:** Acessar shell do pod
+**Ver logs**
+**Logs em tempo real**
+**Logs de pod crasheado**
+**Acessar shell do pod**
 
 ```bash
 oc logs <pod-name>
@@ -49,8 +49,8 @@ oc rsh <pod-name>
 ```
 
 ### 4. Descrever Recursos
-**Ação:** Descrever pod
-**Ação:** Ver eventos
+**Descrever pod**
+**Ver eventos**
 
 ```bash
 oc describe pod <pod-name>
@@ -59,8 +59,8 @@ oc get events --sort-by='.lastTimestamp' | tail -20
 ```
 
 ### 5. Cluster Operators
-**Ação:** Ver status dos operators
-**Ação:** Operators com problemas
+**Ver status dos operators**
+**Operators com problemas**
 
 ```bash
 oc get co
@@ -69,9 +69,9 @@ oc get co | grep -v "True.*False.*False"
 ```
 
 ### 6. Upgrade do Cluster
-**Ação:** Ver versão atual e status do upgrade
-**Ação:** Ver progresso do upgrade
-**Ação:** Ver se há operadores bloqueando upgrade
+**Ver versão atual e status do upgrade**
+**Ver progresso do upgrade**
+**Ver se há operadores bloqueando upgrade**
 
 ```bash
 oc get clusterversion
@@ -82,8 +82,8 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 ```
 
 ### 7. Nodes
-**Ação:** Listar nodes
-**Ação:** Ver uso de recursos dos nodes
+**Listar nodes**
+**Ver uso de recursos dos nodes**
 
 ```bash
 oc get nodes
@@ -92,8 +92,8 @@ oc adm top nodes
 ```
 
 ### 8. CSR (Certificate Signing Requests)
-**Ação:** Listar CSRs
-**Ação:** Aprovar todos os CSRs pendentes
+**Listar CSRs**
+**Aprovar todos os CSRs pendentes**
 
 ```bash
 oc get csr
@@ -102,8 +102,8 @@ oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ### 9. Scaling
-**Ação:** Escalar deployment
-**Ação:** Ver status do rollout
+**Escalar deployment**
+**Ver status do rollout**
 
 ```bash
 oc scale deployment test-app --replicas=3
@@ -112,9 +112,9 @@ oc rollout status deployment/test-app
 ```
 
 ### 10. Criar Aplicação
-**Ação:** Criar app a partir de imagem
-**Ação:** Criar app a partir de git
-**Ação:** Expor service
+**Criar app a partir de imagem**
+**Criar app a partir de git**
+**Expor service**
 
 ```bash
 oc new-app <imagem>
@@ -125,8 +125,8 @@ oc expose service test-app
 ```
 
 ### 10. ConfigMaps e Secrets
-**Ação:** Criar configmap
-**Ação:** Criar secret
+**Criar configmap**
+**Criar secret**
 
 ```bash
 oc create configmap test-app --from-literal=key=value
@@ -139,8 +139,8 @@ oc create secret generic test-app --from-literal=key=value
 ## Comandos de Emergência
 
 ### Troubleshooting Rápido
-**Ação:** Health check completo do cluster
-**Ação:** Must-gather para suporte
+**Health check completo do cluster**
+**Must-gather para suporte**
 
 ```bash
 echo "=== Pods com Problemas ===" && \
@@ -159,16 +159,16 @@ oc adm must-gather --dest-dir=/tmp/must-gather-$(date +%Y%m%d-%H%M%S)
 ```
 
 ### Resolver CSRs Pendentes
-**Ação:** Aprovar todos de uma vez
+**Aprovar todos de uma vez**
 
 ```bash
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ### Cordon e Drain de Node
-**Ação:** Tornar node não agendável
-**Ação:** Drenar pods do node
-**Ação:** Voltar a agendar no node
+**Tornar node não agendável**
+**Drenar pods do node**
+**Voltar a agendar no node**
 
 ```bash
 oc adm cordon <node-name>
@@ -202,11 +202,11 @@ oc adm uncordon <node-name>
 ## Fluxos de Trabalho Comuns
 
 ### Deploy de Nova Aplicação
-**Ação:** 1. Criar projeto
-**Ação:** 2. Criar aplicação
-**Ação:** 3. Expor service
-**Ação:** 4. Ver status
-**Ação:** 5. Ver logs
+**1. Criar projeto**
+**2. Criar aplicação**
+**3. Expor service**
+**4. Ver status**
+**5. Ver logs**
 
 ```bash
 oc new-project development
@@ -221,12 +221,12 @@ oc logs -f deployment/test-app
 ```
 
 ### Debug de Pod com Problema
-**Ação:** 1. Identificar o problema
-**Ação:** 2. Descrever o pod
-**Ação:** 3. Ver logs
-**Ação:** 4. Se crasheado, ver logs anteriores
-**Ação:** 5. Ver eventos
-**Ação:** 6. Se necessário, debug interativo
+**1. Identificar o problema**
+**2. Descrever o pod**
+**3. Ver logs**
+**4. Se crasheado, ver logs anteriores**
+**5. Ver eventos**
+**6. Se necessário, debug interativo**
 
 ```bash
 oc get pods | grep -v Running
@@ -243,11 +243,11 @@ oc debug pod/<pod-name>
 ```
 
 ### Manutenção de Node
-**Ação:** 1. Cordon (não agendar novos pods)
-**Ação:** 2. Drain (remover pods existentes)
-**Ação:** 3. Realizar manutenção...
+**1. Cordon (não agendar novos pods)**
+**2. Drain (remover pods existentes)**
+**3. Realizar manutenção...**
 * 4. Uncordon (voltar a agendar)
-**Ação:** 5. Verificar
+**5. Verificar**
 
 ```bash
 oc adm cordon <node-name>
@@ -265,8 +265,8 @@ oc get nodes
 ## Ferramentas Complementares
 
 ### JQ - Processar JSON
-**Ação:** Instalar
-**Ação:** Exemplo de uso
+**Instalar**
+**Exemplo de uso**
 
 ```bash
 sudo dnf install jq  # RHEL/Fedora
@@ -275,8 +275,8 @@ oc get pods -o json | jq '.items[].metadata.name'
 ```
 
 ### Watch - Monitorar mudanças
-**Ação:** Ver pods em tempo real
-**Ação:** Ver nodes em tempo real
+**Ver pods em tempo real**
+**Ver nodes em tempo real**
 
 ```bash
 watch -n 2 oc get pods
@@ -285,8 +285,8 @@ watch -n 5 oc get nodes
 ```
 
 ### Bash Completion
-**Ação:** Habilitar completion
-**Ação:** Recarregar shell
+**Habilitar completion**
+**Recarregar shell**
 
 ```bash
 oc completion bash > oc && sudo mv oc /etc/bash_completion.d/oc
@@ -329,9 +329,9 @@ source ~/.bashrc
 ## Ajuda Rápida
 
 ### Comando não funciona?
-**Ação:** Ver ajuda do comando
-**Ação:** Ver exemplos
-**Ação:** Explicar recurso da API
+**Ver ajuda do comando**
+**Ver exemplos**
+**Explicar recurso da API**
 
 ```bash
 oc <comando> --help
@@ -342,8 +342,8 @@ oc explain <recurso>
 ```
 
 ### Erro de permissão?
-**Ação:** Verificar suas permissões
-**Ação:** Ver todas as permissões
+**Verificar suas permissões**
+**Ver todas as permissões**
 
 ```bash
 oc auth can-i <verbo> <recurso>
@@ -352,8 +352,8 @@ oc auth can-i --list
 ```
 
 ### Não encontra o pod?
-**Ação:** Listar em todos os namespaces
-**Ação:** Buscar por nome parcial
+**Listar em todos os namespaces**
+**Buscar por nome parcial**
 
 ```bash
 oc get pods -A

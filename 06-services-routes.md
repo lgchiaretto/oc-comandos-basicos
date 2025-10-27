@@ -17,40 +17,40 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 ## Services
 
 ### Básico
-**Ação:** Listar todos os services do namespace atual
+**Listar todos os services do namespace atual**
 
 ```bash
 oc get services
 oc get svc
 ```
 
-**Ação:** Exibir detalhes completos do service
+**Exibir detalhes completos do service**
 **Exemplo:** `oc describe svc <service-name>`
 
 ```bash
 oc describe svc test-app
 ```
 
-**Ação:** Criar service
+**Criar service**
 
 ```bash ignore-test
 oc expose deployment test-app --port=<porta>
 ```
 
-**Ação:** Criar service com tipo específico
+**Criar service com tipo específico**
 
 ```bash ignore-test
 oc create service clusterip test-app --tcp=<porta>:<porta-destino>
 ```
 
-**Ação:** Deletar o service especificado
+**Deletar o service especificado**
 **Exemplo:** `oc delete svc <service-name>`
 
 ```bash ignore-test
 oc delete svc test-app
 ```
 
-**Ação:** Ver endpoints do service
+**Ver endpoints do service**
 **Exemplo:** `oc get endpoints <resource-name>`
 
 ```bash
@@ -61,21 +61,21 @@ oc get endpoints test-app
 
 
 ### Descrever Endpoints
-**Ação:** Exibir detalhes completos do endpoints
+**Exibir detalhes completos do endpoints**
 **Exemplo:** `oc describe endpoints <resource-name>`
 
 ```bash
 oc describe endpoints test-app
 ```
 
-**Ação:** Exibir detalhes completos do endpoints
+**Exibir detalhes completos do endpoints**
 **Exemplo:** `oc describe endpoints <resource-name>app -n <namespace>`
 
 ```bash
 oc describe endpoints test-app -n development
 ```
 
-**Ação:** Exemplo prático
+**Exemplo prático**
 **Exemplo:** `oc describe endpoints <resource-name>app -n <namespace>`
 
 ```bash
@@ -87,67 +87,67 @@ oc describe endpoints test-app -n development
 ## Routes
 
 ### Criar Routes
-**Ação:** Criar route para expor service externamente
+**Criar route para expor service externamente**
 **Exemplo:** `oc expose service <service-name>`
 
 ```bash ignore-test
 oc expose service test-app
 ```
 
-**Ação:** Com hostname específico
+**Com hostname específico**
 
 ```bash ignore-test
 oc expose service test-app --hostname=<hostname>
 ```
 
-**Ação:** Criar route com path específico para o service
+**Criar route com path específico para o service**
 **Exemplo:** `oc expose service <service-name> --path=/api`
 
 ```bash ignore-test
 oc expose service test-app --path=/api
 ```
 
-**Ação:** Criar route com terminação TLS edge (TLS terminado no router)
+**Criar route com terminação TLS edge (TLS terminado no router)**
 **Exemplo:** `oc create route <route-name> test-app --service=test-app`
 
 ```bash ignore-test
 oc create route edge test-app --service=test-app
 ```
 
-**Ação:** Criar route passthrough (TLS vai direto ao pod)
+**Criar route passthrough (TLS vai direto ao pod)**
 **Exemplo:** `oc create route <route-name> test-app --service=test-app`
 
 ```bash ignore-test
 oc create route passthrough test-app --service=test-app
 ```
 
-**Ação:** Criar route reencrypt (TLS terminado e re-encriptado)
+**Criar route reencrypt (TLS terminado e re-encriptado)**
 **Exemplo:** `oc create route <route-name> test-app --service=test-app`
 
 ```bash ignore-test
 oc create route reencrypt test-app --service=test-app
 ```
 
-**Ação:** Com certificado customizado
+**Com certificado customizado**
 
 ```bash ignore-test
 oc create route edge test-app --service=<svc> --cert=<cert-file> --key=<key-file>
 ```
 
-**Ação:** Listar todas as routes expostas no namespace
+**Listar todas as routes expostas no namespace**
 
 ```bash
 oc get routes
 ```
 
-**Ação:** Exibir detalhes completos do route
+**Exibir detalhes completos do route**
 **Exemplo:** `oc describe route <route-name>`
 
 ```bash
 oc describe route test-app
 ```
 
-**Ação:** Exibir route "test-app" em formato JSON
+**Exibir route "test-app" em formato JSON**
 **Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.host}'`
 
 ```bash
@@ -155,21 +155,21 @@ oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
 ### Gerenciar Routes
-**Ação:** Abrir editor para modificar recurso interativamente
+**Abrir editor para modificar recurso interativamente**
 **Exemplo:** `oc edit route <route-name>`
 
 ```bash ignore-test
 oc edit route test-app
 ```
 
-**Ação:** Deletar o route especificado
+**Deletar o route especificado**
 **Exemplo:** `oc delete route <route-name>`
 
 ```bash ignore-test
 oc delete route test-app
 ```
 
-**Ação:** Listar routes com informações detalhadas
+**Listar routes com informações detalhadas**
 
 ```bash
 oc get routes -o wide

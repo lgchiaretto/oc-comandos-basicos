@@ -18,44 +18,44 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 ## Must-Gather Básico
 
 ### Coletar Dados do Cluster
-**Ação:** Coletar dados de diagnóstico completo do cluster
+**Coletar dados de diagnóstico completo do cluster**
 
 ```bash ignore-test
 oc adm must-gather
 ```
 
-**Ação:** Coletar dados de diagnóstico em diretório específico
+**Coletar dados de diagnóstico em diretório específico**
 
 ```bash ignore-test
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-**Ação:** Coletar dados de diagnóstico completo do cluster
+**Coletar dados de diagnóstico completo do cluster**
 
 ```bash ignore-test
 oc adm must-gather -v=4
 ```
 
-**Ação:** Coletar dados de diagnóstico em diretório específico
+**Coletar dados de diagnóstico em diretório específico**
 
 ```bash ignore-test
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
-**Ação:** Ver pods do must-gather
+**Ver pods do must-gather**
 
 ```bash ignore-test
 oc get pods -n openshift-must-gather-*
 ```
 
 ### Coleta por Tempo
-**Ação:** Coletar logs a partir de período específico
+**Coletar logs a partir de período específico**
 
 ```bash ignore-test
 oc adm must-gather --since 2h
 ```
 
-**Ação:** Executar o pod do must-gather no node <node-name>
+**Executar o pod do must-gather no node <node-name>**
 
 ```bash ignore-test
 oc adm must-gather --node-name=<node-name>
@@ -75,39 +75,39 @@ https://access.redhat.com/solutions/5459251
 ## Inspect
 
 ### Inspecionar Recursos
-**Ação:** Inspect de namespace completo
+**Inspect de namespace completo**
 
 ```bash ignore-test
 oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 ```
 
-**Ação:** Coletar informações de debug de todos os cluster operators
+**Coletar informações de debug de todos os cluster operators**
 
 ```bash ignore-test
 oc adm inspect clusteroperators --dest-dir=/tmp/inspect
 ```
 
-**Ação:** Coletar informações de debug de todos os nodes
+**Coletar informações de debug de todos os nodes**
 
 ```bash ignore-test
 oc adm inspect nodes --dest-dir=/tmp/inspect
 ```
 
-**Ação:** Inspecionar e coletar informações de recursos específicos
+**Inspecionar e coletar informações de recursos específicos**
 **Exemplo:** `oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect`
 
 ```bash ignore-test
 oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
 ```
 
-**Ação:** Inspect com logs
+**Inspect com logs**
 
 ```bash ignore-test
 oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 ```
 
 ### Múltiplos Recursos
-**Ação:** Inspecionar e coletar informações de recursos específicos
+**Inspecionar e coletar informações de recursos específicos**
 
 ```bash ignore-test
 oc adm inspect \
@@ -117,7 +117,7 @@ oc adm inspect \
   --dest-dir=/tmp/inspect
 ```
 
-**Ação:** Inspecionar e coletar informações de recursos específicos
+**Inspecionar e coletar informações de recursos específicos**
 
 ```bash ignore-test
 oc adm inspect ns -A --dest-dir=/tmp/inspect
@@ -128,7 +128,7 @@ oc adm inspect ns -A --dest-dir=/tmp/inspect
 ## Diagnósticos Rápidos
 
 ### Verificações Básicas
-**Ação:** Listar status de todos os cluster operators
+**Listar status de todos os cluster operators**
 
 ```bash
 oc get clusteroperators
@@ -136,32 +136,32 @@ oc get nodes
 oc get clusterversion
 ```
 
-**Ação:** Listar pods de todos os namespaces do cluster
+**Listar pods de todos os namespaces do cluster**
 
 ```bash
 oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
 ```
 
-**Ação:** Listar pods de todos os namespaces do cluster
+**Listar pods de todos os namespaces do cluster**
 
 ```bash ignore-test
 oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 ```
 
-**Ação:** Listar eventos de todos os namespaces do cluster
+**Listar eventos de todos os namespaces do cluster**
 
 ```bash
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 ```
 
-**Ação:** Exibir nodes em formato JSON
+**Exibir nodes em formato JSON**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
 ### Coleta Rápida
-**Ação:** Script de diagnóstico rápido
+**Script de diagnóstico rápido**
 
 ```bash
 cat > /tmp/quick-diag.sh << 'EOF'

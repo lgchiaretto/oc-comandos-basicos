@@ -17,47 +17,47 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 ## ConfigMaps
 
 ### Criar ConfigMaps
-**Ação:** Listar ConfigMaps
+**Listar ConfigMaps**
 
 ```bash
 oc get configmaps
 oc get cm
 ```
 
-**Ação:** Criar novo recurso
+**Criar novo recurso**
 **Exemplo:** `oc create configmap <configmap-name> --from-literal=chave=valor`
 
 ```bash
 oc create configmap test-app --from-literal=chave=valor
 ```
 
-**Ação:** De arquivo
+**De arquivo**
 
 ```bash ignore-test
 oc create configmap test-app --from-file=<arquivo>
 ```
 
-**Ação:** De diretório
+**De diretório**
 
 ```bash ignore-test
 oc create configmap test-app --from-file=<diretorio>/
 ```
 
-**Ação:** Exibir configmap "test-app" em formato YAML
+**Exibir configmap "test-app" em formato YAML**
 **Exemplo:** `oc get cm <configmap-name> -o yaml`
 
 ```bash
 oc get cm test-app -o yaml
 ```
 
-**Ação:** Abrir editor para modificar recurso interativamente
+**Abrir editor para modificar recurso interativamente**
 **Exemplo:** `oc edit cm <configmap-name>`
 
 ```bash ignore-test
 oc edit cm test-app
 ```
 
-**Ação:** Deletar o configmap especificado
+**Deletar o configmap especificado**
 **Exemplo:** `oc delete cm <configmap-name>`
 
 ```bash
@@ -65,14 +65,14 @@ oc delete cm test-app
 ```
 
 ### Exemplos Avançados
-**Ação:** Criar novo configmap
+**Criar novo configmap**
 **Exemplo:** `oc create cm <configmap-name>`
 
 ```bash
 oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
 ```
 
-**Ação:** Exibir configmap "test-app" em formato JSON
+**Exibir configmap "test-app" em formato JSON**
 **Exemplo:** `oc get cm <configmap-name> -o jsonpath='{.data}'`
 
 ```bash
@@ -83,21 +83,21 @@ oc get cm test-app -o jsonpath='{.data}'
 
 
 ### Descrever ConfigMap
-**Ação:** Exibir detalhes completos do recurso
+**Exibir detalhes completos do recurso**
 **Exemplo:** `oc describe configmap <configmap-name>`
 
 ```bash
 oc describe configmap test-app
 ```
 
-**Ação:** Exibir detalhes completos do recurso
+**Exibir detalhes completos do recurso**
 **Exemplo:** `oc describe configmap <configmap-name> -n <namespace>`
 
 ```bash
 oc describe configmap test-app -n development
 ```
 
-**Ação:** Exemplo prático
+**Exemplo prático**
 **Exemplo:** `oc describe configmap <configmap-name> -n <namespace>`
 
 ```bash
@@ -107,20 +107,20 @@ oc describe configmap test-app -n development
 ## Secrets
 
 ### Criar Secrets
-**Ação:** Criar novo secret
+**Criar novo secret**
 **Exemplo:** `oc create secret <secret-name> test-app --from-literal=chave=valor`
 
 ```bash
 oc create secret generic test-app --from-literal=chave=valor
 ```
 
-**Ação:** De arquivo
+**De arquivo**
 
 ```bash ignore-test
 oc create secret generic test-app --from-file=<arquivo>
 ```
 
-**Ação:** Criar novo secret
+**Criar novo secret**
 **Exemplo:** `oc create secret <secret-name> test-app \`
 
 ```bash ignore-test
@@ -131,40 +131,40 @@ oc create secret docker-registry test-app \
   --docker-email=<email>
 ```
 
-**Ação:** Secret TLS
+**Secret TLS**
 
 ```bash ignore-test
 oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 
-**Ação:** Listar todos os secrets do namespace atual
+**Listar todos os secrets do namespace atual**
 
 ```bash
 oc get secrets
 ```
 
-**Ação:** Exibir secret "test-app" em formato YAML
+**Exibir secret "test-app" em formato YAML**
 **Exemplo:** `oc get secret <secret-name> -o yaml`
 
 ```bash
 oc get secret test-app -o yaml
 ```
 
-**Ação:** Exibir secret "test-app" em formato JSON
+**Exibir secret "test-app" em formato JSON**
 **Exemplo:** `oc get secret <secret-name> -o jsonpath='{.data.chave}' | base64 -d`
 
 ```bash
 oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
 ```
 
-**Ação:** Abrir editor para modificar recurso interativamente
+**Abrir editor para modificar recurso interativamente**
 **Exemplo:** `oc edit secret <secret-name>`
 
 ```bash ignore-test
 oc edit secret test-app
 ```
 
-**Ação:** Deletar o secret especificado
+**Deletar o secret especificado**
 **Exemplo:** `oc delete secret <secret-name>`
 
 ```bash ignore-test
@@ -172,21 +172,21 @@ oc delete secret test-app
 ```
 
 ### Descrever Secret
-**Ação:** Exibir detalhes completos do secret
+**Exibir detalhes completos do secret**
 **Exemplo:** `oc describe secret <secret-name>`
 
 ```bash
 oc describe secret test-app
 ```
 
-**Ação:** Exibir detalhes completos do secret
+**Exibir detalhes completos do secret**
 **Exemplo:** `oc describe secret <secret-name> -n <namespace>`
 
 ```bash
 oc describe secret test-app -n development
 ```
 
-**Ação:** Exemplo prático
+**Exemplo prático**
 **Exemplo:** `oc describe secret <secret-name> -n <namespace>`
 
 ```bash
@@ -194,19 +194,19 @@ oc describe secret test-app -n development
 ```
 
 ### Link Secrets
-**Ação:** Linkar secret à service account
+**Linkar secret à service account**
 
 ```bash ignore-test
 oc secrets link <service-account> <nome-do-secret>
 ```
 
-**Ação:** Linkar para pull de imagens
+**Linkar para pull de imagens**
 
 ```bash ignore-test
 oc secrets link default <pull-secret> --for=pull
 ```
 
-**Ação:** Linkar para mount
+**Linkar para mount**
 
 ```bash ignore-test
 oc secrets link <service-account> <nome-do-secret> --for=mount
@@ -217,21 +217,21 @@ oc secrets link <service-account> <nome-do-secret> --for=mount
 ## Usando em Pods
 
 ### Como Variáveis de Ambiente
-**Ação:** Definir/atualizar variáveis de ambiente no recurso
+**Definir/atualizar variáveis de ambiente no recurso**
 **Exemplo:** `oc set env <resource-name>/test-app --from=configmap/test-app`
 
 ```bash
 oc set env deployment/test-app --from=configmap/test-app
 ```
 
-**Ação:** Definir/atualizar variáveis de ambiente no recurso
+**Definir/atualizar variáveis de ambiente no recurso**
 **Exemplo:** `oc set env <resource-name>/test-app --from=secret/test-app`
 
 ```bash
 oc set env deployment/test-app --from=secret/test-app
 ```
 
-**Ação:** Definir/atualizar variáveis de ambiente no recurso
+**Definir/atualizar variáveis de ambiente no recurso**
 **Exemplo:** `oc set env <resource-name>/test-app minhachave=valor --from=configmap/test-app`
 
 ```bash
@@ -239,14 +239,14 @@ oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ```
 
 ### Como Volumes
-**Ação:** Patch deployment para montar ConfigMap
+**Patch deployment para montar ConfigMap**
 **Exemplo:** `oc set volume <resource-name>/test-app`
 
 ```bash
 oc set volume --add --type=configmap deployment/test-app --configmap-name test-app --mount-path=/config
 ```
 
-**Ação:** Montar Secret
+**Montar Secret**
 **Exemplo:** `oc set volume <resource-name>/test-app`
 
 ```bash

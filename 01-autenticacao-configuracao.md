@@ -19,69 +19,69 @@ Este documento contém comandos essenciais para autenticação e configuração 
 ## Login e Logout
 
 ### Login Básico
-**Ação:** Login no cluster OpenShift
+**Login no cluster OpenShift**
 
 ```bash ignore-test
 oc login <url-do-cluster>
 ```
 
-**Ação:** Login com usuário e senha
+**Login com usuário e senha**
 
 ```bash ignore-test
 oc login <url-do-cluster> -u <usuario> -p <senha>
 ```
 
-**Ação:** Login com token
+**Login com token**
 
 ```bash ignore-test
 oc login --token=<token> --server=<url-do-cluster>
 ```
 
-**Ação:** Exemplo prático
+**Exemplo prático**
 
 ```bash ignore-test
 oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```
 
 ### Verificar Autenticação
-**Ação:** Exibir o nome do usuário autenticado atualmente
+**Exibir o nome do usuário autenticado atualmente**
 
 ```bash
 oc whoami
 ```
 
-**Ação:** Exibir o token de autenticação do usuário atual
+**Exibir o token de autenticação do usuário atual**
 
 ```bash
 oc whoami -t
 ```
 
-**Ação:** Exibir o contexto atual do kubeconfig
+**Exibir o contexto atual do kubeconfig**
 
 ```bash
 oc whoami --show-context
 ```
 
-**Ação:** Exibir a URL da console web do cluster
+**Exibir a URL da console web do cluster**
 
 ```bash
 oc whoami --show-console
 ```
 
-**Ação:** Exibir a URL do servidor API conectado
+**Exibir a URL do servidor API conectado**
 
 ```bash
 oc whoami --show-server
 ```
 
 ### Logout
-**Ação:** Fazer logout
+**Fazer logout**
 
 ```bash ignore-test
 oc logout
 ```
 
-**Ação:** Fazer logout e limpar contexto
+**Fazer logout e limpar contexto**
 
 ```bash ignore-test
 oc logout && rm -f ~/.kube/config
@@ -93,44 +93,44 @@ oc logout && rm -f ~/.kube/config
 
 
 ### Listar API Resources
-**Ação:** Listar todos os recursos da API disponíveis no cluster
+**Listar todos os recursos da API disponíveis no cluster**
 
 ```bash
 oc api-resources
 ```
 
-**Ação:** Filtrar por verbo
+**Filtrar por verbo**
 
 ```bash
 oc api-resources --verbs=list,get
 ```
 
-**Ação:** Filtrar por grupo de API
+**Filtrar por grupo de API**
 
 ```bash
 oc api-resources --api-group=apps
 ```
 
-**Ação:** Ver recursos com alias
+**Ver recursos com alias**
 
 ```bash
 oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 ```
 
 ### Listar API Versions
-**Ação:** Listar todas as versões de API disponíveis
+**Listar todas as versões de API disponíveis**
 
 ```bash
 oc api-versions
 ```
 
-**Ação:** Ver versões específicas do grupo
+**Ver versões específicas do grupo**
 
 ```bash
 oc api-versions | grep apps
 ```
 
-**Ação:** Ver versões do core
+**Ver versões do core**
 
 ```bash
 oc api-versions | grep -v "/"
@@ -139,45 +139,45 @@ oc api-versions | grep -v "/"
 ## Configuração do Cliente
 
 ### Versão e Informações
-**Ação:** Exibir versão do cliente oc e do servidor OpenShift
+**Exibir versão do cliente oc e do servidor OpenShift**
 
 ```bash
 oc version
 ```
 
-**Ação:** Exibir informações básicas do cluster
+**Exibir informações básicas do cluster**
 
 ```bash
 oc cluster-info
 ```
 
-**Ação:** Ver informações do servidor
+**Ver informações do servidor**
 
 ```bash
 oc cluster-info dump
 ```
 
 ### Configuração
-**Ação:** Exibir configuração atual do kubeconfig
+**Exibir configuração atual do kubeconfig**
 
 ```bash
 oc config view
 ```
 
-**Ação:** Exibir configuração com credenciais (cuidado!)
+**Exibir configuração com credenciais (cuidado!)**
 
 ```bash
 oc config view --raw
 ```
 
-**Ação:** Exibir conteúdo do arquivo de configuração do kubectl/oc
+**Exibir conteúdo do arquivo de configuração do kubectl/oc**
 
 ```bash
 cat ~/.kube/config
 ```
 
 ### Namespace Padrão
-**Ação:** Definir namespace padrão para o contexto atual
+**Definir namespace padrão para o contexto atual**
 
 ```bash
 oc config set-context --current --namespace=development
@@ -187,38 +187,38 @@ oc config set-context --current --namespace=development
 ## Contextos
 
 ### Listar e Gerenciar Contextos
-**Ação:** Listar todos os contextos disponíveis
+**Listar todos os contextos disponíveis**
 
 ```bash
 oc config get-contexts
 ```
 
-**Ação:** Exibir o contexto atual do kubeconfig
+**Exibir o contexto atual do kubeconfig**
 
 ```bash
 oc config current-context
 ```
 
-**Ação:** Trocar de contexto
+**Trocar de contexto**
 
 ```bash ignore-test
 oc config use-context <nome-do-contexto>
 ```
 
-**Ação:** Renomear contexto
+**Renomear contexto**
 
 ```bash ignore-test
 oc config rename-context <nome-antigo> <nome-novo>
 ```
 
-**Ação:** Deletar contexto
+**Deletar contexto**
 
 ```bash ignore-test
 oc config delete-context <nome-do-contexto>
 ```
 
 ### Criar Contextos Customizados
-**Ação:** Criar novo contexto
+**Criar novo contexto**
 
 ```bash ignore-test
 oc config set-context <nome-do-contexto> \
@@ -227,7 +227,7 @@ oc config set-context <nome-do-contexto> \
   --namespace=<namespace>
 ```
 
-**Ação:** Exemplo
+**Exemplo**
 
 ```bash ignore-test
 oc config set-context dev-context \
@@ -236,7 +236,7 @@ oc config set-context dev-context \
   --namespace=development
 ```
 
-**Ação:** Criar contexto para o cluster
+**Criar contexto para o cluster**
 
 ```bash ignore-test
 oc config set-context <contexto> \
@@ -245,13 +245,13 @@ oc config set-context <contexto> \
 ```
 
 ### Variáveis de Ambiente
-**Ação:** Definir KUBECONFIG customizado
+**Definir KUBECONFIG customizado**
 
 ```bash ignore-test
 export KUBECONFIG=/path/to/kubeconfig
 ```
 
-**Ação:** Múltiplos kubeconfigs
+**Múltiplos kubeconfigs**
 
 ```bash ignore-test
 export KUBECONFIG=/path/to/config1:/path/to/config2

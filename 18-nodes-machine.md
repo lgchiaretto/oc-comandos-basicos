@@ -18,44 +18,44 @@ Este documento contém comandos para gerenciar nodes e configurações de máqui
 ## Gerenciar Nodes
 
 ### Listar e Verificar
-**Ação:** Listar todos os nodes do cluster
+**Listar todos os nodes do cluster**
 
 ```bash
 oc get nodes
 ```
 
-**Ação:** Listar nodes exibindo todas as labels
+**Listar nodes exibindo todas as labels**
 
 ```bash
 oc get nodes --show-labels
 ```
 
-**Ação:** Listar nodes com informações detalhadas
+**Listar nodes com informações detalhadas**
 
 ```bash
 oc get nodes -o wide
 ```
 
-**Ação:** Descrever node
+**Descrever node**
 
 ```bash ignore-test
 oc describe node <node-name>
 ```
 
-**Ação:** Ver capacidade e uso
+**Ver capacidade e uso**
 **Exemplo:** `oc adm top <resource-name>`
 
 ```bash
 oc adm top nodes
 ```
 
-**Ação:** Ver versão do node
+**Ver versão do node**
 
 ```bash ignore-test
 oc get node <node-name> -o jsonpath='{.status.nodeInfo.kubeletVersion}'
 ```
 
-**Ação:** Listar nodes filtrados por label
+**Listar nodes filtrados por label**
 
 ```bash
 oc get nodes -l node-role.kubernetes.io/master
@@ -63,111 +63,111 @@ oc get nodes -l node-role.kubernetes.io/worker
 ```
 
 ### Labels e Taints
-**Ação:** Adicionar label
+**Adicionar label**
 
 ```bash ignore-test
 oc label node <node-name> <key>=<value>
 ```
 
-**Ação:** Remover label
+**Remover label**
 
 ```bash ignore-test
 oc label node <node-name> <key>-
 ```
 
-**Ação:** Ver taints
+**Ver taints**
 
 ```bash ignore-test
 oc describe node <node-name> | grep Taints
 ```
 
-**Ação:** Adicionar taint
+**Adicionar taint**
 
 ```bash ignore-test
 oc adm taint nodes <node-name> key=value:NoSchedule
 ```
 
-**Ação:** Remover taint
+**Remover taint**
 
 ```bash ignore-test
 oc adm taint nodes <node-name> key:NoSchedule-
 ```
 
-**Ação:** Adicionar role label
+**Adicionar role label**
 
 ```bash ignore-test
 oc label node <node-name> node-role.kubernetes.io/<role>=
 ```
 
 ### Drain e Cordon
-**Ação:** Cordon (desabilitar scheduling)
+**Cordon (desabilitar scheduling)**
 
 ```bash ignore-test
 oc adm cordon <node-name>
 ```
 
-**Ação:** Uncordon (habilitar scheduling)
+**Uncordon (habilitar scheduling)**
 
 ```bash ignore-test
 oc adm uncordon <node-name>
 ```
 
-**Ação:** Drain (esvaziar node)
+**Drain (esvaziar node)**
 
 ```bash ignore-test
 oc adm drain <node-name>
 ```
 
-**Ação:** Drain com flags
+**Drain com flags**
 
 ```bash ignore-test
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ```
 
-**Ação:** Drain com grace period
+**Drain com grace period**
 
 ```bash ignore-test
 oc adm drain <node-name> --grace-period=600
 ```
 
-**Ação:** Drain forçado (cuidado!)
+**Drain forçado (cuidado!)**
 
 ```bash ignore-test
 oc adm drain <node-name> --force --delete-emptydir-data --ignore-daemonsets
 ```
 
 ### Debug de Nodes
-**Ação:** Debug interativo em node
+**Debug interativo em node**
 
 ```bash ignore-test
 oc debug node/<node-name>
 ```
 
-**Ação:** No shell de debug, acessar filesystem do host
+**No shell de debug, acessar filesystem do host**
 
 ```bash
 chroot /host
 ```
 
-**Ação:** Ver logs do kubelet
+**Ver logs do kubelet**
 
 ```bash ignore-test
 oc adm node-logs <node-name> -u kubelet
 ```
 
-**Ação:** Ver logs do CRI-O
+**Ver logs do CRI-O**
 
 ```bash ignore-test
 oc adm node-logs <node-name> -u crio
 ```
 
-**Ação:** Ver journal do node
+**Ver journal do node**
 
 ```bash ignore-test
 oc adm node-logs <node-name> --tail=100
 ```
 
-**Ação:** Executar comando em node
+**Executar comando em node**
 
 ```bash ignore-test
 oc debug node/<node-name> -- chroot /host <comando>
@@ -178,72 +178,72 @@ oc debug node/<node-name> -- chroot /host <comando>
 ## Machine Config
 
 ### MachineConfigs
-**Ação:** Listar MachineConfigs
+**Listar MachineConfigs**
 
 ```bash
 oc get machineconfigs
 oc get mc
 ```
 
-**Ação:** Descrever MachineConfig
+**Descrever MachineConfig**
 
 ```bash ignore-test
 oc describe mc <mc-name>
 ```
 
-**Ação:** Ver conteúdo
+**Ver conteúdo**
 
 ```bash ignore-test
 oc get mc <mc-name> -o yaml
 ```
 
-**Ação:** MachineConfigs renderizados
+**MachineConfigs renderizados**
 
 ```bash
 oc get mc | grep rendered
 ```
 
 ### MachineConfigPools
-**Ação:** Listar MachineConfigPools
+**Listar MachineConfigPools**
 
 ```bash
 oc get machineconfigpools
 oc get mcp
 ```
 
-**Ação:** Status dos pools
+**Status dos pools**
 
 ```bash
 oc get mcp
 ```
 
-**Ação:** Master pool
+**Master pool**
 **Exemplo:** `oc get mcp <resource-name>`
 
 ```bash
 oc get mcp master
 ```
 
-**Ação:** Worker pool
+**Worker pool**
 **Exemplo:** `oc get mcp <resource-name>`
 
 ```bash
 oc get mcp worker
 ```
 
-**Ação:** Descrever pool
+**Descrever pool**
 
 ```bash ignore-test
 oc describe mcp <pool-name>
 ```
 
-**Ação:** Ver progresso de update
+**Ver progresso de update**
 
 ```bash
 oc get mcp
 ```
 
-**Ação:** Ver qual MC está sendo aplicado
+**Ver qual MC está sendo aplicado**
 
 ```bash ignore-test
 oc get mcp <pool-name> -o jsonpath='{.status.configuration.name}'
@@ -297,19 +297,19 @@ EOF
 ```
 
 ### Pause de Updates
-**Ação:** Pausar MachineConfigPool
+**Pausar MachineConfigPool**
 
 ```bash ignore-test
 oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":true}}'
 ```
 
-**Ação:** Despausar
+**Despausar**
 
 ```bash ignore-test
 oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":false}}'
 ```
 
-**Ação:** Ver se está pausado
+**Ver se está pausado**
 
 ```bash ignore-test
 oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
@@ -320,75 +320,75 @@ oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
 ## Machine Sets
 
 ### Gerenciar MachineSets
-**Ação:** Listar MachineSets
+**Listar MachineSets**
 
 ```bash
 oc get machinesets -n openshift-machine-api
 ```
 
-**Ação:** Descrever MachineSet
+**Descrever MachineSet**
 
 ```bash ignore-test
 oc describe machineset <name> -n openshift-machine-api
 ```
 
-**Ação:** Ver réplicas
+**Ver réplicas**
 
 ```bash ignore-test
 oc get machineset <name> -n openshift-machine-api -o jsonpath='{.spec.replicas}'
 ```
 
-**Ação:** Escalar MachineSet
+**Escalar MachineSet**
 
 ```bash ignore-test
 oc scale machineset <name> -n openshift-machine-api --replicas=<N>
 ```
 
-**Ação:** Ver Machines
+**Ver Machines**
 
 ```bash
 oc get machines -n openshift-machine-api
 ```
 
-**Ação:** Descrever Machine
+**Descrever Machine**
 
 ```bash ignore-test
 oc describe machine <machine-name> -n openshift-machine-api
 ```
 
 ### Criar MachineSet
-**Ação:** Copiar existente
+**Copiar existente**
 
 ```bash ignore-test
 oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.yaml
 ```
 
-**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+**Aplicar configuração do arquivo YAML/JSON ao cluster**
 
 ```bash ignore-test
 oc apply -f new-machineset.yaml
 ```
 
-**Ação:** Verificar
+**Verificar**
 
 ```bash
 oc get machines -n openshift-machine-api
 ```
 
 ### Deletar Machines
-**Ação:** Deletar Machine (node será removido)
+**Deletar Machine (node será removido)**
 
 ```bash ignore-test
 oc delete machine <machine-name> -n openshift-machine-api
 ```
 
-**Ação:** Ver processo
+**Ver processo**
 
 ```bash
 oc get machines -n openshift-machine-api
 ```
 
-**Ação:** Listar todos os nodes do cluster
+**Listar todos os nodes do cluster**
 
 ```bash
 oc get nodes
@@ -399,13 +399,13 @@ oc get nodes
 ## Node Maintenance
 
 ### Atualizar Node
-**Ação:** 1. Cordon
+**1. Cordon**
 
 ```bash ignore-test
 oc adm cordon <node-name>
 ```
 
-**Ação:** 2. Drain
+**2. Drain**
 
 ```bash ignore-test
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
@@ -415,20 +415,20 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 # 3. Aplicar updates (MachineConfig ou manual)
 # Node vai reiniciar automaticamente se MachineConfig mudou
 ```
-**Ação:** Listar todos os nodes do cluster
+**Listar todos os nodes do cluster**
 
 ```bash
 oc get nodes
 ```
 
-**Ação:** 5. Uncordon
+**5. Uncordon**
 
 ```bash ignore-test
 oc adm uncordon <node-name>
 ```
 
 ### Reboot de Nodes
-**Ação:** Via debug
+**Via debug**
 
 ```bash ignore-test
 oc debug node/<node-name>
@@ -436,57 +436,57 @@ chroot /host
 systemctl reboot
 ```
 
-**Ação:** Listar todos os nodes do cluster
+**Listar todos os nodes do cluster**
 
 ```bash
 oc get nodes
 ```
 
 ### Remover Node
-**Ação:** 1. Drain
+**1. Drain**
 
 ```bash ignore-test
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data --force
 ```
 
-**Ação:** 2. Deletar node
+**2. Deletar node**
 
 ```bash ignore-test
 oc delete node <node-name>
 ```
 
-**Ação:** 3. Se usando Machine, deletar Machine também
+**3. Se usando Machine, deletar Machine também**
 
 ```bash ignore-test
 oc delete machine <machine-name> -n openshift-machine-api
 ```
 
 ### Health Checks
-**Ação:** Ver condições do node
+**Ver condições do node**
 
 ```bash ignore-test
 oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
-**Ação:** Exibir nodes em formato JSON
+**Exibir nodes em formato JSON**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
-**Ação:** Exibir nodes em formato JSON
+**Exibir nodes em formato JSON**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Ação:** Exibir nodes em formato JSON
+**Exibir nodes em formato JSON**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Ação:** Exibir nodes em formato JSON
+**Exibir nodes em formato JSON**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'
