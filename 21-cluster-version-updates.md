@@ -118,7 +118,7 @@ oc adm upgrade --to=<version>
 **Exemplo**
 
 ```bash ignore-test
-oc adm upgrade --to=4.14.15
+oc adm upgrade --to=4.19.15
 ```
 
 **Update forçado (não recomendado)**
@@ -176,33 +176,33 @@ oc get clusterversion version -o jsonpath='{.spec.channel}{"\n"}'
 ```
 
 ```bash
-# Canais disponíveis (exemplo para 4.14)
-# - stable-4.14
-# - fast-4.14
-# - eus-4.14 (Extended Update Support)
-# - candidate-4.14
+# Canais disponíveis (exemplo para 4.19)
+# - stable-4.19
+# - fast-4.19
+# - eus-4.19 (Extended Update Support)
+# - candidate-4.19
 ```
 **Aplicar modificação parcial ao recurso usando patch**
 
 ```bash
-oc patch clusterversion version --type merge -p '{"spec":{"channel":"stable-4.14"}}'
-```
-
-**Aplicar modificação parcial ao recurso usando patch**
-
-```bash
-oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.14"}}'
+oc patch clusterversion version --type merge -p '{"spec":{"channel":"stable-4.19"}}'
 ```
 
 **Aplicar modificação parcial ao recurso usando patch**
 
 ```bash
-oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.14"}}'
+oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.19"}}'
+```
+
+**Aplicar modificação parcial ao recurso usando patch**
+
+```bash
+oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.19"}}'
 ```
 
 **Exibir recurso em formato JSON**
 
-```bash ignore-test
+```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
@@ -217,12 +217,6 @@ oc adm upgrade
 
 ```bash
 oc get clusterversion version -o jsonpath='{.spec.upstream}{"\n"}'
-```
-
-**Configurar upstream customizado (disconnected)**
-
-```bash ignore-test
-oc patch clusterversion version --type merge -p '{"spec":{"upstream":"<update-server-url>"}}'
 ```
 
 ---
@@ -272,35 +266,22 @@ oc logs -n <operator-namespace> <pod-name>
 oc get events -n <operator-namespace> --sort-by='.lastTimestamp'
 ```
 
-### Pausar Update
-```bash
-# Não há comando nativo para pausar
-# Mas pode-se deletar ClusterVersion para "congelar"
-# NÃO RECOMENDADO EM PRODUÇÃO!
-```
 **Exibir recurso em formato JSON**
 
-```bash ignore-test
+```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
 
 ### Rollback (Não Suportado Oficialmente)
 ```bash
 # OpenShift NÃO suporta rollback
-# Se update falhar, o cluster permanece na versão atual
+# Se update falhar, o cluster permanece na versão atual e você precisa abrir um chamado na Red Hat
 ```
 **Exibir recurso em formato JSON**
 
-```bash ignore-test
+```bash
 echo "Current: $(oc get clusterversion -o jsonpath='{.items[0].status.history[0].version}')"
 echo "Desired: $(oc get clusterversion -o jsonpath='{.items[0].status.desired.version}')"
-```
-
-```bash
-# Se precisar "reverter", a única opção é:
-# 1. Restaurar etcd backup
-# 2. Reinstalar cluster
-# (Por isso sempre fazer backup antes de update!)
 ```
 
 ### Update Prerequisites
@@ -342,14 +323,14 @@ echo ""
 
 **Exibir cluster operator em formato JSON**
 
-```bash ignore-test
+```bash
 DEGRADED=$(oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name' | wc -l)
 echo "Degraded Operators: $DEGRADED"
 ```
 
 **Exibir nodes em formato JSON**
 
-```bash ignore-test
+```bash
 NOT_READY=$(oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name' | wc -l)
 echo "Not Ready Nodes: $NOT_READY"
 ```
@@ -363,12 +344,12 @@ echo "Non-Running Pods: $BAD_PODS"
 
 **Exibir recurso em formato JSON**
 
-```bash ignore-test
+```bash
 UPDATING_MCP=$(oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name' | wc -l)
 echo "Updating MCPs: $UPDATING_MCP"
 ```
 
-```bash ignore-test
+```bash
 echo ""
 if [ $DEGRADED -eq 0 ] && [ $NOT_READY -eq 0 ] && [ $BAD_PODS -eq 0 ] && [ $UPDATING_MCP -eq 0 ]; then
   echo " Cluster is healthy for update"
