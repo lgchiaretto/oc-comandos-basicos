@@ -404,7 +404,7 @@ oc run netshoot --rm -i --tty --image quay.io/chiaretto/netshoot -- /bin/bash
 **Criar e executar pod**
 
 ```bash ignore-test
-oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bin/bash
+oc run debug --rm -i --tty --image=registry.redhat.io/rhel9/support-tools -- /bin/bash
 ```
 
 ```

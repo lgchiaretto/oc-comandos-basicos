@@ -132,7 +132,7 @@ metadata:
 spec:
   containers:
   - name: backup
-    image: registry.redhat.io/rhel8/support-tools
+    image: registry.redhat.io/rhel9/support-tools
     command: ["sleep", "infinity"]
     volumeMounts:
     - name: data
