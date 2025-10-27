@@ -165,6 +165,7 @@ oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 
 ### Análise de Applications (ArgoCD)
 **Exibir recurso "workshop-vms-prd" em formato JSON**
+
 **Exemplo:** `oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions}' | jq .`
 
 ```bash
@@ -172,6 +173,7 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 ```
 
 **Exibir recurso "workshop-gitops-vms-hml" em formato JSON**
+
 **Exemplo:** `oc get application <resource-name>hml -n <namespace> -o jsonpath='{.spec.syncPolicy}' | jq`
 
 ```bash
@@ -179,6 +181,7 @@ oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.sp
 ```
 
 **Exibir recurso "workshop-vms-dev" em formato JSON**
+
 **Exemplo:** `oc get application <resource-name>dev -n <namespace> -o json | jq '.status.resources[] | select(.kind == "Pod")'`
 
 ```bash ignore-test
@@ -187,6 +190,7 @@ oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.re
 
 ### Análise de ClusterLogForwarder
 **Exibir recurso "instance" em formato JSON**
+
 **Exemplo:** `oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'`
 
 ```bash ignore-test
@@ -194,6 +198,7 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.c
 ```
 
 **Exibir recurso "instance" em formato JSON**
+
 **Exemplo:** `oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.filterConditions}' | jq '.'`
 
 ```bash
@@ -302,6 +307,7 @@ oc get all -o yaml | grep 5000
 
 ### Busca em AdminNetworkPolicy
 **Listar recurso de todos os namespaces do cluster**
+
 **Exemplo:** `oc get adminnetworkpolicy <resource-name>communication -o yaml | grep -A 30 "ingress:" | head -40`
 
 ```bash
@@ -310,6 +316,7 @@ oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 3
 
 ### Análise de ArgoCD
 **Listar recurso de todos os namespaces do cluster**
+
 **Exemplo:** `oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 10 source`
 
 ```bash ignore-test
@@ -317,6 +324,7 @@ oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | gr
 ```
 
 **Listar recurso de todos os namespaces do cluster**
+
 **Exemplo:** `oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 5 destination`
 
 ```bash ignore-test
@@ -324,6 +332,7 @@ oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | gr
 ```
 
 **Listar recurso de todos os namespaces do cluster**
+
 **Exemplo:** `oc get application <resource-name>hml -n <namespace> -o yaml | grep -A 5 -B 5 sync`
 
 ```bash ignore-test
@@ -331,6 +340,7 @@ oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A
 ```
 
 **Listar recurso de todos os namespaces do cluster**
+
 **Exemplo:** `oc get application <resource-name>dev -n <namespace> -o yaml | grep -A 20 -B 5 "message"`
 
 ```bash ignore-test
@@ -339,6 +349,7 @@ oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 
 
 ### Filtros em CatalogSource
 **Listar recurso de todos os namespaces do cluster**
+
 **Exemplo:** `oc get catalogsource <resource-name>operators -n <namespace> -o yaml | grep -A 10 status:`
 
 ```bash
@@ -357,6 +368,7 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 
 ### Análise de API Requests
 **Exibir recurso "ingresses.v1beta1.extensions" em formato JSON**
+
 **Exemplo:** `oc get apirequestcounts <resource-name>.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT`
 
 ```bash ignore-test
@@ -364,6 +376,7 @@ oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status
 ```
 
 **Exibir recurso "ingresses.v1beta1.networking.k8s.io" em formato JSON**
+
 **Exemplo:** `oc get apirequestcounts <resource-name>.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT`
 
 ```bash ignore-test
@@ -371,6 +384,7 @@ oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range 
 ```
 
 **Exibir recurso "roles.v1beta1.rbac.authorization.k8s.io" em formato JSON**
+
 **Exemplo:** `oc get apirequestcounts <resource-name>.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT`
 
 ```bash ignore-test
@@ -405,6 +419,7 @@ oc get application -A -o yaml | sed '/status:/d'
 
 ### Verificações Condicionais
 **Verificar se aplicação existe**
+
 **Exemplo:** `oc get applications.argoproj.io -n <namespace>  || echo "No applications found"`
 
 ```bash
@@ -412,6 +427,7 @@ oc get applications.argoproj.io -n openshift-gitops  || echo "No applications fo
 ```
 
 **Exibir recurso "workshop-gitops-vms-dev" em formato JSON**
+
 **Exemplo:** `oc get application <resource-name>dev -n <namespace> -o jsonpath='{.status.health.status}'  || echo "Application not found"`
 
 ```bash
@@ -419,6 +435,7 @@ oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.st
 ```
 
 **Exibir recurso "workshop-vms-prd" em formato JSON**
+
 **Exemplo:** `oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"`
 
 ```bash ignore-test
@@ -530,6 +547,7 @@ oc get apiservice | grep -v True
 ```
 
 **Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON**
+
 **Exemplo:** `oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text`
 
 ```bash
@@ -537,6 +555,7 @@ oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64
 ```
 
 **Exibir recurso "v1.packages.operators.coreos.com" em formato JSON**
+
 **Exemplo:** `oc get apiservice <service-name>.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text`
 
 ```bash
@@ -561,6 +580,7 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 ```
 
 **Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON**
+
 **Exemplo:** `oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text`
 
 ```bash

@@ -57,6 +57,7 @@ watch oc get co
 
 ### Status Detalhado
 **Exibir detalhes completos do cluster operator**
+
 **Exemplo:** `oc describe co <resource-name>`
 
 ```bash
@@ -64,6 +65,7 @@ oc describe co authentication
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
+
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'`
 
 ```bash
@@ -71,6 +73,7 @@ oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
+
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'`
 
 ```bash
@@ -78,6 +81,7 @@ oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")]
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
+
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.versions[0].version}'`
 
 ```bash
@@ -85,6 +89,7 @@ oc get co authentication -o jsonpath='{.status.versions[0].version}'
 ```
 
 **Exibir cluster operator "authentication" em formato JSON**
+
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.relatedObjects}'`
 
 ```bash
@@ -97,6 +102,7 @@ oc get co authentication -o jsonpath='{.status.relatedObjects}'
 
 ### Diagnosticar Problemas
 **Exibir cluster operator "authentication" em formato JSON**
+
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}`
 
 ```bash ignore-test
@@ -166,6 +172,7 @@ find . -name "*operator*" -type d
 
 ### Authentication Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -192,6 +199,7 @@ oc logs -n openshift-authentication-operator <pod-name>
 
 ### Ingress Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -211,6 +219,7 @@ oc get pods -n openshift-ingress
 ```
 
 **Exibir logs de todos os pods que correspondem ao label**
+
 **Exemplo:** `oc logs -n <namespace> -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default`
 
 ```bash
@@ -218,6 +227,7 @@ oc logs -n openshift-ingress -l ingresscontroller.operator.openshift.io/deployme
 ```
 
 **Exibir detalhes completos do recurso**
+
 **Exemplo:** `oc describe ingresscontroller default -n <namespace>`
 
 ```bash
@@ -226,6 +236,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 
 ### Network Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -258,6 +269,7 @@ oc logs -n openshift-network-operator <pod-name>
 
 ### DNS Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -284,6 +296,7 @@ oc logs -n openshift-dns <dns-pod>
 
 ### Image Registry Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -310,6 +323,7 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.s
 
 ### Storage Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -336,6 +350,7 @@ oc get sc
 
 ### Monitoring Operator
 **Status**
+
 **Exemplo:** `oc get co <resource-name>`
 
 ```bash
@@ -349,6 +364,7 @@ oc get pods -n openshift-monitoring
 ```
 
 **Exibir recurso "cluster-monitoring-config" em formato YAML**
+
 **Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
 
 ```bash ignore-test
@@ -422,6 +438,7 @@ oc get packagemanifests -n openshift-marketplace | grep odf-operator
 ```
 
 **Exibir detalhes completos do recurso**
+
 **Exemplo:** `oc describe packagemanifest <resource-name>app -n <namespace>`
 
 ```bash
@@ -453,6 +470,7 @@ oc get csv -n <namespace>
 
 ### Troubleshoot Operadores OLM
 **Exibir detalhes completos do recurso**
+
 **Exemplo:** `oc describe subscription -n <namespace>   local-storage-operator`
 
 ```bash

@@ -21,6 +21,7 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 
 ### Conectividade de Pod
 **Exibir recurso "my-pod" em formato JSON**
+
 **Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'`
 
 ```bash
@@ -66,6 +67,7 @@ oc get networkpolicy
 ```
 
 **Exibir detalhes completos do network policy**
+
 **Exemplo:** `oc describe networkpolicy <resource-name>`
 
 ```bash ignore-test
@@ -96,6 +98,7 @@ oc describe pod test-app | grep -i network
 
 ### Verificar Services
 **Listar todos os services do namespace atual**
+
 **Exemplo:** `oc get svc <service-name>`
 
 ```bash
@@ -103,6 +106,7 @@ oc get svc
 ```
 
 **Exibir detalhes completos do service**
+
 **Exemplo:** `oc describe svc <service-name>`
 
 ```bash
@@ -110,6 +114,7 @@ oc describe svc test-app
 ```
 
 **Exibir service "test-app" em formato JSON**
+
 **Exemplo:** `oc get svc <service-name> -o jsonpath='{.spec.clusterIP}'`
 
 ```bash
@@ -117,6 +122,7 @@ oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 ```
 
 **Exibir service "test-app" em formato JSON**
+
 **Exemplo:** `oc get svc <service-name> -o jsonpath='{.spec.ports}'`
 
 ```bash
@@ -137,6 +143,7 @@ oc get endpoints
 ```
 
 **Endpoints de service específico**
+
 **Exemplo:** `oc get endpoints <resource-name>`
 
 ```bash
@@ -144,6 +151,7 @@ oc get endpoints test-app
 ```
 
 **Exibir endpoints "test-app" em formato JSON**
+
 **Exemplo:** `oc get endpoints <resource-name>app -o jsonpath='{.subsets[*].addresses[*].ip}'`
 
 ```bash ignore-test
@@ -151,6 +159,7 @@ oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
 **Exibir service "test-app" em formato JSON**
+
 **Exemplo:** `oc get svc <service-name> -o jsonpath='{.spec.selector}'`
 
 ```bash ignore-test
@@ -159,6 +168,7 @@ oc get pods --selector=<label-do-service>
 ```
 
 **Exibir detalhes completos do service**
+
 **Exemplo:** `oc describe svc <service-name> | grep Selector`
 
 ```bash
@@ -178,6 +188,7 @@ oc get routes
 ```
 
 **Exibir detalhes completos do route**
+
 **Exemplo:** `oc describe route <route-name>>`
 
 ```bash
@@ -185,6 +196,7 @@ oc describe route test-app
 ```
 
 **Exibir route "test-app" em formato JSON**
+
 **Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.host}'`
 
 ```bash
@@ -198,6 +210,7 @@ curl -v https://<hostname-da-route>
 ```
 
 **Exibir route "test-app" em formato JSON**
+
 **Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.tls}'`
 
 ```bash
@@ -205,6 +218,7 @@ oc get route test-app -o jsonpath='{.spec.tls}'
 ```
 
 **Exibir route "test-app" em formato JSON**
+
 **Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.to.name}'`
 
 ```bash
@@ -225,6 +239,7 @@ oc get pods -n openshift-ingress
 ```
 
 **Exibir logs de todos os pods que correspondem ao label**
+
 **Exemplo:** `oc logs -n <namespace> -l app=router`
 
 ```bash
@@ -244,6 +259,7 @@ oc get ingresscontroller -n openshift-ingress-operator
 ```
 
 **Exibir detalhes completos do recurso**
+
 **Exemplo:** `oc describe ingresscontroller default -n <namespace>`
 
 ```bash
@@ -364,6 +380,7 @@ oc exec my-pod -- cat /etc/resolv.conf
 ```
 
 **Verificar DNS operator**
+
 **Exemplo:** `oc get clusteroperator <resource-name>`
 
 ```bash
@@ -384,6 +401,7 @@ oc get pods -n openshift-dns
 ```
 
 **Deletar o recurso especificado**
+
 **Exemplo:** `oc delete pod -n <namespace> --all`
 
 ```bash ignore-test
