@@ -18,13 +18,13 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 
 ### Básico
 ```bash
-# Listar services
+# Listar todos os services do namespace atual
 oc get services
 oc get svc
 ```
 
 ```bash
-# Descrever service
+# Exibir detalhes completos do service
 # oc describe svc <service-name>
 oc describe svc test-app
 ```
@@ -40,7 +40,7 @@ oc create service clusterip test-app --tcp=<porta>:<porta-destino>
 ```
 
 ```bash ignore-test
-# Deletar service
+# Deletar o service especificado
 # oc delete svc <service-name>
 oc delete svc test-app
 ```
@@ -56,13 +56,13 @@ oc get endpoints test-app
 
 ### Descrever Endpoints
 ```bash
-# Ver detalhes dos endpoints de um service
+# Exibir detalhes completos do endpoints
 # oc describe endpoints <resource-name>
 oc describe endpoints test-app
 ```
 
 ```bash
-# Em namespace específico
+# Exibir detalhes completos do endpoints
 # oc describe endpoints <resource-name>app -n <namespace>
 oc describe endpoints test-app -n development
 ```
@@ -79,7 +79,7 @@ oc describe endpoints test-app -n development
 
 ### Criar Routes
 ```bash ignore-test
-# Criar route a partir de service
+# Criar route para expor service externamente
 # oc expose service <service-name>
 oc expose service test-app
 ```
@@ -90,25 +90,25 @@ oc expose service test-app --hostname=<hostname>
 ```
 
 ```bash ignore-test
-# Com path específico
+# Criar route com path específico para o service
 # oc expose service <service-name> --path=/api
 oc expose service test-app --path=/api
 ```
 
 ```bash ignore-test
-# Criar route com TLS edge
+# Criar route com terminação TLS edge (TLS terminado no router)
 # oc create route <route-name> test-app --service=test-app
 oc create route edge test-app --service=test-app
 ```
 
 ```bash ignore-test
-# Route passthrough TLS
+# Criar route passthrough (TLS vai direto ao pod)
 # oc create route <route-name> test-app --service=test-app
 oc create route passthrough test-app --service=test-app
 ```
 
 ```bash ignore-test
-# Route reencrypt TLS
+# Criar route reencrypt (TLS terminado e re-encriptado)
 # oc create route <route-name> test-app --service=test-app
 oc create route reencrypt test-app --service=test-app
 ```
@@ -119,37 +119,37 @@ oc create route edge test-app --service=<svc> --cert=<cert-file> --key=<key-file
 ```
 
 ```bash
-# Listar routes
+# Listar todas as routes expostas no namespace
 oc get routes
 ```
 
 ```bash
-# Descrever route
+# Exibir detalhes completos do route
 # oc describe route <route-name>
 oc describe route test-app
 ```
 
 ```bash
-# Ver URL da route
+# Exibir route "test-app" em formato JSON
 # oc get route <route-name> -o jsonpath='{.spec.host}'
 oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
 ### Gerenciar Routes
 ```bash ignore-test
-# Editar route
+# Abrir editor para modificar recurso interativamente
 # oc edit route <route-name>
 oc edit route test-app
 ```
 
 ```bash ignore-test
-# Deletar route
+# Deletar o route especificado
 # oc delete route <route-name>
 oc delete route test-app
 ```
 
 ```bash
-# Ver routes em formato wide
+# Listar routes com informações detalhadas
 oc get routes -o wide
 ```
 

@@ -41,27 +41,27 @@ oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 
 ### Verificar Autenticação
 ```bash
-# Verificar usuário atual
+# Exibir o nome do usuário autenticado atualmente
 oc whoami
 ```
 
 ```bash
-# Verificar token de acesso
+# Exibir o token de autenticação do usuário atual
 oc whoami -t
 ```
 
 ```bash
-# Verificar contexto atual
+# Exibir o contexto atual do kubeconfig
 oc whoami --show-context
 ```
 
 ```bash
-# Verificar a URL da console
+# Exibir a URL da console web do cluster
 oc whoami --show-console
 ```
 
 ```bash
-# Verificar servidor conectado
+# Exibir a URL do servidor API conectado
 oc whoami --show-server
 ```
 
@@ -83,7 +83,7 @@ oc logout && rm -f ~/.kube/config
 
 ### Listar API Resources
 ```bash
-# Listar todos os recursos da API disponíveis
+# Listar todos os recursos da API disponíveis no cluster
 oc api-resources
 ```
 
@@ -104,7 +104,7 @@ oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 
 ### Listar API Versions
 ```bash
-# Listar todas as versões da API disponíveis
+# Listar todas as versões de API disponíveis
 oc api-versions
 ```
 
@@ -122,12 +122,12 @@ oc api-versions | grep -v "/"
 
 ### Versão e Informações
 ```bash
-# Verificar versão do oc
+# Exibir versão do cliente oc e do servidor OpenShift
 oc version
 ```
 
 ```bash
-# Verificar informações do cluster
+# Exibir informações básicas do cluster
 oc cluster-info
 ```
 
@@ -138,7 +138,7 @@ oc cluster-info dump
 
 ### Configuração
 ```bash
-# Exibir configuração atual
+# Exibir configuração atual do kubeconfig
 oc config view
 ```
 
@@ -148,7 +148,7 @@ oc config view --raw
 ```
 
 ```bash
-# Ver arquivo de configuração ~/.kube/config
+# Exibir conteúdo do arquivo de configuração do kubectl/oc
 cat ~/.kube/config
 ```
 
@@ -163,12 +163,12 @@ oc config set-context --current --namespace=development
 
 ### Listar e Gerenciar Contextos
 ```bash
-# Listar todos os contextos
+# Listar todos os contextos disponíveis
 oc config get-contexts
 ```
 
 ```bash
-# Ver contexto atual
+# Exibir o contexto atual do kubeconfig
 oc config current-context
 ```
 
@@ -258,3 +258,15 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 ---
 
 **Última atualização**: Outubro 2025
+
+
+```markdown
+**Ação:** Deletar recurso forçadamente (sem período de espera).
+
+* `--grace-period=0`: Define o período de espera para zero, forçando a remoção imediata.
+* `--force`: Força a deleção do recurso.
+```
+
+```bash
+oc delete pod my-pod --grace-period=0 --force
+```

@@ -31,12 +31,12 @@ oc new-app nginx
 ```
 
 ```bash ignore-test
-# Imagem de registry customizado
+# Criar nova aplicação a partir de imagem ou código fonte
 oc new-app myregistry.com/myapp:latest
 ```
 
 ```bash ignore-test
-# Com nome personalizado
+# Criar aplicação com nome customizado
 oc new-app nginx --name=meu-nginx
 ```
 
@@ -75,7 +75,7 @@ oc new-app mysql -e MYSQL_USER=user -e MYSQL_PASSWORD=pass
 
 ### A partir de Template
 ```bash
-# Listar templates disponíveis
+# Listar templates disponíveis no namespace openshift
 oc get templates -n openshift
 ```
 
@@ -85,7 +85,7 @@ oc new-app --template=<nome-do-template>
 ```
 
 ```bash ignore-test
-# Com parâmetros
+# Criar aplicação a partir de template
 oc new-app --template=mysql-persistent -p MYSQL_USER=admin
 ```
 
@@ -99,7 +99,7 @@ oc new-app <url-git> --strategy=source
 ```
 
 ```bash ignore-test
-# A partir de código local
+# Criar aplicação com nome customizado
 oc new-app . --name=test-app
 ```
 
@@ -109,27 +109,27 @@ oc new-app . --name=test-app
 
 ### Listar Recursos
 ```bash
-# Listar todas as aplicações
+# Listar todos os recursos principais do namespace
 oc get all
 ```
 
 ```bash
-# Listar recursos com labels
+# Listar recurso filtrados por label
 oc get all -l app=test-app
 ```
 
 ```bash
-# Listar apenas deployments
+# Listar todos os deployments do namespace
 oc get deployment
 ```
 
 ```bash
-# Listar services
+# Listar todos os services do namespace atual
 oc get svc
 ```
 
 ```bash
-# Listar routes
+# Listar todas as routes expostas no namespace
 oc get routes
 ```
 
@@ -139,7 +139,7 @@ oc get routes -n development
 ```
 
 ```bash
-# Listar ImageStreams
+# Listar todas as ImageStreams do projeto
 oc get is
 ```
 
@@ -150,36 +150,36 @@ oc get is -n development
 
 ### Deletar Aplicações
 ```bash ignore-test
-# Deletar aplicação e recursos relacionados
+# Deletar recurso que correspondem ao seletor de label
 oc delete all -l app=test-app
 ```
 
 ```bash ignore-test
-# Deletar por seletor
+# Deletar recurso que correspondem ao seletor de label
 oc delete all --selector app=test-app
 ```
 
 ```bash ignore-test
-# Deletar deployment específico
+# Deletar o recurso especificado
 # oc delete deployment <deployment-name>
 oc delete deployment test-app
 ```
 
 ### Expor Aplicação
 ```bash ignore-test
-# Expor service como route
+# Criar route para expor service externamente
 # oc expose service <service-name>
 oc expose service test-app
 ```
 
 ```bash ignore-test
-# Com hostname customizado
+# Criar route com hostname customizado para o service
 # oc expose service <service-name> --hostname=app.example.com
 oc expose service test-app --hostname=app.example.com
 ```
 
 ```bash
-# Com TLS
+# Criar route com terminação TLS edge (TLS terminado no router)
 # oc create route <route-name> --service=test-app
 oc create route edge --service=test-app
 ```
@@ -190,7 +190,7 @@ oc create route edge --service=test-app
 
 ### Status do Projeto
 ```bash
-# Ver status geral do projeto
+# Exibir visão geral dos recursos do projeto atual
 oc status
 ```
 
@@ -202,13 +202,13 @@ oc status -n development
 
 ### Descrever Recursos
 ```bash
-# Descrever deployment
+# Exibir detalhes completos do recurso
 # oc describe deployment <deployment-name>
 oc describe deployment test-app
 ```
 
 ```bash
-# Descrever deployment em namespace específico
+# Exibir detalhes completos do recurso
 # oc describe deployment <deployment-name> -n <namespace>
 oc describe deployment test-app -n development
 ```
@@ -219,26 +219,26 @@ oc describe deployment test-app -n development
 
 ### Atualizar Imagem do Deployment
 ```bash
-# Atualizar imagem de um container
+# Atualizar imagem do container no deployment/pod
 # oc set image <resource-name>/test-app httpd=httpd:2.4 -n <namespace>
 oc set image deployment/test-app httpd=httpd:2.4 -n development
 ```
 
 ```bash ignore-test
-# Atualizar múltiplos containers
+# Atualizar imagem do container no deployment/pod
 # oc set image <resource-name>/test-app container1=image1:tag container2=image2:tag
 oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ```
 
 ### Patch de Deployment
 ```bash
-# Aplicar patch usando merge
+# Aplicar merge patch ao recurso (mescla alterações)
 # oc patch deployment <deployment-name> -n <namespace> --type=merge -p '{"spec":{"replicas":3}}'
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"replicas":3}}'
 ```
 
 ```bash
-# Patch para atualizar imagem (JSON em uma linha)
+# Aplicar merge patch ao recurso (mescla alterações)
 # oc patch deployment <deployment-name> -n <namespace> --type=merge -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"httpd:latest"}]}}}}'
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"httpd:latest"}]}}}}'
 ```
@@ -249,18 +249,18 @@ oc patch deployment test-app -n development --type=merge -p '{"spec":{"template"
 
 ### Verificar Permissões
 ```bash
-# Verificar se pode criar deployments
+# Verificar se usuário tem permissão para executar ação específica
 oc auth can-i create deployments
 ```
 
 ```bash
-# Verificar em namespace específico
+# Verificar se usuário tem permissão para executar ação específica
 # oc auth can-i create deployments -n <namespace>
 oc auth can-i create deployments -n development
 ```
 
 ```bash
-# Verificar outras ações
+# Verificar se usuário tem permissão para executar ação específica
 # oc auth can-i delete pods -n <namespace>
 oc auth can-i delete pods -n development
 # oc auth can-i get secrets -n <namespace>
@@ -273,17 +273,19 @@ oc auth can-i get secrets -n development
 
 ### Wait para Deployment
 ```bash
-# Aguardar deployment estar disponível
+# Aguardar deployment ficar disponível
+# oc wait --for=condition=available deployment/<deployment-name>
 oc wait --for=condition=available deployment/test-app
 ```
 
 ```bash
-# Com timeout
+# Aguardar deployment ficar disponível
+# oc wait --for=condition=available --timeout=60s deployment/<deployment-name>
 oc wait --for=condition=available --timeout=60s deployment/test-app
 ```
 
 ```bash
-# Aguardar em namespace específico
+# Aguardar deployment ficar disponível
 # oc wait --for=condition=available --timeout=60s deployment/test-app -n <namespace>
 oc wait --for=condition=available --timeout=60s deployment/test-app -n development
 ```

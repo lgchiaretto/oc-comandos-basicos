@@ -22,7 +22,7 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 
 ### Velero - Backup Tool
 ```bash ignore-test
-# Instalar Velero Operator
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -43,7 +43,7 @@ oc get csv -n openshift-adp
 ```
 
 ```bash ignore-test
-# Configurar DataProtectionApplication
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
 kind: DataProtectionApplication
@@ -80,7 +80,7 @@ EOF
 
 ### Backup de PVCs
 ```bash ignore-test
-# Snapshot de PVC (se StorageClass suportar)
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
@@ -99,7 +99,7 @@ oc get volumesnapshot
 ```
 
 ```bash
-# Restore de snapshot
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -120,7 +120,7 @@ EOF
 
 ### Backup Manual de Dados em PVC
 ```bash ignore-test
-# Criar pod temporário para acessar PVC
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: Pod
@@ -142,22 +142,23 @@ EOF
 ```
 
 ```bash ignore-test
-# Aguardar pod ficar ready
+# Aguardar condição específica do recurso
+# oc wait --for=condition=ready pod/<pod-name>
 oc wait --for=condition=ready pod/backup-pod
 ```
 
 ```bash ignore-test
-# Tar dos dados
+# Executar comando dentro do pod especificado
 oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 ```
 
 ```bash ignore-test
-# Copiar backup
+# Copiar arquivo entre máquina local e pod
 oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 ```
 
 ```bash ignore-test
-# Limpeza
+# Deletar o recurso especificado
 # oc delete pod <resource-name>
 oc delete pod backup-pod
 ```
@@ -244,35 +245,35 @@ cd namespace-backup-myproject-*/
 ```
 
 ```bash ignore-test
-# 2. Criar namespace
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f namespace.yaml
 ```
 
 ```bash ignore-test
-# 3. Restore de secrets e configmaps primeiro
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f secrets.yaml
 oc apply -f configmaps.yaml
 ```
 
 ```bash ignore-test
-# 4. Restore de PVCs
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f /tmp/persistentvolumeclaims.yaml
 ```
 
 ```bash ignore-test
-# 5. Aguardar PVCs bound
+# Listar todos os Persistent Volume Claims do namespace
 oc get pvc
 ```
 
 ```bash ignore-test
-# 6. Restore de service accounts e RBAC
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f /tmp/serviceaccounts.yaml
 oc apply -f /tmp/roles.yaml
 oc apply -f /tmp/rolebindings.yaml
 ```
 
 ```bash ignore-test
-# 7. Restore de applications
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f /tmp/deployments.yaml
 oc apply -f /tmp/statefulsets.yaml
 oc apply -f /tmp/services.yaml
@@ -280,7 +281,7 @@ oc apply -f /tmp/routes.yaml
 ```
 
 ```bash ignore-test
-# 8. Verificar
+# Listar todos os recursos principais do namespace
 oc get all
 ```
 

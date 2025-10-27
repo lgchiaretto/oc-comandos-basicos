@@ -24,7 +24,7 @@ oc get templates
 ```
 
 ```bash
-# Templates do openshift namespace
+# Listar templates disponíveis no namespace openshift
 oc get templates -n openshift
 ```
 
@@ -45,7 +45,7 @@ oc get templates -n openshift | grep <keyword>
 
 ### Criar Template
 ```bash ignore-test
-# Template básico
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: template.openshift.io/v1
 kind: Template
@@ -89,7 +89,7 @@ EOF
 
 ### Template Completo
 ```bash ignore-test
-# Template com múltiplos recursos
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: template.openshift.io/v1
 kind: Template
@@ -226,7 +226,7 @@ oc process -n openshift <template-name> -p PARAM=value | oc create -f -
 ```
 
 ```bash ignore-test
-# De arquivo local
+# Criar novo recurso
 oc process -f template.yaml -p APP_NAME=test-app | oc create -f -
 ```
 
@@ -338,31 +338,31 @@ oc get pod test-app -o yaml > /tmp/pod.yaml
 ```
 
 ```bash
-# Export deployment
+# Exibir recurso "test-app" em formato YAML
 # oc get deployment <deployment-name> -o yaml > /tmp/deployment.yaml
 oc get deployment test-app -o yaml > /tmp/deployment.yaml
 ```
 
 ```bash
-# Export service
-# oc get svc <service-name> -o yaml > /tmp/service.yaml> 
+# Exibir service "test-app" em formato YAML
+# oc get svc <service-name> -o yaml > /tmp/service.yaml>
 oc get svc test-app -o yaml > /tmp/service.yaml
 ```
 
 ```bash
-# Export route
+# Exibir route "test-app" em formato YAML
 # oc get route <route-name> -o yaml > /tmp/route.yaml
 oc get route test-app -o yaml > /tmp/route.yaml
 ```
 
 ```bash
-# Export todos os recursos de um tipo
+# Exibir deployments em formato YAML
 oc get deployments -o yaml > /tmp/all-deployments.yaml
 ```
 
 ### Criar Template de Recursos Existentes
 ```bash
-# Export como template
+# Listar recurso filtrados por label
 oc get deployment,svc,route -l app=test-app -o yaml
 ```
 ```bash ignore-test
@@ -382,7 +382,7 @@ EOF
 ```
 
 ```bash
-# Adicionar recursos exportados
+# Exibir recurso "test-app" em formato YAML
 # oc get deployment <deployment-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 oc get deployment test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 echo "---" >> /tmp/app-template.yaml

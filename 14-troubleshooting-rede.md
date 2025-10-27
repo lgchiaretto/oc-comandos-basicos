@@ -21,7 +21,7 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 
 ### Conectividade de Pod
 ```bash
-# IP do pod
+# Exibir recurso "my-pod" em formato JSON
 # oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
@@ -43,29 +43,29 @@ oc exec my-pod -- nslookup <nome-service>
 ```
 
 ```bash
-# Verificar rotas de rede
+# Executar comando dentro do pod especificado
 oc exec my-pod -- ip route
 ```
 
 ```bash
-# Interfaces de rede
+# Executar comando dentro do pod especificado
 oc exec my-pod -- ip addr
 ```
 
 ### Network Policies
 ```bash
-# Listar network policies
+# Listar políticas de rede configuradas no namespace
 oc get networkpolicy
 ```
 
 ```bash ignore-test
-# Descrever policy
+# Exibir detalhes completos do network policy
 # oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
 ```bash
-# Ver todas as policies do namespace
+# Exibir network policy em formato YAML
 oc get networkpolicy -o yaml
 ```
 
@@ -87,24 +87,25 @@ oc describe pod test-app | grep -i network
 
 ### Verificar Services
 ```bash
-# Listar services
+# Listar todos os services do namespace atual
+# oc get svc <service-name>
 oc get svc
 ```
 
 ```bash
-# Detalhes do service
+# Exibir detalhes completos do service
 # oc describe svc <service-name>
 oc describe svc test-app
 ```
 
 ```bash
-# Ver ClusterIP
+# Exibir service "test-app" em formato JSON
 # oc get svc <service-name> -o jsonpath='{.spec.clusterIP}'
 oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 ```
 
 ```bash
-# Ver portas
+# Exibir service "test-app" em formato JSON
 # oc get svc <service-name> -o jsonpath='{.spec.ports}'
 oc get svc test-app -o jsonpath='{.spec.ports}'
 ```
@@ -127,20 +128,20 @@ oc get endpoints test-app
 ```
 
 ```bash ignore-test
-# Verificar se endpoints estão vazios
+# Exibir endpoints "test-app" em formato JSON
 # oc get endpoints <resource-name>app -o jsonpath='{.subsets[*].addresses[*].ip}'
 oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
 ```bash ignore-test
-# Comparar labels do service com pods
+# Exibir service "test-app" em formato JSON
 # oc get svc <service-name> -o jsonpath='{.spec.selector}'
 oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
 ```
 
 ```bash
-# Se não há endpoints, verificar labels
+# Exibir detalhes completos do service
 # oc describe svc <service-name> | grep Selector
 oc describe svc test-app | grep Selector
 oc get pods --show-labels
@@ -152,18 +153,18 @@ oc get pods --show-labels
 
 ### Troubleshoot Routes
 ```bash
-# Listar routes
+# Listar todas as routes expostas no namespace
 oc get routes
 ```
 
 ```bash
-# Detalhes da route
+# Exibir detalhes completos do route
 # oc describe route <route-name>>
 oc describe route test-app
 ```
 
 ```bash
-# Ver hostname da route
+# Exibir route "test-app" em formato JSON
 # oc get route <route-name> -o jsonpath='{.spec.host}'
 oc get route test-app -o jsonpath='{.spec.host}'
 ```
@@ -174,13 +175,13 @@ curl -v https://<hostname-da-route>
 ```
 
 ```bash
-# Ver TLS da route
+# Exibir route "test-app" em formato JSON
 # oc get route <route-name> -o jsonpath='{.spec.tls}'
 oc get route test-app -o jsonpath='{.spec.tls}'
 ```
 
 ```bash
-# Verificar se route aponta para service correto
+# Exibir route "test-app" em formato JSON
 # oc get route <route-name> -o jsonpath='{.spec.to.name}'
 oc get route test-app -o jsonpath='{.spec.to.name}'
 ```
@@ -197,13 +198,13 @@ oc get pods -n openshift-ingress
 ```
 
 ```bash
-# Logs do router
+# Exibir logs de todos os pods que correspondem ao label
 # oc logs -n <namespace> -l app=router
 oc logs -n openshift-ingress -l app=router
 ```
 
 ```bash
-# Verificar domínio padrão
+# Exibir recurso em formato JSON
 oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
 ```
 
@@ -213,7 +214,7 @@ oc get ingresscontroller -n openshift-ingress-operator
 ```
 
 ```bash
-# Descrever IngressController
+# Exibir detalhes completos do recurso
 # oc describe ingresscontroller default -n <namespace>
 oc describe ingresscontroller default -n openshift-ingress-operator
 ```
@@ -224,12 +225,12 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 
 ### Verificar Rede do Cluster
 ```bash
-# Ver tipo de rede (SDN ou OVN)
+# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
 ```bash
-# Ver network config
+# Exibir recurso em formato YAML
 oc get network.config.openshift.io cluster -o yaml
 ```
 
@@ -304,14 +305,14 @@ oc logs -n openshift-dns <dns-pod-name>
 ```
 
 ```bash ignore-test
-# Testar DNS de dentro do pod
+# Executar comando dentro do pod especificado
 oc exec my-pod -- nslookup kubernetes.default
 oc exec my-pod -- nslookup <service-name>
 oc exec my-pod -- nslookup <service-name>.<namespace>.svc.cluster.local
 ```
 
 ```bash
-# Ver configuração DNS do pod
+# Executar comando dentro do pod especificado
 oc exec my-pod -- cat /etc/resolv.conf
 ```
 
@@ -322,7 +323,7 @@ oc get clusteroperator dns
 ```
 
 ```bash
-# Configuração DNS
+# Exibir recurso em formato YAML
 oc get dns.operator/default -o yaml
 ```
 
@@ -333,7 +334,7 @@ oc get pods -n openshift-dns
 ```
 
 ```bash ignore-test
-# Restart DNS pods se necessário
+# Deletar o recurso especificado
 # oc delete pod -n <namespace> --all
 oc delete pod -n openshift-dns --all
 ```
@@ -344,12 +345,12 @@ oc get svc -n openshift-dns
 ```
 
 ```bash
-# Testar resolução externa
+# Executar comando dentro do pod especificado
 oc exec my-pod -- nslookup redhat.com
 ```
 
 ```bash
-# Testar resolução interna
+# Executar comando dentro do pod especificado
 oc exec my-pod -- nslookup kubernetes.default.svc.cluster.local
 ```
 
@@ -359,12 +360,12 @@ oc exec my-pod -- nslookup kubernetes.default.svc.cluster.local
 
 ### Pod de Debug de Rede
 ```bash ignore-test
-# Criar pod com ferramentas de rede
+# Criar e executar pod
 oc run netshoot --rm -i --tty --image quay.io/chiaretto/netshoot -- /bin/bash
 ```
 
 ```bash ignore-test
-# Ou usando imagem Red Hat
+# Criar e executar pod
 oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bin/bash
 ```
 

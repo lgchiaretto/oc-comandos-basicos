@@ -24,7 +24,7 @@ oc get route -n openshift-image-registry
 ```
 
 ```bash
-# Ver info do registry
+# Exibir recurso em formato YAML
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 ```
 
@@ -36,7 +36,7 @@ oc get clusteroperator image-registry
 
 ### Configurar Registry
 ```bash
-# Expor registry externamente
+# Aplicar modificação parcial ao recurso usando patch
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"defaultRoute":true}}'
 ```
 
@@ -46,7 +46,7 @@ oc get route -n openshift-image-registry
 ```
 
 ```bash
-# Configurar storage para registry
+# Aplicar modificação parcial ao recurso usando patch
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"storage":{"pvc":{"claim":""}}}}'
 ```
 
@@ -90,7 +90,7 @@ docker pull <registry-interno>/<projeto>/test-app:<tag>
 ```
 
 ```bash
-# Ver imagens disponíveis em ImageStream
+# Exibir imagestream "s2i-chiaretto" em formato YAML
 # oc get is <imagestream-name> -o yaml
 oc get is s2i-chiaretto -o yaml
 ```
@@ -126,7 +126,7 @@ EOF
 ```
 
 ```bash
-# Ver configuração de mirror
+# Exibir recurso em formato YAML
 oc get imagecontentsourcepolicy -o yaml
 ```
 
@@ -163,12 +163,12 @@ oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 ```
 
 ```bash
-# Ver configuração de pruner automático
+# Exibir recurso em formato YAML
 oc get imagepruner/cluster -o yaml
 ```
 
 ```bash
-# Configurar pruner automático
+# Aplicar modificação parcial ao recurso usando patch
 oc patch imagepruners.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"schedule":"0 0 * * *","suspend":false,"keepTagRevisions":3}}'
 ```
 

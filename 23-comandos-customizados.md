@@ -24,17 +24,17 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 
 ### CSR Management com AWK
 ```bash ignore-test
-# Aprovar CSRs pendentes usando awk
+# Aprovar Certificate Signing Request (CSR)
 oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
 ```
 
 ```bash ignore-test
-# Aprovar CSRs não aprovados
+# Aprovar Certificate Signing Request (CSR)
 oc adm certificate approve $(oc get csr | grep -v -E "Approved|NAME" | awk '{print $1}')
 ```
 
 ```bash ignore-test
-# Aprovar apenas CSRs específicos
+# Aprovar Certificate Signing Request (CSR)
 oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
 ```
 
@@ -45,17 +45,17 @@ oc get co --no-headers | awk '{print $1,$3,$4,$5}'
 ```
 
 ```bash
-# Extrair nomes e IPs dos nodes
+# Listar nodes com informações detalhadas
 oc get nodes -o wide --no-headers | awk '{print $1, $6}'
 ```
 
 ```bash
-# Listar pods e seus nodes
+# Listar pods com informações detalhadas
 oc get pods -o wide --no-headers | awk '{print $1, $7}'
 ```
 
 ```bash
-# Contar pods por node
+# Listar pods de todos os namespaces do cluster
 oc get pods -o wide -A --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
@@ -80,17 +80,17 @@ oc adm top pods -A --no-headers | awk '{print $2, $4}' | sort -k2 -h
 
 ### Builds com AWK
 ```bash
-# Gerar comandos describe para todos os builds
+# Listar build de todos os namespaces do cluster
 oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}'
 ```
 
 ```bash
-# Executar describe em todos os builds e filtrar imagens
+# Listar build de todos os namespaces do cluster
 oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:"
 ```
 
 ```bash
-# Salvar resultado em arquivo
+# Listar build de todos os namespaces do cluster
 oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:" | tee /tmp/build-images.txt
 ```
 
@@ -106,98 +106,98 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 
 ### Análise de Cluster Operators
 ```bash ignore-test
-# Ver status detalhado dos cluster operators
+# Exibir cluster operators em formato JSON
 oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.conditions[] | select(.type=="Progressing").status), (.status.conditions[] | select(.type=="Degraded").status), (.status.conditions[] | select(.type=="Degraded").message)] | @tsv'
 ```
 
 ```bash
-# Listar operators com problemas
+# Exibir cluster operator em formato JSON
 oc get clusteroperator/operator-lifecycle-manager-packageserver -o json | jq
 ```
 
 ```bash ignore-test
-# Filtrar operators degradados
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
 ### Análise de Pods
 ```bash ignore-test
-# Encontrar pods com OOMKilled
+# Exibir pods em formato JSON
 oc get pods -o json | jq '.items[] | select(.status.containerStatuses[]?.lastState.terminated.reason=="OOMKilled") | .metadata.name'
 ```
 
 ```bash ignore-test
-# Ver recursos de todos os pods
+# Exibir pods em formato JSON
 oc get pods -o json | jq '.items[] | {name: .metadata.name, cpu: .spec.containers[].resources.requests.cpu, memory: .spec.containers[].resources.requests.memory}'
 ```
 
 ```bash ignore-test
-# Listar pods por fase
+# Exibir pods em formato JSON
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
 ```
 
 ```bash ignore-test
-# Ver imagens de todos os containers
+# Exibir pods em formato JSON
 oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ```
 
 ### Análise de Applications (ArgoCD)
 ```bash
-# Ver status de sync do ArgoCD app
+# Exibir recurso "workshop-vms-prd" em formato JSON
 # oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions}' | jq .
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions}' | jq .
 ```
 
 ```bash
-# Ver sync policy
+# Exibir recurso "workshop-gitops-vms-hml" em formato JSON
 # oc get application <resource-name>hml -n <namespace> -o jsonpath='{.spec.syncPolicy}' | jq
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.spec.syncPolicy}' | jq
 ```
 
 ```bash ignore-test
-# Listar recursos de uma aplicação
+# Exibir recurso "workshop-vms-dev" em formato JSON
 # oc get application <resource-name>dev -n <namespace> -o json | jq '.status.resources[] | select(.kind == "Pod")'
 oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.resources[] | select(.kind == "Pod")'
 ```
 
 ### Análise de ClusterLogForwarder
 ```bash ignore-test
-# Ver condições do log forwarder
+# Exibir recurso "instance" em formato JSON
 # oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 ```
 
 ```bash
-# Ver filter conditions
+# Exibir recurso "instance" em formato JSON
 # oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.filterConditions}' | jq '.'
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.filterConditions}' | jq '.'
 ```
 
 ### CSR com JQ
 ```bash ignore-test
-# Listar CSRs com status vazio e aprovar
+# Aprovar Certificate Signing Request (CSR)
 oc get csr -ojson | jq -r '.items[] | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
 ```bash ignore-test
-# Ver detalhes de CSRs pendentes
+# Exibir certificate signing request em formato JSON
 oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: .metadata.name, user: .spec.username}'
 ```
 
 ### Análise de Secrets
 ```bash
-# Extrair CA do secret oauth
+# Exibir recurso em formato JSON
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d
 ```
 
 ```bash
-# Salvar CA bundle em arquivo
+# Exibir recurso em formato JSON
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/bundle-ca.crt
 ```
 
 ### Must-Gather Dinâmico com JQ
 ```bash ignore-test
-# Must-gather com detecção automática de operators
+# Coletar dados de diagnóstico completo do cluster
 oc adm must-gather \
   --image-stream=openshift/must-gather \
   `$(oc get ns | grep -q openshift-logging) && \
@@ -214,12 +214,12 @@ oc adm must-gather \
 
 ### Filtros Complexos
 ```bash
-# Pods que não estão Running ou Completed
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ```bash
-# Ver apenas pods com erro
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff"
 ```
 
@@ -240,60 +240,60 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 
 ### Análise de Configurações
 ```bash
-# Ver limites de recursos
+# Listar recurso de todos os namespaces do cluster
 oc get all -o yaml | grep -A5 limits
 ```
 
 ```bash
-# Buscar configurações de registry
+# Listar recurso de todos os namespaces do cluster
 oc get all -A | grep redhat-operator
 ```
 
 ```bash
-# Ver configurações de métricas
+# Listar recurso de todos os namespaces do cluster
 oc get all -A | grep metrics
 ```
 
 ```bash
-# Buscar referências a portas
+# Exibir recurso em formato YAML
 oc get all -o yaml | grep 5000
 ```
 
 ### Busca em AdminNetworkPolicy
 ```bash
-# Ver regras de ingress
+# Listar recurso de todos os namespaces do cluster
 # oc get adminnetworkpolicy <resource-name>communication -o yaml | grep -A 30 "ingress:" | head -40
 oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 30 "ingress:" | head -40
 ```
 
 ### Análise de ArgoCD
 ```bash ignore-test
-# Ver source da aplicação
+# Listar recurso de todos os namespaces do cluster
 # oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 10 source
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
 ```
 
 ```bash ignore-test
-# Ver destination
+# Listar recurso de todos os namespaces do cluster
 # oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 5 destination
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
 ```
 
 ```bash ignore-test
-# Ver sync policy
+# Listar recurso de todos os namespaces do cluster
 # oc get application <resource-name>hml -n <namespace> -o yaml | grep -A 5 -B 5 sync
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A 5 -B 5 sync
 ```
 
 ```bash ignore-test
-# Ver mensagens de erro
+# Listar recurso de todos os namespaces do cluster
 # oc get application <resource-name>dev -n <namespace> -o yaml | grep -A 20 -B 5 "message"
 oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 5 "message"
 ```
 
 ### Filtros em CatalogSource
 ```bash
-# Ver status do catalog source
+# Listar recurso de todos os namespaces do cluster
 # oc get catalogsource <resource-name>operators -n <namespace> -o yaml | grep -A 10 status:
 oc get catalogsource certified-operators -n openshift-marketplace -o yaml | grep -A 10 status:
 ```
@@ -309,42 +309,42 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 
 ### Análise de API Requests
 ```bash ignore-test
-# Ver API requests com formatação
+# Exibir recurso "ingresses.v1beta1.extensions" em formato JSON
 # oc get apirequestcounts <resource-name>.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 ```bash ignore-test
-# Para networking ingresses
+# Exibir recurso "ingresses.v1beta1.networking.k8s.io" em formato JSON
 # oc get apirequestcounts <resource-name>.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 ```bash ignore-test
-# Para roles RBAC
+# Exibir recurso "roles.v1beta1.rbac.authorization.k8s.io" em formato JSON
 # oc get apirequestcounts <resource-name>.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
 ### Análise de ClusterOperators com Tabela
 ```bash ignore-test
-# Criar tabela formatada de cluster operators
+# Exibir cluster operators em formato JSON
 oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .status.conditions[?(@.type=="Progressing")]}{.status}{"\t"}{end}{range .status.conditions[?(@.type=="Degraded")]}{.status}{"\t"}{.message}{"\n"}{end}{end}' | column -t -s $'\t'
 ```
 
 ### Exportar Applications ArgoCD
 ```bash
-# Exportar applications sem metadados desnecessários
+# Listar recurso de todos os namespaces do cluster
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d'
 ```
 
 ```bash
-# Exportar e salvar com timestamp
+# Listar recurso de todos os namespaces do cluster
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d' > /tmp/argocd-apps-$(date +'%d%m%y_%H%M%S').yaml
 ```
 
 ```bash
-# Exportar sem status
+# Listar recurso de todos os namespaces do cluster
 oc get application -A -o yaml | sed '/status:/d'
 ```
 
@@ -356,13 +356,13 @@ oc get applications.argoproj.io -n openshift-gitops  || echo "No applications fo
 ```
 
 ```bash
-# Verificar health status com fallback
+# Exibir recurso "workshop-gitops-vms-dev" em formato JSON
 # oc get application <resource-name>dev -n <namespace> -o jsonpath='{.status.health.status}'  || echo "Application not found"
 oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}'  || echo "Application not found"
 ```
 
 ```bash ignore-test
-# Ver erro condition com fallback
+# Exibir recurso "workshop-vms-prd" em formato JSON
 # oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"
 ```
@@ -381,7 +381,7 @@ done
 ```
 
 ```bash ignore-test
-# Coletar logs do pods com erro
+# Exibir recurso em formato JSON
 for pod in $(oc get pods -o jsonpath="{range .items[?(@.status.containerStatuses[*].state.waiting.reason=='CrashLoopBackOff')]}{.metadata.name}{'\n'}{end}"); do
   echo "=== $pod ===" >> /tmp/error-logs.txt
   oc logs $pod --previous >> /tmp/error-logs.txt
@@ -441,17 +441,17 @@ done
 
 ### Status Completo
 ```bash
-# Ver todos os operators e suas condições
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.conditions[] | select(.type=="Available").status), Progressing=\(.status.conditions[] | select(.type=="Progressing").status), Degraded=\(.status.conditions[] | select(.type=="Degraded").status)"'
 ```
 
 ```bash
-# Operators com problemas detalhados
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'
 ```
 
 ```bash
-# Ver versões dos operators
+# Exibir cluster operator em formato JSON
 oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[0].version}{"\n"}{end}' | column -t
 ```
 
@@ -462,13 +462,13 @@ oc get apiservice | grep -v True
 ```
 
 ```bash
-# Ver certificados de apiservice
+# Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON
 # oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
 ```bash
-# Análise completa de apiservice
+# Exibir recurso "v1.packages.operators.coreos.com" em formato JSON
 # oc get apiservice <service-name>.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text
 oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text
 ```
@@ -489,13 +489,13 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 ```
 
 ```bash
-# Verificar certificado de apiservice
+# Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON
 # oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
 ```bash
-# Extrair bundle CA do OAuth
+# Exibir recurso em formato JSON
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/oauth-ca-bundle.crt
 ```
 
@@ -510,18 +510,18 @@ oc adm top pods -A --no-headers | sort -k3 -nr | head -10
 ```
 
 ```bash
-# Ver nodes com mais pods
+# Listar pods de todos os namespaces do cluster
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c | sort -nr
 ```
 
 ```bash
-# Contar recursos por namespace
+# Listar recurso de todos os namespaces do cluster
 oc get all -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```
 
 ### Aliases Úteis para Scripts
 ```bash ignore-test
-# Adicionar ao ~/.bashrc
+# Listar recurso de todos os namespaces do cluster
 alias ocpods='oc get pods -A | grep -E -v "Running|Completed"'
 alias occo='oc get co | grep -v "True.*False.*False"'
 alias occsrfix='oc get csr -o name | xargs oc adm certificate approve'

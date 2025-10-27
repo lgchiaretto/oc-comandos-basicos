@@ -18,7 +18,7 @@ Este documento contém comandos para gerenciar deployments, scaling e rollouts n
 
 ### Manual
 ```bash
-# Escalar deployment manualmente para 3
+# Ajustar número de réplicas do deployment/replicaset
 # oc scale deployment <deployment-name> --replicas=3
 oc scale deployment test-app --replicas=3
 ```
@@ -30,24 +30,24 @@ oc scale dc <nome-do-dc> --replicas=<numero>
 
 ### Autoscaling (HPA)
 ```bash
-# Criar Horizontal Pod Autoscaler
+# Criar Horizontal Pod Autoscaler (HPA) para escalar automaticamente
 # oc autoscale deployment <deployment-name> --min=2 --max=10 --cpu-percent=80
 oc autoscale deployment test-app --min=2 --max=10 --cpu-percent=80
 ```
 
 ```bash
-# Ver autoscalers
+# Listar Horizontal Pod Autoscalers configurados
 oc get hpa
 ```
 
 ```bash
-# Descrever HPA
+# Exibir detalhes completos do horizontal pod autoscaler
 # oc describe hpa <resource-name>
 oc describe hpa test-app
 ```
 
 ```bash
-# Deletar autoscaler
+# Deletar o horizontal pod autoscaler especificado
 # oc delete hpa <resource-name>
 oc delete hpa test-app
 ```
@@ -57,45 +57,45 @@ oc delete hpa test-app
 
 ### Atualizar Imagem
 ```bash
-# Atualizar imagem do deployment (deployment/deploy-name container-name=image)
+# Atualizar imagem do container no deployment/pod
 # oc set image <resource-name>/test-app httpd=httpd:2.4
 oc set image deployment/test-app httpd=httpd:2.4
 ```
 
 ```bash
-# Ver histórico de rollouts
+# Exibir histórico de revisões do deployment
 # oc rollout history <resource-name>/test-app
 oc rollout history deployment/test-app
 ```
 
 ```bash
-# Ver status do rollout
+# Verificar status do rollout em andamento
 # oc rollout status <resource-name>/test-app
 oc rollout status deployment/test-app
 ```
 
 ### Pausar e Retomar
 ```bash
-# Pausar rollout
+# Pausar rollout do deployment (impede novas atualizações)
 # oc rollout pause <resource-name>/test-app
 oc rollout pause deployment/test-app
 ```
 
 ```bash
-# Retomar rollout
+# Retomar rollout pausado do deployment
 # oc rollout resume <resource-name>/test-app
 oc rollout resume deployment/test-app
 ```
 
 ```bash
-# Reiniciar deployment (recrear pods)
+# Reiniciar deployment (recria todos os pods)
 # oc rollout restart <resource-name>/test-app
 oc rollout restart deployment/test-app
 ```
 
 ### Rollback
 ```bash
-# Fazer rollback para revisão anterior
+# Fazer rollback para revisão anterior do deployment
 # oc rollout undo <resource-name>/test-app
 oc rollout undo deployment/test-app
 ```
@@ -107,7 +107,7 @@ oc rollout undo deployment/test-app --to-revision=1
 ```
 
 ```bash
-# Ver detalhes de uma revisão
+# Exibir detalhes de revisão específica
 # oc rollout history <resource-name>/test-app --revision=3
 oc rollout history deployment/test-app --revision=3
 ```
@@ -117,7 +117,7 @@ oc rollout history deployment/test-app --revision=3
 ## ReplicaSets
 
 ```bash
-# Listar replicasets
+# Listar todos os ReplicaSets do namespace
 oc get replicasets
 oc get rs
 ```
@@ -128,7 +128,7 @@ oc describe rs <nome-do-rs>
 ```
 
 ```bash
-# Ver replica sets de um deployment
+# Listar replicaset filtrados por label
 oc get rs -l app=test-app
 ```
 

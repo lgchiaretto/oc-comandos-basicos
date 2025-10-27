@@ -19,22 +19,22 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 
 ### Coletar Dados do Cluster
 ```bash ignore-test
-# Must-gather padrão (coleta completa dos componentes padrões do OpenShift)
+# Coletar dados de diagnóstico completo do cluster
 oc adm must-gather
 ```
 
 ```bash ignore-test
-# Salvar em diretório específico
+# Coletar dados de diagnóstico em diretório específico
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
 ```bash ignore-test
-# Ver progresso
+# Coletar dados de diagnóstico completo do cluster
 oc adm must-gather -v=4
 ```
 
 ```bash ignore-test
-# Salvar arquivos em um diretório específico
+# Coletar dados de diagnóstico em diretório específico
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
@@ -45,7 +45,7 @@ oc get pods -n openshift-must-gather-*
 
 ### Coleta por Tempo
 ```bash ignore-test
-# Coletar logs das últimas 2 horas
+# Coletar logs a partir de período específico
 oc adm must-gather --since 2h
 ```
 
@@ -74,18 +74,17 @@ oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 ```
 
 ```bash ignore-test
-# Captura dado de debugging para todos os
-# os projetos dos cluster operators
+# Coletar informações de debug de todos os cluster operators
 oc adm inspect clusteroperators --dest-dir=/tmp/inspect
 ```
 
 ```bash ignore-test
-# Inspect de nós
+# Coletar informações de debug de todos os nodes
 oc adm inspect nodes --dest-dir=/tmp/inspect
 ```
 
 ```bash ignore-test
-# Inspect de recurso específico
+# Inspecionar e coletar informações de recursos específicos
 # oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect
 oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
 ```
@@ -97,7 +96,7 @@ oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 
 ### Múltiplos Recursos
 ```bash ignore-test
-# Inspect de vários recursos
+# Inspecionar e coletar informações de recursos específicos
 oc adm inspect \
   clusteroperators \
   nodes \
@@ -106,7 +105,7 @@ oc adm inspect \
 ```
 
 ```bash ignore-test
-# Inspect all-namespaces
+# Inspecionar e coletar informações de recursos específicos
 oc adm inspect ns -A --dest-dir=/tmp/inspect
 ```
 
@@ -116,29 +115,29 @@ oc adm inspect ns -A --dest-dir=/tmp/inspect
 
 ### Verificações Básicas
 ```bash
-# Status geral do cluster
+# Listar status de todos os cluster operators
 oc get clusteroperators
 oc get nodes
 oc get clusterversion
 ```
 
 ```bash
-# Pods com problema
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
 ```
 
 ```bash ignore-test
-# Pods recentemente reiniciados
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 ```
 
 ```bash
-# Ver últimos eventos de erro
+# Listar eventos de todos os namespaces do cluster
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 ```
 
 ```bash ignore-test
-# Nodes com problemas
+# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 

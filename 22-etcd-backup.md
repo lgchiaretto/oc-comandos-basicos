@@ -30,7 +30,7 @@ oc get pods -n openshift-etcd
 ```
 
 ```bash
-# Ver etcd members
+# Listar pods com informações detalhadas
 oc get pods -n openshift-etcd -l app=etcd -o wide
 ```
 
@@ -41,7 +41,7 @@ oc get clusteroperator etcd
 ```
 
 ```bash
-# Descrever etcd operator
+# Exibir detalhes completos do cluster operator
 # oc describe co <resource-name>
 oc describe co etcd
 ```
@@ -52,7 +52,7 @@ oc logs -n openshift-etcd <etcd-pod-name>
 ```
 
 ```bash ignore-test
-# Pegar o log do pod etcd-0
+# Listar recurso filtrados por label
 oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
@@ -63,7 +63,7 @@ oc logs -n openshift-etcd-operator <etcd-operator-pod>
 
 ### Etcd Health Check
 ```bash ignore-test
-# Executar dentro de pod etcd
+# Listar recurso filtrados por label
 oc rsh -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
@@ -75,17 +75,17 @@ etcdctl member list -w table
 ```
 
 ```bash ignore-test
-# 'etcdctl endpoint status --cluster -w table' executado diretamente no pod
+# Listar recurso filtrados por label
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl endpoint status --cluster -w table
 ```
 
 ```bash ignore-test
-# 'etcdctl member list -w table' executado diretamente no pod
+# Listar recurso filtrados por label
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
 ```
 
 ```bash ignore-test
-# Verificar alarmes
+# Listar recurso filtrados por label
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl alarm list
 ```
 
@@ -141,7 +141,7 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 # Sempre consulte documentação oficial antes de fazer restore
 # Para rodar o restore você obrigatoriamente precisa ter acesso a um dos 
 # masters seja por SSH ou 'oc debug'
-# Para restaurar um backup do etcd siga o processo descrito na documentação oficial 
+# Para restaurar um backup do etcd siga o processo descrito na documentação oficial
 ```
 
 ### Limpar Alarmes

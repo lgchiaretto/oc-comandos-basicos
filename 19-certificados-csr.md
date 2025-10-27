@@ -19,7 +19,7 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 
 ### Visualizar CSRs
 ```bash
-# Listar todos os CSRs
+# Listar Certificate Signing Requests pendentes
 oc get csr
 ```
 
@@ -29,7 +29,7 @@ oc get csr | grep Pending
 ```
 
 ```bash
-# Com mais detalhes
+# Listar certificate signing request com informações detalhadas
 oc get csr -o wide
 ```
 
@@ -50,17 +50,17 @@ oc adm certificate approve <csr-name>
 ```
 
 ```bash ignore-test
-# Aprovar todos os CSRs pendentes (CUIDADO!)
+# Aprovar Certificate Signing Request (CSR)
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ```bash ignore-test
-# Aprovar apenas CSRs de nodes
+# Exibir certificate signing request em formato JSON
 oc get csr -o json | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
 ```
 
 ```bash ignore-test
-# Aprovar CSRs específicos de worker nodes
+# Exibir certificate signing request em formato JSON
 oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:node:worker")) | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
@@ -77,17 +77,17 @@ oc delete csr <csr-name>
 
 ### Monitorar CSRs
 ```bash
-# Watch CSRs
+# Listar Certificate Signing Requests pendentes
 oc get csr
 ```
 
 ```bash
-# Ver CSRs criados nas últimas horas
+# Listar certificate signing request ordenados por campo específico
 oc get csr --sort-by='.metadata.creationTimestamp'
 ```
 
 ```bash ignore-test
-# Count de CSRs por status
+# Exibir certificate signing request em formato JSON
 oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | uniq -c
 ```
 
@@ -123,13 +123,13 @@ oc get secret -n openshift-ingress
 ```
 
 ```bash
-# Router default certificate
+# Exibir secret "apps-cert" em formato YAML
 # oc get secret <secret-name> -n <namespace> -o yaml
 oc get secret apps-cert -n openshift-ingress -o yaml
 ```
 
 ```bash
-# Ver validade do certificado default
+# Exibir secret "apps-cert" em formato JSON
 # oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
@@ -146,7 +146,7 @@ oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p
 
 ### Service Serving Certificates
 ```bash
-# Secrets de service serving
+# Listar recurso filtrados por campo específico
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 
@@ -181,7 +181,7 @@ oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts":{"namedCerti
 ```
 
 ```bash
-# Ver configuração
+# Exibir recurso "cluster" em formato YAML
 oc get apiserver cluster -o yaml
 ```
 
@@ -224,7 +224,7 @@ oc get configmap -n openshift-config-managed
 ```
 
 ```bash
-# Ver CA bundle
+# Exibir recurso "default-ingress-cert" em formato YAML
 # oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 ```
@@ -234,7 +234,6 @@ oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 # Certificados são renovados automaticamente
 # Forçar renovação deletando secrets (serão recriados)
 ```
-
 ```bash ignore-test
 # CUIDADO: Isso pode causar downtime!
 oc delete secret <secret-name> -n <namespace>
@@ -295,7 +294,7 @@ chmod +x /tmp/approve-csrs.sh
 ```
 
 ```bash ignore-test
-# Verificar CSRs antigos para limpeza
+# Exibir certificate signing request em formato JSON
 oc get csr -o json | jq -r '.items[] | select(.metadata.creationTimestamp < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete csr
 ```
 

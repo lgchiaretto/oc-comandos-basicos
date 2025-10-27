@@ -35,7 +35,7 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 ### Criar e Deletar
 
 ```bash
-# Criar ou atualizar um pod usando um yaml
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 # Essa imagem é uma copia da docker.io/nicolaka/netshoot
 cat <<EOF | oc apply -f -
 apiVersion: v1
@@ -61,50 +61,50 @@ EOF
 ```
 
 ```bash ignore-test
-# Aplicar mudanças em pod
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f pod.yaml
 ```
 
 ```bash ignore-test
-# Deletar um pod
+# Deletar o recurso especificado
 # oc delete pod <resource-name>
 oc delete pod my-pod
 ```
 
 ```bash ignore-test
-# Deletar pod forçadamente
+# Deletar recurso forçadamente (sem período de espera)
 # oc delete pod <resource-name>pod --grace-period=0 --force
 oc delete pod my-pod --grace-period=0 --force
 ```
 
 ```bash
-# Deletar todos os pods com label
+# Deletar pods que correspondem ao seletor de label
 oc delete pods -l app=test-app
 ```
 
 ### Listar Pods
 ```bash
-# Listar todos os pods
+# Listar todos os pods do namespace atual
 oc get pods
 ```
 
 ```bash
-# Listar pods em todos os namespaces
+# Listar todos os pods de todos os namespaces do cluster
 oc get pods -A
 ```
 
 ```bash
-# Listar pods com mais detalhes
+# Listar pods com informações adicionais (node, IP, etc)
 oc get pods -o wide
 ```
 
 ```bash
-# Listar pods com labels
+# Listar pods mostrando todas as labels associadas
 oc get pods --show-labels
 ```
 
 ```bash
-# Listar pods por seletor
+# Listar pods filtrados por label
 oc get pods -l app=test-app
 ```
 
@@ -115,36 +115,37 @@ oc get pods -n development
 ```
 
 ```bash
-# Listar pods com status customizado
+# Listar pods com colunas customizadas
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP
 ```
 
 ```bash
-# Descrever um pod
+# Exibir detalhes completos do recurso
 # oc describe pod <resource-name>
 oc describe pod my-pod
 ```
 
 ```bash
-# Ver definição YAML do pod
+# Exibir recurso "my-pod" em formato YAML
 # oc get pod <resource-name>pod -o yaml
 oc get pod my-pod -o yaml
 ```
 
 ```bash
-# Ver definição JSON do pod
+# Exibir recurso "my-pod" em formato JSON
 # oc get pod <resource-name>pod -o json
 oc get pod my-pod -o json
 ```
 
 ```bash
-# Ver apenas o status
+# Exibir recurso "my-pod" em formato JSON
 # oc get pod <resource-name>pod -o jsonpath='{.status.phase}'
 oc get pod my-pod -o jsonpath='{.status.phase}'
 ```
 
 ```bash
-# Esperar um pod ficar running
+# Aguardar pod ficar no estado Ready
+# oc wait --for=condition=Ready pod/<pod-name>
 oc wait --for=condition=Ready pod/my-pod
 ```
 
@@ -154,7 +155,7 @@ oc wait --for=condition=Ready pod/my-pod
 
 ### Acessar Shell
 ```bash ignore-test
-# Acessar shell de um pod
+# Abrir shell interativo dentro do pod
 oc rsh my-pod
 ```
 
@@ -164,12 +165,12 @@ oc exec my-pod -- <comando>
 ```
 
 ```bash
-# Executar comando interativo
+# Executar comando interativo dentro do pod
 oc exec -it my-pod -- /bin/date
 ```
 
 ```bash
-# Executar comando em container específico
+# Executar comando em container específico do pod
 # oc exec my-pod -c <container-name> -- /bin/date
 oc exec my-pod -c my-container -- /bin/date
 ```
@@ -191,12 +192,12 @@ oc cp my-pod:<caminho-no-pod> <arquivo-local>
 ```
 
 ```bash ignore-test
-# Copiar diretório
+# Copiar arquivo/diretório da máquina local para o pod
 oc cp /local/dir my-pod:/container/dir
 ```
 
 ```bash ignore-test
-# Copiar diretório com rsync (precisa ter rsync instalado no pod)
+# Sincronizar diretórios entre máquina local e pod (requer rsync no pod)
 oc rsync /local/dir my-pod:/container/dir
 ```
 
@@ -209,24 +210,24 @@ oc cp ./config.json mypod:/etc/config/config.json
 
 ### Reiniciar Pods
 ```bash
-# Reiniciar pods de um deployment
+# Reiniciar deployment (recria todos os pods)
 # oc rollout restart <resource-name>/test-app
 oc rollout restart deployment/test-app
 ```
 
 ```bash ignore-test
-# Deletar pod para forçar recriação
+# Deletar o recurso especificado
 # oc delete pod <resource-name>
 oc delete pod my-pod
 ```
 
 ```bash
-# Scale down deployment test-app
+# Escalar deployment para zero (parar todos os pods)
 # oc scale deployment <deployment-name> --replicas=0
 oc scale deployment test-app --replicas=0
 ```
 ```bash
-# Scale up deployment test-app
+# Ajustar número de réplicas do deployment/replicaset
 # oc scale deployment <deployment-name> --replicas=2
 oc scale deployment test-app --replicas=2
 ```
@@ -236,43 +237,45 @@ oc scale deployment test-app --replicas=2
 
 ### Debug Interativo
 ```bash ignore-test
-# Debug interativo de pod
+# Criar cópia de pod para debug interativo
+# oc debug pod/<pod-name>
 oc debug pod/my-pod
 ```
 
 ```bash ignore-test
-# Debug com imagem customizada
+# Criar pod de debug com imagem customizada
+# oc debug pod/<pod-name> --image=quay.io/chiaretto/netshoot
 oc debug pod/my-pod-debug --image=quay.io/chiaretto/netshoot
 ```
 
 ```bash
-# Criar pod de debug temporário e imprima o hostname
+# Criar pod temporário interativo (removido ao sair)
 oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- hostname
 ```
 
 ```bash ignore-test
-# Criar pod de debug temporário e conecte
+# Criar pod temporário interativo (removido ao sair)
 oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- sh
 ```
 
 ### Verificações
 ```bash
-# Ver pods com problemas
+# Listar pods que não estão em estado Running
 oc get pods --field-selector=status.phase!=Running
 ```
 
 ```bash
-# Ver pods pendentes
+# Listar pods em estado Pending (aguardando)
 oc get pods --field-selector=status.phase=Pending
 ```
 
 ```bash
-# Ver pods falhados
+# Listar pods que falharam
 oc get pods --field-selector=status.phase=Failed
 ```
 
 ```bash
-# Ver motivo de erro do pod
+# Exibir detalhes completos do recurso
 # oc describe pod <resource-name> | grep -A 10 "Events:"
 oc describe pod my-pod | grep -A 10 "Events:"
 ```
@@ -283,23 +286,23 @@ oc describe pod my-pod | grep -A 10 "Events:"
 
 ### Ver Logs
 ```bash ignore-test
-# Ver logs de um pod
+# Exibir logs do pod especificado
 oc logs my-pod
 ```
 
 ```bash ignore-test
-# Ver logs em tempo real
+# Acompanhar logs em tempo real do pod
 oc logs -f my-pod
 ```
 
 ```bash ignore-test
-# Ver logs de container específico
+# Exibir logs de container específico do pod
 # oc logs my-pod -c <container-name>
 oc logs my-pod -c my-container
 ```
 
 ```bash ignore-test
-# Ver logs anteriores (pod crasheado)
+# Exibir logs da instância anterior do container (após crash)
 oc logs my-pod --previous
 ```
 
@@ -309,12 +312,12 @@ oc logs my-pod --tail=<numero>
 ```
 
 ```bash ignore-test
-# Ver logs desde timestamp específico
+# Exibir logs a partir de um período de tempo
 oc logs my-pod --since=1h
 ```
 
 ```bash
-# Ver logs de todos os pods com label
+# Exibir logs de todos os pods que correspondem ao label
 oc logs -l app=test-app
 ```
 
@@ -322,17 +325,17 @@ oc logs -l app=test-app
 
 ### Ver Eventos
 ```bash
-# Ver eventos ordenados por timestamp
+# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp'
 ```
 
 ```bash
-# Em namespace específico
+# Listar eventos ordenados por campo específico
 oc get events -n development --sort-by='.lastTimestamp'
 ```
 
 ```bash
-# Últimos 10 eventos
+# Listar eventos ordenados por campo específico
 oc get events -n development --sort-by='.lastTimestamp' | head -10
 ```
 

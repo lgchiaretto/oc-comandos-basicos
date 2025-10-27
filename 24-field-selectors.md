@@ -24,49 +24,49 @@ Este documento contém comandos avançados usando field selectors, label selecto
 
 ### Filtrar Pods por Status
 ```bash
-# Pods em execução
+# Listar pods filtrados por campo específico
 oc get pods --field-selector=status.phase=Running
 ```
 
 ```bash
-# Pods pendentes
+# Listar pods em estado Pending (aguardando)
 oc get pods --field-selector=status.phase=Pending
 ```
 
 ```bash
-# Pods falhados
+# Listar pods que falharam
 oc get pods --field-selector=status.phase=Failed
 ```
 
 ```bash
-# Pods que NÃO estão rodando
+# Listar pods que não estão em estado Running
 oc get pods --field-selector=status.phase!=Running
 ```
 
 ```bash
-# Pods com sucesso (Completed)
+# Listar pods filtrados por campo específico
 oc get pods --field-selector=status.phase=Succeeded
 ```
 
 ### Filtrar por Namespace
 ```bash
-# Recursos em namespace específico
+# Listar pods filtrados por campo específico
 oc get pods --field-selector=metadata.namespace=default
 ```
 
 ```bash
-# Pods em múltiplos namespaces (usando grep)
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --field-selector=metadata.namespace=default,metadata.namespace=kube-system
 ```
 
 ### Filtrar Eventos
 ```bash
-# Eventos de warning
+# Listar apenas eventos do tipo Warning
 oc get events --field-selector type=Warning
 ```
 
 ```bash
-# Eventos normais
+# Listar eventos filtrados por campo específico
 oc get events --field-selector type=Normal
 ```
 
@@ -82,12 +82,12 @@ oc get events --field-selector involvedObject.namespace=<namespace>
 
 ### Filtrar Nodes
 ```bash
-# Nodes não agendáveis
+# Listar nodes filtrados por campo específico
 oc get nodes --field-selector spec.unschedulable=true
 ```
 
 ```bash
-# Nodes agendáveis
+# Listar nodes filtrados por campo específico
 oc get nodes --field-selector spec.unschedulable=false
 ```
 
@@ -102,7 +102,7 @@ oc get csr | grep -i Pending
 ```
 
 ```bash
-# CSRs aprovados
+# Listar Certificate Signing Requests pendentes
 oc get csr
 ```
 
@@ -113,28 +113,28 @@ oc get csr | grep Pending
 
 ### Builds
 ```bash
-# Builds não completos
+# Listar recurso filtrados por campo específico
 oc get builds --field-selector status!=Complete
 ```
 
 ```bash
-# Builds completos
+# Listar recurso filtrados por campo específico
 oc get builds --field-selector status=Complete
 ```
 
 ```bash
-# Builds falhados
+# Listar recurso filtrados por campo específico
 oc get builds --field-selector status=Failed
 ```
 
 ### Services
 ```bash
-# Services do tipo LoadBalancer
+# Exibir service em formato JSON
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='LoadBalancer')]}{.metadata.name}{'\n'}{end}"
 ```
 
 ```bash
-# Services do tipo NodePort
+# Exibir service em formato JSON
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.name}{'\n'}{end}"
 ```
 
@@ -144,69 +144,69 @@ oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.nam
 
 ### Seleção por Label
 ```bash
-# Pods com label específica
+# Listar pods filtrados por label
 oc get pods -l app=nginx
 ```
 
 ```bash
-# Pods com múltiplas labels (AND)
+# Listar pods filtrados por label
 oc get pods -l app=nginx,tier=frontend
 ```
 
 ```bash
-# Pods com label existente (qualquer valor)
+# Listar pods filtrados por label
 oc get pods -l app
 ```
 
 ```bash
-# Pods SEM uma label específica
+# Listar pods filtrados por label
 oc get pods -l '!app'
 ```
 
 ```bash
-# Pods com label em conjunto de valores
+# Listar pods filtrados por label
 oc get pods -l 'env in (dev,qa)'
 ```
 
 ```bash
-# Pods com label NÃO em conjunto
+# Listar pods filtrados por label
 oc get pods -l 'env notin (prod)'
 ```
 
 ### Label Selectors Complexos
 ```bash
-# Combinação de labels e operadores
+# Listar pods filtrados por label
 oc get pods -l 'deployment=test-app,tier!=frontend'
 ```
 
 ```bash
-# Labels com operadores de comparação
+# Listar pods filtrados por label
 oc get pods -l 'deployment=test-app'
 ```
 
 ```bash
-# Labels com regex (usando grep após)
+# Listar pods exibindo todas as labels
 oc get pods --show-labels | grep "deployment=test-app"
 ```
 
 ### Labels em Diferentes Recursos
 ```bash
-# Deployments por label
+# Listar deployments filtrados por label
 oc get deployments -l app=test-app
 ```
 
 ```bash
-# Services por label
+# Listar service filtrados por label
 oc get svc -l app=test-app
 ```
 
 ```bash
-# Todos os recursos com label
+# Listar recurso filtrados por label
 oc get all -l app=test-app
 ```
 
 ```bash
-# Pods de um deployment específico
+# Listar pods filtrados por label
 oc get pods -l deployment=test-app
 ```
 
@@ -216,17 +216,17 @@ oc get pods -l deployment=test-app
 
 ### Field Selector + Label Selector
 ```bash
-# Pods Running com label específica
+# Listar pods filtrados por campo específico
 oc get pods -l app=nginx --field-selector=status.phase=Running
 ```
 
 ```bash
-# Pods em namespace com label
+# Listar pods filtrados por campo específico
 oc get pods -l tier=frontend --field-selector=metadata.namespace=production
 ```
 
 ```bash
-# Combinação complexa
+# Listar pods filtrados por campo específico
 oc get pods -l app=test-app,version=v2 --field-selector=status.phase=Running,metadata.namespace=default
 ```
 
@@ -237,12 +237,12 @@ oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 ```
 
 ```bash ignore-test
-# Pods rodando em node específico
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --field-selector=spec.nodeName=worker-1
 ```
 
 ```bash
-# Eventos de warning em namespace específico
+# Listar apenas eventos do tipo Warning
 oc get events --field-selector=type=Warning,involvedObject.namespace=development
 ```
 
@@ -252,12 +252,12 @@ oc get events --field-selector=type=Warning,involvedObject.namespace=development
 
 ### Filtros Básicos com GREP
 ```bash
-# Pods com problemas (não Running ou Completed)
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ```bash
-# Pods com estados de erro específicos
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff|ErrImagePull|Pending"
 ```
 
@@ -273,28 +273,28 @@ oc get co | grep -v "True.*False.*False"
 
 ### Filtros Complexos com grep
 ```bash
-# Múltiplos padrões de erro
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E "Error|Failed|CrashLoop|ImagePull|Pending|Unknown"
 ```
 
 ```bash
-# Pods em namespaces específicos
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E "kube-system|openshift-"
 ```
 
 ### Grep Inverso (excluir padrões)
 ```bash
-# Excluir múltiplos padrões
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E -v "Running|Completed|Succeeded"
 ```
 
 ```bash
-# Excluir namespaces do sistema
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E -v "kube-system|kube-public|openshift-"
 ```
 
 ```bash
-# Ver apenas pods com problemas
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E -v "Running|Completed" | grep -E -v "NAME"
 ```
 
@@ -304,33 +304,33 @@ oc get pods -A | grep -E -v "Running|Completed" | grep -E -v "NAME"
 
 ### Ordenar por Campos
 ```bash
-# Ordenar eventos por timestamp
+# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp'
 ```
 
 ```bash
-# Ordenar eventos mais recentes primeiro
+# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp' | tac
 ```
 
 ```bash
-# Ordenar pods por criação
+# Listar pods ordenados por campo específico
 oc get pods --sort-by='.metadata.creationTimestamp'
 ```
 
 ```bash
-# Ordenar nodes por nome
+# Listar nodes ordenados por campo específico
 oc get nodes --sort-by='.metadata.name'
 ```
 
 ### Limitar Resultados
 ```bash
-# Primeiros 10 eventos
+# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp' | head -10
 ```
 
 ```bash
-# Últimos 10 eventos
+# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp' | tail -10
 ```
 
@@ -361,7 +361,7 @@ oc adm top nodes --no-headers | sort -k3 -nr
 
 ### Health Checks Rápidos
 ```bash ignore-test
-# Verificar se há pods com problemas
+# Listar recurso de todos os namespaces do cluster
 if oc get pods -A | grep -E -v "Running|Completed" | grep -v NAME; then
   echo "  Pods com problemas encontrados!"
 else
@@ -391,17 +391,17 @@ fi
 
 ### Contadores
 ```bash
-# Contar pods por estado
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --no-headers | awk '{print $4}' | sort | uniq -c
 ```
 
 ```bash
-# Contar pods por namespace
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```
 
 ```bash
-# Contar pods por node
+# Listar pods de todos os namespaces do cluster
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
@@ -412,7 +412,7 @@ oc get events --no-headers | awk '{print $3}' | sort | uniq -c
 
 ### Filtros Combinados Complexos
 ```bash ignore-test
-# Pods não-Running em namespaces específicos
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E "my-app|my-service" | grep -E -v "Running|Completed"
 ```
 
@@ -432,12 +432,12 @@ oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 
 ### Encontrar Pods com Problemas Específicos
 ```bash
-# Pods com restart alto
+# Listar pods de todos os namespaces do cluster
 oc get pods -A -o wide | awk '$5 > 5 {print $0}'
 ```
 
 ```bash
-# Pods em CrashLoopBackOff
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep CrashLoopBackOff
 ```
 
@@ -447,13 +447,13 @@ oc get pods -A | grep ImagePullBackOff
 ```
 
 ```bash
-# Pods Pending há muito tempo
+# Listar pods de todos os namespaces do cluster
 oc get pods -A --field-selector=status.phase=Pending --sort-by='.metadata.creationTimestamp'
 ```
 
 ### Análise de Recursos
 ```bash
-# PVCs não bound
+# Listar persistent volume claim de todos os namespaces do cluster
 oc get pvc -A | grep -v Bound
 ```
 
@@ -467,7 +467,7 @@ done
 ```
 
 ```bash ignore-test
-# Routes sem host
+# Listar routes de todos os namespaces do cluster
 oc get routes -A -o custom-columns=NAME:.metadata.name,HOST:.spec.host | grep -E "^[^ ]+ *$"
 ```
 

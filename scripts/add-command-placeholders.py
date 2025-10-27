@@ -55,11 +55,20 @@ def extract_placeholder_pattern(command):
         (r'(istag\s+)[a-zA-Z0-9][-a-zA-Z0-9]*:[a-zA-Z0-9][-a-zA-Z0-9\.]*', r'\1<istag-name>:<tag>'),
         # ImageStream:tag
         (r'(is\s+)[a-zA-Z0-9][-a-zA-Z0-9]*:[a-zA-Z0-9][-a-zA-Z0-9\.]*', r'\1<imagestream-name>:<tag>'),
-        # Pod names with generated suffixes (pod-name-xxx-yyy)
+        # Pod names with generated suffixes (pod-name-xxx-yyy) - específico primeiro
         (r'(pod\s+)[a-zA-Z0-9][-a-zA-Z0-9]*-[a-zA-Z0-9]+-[a-zA-Z0-9]+\b', r'\1<pod-name>'),
+        # Pod names simples (my-pod, test-pod, etc)
+        (r'(pod\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<pod-name>'),
+        # Pod com / (pod/my-pod)
+        (r'(pod/)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<pod-name>'),
         # Deployment/ReplicaSet names with hash (name-xxx)
         (r'(deploy(?:ment)?\s+)[a-zA-Z0-9][-a-zA-Z0-9]*-[a-zA-Z0-9]+\b', r'\1<deployment-name>'),
+        # Deployment names simples
+        (r'(deploy(?:ment)?\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<deployment-name>'),
+        (r'(deployment/)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<deployment-name>'),
+        # ReplicaSet
         (r'(rs\s+)[a-zA-Z0-9][-a-zA-Z0-9]*-[a-zA-Z0-9]+\b', r'\1<replicaset-name>'),
+        (r'(rs\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<replicaset-name>'),
         # Service names
         (r'(service/)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<service-name>'),
         (r'(svc\s+)[a-zA-Z0-9][-a-zA-Z0-9]*\b', r'\1<service-name>'),
@@ -156,23 +165,34 @@ def process_markdown_file(filepath):
                 
                 # É um comando oc (não é comentário e começa com oc)
                 if stripped.startswith('oc ') and not stripped.startswith('#'):
-                    # Verifica se a linha anterior já é um placeholder
-                    if i > 0 and new_lines:
-                        prev_line = new_lines[-1].strip()
-                        if prev_line.startswith('# oc ') and '<' in prev_line and '>' in prev_line:
-                            # Já tem placeholder, pula
-                            new_lines.append(current_line)
-                            i += 1
-                            continue
-                    
-                    # Tenta extrair placeholder
+                    # Tenta extrair placeholder primeiro
                     placeholder = extract_placeholder_pattern(stripped)
+                    
+                    # Só continua se houver um placeholder válido para adicionar
                     if placeholder:
-                        # Adiciona linha de comentário com placeholder
-                        indent = len(current_line) - len(current_line.lstrip())
-                        placeholder_line = ' ' * indent + '# ' + placeholder + '\n'
-                        new_lines.append(placeholder_line)
-                        changes_made += 1
+                        # Verifica se já existe uma linha de placeholder para este comando
+                        has_placeholder = False
+                        if new_lines:
+                            # Procura por comentário placeholder nas últimas linhas adicionadas
+                            # Placeholder deve ser: "# oc ..." com <placeholders>
+                            for j in range(len(new_lines) - 1, max(0, len(new_lines) - 4), -1):
+                                prev_line = new_lines[j].strip()
+                                # Deve começar com "# oc" E ter placeholders <>
+                                if (prev_line.startswith('# oc ') and 
+                                    '<' in prev_line and '>' in prev_line):
+                                    has_placeholder = True
+                                    break
+                                # Para se encontrou uma linha de código (não comentário)
+                                if prev_line and not prev_line.startswith('#'):
+                                    break
+                        
+                        # Só adiciona se não tiver placeholder
+                        if not has_placeholder:
+                            # Adiciona linha de comentário com placeholder
+                            indent = len(current_line) - len(current_line.lstrip())
+                            placeholder_line = ' ' * indent + '# ' + placeholder + '\n'
+                            new_lines.append(placeholder_line)
+                            changes_made += 1
                 
                 new_lines.append(current_line)
                 i += 1
@@ -187,10 +207,10 @@ def process_markdown_file(filepath):
     if changes_made > 0:
         with open(filepath, 'w', encoding='utf-8') as f:
             f.writelines(new_lines)
-        print(f"  OK: {changes_made} placeholders adicionados")
+        print(f"  ✅ OK: {changes_made} placeholders adicionados")
         return changes_made
     else:
-        print(f"  INFO:  Nenhuma mudança necessária")
+        print(f"  ℹ️  INFO: Nenhuma mudança necessária")
         return 0
 
 
@@ -207,18 +227,21 @@ def main():
     ])
     
     if not markdown_files:
-        print("ERRO: Nenhum arquivo markdown encontrado!")
+        print("❌ ERRO: Nenhum arquivo markdown encontrado!")
         return 1
     
-    print(f" Encontrados {len(markdown_files)} arquivos markdown\n")
+    print(f"📁 Encontrados {len(markdown_files)} arquivos markdown\n")
     
     total_changes = 0
     for md_file in markdown_files:
         changes = process_markdown_file(md_file)
         total_changes += changes
     
-    print(f"\nOK: Processamento concluído!")
-    print(f" Total de placeholders adicionados: {total_changes}")
+    print(f"\n✅ Processamento concluído!")
+    print(f"📊 Total de placeholders adicionados: {total_changes}")
+    
+    if total_changes > 0:
+        print(f"💡 Revise as mudanças com: git diff")
     
     return 0
 

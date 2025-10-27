@@ -43,7 +43,7 @@ oc auth can-i get pods --as=<usuario>
 ```
 
 ```bash
-# Listar minhas permissões
+# Verificar se usuário tem permissão para executar ação específica
 oc auth can-i --list
 ```
 
@@ -64,7 +64,7 @@ oc get identities
 ```
 
 ```bash
-# Descrever usuário
+# Exibir detalhes completos do recurso
 # oc describe user <username>
 oc describe user chiaretto
 ```
@@ -80,7 +80,7 @@ oc get clusterroles
 ```
 
 ```bash
-# Roles importantes
+# Exibir cluster role "admin" em formato YAML
 # oc get clusterrole <role-name> -o yaml
 oc get clusterrole admin -o yaml
 # oc get clusterrole <role-name> -o yaml
@@ -95,14 +95,14 @@ oc describe clusterrole <nome-da-role>
 ```
 
 ```bash
-# Ver permissões de uma ClusterRole
+# Exibir detalhes completos do cluster role
 # oc describe clusterrole <role-name> | grep -A 50 PolicyRule
 oc describe clusterrole admin | grep -A 50 PolicyRule
 ```
 
 ### Roles (Namespace)
 ```bash
-# Listar Roles no namespace
+# Listar roles customizados do namespace
 oc get roles
 ```
 
@@ -118,13 +118,13 @@ oc create role pod-reader --verb=get,list,watch --resource=pods
 ```
 
 ```bash ignore-test
-# Editar Role
+# Abrir editor para modificar recurso interativamente
 # oc edit role <role-name>
 oc edit role pod-reader
 ```
 
 ```bash
-# Deletar Role
+# Deletar o role especificado
 # oc delete role <role-name>
 oc delete role pod-reader
 ```
@@ -136,7 +136,7 @@ oc get clusterrolebindings
 ```
 
 ```bash ignore-test
-# Ver quem tem role cluster-admin
+# Exibir recurso em formato JSON
 oc get clusterrolebinding -o json | jq -r '.items[] | select(.roleRef.name=="cluster-admin") | .metadata.name'
 ```
 
@@ -157,7 +157,7 @@ oc adm policy add-cluster-role-to-group cluster-admin <groupname>
 
 ### RoleBindings (Namespace)
 ```bash
-# Listar RoleBindings
+# Listar vinculações de roles no namespace atual
 oc get rolebindings
 ```
 
@@ -180,7 +180,7 @@ oc adm policy remove-role-from-user <role> <username>
 ```
 
 ```bash
-# Ver RoleBinding específico
+# Exibir detalhes completos do recurso
 # oc describe rolebinding <rolebinding-name>
 oc describe rolebinding admin
 ```
@@ -197,25 +197,25 @@ oc get sa
 ```
 
 ```bash
-# Criar Service Account
+# Criar novo recurso
 # oc create serviceaccount <serviceaccount-name>
 oc create serviceaccount test-app
 ```
 
 ```bash
-# Descrever Service Account
+# Exibir detalhes completos do serviceaccount
 # oc describe sa <serviceaccount-name>
 oc describe sa test-app
 ```
 
 ```bash ignore-test
-# Ver secrets da SA
+# Exibir serviceaccount "test-app" em formato JSON
 # oc get sa <serviceaccount-name> -o jsonpath='{.secrets[*].name}'
 oc get sa test-app -o jsonpath='{.secrets[*].name}'
 ```
 
 ```bash ignore-test
-# Deletar Service Account
+# Deletar o serviceaccount especificado
 # oc delete sa <serviceaccount-name>
 oc delete sa test-app
 ```
@@ -244,7 +244,7 @@ oc set serviceaccount deployment/test-app test-app
 ```
 
 ```bash ignore-test
-# Ver qual SA o pod está usando
+# Exibir recurso "test-app" em formato JSON
 # oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 ```
@@ -260,14 +260,14 @@ oc get scc
 ```
 
 ```bash
-# SCCs principais
+# Exibir recurso "restricted" em formato YAML
 oc get scc restricted -o yaml
 oc get scc privileged -o yaml
 oc get scc anyuid -o yaml
 ```
 
 ```bash
-# Descrever SCC
+# Exibir detalhes completos do recurso
 # oc describe scc <resource-name>
 oc describe scc restricted
 ```
@@ -279,7 +279,7 @@ oc get pod test-app -o yaml | grep scc
 ```
 
 ```bash
-# Ver usuários/SAs em uma SCC
+# Exibir detalhes completos do recurso
 # oc describe scc <resource-name> | grep Users
 oc describe scc restricted | grep Users
 ```
@@ -306,14 +306,14 @@ oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiarett
 ```
 
 ```bash
-# Ver quem pode usar SCC
+# Exibir detalhes completos do recurso
 # oc describe scc <resource-name>
 oc describe scc restricted
 ```
 
 ### Troubleshoot SCC
 ```bash
-# Ver por que pod não está rodando devido a SCC
+# Exibir detalhes completos do recurso
 # oc describe pod <resource-name> | grep -i scc
 oc describe pod test-app | grep -i scc
 ```
@@ -324,7 +324,7 @@ oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 ```
 
 ```bash ignore-test
-# Verificar capabilities do container
+# Listar recurso de todos os namespaces do cluster
 # oc get pod <resource-name>app -o yaml | grep -A 10 securityContext
 oc get pod test-app -o yaml | grep -A 10 securityContext
 ```
@@ -350,12 +350,12 @@ grep <username> /var/log/openshift-apiserver/audit.log
 
 ### OAuth e Autenticação
 ```bash
-# Ver OAuth config
+# Exibir recurso "cluster" em formato YAML
 oc get oauth cluster -o yaml
 ```
 
 ```bash
-# Ver identity providers
+# Exibir recurso "cluster" em formato JSON
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
 ```
 
@@ -371,7 +371,7 @@ oc logs -n openshift-authentication <oauth-pod>
 
 ### Secrets de TLS
 ```bash
-# Listar secrets TLS
+# Listar recurso filtrados por campo específico
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 

@@ -18,7 +18,7 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 ## PersistentVolumes (PV)
 
 ```bash
-# Listar PVs
+# Listar todos os Persistent Volumes do cluster
 oc get pv
 oc get persistentvolumes
 ```
@@ -34,12 +34,12 @@ oc get pv <nome-do-pv> -o yaml
 ```
 
 ```bash
-# Ver PVs disponíveis
+# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
 ```bash
-# Ver PVs bound
+# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
@@ -54,14 +54,13 @@ oc delete pv <nome-do-pv>
 
 ### Criar e Gerenciar
 ```bash
-# Listar PVCs
+# Listar todos os Persistent Volume Claims do namespace
 oc get pvc
 oc get persistentvolumeclaims
 ```
 
 ```bash ignore-test
-# Descrever PVC
-# oc describe pvc test-app
+# Exibir detalhes completos do persistent volume claim
 # oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
@@ -72,15 +71,13 @@ oc create -f <pvc-definition.yaml>
 ```
 
 ```bash ignore-test
-# Ver status da claim
-# oc get pvc test-app -o jsonpath='{.status.phase}'
+# Exibir persistent volume claim "test-app" em formato JSON
 # oc get pvc <resource-name>app -o jsonpath='{.status.phase}'
 oc get pvc test-app -o jsonpath='{.status.phase}'
 ```
 
 ```bash ignore-test
-# Deletar PVC
-# oc delete pvc test-app
+# Deletar o persistent volume claim especificado
 # oc delete pvc <resource-name>
 oc delete pvc test-app
 ```
@@ -122,7 +119,7 @@ oc patch storageclass <nome-da-sc> -p '{"metadata": {"annotations":{"storageclas
 ```
 
 ```bash ignore-test
-# Ver StorageClass padrão
+# Exibir storageclass em formato JSON
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
 ```
 ---
@@ -149,7 +146,7 @@ oc set volume deployment/test-app
 ```
 
 ```bash
-# Ver volumes montados em pod
+# Exibir detalhes completos do recurso
 # oc describe pod <resource-name> | grep -A 5 Volumes
 oc describe pod my-pod | grep -A 5 Volumes
 ```

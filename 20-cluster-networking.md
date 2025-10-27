@@ -19,22 +19,22 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 
 ### Visualizar Configuração
 ```bash
-# Ver configuração de rede do cluster
+# Exibir recurso em formato YAML
 oc get network.config.openshift.io cluster -o yaml
 ```
 
 ```bash
-# Tipo de rede (SDN ou OVN)
+# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
 ```bash
-# Ver cluster network
+# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork}'
 ```
 
 ```bash
-# Ver service network
+# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
 ```
 
@@ -45,18 +45,18 @@ oc get clusteroperator network
 ```
 
 ```bash
-# Network operator config
+# Exibir recurso em formato YAML
 oc get network.operator.openshift.io cluster -o yaml
 ```
 
 ### Pod Network
 ```bash ignore-test
-# Ver CIDR dos pods
+# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*].cidr}'
 ```
 
 ```bash ignore-test
-# Ver CIDR dos services
+# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]}'
 ```
 
@@ -66,12 +66,12 @@ oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 ```
 
 ```bash
-# Ver IPs de todos os pods
+# Listar pods de todos os namespaces do cluster
 oc get pods -o wide -A
 ```
 
 ```bash ignore-test
-# Verificar range de IPs usado
+# Listar pods de todos os namespaces do cluster
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 ```
 
@@ -85,14 +85,14 @@ oc get ingresscontroller -n openshift-ingress-operator
 ```
 
 ```bash
-# Ver detalhes
+# Exibir detalhes completos do recurso
 # oc describe ingresscontroller -n <namespace> default
 oc describe ingresscontroller -n openshift-ingress-operator default
 ```
 
 ### Escalar Ingress Controller
 ```bash
-# Escalar número de réplicas do IngressController
+# Ajustar número de réplicas do deployment/replicaset
 # oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ```
@@ -102,19 +102,19 @@ oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 
 ### Criar Network Policies
 ```bash
-# Listar network policies
+# Listar políticas de rede configuradas no namespace
 oc get networkpolicy
 oc get netpol
 ```
 
 ```bash ignore-test
-# Descrever policy
+# Exibir detalhes completos do network policy
 # oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
 ```bash
-# Deny all por padrão
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -129,7 +129,7 @@ EOF
 ```
 
 ```bash
-# Allow específico
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -146,7 +146,7 @@ EOF
 ```
 
 ```bash
-# Allow de namespace específico
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -173,7 +173,7 @@ oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- w
 ```
 
 ```bash ignore-test
-# Aplicar policy
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f networkpolicy.yaml
 ```
 
@@ -189,23 +189,23 @@ oc get events | grep -i network
 
 ### Debugging Network Policies
 ```bash
-# Ver todas as policies do namespace
+# Exibir network policy em formato YAML
 oc get networkpolicy -o yaml
 ```
 
 ```bash ignore-test
-# Ver labels dos pods
+# Listar pods mostrando todas as labels associadas
 oc get pods --show-labels
 ```
 
 ```bash ignore-test
-# Ver se policy está afetando pod
+# Exibir detalhes completos do network policy
 # oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
 ```bash ignore-test
-# Deletar temporariamente para testar
+# Deletar o network policy especificado
 # oc delete networkpolicy <resource-name>
 oc delete networkpolicy test-app
 ```
@@ -220,7 +220,7 @@ oc get network-attachment-definitions
 ```
 
 ```bash
-# Criar NAD
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
@@ -251,23 +251,23 @@ EOF
 
 ### MTU Configuration
 ```bash
-# Ver MTU configurado
+# Exibir recurso em formato JSON
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'
 ```
 
 ```bash ignore-test
-# Verificar MTU em pod
+# Executar comando dentro do pod especificado
 oc exec my-pod -- ip link show eth0
 ```
 
 ### Network Diagnostics
 ```bash
-# Verificar conectividade entre nodes
+# Listar nodes com informações detalhadas
 oc get nodes -o wide
 ```
 
 ```bash ignore-test
-# Criar DaemonSet de teste
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: apps/v1
 kind: DaemonSet
@@ -290,7 +290,7 @@ EOF
 ```
 
 ```bash ignore-test
-# Testar de cada pod
+# Listar recurso filtrados por label
 for pod in $(oc get pods -l app=network-test -o name); do
   echo "=== Testing from $pod ==="
   oc exec $pod -- ping -c 2 8.8.8.8

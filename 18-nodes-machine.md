@@ -19,17 +19,17 @@ Este documento contém comandos para gerenciar nodes e configurações de máqui
 
 ### Listar e Verificar
 ```bash
-# Listar nodes
+# Listar todos os nodes do cluster
 oc get nodes
 ```
 
 ```bash
-# Com labels
+# Listar nodes exibindo todas as labels
 oc get nodes --show-labels
 ```
 
 ```bash
-# Wide output
+# Listar nodes com informações detalhadas
 oc get nodes -o wide
 ```
 
@@ -50,7 +50,7 @@ oc get node <node-name> -o jsonpath='{.status.nodeInfo.kubeletVersion}'
 ```
 
 ```bash
-# Nodes por role
+# Listar nodes filtrados por label
 oc get nodes -l node-role.kubernetes.io/master
 oc get nodes -l node-role.kubernetes.io/worker
 ```
@@ -315,9 +315,8 @@ oc describe machine <machine-name> -n openshift-machine-api
 oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.yaml
 ```
 
-```bash  ignore-test
-# Editar e aplicar
-# Mudar: nome, replicas, availability zone, etc
+```bash ignore-test
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f new-machineset.yaml
 ```
 
@@ -338,7 +337,7 @@ oc get machines -n openshift-machine-api
 ```
 
 ```bash
-# Ver nodes
+# Listar todos os nodes do cluster
 oc get nodes
 ```
 
@@ -361,9 +360,8 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 # 3. Aplicar updates (MachineConfig ou manual)
 # Node vai reiniciar automaticamente se MachineConfig mudou
 ```
-
 ```bash
-# 4. Aguardar node voltar
+# Listar todos os nodes do cluster
 oc get nodes
 ```
 
@@ -381,7 +379,7 @@ systemctl reboot
 ```
 
 ```bash
-# Aguardar
+# Listar todos os nodes do cluster
 oc get nodes
 ```
 
@@ -408,22 +406,22 @@ oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
 ```bash ignore-test
-# Verificar Ready
+# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
 ```bash ignore-test
-# Ver disk pressure
+# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
 ```bash ignore-test
-# Ver memory pressure
+# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
 ```bash ignore-test
-# Ver PID pressure
+# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'
 ```
 

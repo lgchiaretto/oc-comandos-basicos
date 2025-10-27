@@ -19,45 +19,46 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 
 ### Logs de Pods
 ```bash
-# Ver logs de pod
+# Exibir logs do pod especificado
 oc logs my-pod
 ```
 
 ```bash ignore-test
-# Seguir logs em tempo real
+# Acompanhar logs em tempo real do pod
 oc logs -f my-pod
 ```
 
 ```bash
-# Logs de container específico
+# Exibir logs de container específico do pod
 # oc logs my-pod -c <container-name>
 oc logs my-pod -c my-container
 ```
 
 ```bash
-# Últimas N linhas
+# Exibir últimas N linhas dos logs
 oc logs my-pod --tail=100
 ```
 
 ```bash
-# Logs desde tempo específico
+# Exibir logs a partir de um período de tempo
 oc logs my-pod --since=1h
 oc logs my-pod --since-time=2025-01-01T00:00:00Z
 ```
 
 ```bash ignore-test
-# Logs anteriores (pod crashado)
+# Exibir logs da instância anterior do container (após crash)
 oc logs my-pod --previous
 oc logs my-pod -p
 ```
 
 ```bash
-# Todos os pods de um deployment
+# Exibir logs do pod especificado
+# oc logs deployment/<deployment-name>
 oc logs deployment/test-app
 ```
 
 ```bash
-# Logs com timestamps
+# Exibir logs do pod especificado
 oc logs my-pod --timestamps
 ```
 
@@ -83,12 +84,12 @@ oc adm node-logs <nome-do-node> -u crio
 
 ### Visualizar Eventos
 ```bash
-# Todos os eventos
+# Listar eventos do namespace atual
 oc get events
 ```
 
 ```bash
-# Eventos ordenados por tempo
+# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp'
 ```
 
@@ -98,27 +99,27 @@ oc get events -n <namespace>
 ```
 
 ```bash
-# Todos os namespaces
+# Listar eventos de todos os namespaces do cluster
 oc get events -A
 ```
 
 ```bash
-# Eventos de um recurso específico
+# Listar eventos filtrados por campo específico
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
 ```bash
-# Eventos de warnings
+# Listar apenas eventos do tipo Warning
 oc get events --field-selector type=Warning
 ```
 
 ```bash
-# Eventos recentes (última hora)
+# Listar eventos ordenados por campo específico
 oc get events --field-selector involvedObject.kind=Pod --sort-by='.lastTimestamp' | tail -20
 ```
 
 ```bash
-# Watch events em tempo real
+# Listar eventos do namespace atual
 oc get events
 ```
 
@@ -177,7 +178,7 @@ oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
 ```
 
 ```bash ignore-test
-# Ver uso de todos os pods
+# Exibir pods em formato JSON
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.containers[0].resources.requests.cpu) MEM:\(.spec.containers[0].resources.requests.memory)"'
 ```
 
@@ -192,7 +193,7 @@ oc get route -n openshift-monitoring
 ```
 
 ```bash
-# Ver alertas ativos
+# Listar recurso de todos os namespaces do cluster
 oc get prometheusrule -A
 ```
 
@@ -203,7 +204,7 @@ oc get pods -n openshift-monitoring
 
 ### Configurar Monitoring
 ```bash
-# Habilitar monitoring para user workloads
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: ConfigMap
@@ -217,7 +218,7 @@ EOF
 ```
 
 ```bash ignore-test
-# Ver configuração do Prometheus
+# Exibir recurso "cluster-monitoring-config" em formato YAML
 # oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
@@ -230,7 +231,7 @@ oc get clusteroperator monitoring
 
 ### ServiceMonitor
 ```bash
-# Listar ServiceMonitors
+# Listar recurso de todos os namespaces do cluster
 oc get servicemonitor -A
 ```
 

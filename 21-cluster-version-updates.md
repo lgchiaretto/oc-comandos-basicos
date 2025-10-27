@@ -19,44 +19,44 @@ Este documento contém comandos para gerenciar versão e atualizações do clust
 
 ### Ver Versão Atual
 ```bash
-# Versão do cluster
+# Exibir versão e status de atualização do cluster
 oc get clusterversion
 ```
 
 ```bash
-# Detalhes da versão
+# Exibir detalhes completos do recurso
 # oc describe clusterversion <resource-name>
 oc describe clusterversion version
 ```
 
 ```bash ignore-test
-# Versão em formato compacto
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.desired.version}{"\n"}'
 ```
 
 ```bash ignore-test
-# Ver histórico de updates
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq .
 ```
 
 ```bash ignore-test
-# Cluster ID
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].spec.clusterID}{"\n"}'
 ```
 
 ### Status do Cluster
 ```bash
-# Status geral
+# Exibir recurso "version" em formato YAML
 oc get clusterversion version -o yaml
 ```
 
 ```bash ignore-test
-# Ver se está updating
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
 
 ```bash ignore-test
-# Ver mensagem de progresso
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
 ```
 
@@ -66,7 +66,7 @@ oc adm upgrade
 ```
 
 ```bash
-# Watch do update
+# Exibir versão e status de atualização do cluster
 oc get clusterversion
 ```
 
@@ -86,7 +86,7 @@ oc adm upgrade --to-latest=false
 ```
 
 ```bash ignore-test
-# Ver canal atual
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
@@ -119,7 +119,7 @@ oc get clusterversion
 ```
 
 ```bash
-# Ver Cluster Operators atualizando
+# Listar status de todos os cluster operators
 oc get co
 ```
 
@@ -134,12 +134,12 @@ oc logs -n <operator-namespace> <operator-pod>
 ```
 
 ```bash
-# Ver progresso detalhado
+# Exibir detalhes completos do recurso
 oc describe clusterversion
 ```
 
 ```bash ignore-test
-# Histórico completo
+# Exibir recurso em formato JSON
 oc get clusterversion -o json | jq '.items[0].status.history'
 ```
 
@@ -149,7 +149,7 @@ oc get clusterversion -o json | jq '.items[0].status.history'
 
 ### Ver e Mudar Channel
 ```bash
-# Ver canal atual
+# Exibir recurso "version" em formato JSON
 oc get clusterversion version -o jsonpath='{.spec.channel}{"\n"}'
 ```
 
@@ -160,24 +160,23 @@ oc get clusterversion version -o jsonpath='{.spec.channel}{"\n"}'
 # - eus-4.14 (Extended Update Support)
 # - candidate-4.14
 ```
-
 ```bash
-# Mudar para stable
+# Aplicar modificação parcial ao recurso usando patch
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"stable-4.14"}}'
 ```
 
 ```bash
-# Mudar para fast
+# Aplicar modificação parcial ao recurso usando patch
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.14"}}'
 ```
 
 ```bash
-# Mudar para EUS
+# Aplicar modificação parcial ao recurso usando patch
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.14"}}'
 ```
 
 ```bash ignore-test
-# Verificar mudança
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
@@ -188,7 +187,7 @@ oc adm upgrade
 
 ### Upstream Update Server
 ```bash
-# Ver upstream configurado
+# Exibir recurso "version" em formato JSON
 oc get clusterversion version -o jsonpath='{.spec.upstream}{"\n"}'
 ```
 
@@ -203,7 +202,7 @@ oc patch clusterversion version --type merge -p '{"spec":{"upstream":"<update-se
 
 ### Update Stuck ou Falhando
 ```bash
-# Ver status detalhado
+# Exibir detalhes completos do recurso
 oc describe clusterversion
 ```
 
@@ -243,9 +242,8 @@ oc get events -n <operator-namespace> --sort-by='.lastTimestamp'
 # Mas pode-se deletar ClusterVersion para "congelar"
 # NÃO RECOMENDADO EM PRODUÇÃO!
 ```
-
 ```bash ignore-test
-# Ver se cluster está em update
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
 
@@ -254,9 +252,8 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 # OpenShift NÃO suporta rollback
 # Se update falhar, o cluster permanece na versão atual
 ```
-
 ```bash ignore-test
-# Ver versão atual vs desejada
+# Exibir recurso em formato JSON
 echo "Current: $(oc get clusterversion -o jsonpath='{.items[0].status.history[0].version}')"
 echo "Desired: $(oc get clusterversion -o jsonpath='{.items[0].status.desired.version}')"
 ```
@@ -304,25 +301,25 @@ echo ""
 ```
 
 ```bash ignore-test
-# Cluster Operators
+# Exibir cluster operator em formato JSON
 DEGRADED=$(oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name' | wc -l)
 echo "Degraded Operators: $DEGRADED"
 ```
 
 ```bash ignore-test
-# Nodes
+# Exibir nodes em formato JSON
 NOT_READY=$(oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name' | wc -l)
 echo "Not Ready Nodes: $NOT_READY"
 ```
 
 ```bash
-# Pods
+# Listar pods de todos os namespaces do cluster
 BAD_PODS=$(oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded -o json | jq '.items | length')
 echo "Non-Running Pods: $BAD_PODS"
 ```
 
 ```bash ignore-test
-# MCPs
+# Exibir recurso em formato JSON
 UPDATING_MCP=$(oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name' | wc -l)
 echo "Updating MCPs: $UPDATING_MCP"
 ```
@@ -346,7 +343,7 @@ chmod +x /tmp/pre-update-check.sh
 
 ### Cincinnati Graph
 ```bash
-# Ver graph de updates disponíveis (com cluster UUID)
+# Exibir recurso "version" em formato JSON
 CLUSTER_ID=$(oc get clusterversion version -o jsonpath='{.spec.clusterID}')
 CURRENT_VERSION=$(oc get clusterversion version -o jsonpath='{.status.desired.version}')
 CHANNEL=$(oc get clusterversion version -o jsonpath='{.spec.channel}')

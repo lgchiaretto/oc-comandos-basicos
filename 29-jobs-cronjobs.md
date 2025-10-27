@@ -18,14 +18,13 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 
 ### Criar Jobs
 ```bash
-# Job simples
-# oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
+# Criar novo Job para execução única de tarefa
 # oc create job <job-name> --image=quay.io/chiaretto/netshoot -- echo "Hello World"
 oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
 ```
 
 ```bash
-# De arquivo yaml
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -44,7 +43,7 @@ EOF
 ```
 
 ```bash
-# Job com múltiplas tentativas
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -69,36 +68,36 @@ oc get jobs
 ```
 
 ```bash
-# Descrever job
+# Exibir detalhes completos do job
 # oc describe job <job-name>
 oc describe job test-app-job
 ```
 
 ```bash ignore-test
-# Ver logs do job
+# Exibir logs do pod especificado
 oc logs job/test-app-job
 ```
 
 ```bash
-# Ver pods do job
+# Listar pods filtrados por label
 oc get pods -l job-name=test-app-job
 ```
 
 ```bash
-# Deletar job
+# Deletar o job especificado
 # oc delete job <job-name>
 oc delete job test-app-job
 ```
 
 ```bash ignore-test
-# Deletar job e seus pods
+# Deletar job e aguardar exclusão de recursos dependentes
 # oc delete job <job-name> --cascade=foreground
 oc delete job test-app --cascade=foreground
 ```
 
 ### Jobs Paralelos
 ```bash
-# Job com parallelism
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -126,7 +125,7 @@ oc get pods -l job-name=parallel-job
 
 ### Jobs com TTL
 ```bash ignore-test
-# Job que se auto-deleta após completar
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
 kind: Job
@@ -150,13 +149,13 @@ EOF
 
 ### Criar CronJobs
 ```bash
-# CronJob simples
+# Criar novo Job para execução única de tarefa
 # oc create cronjob <job-name> --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 oc create cronjob test-app-job --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 ```
 
 ```bash ignore-test
-# De arquivo
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
 kind: CronJob
@@ -184,7 +183,7 @@ oc get cj
 ```
 
 ```bash ignore-test
-# Descrever cronjob
+# Exibir detalhes completos do recurso
 # oc describe cronjob <job-name>
 oc describe cronjob test-app-job
 ```
@@ -200,32 +199,32 @@ oc get jobs --sort-by=.metadata.creationTimestamp | grep <cronjob-name> | tail -
 ```
 
 ```bash ignore-test
-# Suspender cronjob
+# Aplicar modificação parcial ao recurso usando patch
 # oc patch cronjob <job-name> -p '{"spec":{"suspend":true}}'
 oc patch cronjob test-app-job -p '{"spec":{"suspend":true}}'
 ```
 
 ```bash ignore-test
-# Reativar
+# Aplicar modificação parcial ao recurso usando patch
 # oc patch cronjob <job-name> -p '{"spec":{"suspend":false}}'
 oc patch cronjob test-app-job -p '{"spec":{"suspend":false}}'
 ```
 
 ```bash
-# Deletar cronjob
+# Deletar o recurso especificado
 # oc delete cronjob <job-name>
 oc delete cronjob test-app-job
 ```
 
 ```bash ignore-test
-# Deletar cronjob e jobs/pods
+# Deletar recurso e aguardar exclusão de recursos dependentes
 # oc delete cronjob <job-name> --cascade=foreground
 oc delete cronjob test-app --cascade=foreground
 ```
 
 ### CronJob Avançado
 ```bash
-# Com configurações completas
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: batch/v1
 kind: CronJob
@@ -280,42 +279,42 @@ concurrencyPolicy: Replace
 
 ### Debug de Jobs
 ```bash ignore-test
-# Ver status do job
+# Exibir job "test-app-job" em formato YAML
 # oc get job <job-name> -o yaml
 oc get job test-app-job -o yaml
 ```
 
 ```bash ignore-test
-# Ver condições
+# Exibir job "test-app-job" em formato JSON
 # oc get job <job-name> -o jsonpath='{.status.conditions}'
 oc get job test-app-job -o jsonpath='{.status.conditions}'
 ```
 
 ```bash ignore-test
-# Ver por que job falhou
+# Exibir detalhes completos do job
 # oc describe job <job-name>
 oc describe job test-app-job
 ```
 
 ```bash ignore-test
-# Logs do pod anterior (se falhou)
+# Exibir logs da instância anterior do container (após crash)
 oc logs $POD --previous
 ```
 
 ```bash ignore-test
-# Ver eventos
+# Listar eventos filtrados por campo específico
 oc get events --field-selector involvedObject.name=test-app-job
 ```
 
 ### Debug de CronJobs
 ```bash ignore-test
-# Ver status do cronjob
+# Exibir recurso "test-app-job" em formato YAML
 # oc get cronjob <job-name> -o yaml
 oc get cronjob test-app-job -o yaml
 ```
 
 ```bash ignore-test
-# Ver último schedule
+# Exibir recurso "test-app-job" em formato JSON
 # oc get cronjob <job-name> -o jsonpath='{.status.lastScheduleTime}'
 oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'
 ```
@@ -326,24 +325,24 @@ oc create job test-job --from=cronjob/<cronjob-name>
 ```
 
 ```bash ignore-test
-# Ver histórico de jobs
+# Listar recurso ordenados por campo específico
 oc get jobs --sort-by=.metadata.creationTimestamp -l cronjob=test-app-job
 ```
 
 ```bash ignore-test
-# Logs do último job
+# Listar recurso ordenados por campo específico
 LAST_JOB=$(oc get jobs --sort-by=.metadata.creationTimestamp -l cronjob=test-app-job -o name | tail -1)
 oc logs $LAST_JOB
 ```
 
 ### Jobs Travados
 ```bash
-# Ver jobs rodando há muito tempo
+# Exibir recurso em formato JSON
 oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadata.name) - \(.metadata.creationTimestamp)"'
 ```
 
 ```bash ignore-test
-# Deletar jobs antigos manualmente
+# Exibir recurso em formato JSON
 oc get jobs -o json | jq -r '.items[] | select(.status.completionTime != null) | select(.status.completionTime < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete job
 ```
 

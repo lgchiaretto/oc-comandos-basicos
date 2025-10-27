@@ -25,7 +25,7 @@ oc get bc
 ```
 
 ```bash
-# Descrever BuildConfig
+# Exibir detalhes completos do buildconfig
 # oc describe bc <buildconfig-name>
 oc describe bc s2i-chiaretto
 ```
@@ -41,7 +41,7 @@ oc delete bc <nome-do-bc>
 ```
 
 ```bash ignore-test
-# Ver logs do último build
+# Acompanhar logs em tempo real do pod
 oc logs -f bc/s2i-chiaretto
 ```
 
@@ -61,7 +61,7 @@ oc set triggers bc/s2i-chiaretto --remove-all
 ```
 
 ```bash
-# Ver triggers
+# Exibir detalhes completos do buildconfig
 # oc describe bc <buildconfig-name> | grep Triggered
 oc describe bc s2i-chiaretto | grep Triggered
 ```
@@ -87,7 +87,7 @@ oc start-build <nome-do-bc> --from-file=Dockerfile
 ```
 
 ```bash
-# Listar builds
+# Listar todos os builds do projeto
 oc get builds
 ```
 
@@ -104,13 +104,13 @@ oc cancel-build s2i-chiaretto-2
 ```
 
 ```bash ignore-test
-# Deletar build
+# Deletar o build especificado
 # oc delete build <build-name>
 oc delete build s2i-chiaretto-2
 ```
 
 ```bash
-# Ver histórico de builds
+# Listar recurso ordenados por campo específico
 oc get builds --sort-by=.metadata.creationTimestamp
 ```
 
@@ -132,17 +132,17 @@ oc cancel-build s2i-chiaretto -n development
 
 ### Logs de BuildConfig
 ```bash
-# Ver logs de builds por label buildconfig
+# Exibir logs de todos os pods que correspondem ao label
 oc logs -l buildconfig=s2i-chiaretto
 ```
 
 ```bash
-# Com limite de linhas
+# Exibir últimas N linhas dos logs
 oc logs -l buildconfig=s2i-chiaretto --tail=20
 ```
 
 ```bash
-# Em namespace específico
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> -l buildconfig=s2i-chiaretto --tail=20
 oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 ```
@@ -150,13 +150,13 @@ oc logs -n development -l buildconfig=s2i-chiaretto --tail=20
 
 ### Debug de Builds
 ```bash ignore-test
-# Ver por que build falhou
+# Exibir detalhes completos do build
 # oc describe build <build-name>
 oc describe build s2i-chiaretto-2
 ```
 
 ```bash ignore-test
-# Ver eventos relacionados ao build
+# Listar eventos filtrados por campo específico
 oc get events --field-selector involvedObject.name=s2i-chiaretto-2
 ```
 
@@ -177,19 +177,19 @@ oc get is
 ```
 
 ```bash
-# Descrever ImageStream
+# Exibir detalhes completos do imagestream
 # oc describe is <imagestream-name>
 oc describe is s2i-chiaretto
 ```
 
 ```bash
-# Ver tags disponíveis
+# Exibir imagestream "s2i-chiaretto" em formato JSON
 # oc get is <imagestream-name> -o jsonpath='{.spec.tags[*].name}'
 oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
 ```
 
 ```bash ignore-test
-# Criar ImageStream
+# Criar novo recurso
 # oc create imagestream <imagestream-name>
 oc create imagestream s2i-chiaretto
 ```
@@ -200,13 +200,13 @@ oc import-image s2i-chiaretto --from=<registry>/<image>:<tag> --confirm
 ```
 
 ```bash ignore-test
-# Deletar ImageStream
+# Deletar o imagestream especificado
 # oc delete is <imagestream-name>
 oc delete is s2i-chiaretto
 ```
 
 ```bash ignore-test
-# Ver SHA da imagem
+# Exibir imagestream "s2i-chiaretto" em formato JSON
 # oc get is <imagestream-name> -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 oc get is s2i-chiaretto -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].image}'
 ```
@@ -219,7 +219,7 @@ oc get istag
 ```
 
 ```bash ignore-test
-# Ver detalhes de tag específica
+# Exibir detalhes completos do recurso
 # oc describe istag <istag-name>:<tag>
 oc describe istag s2i-chiaretto:latest
 ```

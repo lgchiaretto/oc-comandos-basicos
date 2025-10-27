@@ -19,28 +19,28 @@ Este documento contém comandos para gerenciar e diagnosticar Cluster Operators 
 
 ### Status Geral
 ```bash
-# Listar todos os Cluster Operators
+# Listar status de todos os cluster operators
 oc get clusteroperators
 oc get co
 ```
 
 ```bash
-# Ver somente nome e versao do operator
+# Listar cluster operator com colunas customizadas
 oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].version
 ```
 
 ```bash
-# Operators com problema (não Available)
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
 ```bash
-# Operators Degraded
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
 ```bash
-# Operators Progressing
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 ```
 
@@ -51,31 +51,31 @@ watch oc get co
 
 ### Status Detalhado
 ```bash
-# Descrever Cluster Operator
+# Exibir detalhes completos do cluster operator
 # oc describe co <resource-name>
 oc describe co authentication
 ```
 
 ```bash
-# Ver condições
+# Exibir cluster operator "authentication" em formato JSON
 # oc get co <resource-name>app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 ```
 
 ```bash
-# Ver mensagem do operator
+# Exibir cluster operator "authentication" em formato JSON
 # oc get co <resource-name>app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
 ```bash
-# Ver versão de um operator
+# Exibir cluster operator "authentication" em formato JSON
 # oc get co <resource-name>app -o jsonpath='{.status.versions[0].version}'
 oc get co authentication -o jsonpath='{.status.versions[0].version}'
 ```
 
 ```bash
-# Ver related objects
+# Exibir cluster operator "authentication" em formato JSON
 # oc get co <resource-name>app -o jsonpath='{.status.relatedObjects}'
 oc get co authentication -o jsonpath='{.status.relatedObjects}'
 ```
@@ -86,7 +86,7 @@ oc get co authentication -o jsonpath='{.status.relatedObjects}'
 
 ### Diagnosticar Problemas
 ```bash ignore-test
-# Ver pods do operator
+# Exibir cluster operator "authentication" em formato JSON
 # oc get co <resource-name>app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 oc get co authentication -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 ```
@@ -113,7 +113,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 
 ### Forçar Reconciliation
 ```bash
-# Adicionar annotation para forçar reconcile
+# Atualizar annotation existente com novo valor
 oc annotate co/authentication --overwrite operator.openshift.io/refresh="$(date +%s)"
 ```
 
@@ -129,7 +129,7 @@ oc get co/authentication
 
 ### Must-Gather de Operadores
 ```bash ignore-test
-# Must-gather específico para operadores
+# Coletar dados de diagnóstico em diretório específico
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
@@ -156,7 +156,7 @@ oc get pods -n openshift-authentication
 ```
 
 ```bash
-# Configuração OAuth
+# Exibir recurso "cluster" em formato YAML
 oc get oauth cluster -o yaml
 ```
 
@@ -183,13 +183,13 @@ oc get pods -n openshift-ingress
 ```
 
 ```bash
-# Logs do router
+# Exibir logs de todos os pods que correspondem ao label
 # oc logs -n <namespace> -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
 oc logs -n openshift-ingress -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
 ```
 
 ```bash
-# Configuração
+# Exibir detalhes completos do recurso
 # oc describe ingresscontroller default -n <namespace>
 oc describe ingresscontroller default -n openshift-ingress-operator
 ```
@@ -202,7 +202,7 @@ oc get co network
 ```
 
 ```bash
-# Configuração de rede
+# Exibir recurso em formato YAML
 oc get network.config.openshift.io cluster -o yaml
 ```
 
@@ -234,7 +234,7 @@ oc get pods -n openshift-dns
 ```
 
 ```bash
-# Configuração DNS
+# Exibir recurso em formato YAML
 oc get dns.operator/default -o yaml
 ```
 
@@ -251,7 +251,7 @@ oc get co image-registry
 ```
 
 ```bash
-# Configuração
+# Exibir recurso em formato YAML
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 ```
 
@@ -261,7 +261,7 @@ oc get pods -n openshift-image-registry
 ```
 
 ```bash
-# Ver storage config
+# Exibir recurso em formato JSON
 oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.storage}'
 ```
 
@@ -300,7 +300,7 @@ oc get pods -n openshift-monitoring
 ```
 
 ```bash ignore-test
-# Configuração
+# Exibir recurso "cluster-monitoring-config" em formato YAML
 # oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
@@ -321,22 +321,22 @@ oc get alertmanager -n openshift-monitoring
 
 ### Gerenciar Operadores Instalados
 ```bash
-# Listar subscriptions
+# Listar recurso de todos os namespaces do cluster
 oc get subscriptions -A
 ```
 
 ```bash
-# Listar ClusterServiceVersions (CSVs)
+# Listar recurso de todos os namespaces do cluster
 oc get csv -A
 ```
 
 ```bash
-# Ver operadores instalados
+# Listar recurso de todos os namespaces do cluster
 oc get operators -A
 ```
 
 ```bash
-# InstallPlans
+# Listar recurso de todos os namespaces do cluster
 oc get installplans -A
 ```
 
@@ -346,7 +346,7 @@ oc get catalogsources -n openshift-marketplace
 ```
 
 ```bash
-# OperatorGroups
+# Listar recurso de todos os namespaces do cluster
 oc get operatorgroups -A
 ```
 
@@ -362,7 +362,7 @@ oc get packagemanifests -n openshift-marketplace | grep odf-operator
 ```
 
 ```bash
-# Ver channels disponíveis
+# Exibir detalhes completos do recurso
 # oc describe packagemanifest <resource-name>app -n <namespace>
 oc describe packagemanifest odf-operator -n openshift-marketplace
 ```
@@ -390,7 +390,7 @@ oc get csv -n <namespace>
 
 ### Troubleshoot Operadores OLM
 ```bash
-# Ver status da subscription
+# Exibir detalhes completos do recurso
 # oc describe subscription -n <namespace>   local-storage-operator
 oc describe subscription -n openshift-local-storage   local-storage-operator
 ```
@@ -427,7 +427,7 @@ oc get csv -n <namespace>
 ```
 
 ```bash
-# Approval automático ou manual
+# Exibir recurso em formato JSON
 oc get subscription  -n openshift-local-storage   local-storage-operator -o jsonpath='{.spec.installPlanApproval}'
 ```
 

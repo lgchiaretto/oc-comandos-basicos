@@ -24,7 +24,7 @@ oc get cm
 ```
 
 ```bash
-# De literal
+# Criar novo recurso
 # oc create configmap <configmap-name> --from-literal=chave=valor
 oc create configmap test-app --from-literal=chave=valor
 ```
@@ -40,32 +40,32 @@ oc create configmap test-app --from-file=<diretorio>/
 ```
 
 ```bash
-# Ver conteúdo
+# Exibir configmap "test-app" em formato YAML
 # oc get cm <configmap-name> -o yaml
 oc get cm test-app -o yaml
 ```
 
 ```bash ignore-test
-# Editar ConfigMap
+# Abrir editor para modificar recurso interativamente
 # oc edit cm <configmap-name>
 oc edit cm test-app
 ```
 
 ```bash
-# Deletar ConfigMap
+# Deletar o configmap especificado
 # oc delete cm <configmap-name>
 oc delete cm test-app
 ```
 
 ### Exemplos Avançados
 ```bash
-# Múltiplos valores literais
+# Criar novo configmap
 # oc create cm <configmap-name>
 oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
 ```
 
 ```bash
-# Ver apenas as chaves
+# Exibir configmap "test-app" em formato JSON
 # oc get cm <configmap-name> -o jsonpath='{.data}'
 oc get cm test-app -o jsonpath='{.data}'
 ```
@@ -75,13 +75,13 @@ oc get cm test-app -o jsonpath='{.data}'
 
 ### Descrever ConfigMap
 ```bash
-# Ver detalhes de um ConfigMap
+# Exibir detalhes completos do recurso
 # oc describe configmap <configmap-name>
 oc describe configmap test-app
 ```
 
 ```bash
-# Em namespace específico
+# Exibir detalhes completos do recurso
 # oc describe configmap <configmap-name> -n <namespace>
 oc describe configmap test-app -n development
 ```
@@ -96,7 +96,7 @@ oc describe configmap test-app -n development
 
 ### Criar Secrets
 ```bash
-# Secret genérico
+# Criar novo secret
 # oc create secret <secret-name> test-app --from-literal=chave=valor
 oc create secret generic test-app --from-literal=chave=valor
 ```
@@ -107,7 +107,7 @@ oc create secret generic test-app --from-file=<arquivo>
 ```
 
 ```bash ignore-test
-# Secret para Docker Registry
+# Criar novo secret
 # oc create secret <secret-name> test-app \
 oc create secret docker-registry test-app \
   --docker-server=<registry> \
@@ -122,43 +122,43 @@ oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 
 ```bash
-# Listar secrets
+# Listar todos os secrets do namespace atual
 oc get secrets
 ```
 
 ```bash
-# Ver secret (dados base64)
+# Exibir secret "test-app" em formato YAML
 # oc get secret <secret-name> -o yaml
 oc get secret test-app -o yaml
 ```
 
 ```bash
-# Decodificar secret
+# Exibir secret "test-app" em formato JSON
 # oc get secret <secret-name> -o jsonpath='{.data.chave}' | base64 -d
 oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
 ```
 
 ```bash ignore-test
-# Editar secret
+# Abrir editor para modificar recurso interativamente
 # oc edit secret <secret-name>
 oc edit secret test-app
 ```
 
 ```bash ignore-test
-# Deletar secret
+# Deletar o secret especificado
 # oc delete secret <secret-name>
 oc delete secret test-app
 ```
 
 ### Descrever Secret
 ```bash
-# Ver detalhes de um Secret
+# Exibir detalhes completos do secret
 # oc describe secret <secret-name>
 oc describe secret test-app
 ```
 
 ```bash
-# Em namespace específico
+# Exibir detalhes completos do secret
 # oc describe secret <secret-name> -n <namespace>
 oc describe secret test-app -n development
 ```
@@ -191,19 +191,19 @@ oc secrets link <service-account> <nome-do-secret> --for=mount
 
 ### Como Variáveis de Ambiente
 ```bash
-# ConfigMap
+# Definir/atualizar variáveis de ambiente no recurso
 # oc set env <resource-name>/test-app --from=configmap/test-app
 oc set env deployment/test-app --from=configmap/test-app
 ```
 
 ```bash
-# Secret
+# Definir/atualizar variáveis de ambiente no recurso
 # oc set env <resource-name>/test-app --from=secret/test-app
 oc set env deployment/test-app --from=secret/test-app
 ```
 
 ```bash
-# Chave específica
+# Definir/atualizar variáveis de ambiente no recurso
 # oc set env <resource-name>/test-app minhachave=valor --from=configmap/test-app
 oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ```

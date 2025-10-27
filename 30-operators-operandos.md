@@ -24,17 +24,17 @@ oc get pods -n openshift-operator-lifecycle-manager
 ```
 
 ```bash
-# OLM Operator
+# Listar pods filtrados por label
 oc get pods -n openshift-operator-lifecycle-manager -l app=olm-operator
 ```
 
 ```bash
-# Catalog Operator
+# Listar pods filtrados por label
 oc get pods -n openshift-operator-lifecycle-manager -l app=catalog-operator
 ```
 
 ```bash
-# Packageserver
+# Listar pods filtrados por label
 oc get pods -n openshift-operator-lifecycle-manager -l app=packageserver
 ```
 
@@ -67,19 +67,19 @@ oc get catalogsource redhat-marketplace -n openshift-marketplace
 ```
 
 ```bash
-# Descrever catalog
+# Exibir detalhes completos do recurso
 # oc describe catalogsource <resource-name>operators -n <namespace>
 oc describe catalogsource redhat-operators -n openshift-marketplace
 ```
 
 ```bash
-# Ver imagem do catalog
+# Exibir recurso "redhat-operators" em formato JSON
 # oc get catalogsource <resource-name>operators -n <namespace> -o jsonpath='{.spec.image}'
 oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
 ```
 
 ```bash
-# Status do catalog
+# Listar recurso com colunas customizadas
 oc get catalogsource -n openshift-marketplace -o custom-columns=NAME:.metadata.name,STATUS:.status.connectionState.lastObservedState
 ```
 
@@ -95,25 +95,25 @@ oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 ```
 
 ```bash
-# Descrever packagemanifest
+# Exibir detalhes completos do recurso
 # oc describe packagemanifest <resource-name>operator -n <namespace>
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
 ```
 
 ```bash ignore-test
-# Ver channels disponíveis
+# Exibir recurso "local-storage-operator" em formato JSON
 # oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[*].name}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
 ```
 
 ```bash ignore-test
-# Ver versão do channel
+# Exibir recurso "local-storage-operator" em formato JSON
 # oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 ```
 
 ```bash
-# Ver default channel
+# Exibir recurso "local-storage-operator" em formato JSON
 # oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.defaultChannel}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
 ```
@@ -177,13 +177,13 @@ oc get pods -n <operator-namespace>
 
 ### Exemplo: Elasticsearch Operator
 ```bash ignore-test
-# Criar namespace
+# Criar novo recurso
 # oc create namespace <namespace-name>
 oc create namespace openshift-operators-redhat
 ```
 
 ```bash ignore-test
-# Subscription
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -228,12 +228,12 @@ oc get installplan <plan-name> -n <namespace> -o jsonpath='{.status.phase}'
 
 ### OperatorGroup
 ```bash
-# Listar OperatorGroups
+# Listar recurso de todos os namespaces do cluster
 oc get operatorgroups -A
 ```
 
 ```bash ignore-test
-# OperatorGroup para namespace único
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -247,7 +247,7 @@ EOF
 ```
 
 ```bash ignore-test
-# OperatorGroup para múltiplos namespaces
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -263,7 +263,7 @@ EOF
 ```
 
 ```bash ignore-test
-# OperatorGroup cluster-wide (sem targetNamespaces)
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -290,19 +290,19 @@ oc get crd | grep ingresscontrollers
 ```
 
 ```bash
-# Descrever CRD
+# Exibir detalhes completos do recurso
 # oc describe crd <resource-name>.operator.openshift.io
 oc describe crd ingresscontrollers.operator.openshift.io
 ```
 
 ```bash
-# Ver spec do CRD
+# Exibir recurso "ingresscontrollers.operator.openshift.io" em formato YAML
 # oc get crd <resource-name>.operator.openshift.io -o yaml
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
 ```
 
 ```bash
-# Ver versões suportadas
+# Exibir recurso "ingresscontrollers.operator.openshift.io" em formato JSON
 # oc get crd <resource-name>.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 ```
@@ -315,7 +315,7 @@ oc get $CSV_NAME -n <namespace> -o yaml | grep -A 50 alm-examples
 ```
 
 ```bash ignore-test
-# Criar CR (exemplo: Elasticsearch)
+# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: logging.openshift.io/v1
 kind: Elasticsearch
@@ -348,7 +348,7 @@ oc get <crd-resource-name>
 ```
 
 ```bash ignore-test
-# Com custom-columns
+# Listar recurso com colunas customizadas
 oc get elasticsearch -o custom-columns=NAME:.metadata.name,STATUS:.status.cluster.status
 ```
 
@@ -399,7 +399,7 @@ oc get <cr-type> <name>
 
 ### CSV (ClusterServiceVersion)
 ```bash
-# Listar CSVs
+# Listar recurso de todos os namespaces do cluster
 oc get csv -A
 ```
 
@@ -500,7 +500,7 @@ oc describe installplan <plan> -n <namespace>
 ```
 
 ```bash
-# Logs do OLM
+# Exibir logs do pod especificado
 # oc logs -n <namespace> deployment/olm-operator
 oc logs -n openshift-operator-lifecycle-manager deployment/olm-operator
 # oc logs -n <namespace> deployment/catalog-operator

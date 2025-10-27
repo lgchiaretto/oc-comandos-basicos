@@ -43,29 +43,29 @@ oc logs -n openshift-machine-config-operator $(oc get pods -n openshift-machine-
 ### Versão e Canal Atual
 
 ```bash
-# Verificar versão atual do cluster
+# Exibir versão e status de atualização do cluster
 oc get clusterversion
 ```
 
 ```bash
-# Verificar detalhes completos da versão
+# Exibir recurso "version" em formato YAML
 oc get clusterversion version -o yaml
 ```
 
 ```bash
-# Verificar canal de atualização configurado
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
 ```bash
-# Verificar versão desejada (target)
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
 ```
 
 ### Status do Upgrade
 
 ```bash
-# Verificar progresso do upgrade
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")]}{"\n"}' | jq
 ```
 
@@ -75,34 +75,34 @@ oc adm upgrade
 ```
 
 ```bash
-# Histórico de upgrades
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq
 ```
 
 ```bash
-# Verificar percentual de conclusão
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
 ```
 
 ### Condições de Saúde
 
 ```bash
-# Verificar todas as condições do cluster version
+# Exibir recurso em formato JSON
 oc get clusterversion -o json | jq '.items[0].status.conditions'
 ```
 
 ```bash
-# Verificar condição Available
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Available")]}{"\n"}' | jq
 ```
 
 ```bash
-# Verificar condição Failing
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Failing")]}{"\n"}' | jq
 ```
 
 ```bash
-# Verificar condição RetrieveUpdatesFailing
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="RetrieveUpdatesFailing")]}{"\n"}' | jq
 ```
 
@@ -118,13 +118,13 @@ oc get pods -n openshift-cluster-version
 ```
 
 ```bash
-# Logs do CVO
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> deployments/cluster-version-operator --tail=100
 oc logs -n openshift-cluster-version deployments/cluster-version-operator --tail=100
 ```
 
 ```bash ignore-test
-# Logs do CVO em tempo real
+# Acompanhar logs em tempo real do pod
 # oc logs -n <namespace> deployments/cluster-version-operator -f
 oc logs -n openshift-cluster-version deployments/cluster-version-operator -f
 ```
@@ -137,18 +137,17 @@ oc get all -n openshift-cluster-version
 ### Overrides do CVO
 
 ```bash
-# Verificar se há operadores com override (pausados)
+# Exibir recurso "version" em formato JSON
 oc get clusterversion version -o json | jq '.spec.overrides'
 ```
 
 ```bash
-# Listar operadores em override
+# Exibir recurso "version" em formato JSON
 oc get clusterversion version -o jsonpath='{.spec.overrides[*].name}{"\n"}'
 ```
 
 ```bash ignore-test
-# Remover override de um operador específico
-# CUIDADO: Só faça isso se souber o que está fazendo
+# Aplicar JSON patch ao recurso
 oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/overrides"}]'
 ```
 
@@ -159,22 +158,22 @@ oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/ov
 ### Status Geral dos Operadores
 
 ```bash
-# Listar todos os cluster operators
+# Listar status de todos os cluster operators
 oc get co
 ```
 
 ```bash
-# Operadores que não estão Available
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
 ```bash
-# Operadores que estão Degraded
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
 ```bash
-# Operadores que estão Progressing
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 ```
 
@@ -191,12 +190,12 @@ oc get co authentication -o yaml
 ```
 
 ```bash
-# Mensagens de erro de um operador
+# Exibir cluster operator "authentication" em formato JSON
 oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}{"\n"}'
 ```
 
 ```bash
-# Versão atual vs desejada de um operador
+# Exibir cluster operator "authentication" em formato JSON
 oc get co authentication -o jsonpath='Atual: {.status.versions[0].version}{"\n"}Desejada: {.status.desiredVersion}{"\n"}'
 ```
 
@@ -211,13 +210,13 @@ done
 ```
 
 ```bash
-# Verificar Machine Config Operator
+# Exibir cluster operator "machine-config" em formato YAML
 # oc get co <resource-name>config -o yaml
 oc get co machine-config -o yaml
 ```
 
 ```bash
-# Verificar Network Operator
+# Exibir cluster operator "network" em formato YAML
 oc get co network -o yaml
 ```
 
@@ -228,7 +227,7 @@ oc get co network -o yaml
 ### Status dos Nodes
 
 ```bash
-# Listar todos os nodes
+# Listar todos os nodes do cluster
 oc get nodes
 ```
 
@@ -238,7 +237,7 @@ oc get nodes | grep -v Ready
 ```
 
 ```bash
-# Verificar labels dos nodes
+# Listar nodes exibindo todas as labels
 oc get nodes --show-labels
 ```
 
@@ -250,17 +249,17 @@ oc describe node <node-name> | grep -A 10 Conditions
 ### Versões dos Nodes
 
 ```bash
-# Verificar versões do kubelet em cada node
+# Exibir nodes em formato JSON
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
 ```
 
 ```bash
-# Verificar OS dos nodes
+# Exibir nodes em formato JSON
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.osImage}{"\n"}{end}'
 ```
 
 ```bash
-# Nodes que ainda não foram atualizados
+# Listar nodes com informações detalhadas
 oc get nodes -o wide
 ```
 
@@ -276,34 +275,34 @@ oc get mcp
 ```
 
 ```bash
-# Verificar MCP master
+# Exibir recurso "master" em formato YAML
 oc get mcp master -o yaml
 ```
 
 ```bash
-# Verificar MCP worker
+# Exibir recurso "worker" em formato YAML
 oc get mcp worker -o yaml
 ```
 
 ```bash
-# MCPs que estão atualizando
+# Exibir recurso em formato JSON
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name'
 ```
 
 ```bash
-# MCPs que estão degraded
+# Exibir recurso em formato JSON
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
 ### Progresso da Atualização dos MCPs
 
 ```bash
-# Verificar progresso de atualização dos workers
+# Exibir recurso "worker" em formato JSON
 oc get mcp worker -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
 ```
 
 ```bash
-# Verificar progresso de atualização dos masters
+# Exibir recurso "master" em formato JSON
 oc get mcp master -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
 ```
 
@@ -320,7 +319,7 @@ oc get mc
 ```
 
 ```bash
-# Verificar machine config atual do pool
+# Exibir recurso "worker" em formato JSON
 oc get mcp worker -o jsonpath='{.status.configuration.name}{"\n"}'
 ```
 
@@ -336,25 +335,25 @@ oc get mc <mc-name> -o yaml
 ### Logs dos Componentes Críticos
 
 ```bash
-# Logs do kube-apiserver
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> -l app=openshift-kube-apiserver --tail=100
 oc logs -n openshift-kube-apiserver -l app=openshift-kube-apiserver --tail=100
 ```
 
 ```bash
-# Logs do etcd
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> -l app=etcd --tail=100
 oc logs -n openshift-etcd -l app=etcd --tail=100
 ```
 
 ```bash
-# Logs do machine-config-operator
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> -l k8s-app=machine-config-operator --tail=100
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-operator --tail=100
 ```
 
 ```bash
-# Logs do machine-config-daemon (MCD)
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> -l k8s-app=machine-config-daemon --tail=50
 oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --tail=50
 ```
@@ -362,34 +361,34 @@ oc logs -n openshift-machine-config-operator -l k8s-app=machine-config-daemon --
 ### Events do Cluster
 
 ```bash
-# Events recentes de todos os namespaces
+# Listar eventos de todos os namespaces do cluster
 oc get events -A --sort-by='.lastTimestamp' | tail -50
 ```
 
 ```bash
-# Events de warning
+# Listar eventos de todos os namespaces do cluster
 oc get events -A --field-selector type=Warning
 ```
 
 ```bash
-# Events de um namespace específico
+# Listar eventos ordenados por campo específico
 oc get events -n openshift-cluster-version --sort-by='.lastTimestamp'
 ```
 
 ### Must-Gather para Upgrade
 
 ```bash ignore-test
-# Coletar must-gather para análise de upgrade
+# Coletar dados de diagnóstico em diretório específico
 oc adm must-gather --dest-dir=/tmp/must-gather-upgrade
 ```
 
 ```bash ignore-test
-# Must-gather com foco em network (se suspeitar de problemas de rede)
+# Coletar dados de diagnóstico em diretório específico
 oc adm must-gather --image=$(oc adm release info --image-for=network-tools) --dest-dir=/tmp/must-gather-network
 ```
 
 ```bash ignore-test
-# Must-gather para etcd
+# Coletar dados de diagnóstico em diretório específico
 oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/tmp/must-gather-etcd
 ```
 
@@ -400,51 +399,51 @@ oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/t
 ### Verificar Bloqueios de Upgrade
 
 ```bash
-# Verificar se há upgradeable=false
+# Exibir recurso em formato JSON
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Upgradeable")]}{"\n"}' | jq
 ```
 
 ```bash
-# Listar operadores que bloqueiam upgrade
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | .metadata.name'
 ```
 
 ```bash
-# Verificar razão do bloqueio
+# Exibir cluster operator em formato JSON
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | {name: .metadata.name, reason: .status.conditions[] | select(.type=="Upgradeable") | .reason, message: .status.conditions[] | select(.type=="Upgradeable") | .message}'
 ```
 
 ### Recursos que Impedem Upgrade
 
 ```bash
-# Verificar pods em estado ruim
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -E 'Error|CrashLoopBackOff|ImagePullBackOff'
 ```
 
 ```bash
-# Verificar PVCs não vinculados
+# Listar persistent volume claim de todos os namespaces do cluster
 oc get pvc -A | grep Pending
 ```
 
 ```bash
-# Verificar nodes com problemas
+# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
 ```bash ignore-test
-# Verificar se há pods evicted
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep Evicted
 ```
 
 ### Resource Quota e Limits
 
 ```bash
-# Verificar resource quotas que podem estar bloqueando
+# Listar recurso de todos os namespaces do cluster
 oc get resourcequotas -A
 ```
 
 ```bash
-# Verificar limit ranges
+# Listar recurso de todos os namespaces do cluster
 oc get limitranges -A
 ```
 
@@ -467,12 +466,12 @@ Em caso de falha, não tente reverter o processoee o procedimento correto é abr
 ### Limpeza de Recursos Problemáticos
 
 ```bash ignore-test
-# Remover pods failed/evicted
+# Deletar o pods especificado
 oc delete pods -A --field-selector=status.phase=Failed
 ```
 
 ```bash ignore-test
-# Remover completed jobs antigos
+# Deletar o recurso especificado
 oc delete jobs -A --field-selector=status.successful=1
 ```
 
@@ -483,17 +482,17 @@ oc delete jobs -A --field-selector=status.successful=1
 ### 1. Verificações Iniciais
 
 ```bash
-# Status geral do cluster
+# Exibir versão e status de atualização do cluster
 oc get clusterversion
 ```
 
 ```bash
-# Verificar cluster operators
+# Listar status de todos os cluster operators
 oc get co
 ```
 
 ```bash
-# Verificar nodes
+# Listar todos os nodes do cluster
 oc get nodes
 ```
 
@@ -510,13 +509,13 @@ oc get co | grep -i false
 ### 2. Análise de Logs
 
 ```bash
-# CVO logs
+# Exibir últimas N linhas dos logs
 # oc logs -n <namespace> deployment/cluster-version-operator --tail=200
 oc logs -n openshift-cluster-version deployment/cluster-version-operator --tail=200
 ```
 
 ```bash ignore-test
-# Operador com problema
+# Exibir cluster operator "authentication" em formato YAML
 oc get co authentication -o yaml
 ```
 
@@ -526,7 +525,7 @@ oc logs -n <namespace> <pod-name> --tail=100
 ```
 
 ```bash
-# Events recentes
+# Listar eventos de todos os namespaces do cluster
 oc get events -A --sort-by='.lastTimestamp' | tail -100
 ```
 
@@ -539,19 +538,19 @@ oc adm top nodes
 ```
 
 ```bash
-# Pods com problemas
+# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep -v Running | grep -v Completed
 ```
 
 ```bash
-# Verificar se há recursos suficientes
+# Exibir detalhes completos do nodes
 oc describe nodes | grep -A 5 "Allocated resources"
 ```
 
 ### 4. Ações Corretivas Comuns
 
 ```bash ignore-test
-# Aprovar CSRs pendentes
+# Aprovar Certificate Signing Request (CSR)
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
@@ -623,12 +622,12 @@ oc adm top pods -A --sort-by=memory
 ```
 
 ```bash
-# Verificar persistent volumes
+# Listar todos os Persistent Volumes do cluster
 oc get pv
 ```
 
 ```bash
-# Verificar persistent volume claims
+# Listar persistent volume claim de todos os namespaces do cluster
 oc get pvc -A
 ```
 
