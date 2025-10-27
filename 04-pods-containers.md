@@ -34,9 +34,12 @@ Este documento contém comandos para gerenciar pods e containers no OpenShift.
 
 ### Criar e Deletar
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+* Essa imagem é uma copia da docker.io/nicolaka/netshoot
+```
+
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
-# Essa imagem é uma copia da docker.io/nicolaka/netshoot
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: Pod
@@ -60,92 +63,140 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f pod.yaml
 ```
 
+```markdown
+**Ação:** Deletar o recurso especificado
+**Exemplo:** `oc delete pod <resource-name>`
+```
+
 ```bash ignore-test
-# Deletar o recurso especificado
-# oc delete pod <resource-name>
 oc delete pod my-pod
 ```
 
+```markdown
+**Ação:** Deletar recurso forçadamente (sem período de espera)
+**Exemplo:** `oc delete pod <resource-name>pod --grace-period=0 --force`
+```
+
 ```bash ignore-test
-# Deletar recurso forçadamente (sem período de espera)
-# oc delete pod <resource-name>pod --grace-period=0 --force
 oc delete pod my-pod --grace-period=0 --force
 ```
 
+```markdown
+**Ação:** Deletar pods que correspondem ao seletor de label
+```
+
 ```bash
-# Deletar pods que correspondem ao seletor de label
 oc delete pods -l app=test-app
 ```
 
 ### Listar Pods
+```markdown
+**Ação:** Listar todos os pods do namespace atual
+```
+
 ```bash
-# Listar todos os pods do namespace atual
 oc get pods
 ```
 
+```markdown
+**Ação:** Listar todos os pods de todos os namespaces do cluster
+```
+
 ```bash
-# Listar todos os pods de todos os namespaces do cluster
 oc get pods -A
 ```
 
+```markdown
+**Ação:** Listar pods com informações adicionais (node, IP, etc)
+```
+
 ```bash
-# Listar pods com informações adicionais (node, IP, etc)
 oc get pods -o wide
 ```
 
+```markdown
+**Ação:** Listar pods mostrando todas as labels associadas
+```
+
 ```bash
-# Listar pods mostrando todas as labels associadas
 oc get pods --show-labels
 ```
 
+```markdown
+**Ação:** Listar pods filtrados por label
+```
+
 ```bash
-# Listar pods filtrados por label
 oc get pods -l app=test-app
 ```
 
+```markdown
+**Ação:** Listar pods em um projeto específico
+**Exemplo:** `oc get pods -n <namespace>`
+```
+
 ```bash
-# Listar pods em um projeto específico
-# oc get pods -n <namespace>
 oc get pods -n development
 ```
 
+```markdown
+**Ação:** Listar pods com colunas customizadas
+```
+
 ```bash
-# Listar pods com colunas customizadas
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe pod <resource-name>`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe pod <resource-name>
 oc describe pod my-pod
 ```
 
+```markdown
+**Ação:** Exibir recurso "my-pod" em formato YAML
+**Exemplo:** `oc get pod <resource-name>pod -o yaml`
+```
+
 ```bash
-# Exibir recurso "my-pod" em formato YAML
-# oc get pod <resource-name>pod -o yaml
 oc get pod my-pod -o yaml
 ```
 
+```markdown
+**Ação:** Exibir recurso "my-pod" em formato JSON
+**Exemplo:** `oc get pod <resource-name>pod -o json`
+```
+
 ```bash
-# Exibir recurso "my-pod" em formato JSON
-# oc get pod <resource-name>pod -o json
 oc get pod my-pod -o json
 ```
 
-```bash
-# Exibir recurso "my-pod" em formato JSON
-# oc get pod <resource-name>pod -o jsonpath='{.status.phase}'
-oc get pod my-pod -o jsonpath='{.status.phase}'
+```markdown
+**Ação:** Exibir recurso "my-pod" em formato JSON
+**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.phase}'`
 ```
 
 ```bash
-# Aguardar pod ficar no estado Ready
-# oc wait --for=condition=Ready pod/<pod-name>
+oc get pod my-pod -o jsonpath='{.status.phase}'
+```
+
+```markdown
+**Ação:** Aguardar pod ficar no estado Ready
+**Exemplo:** `oc wait --for=condition=Ready pod/<pod-name>`
+```
+
+```bash
 oc wait --for=condition=Ready pod/my-pod
 ```
 
@@ -154,81 +205,123 @@ oc wait --for=condition=Ready pod/my-pod
 ## Interação com Pods
 
 ### Acessar Shell
+```markdown
+**Ação:** Abrir shell interativo dentro do pod
+```
+
 ```bash ignore-test
-# Abrir shell interativo dentro do pod
 oc rsh my-pod
 ```
 
+```markdown
+**Ação:** Executar comando em um pod
+```
+
 ```bash ignore-test
-# Executar comando em um pod
 oc exec my-pod -- <comando>
 ```
 
+```markdown
+**Ação:** Executar comando interativo dentro do pod
+```
+
 ```bash
-# Executar comando interativo dentro do pod
 oc exec -it my-pod -- /bin/date
 ```
 
+```markdown
+**Ação:** Executar comando em container específico do pod
+**Exemplo:** `oc exec my-pod -c <container-name> -- /bin/date`
+```
+
 ```bash
-# Executar comando em container específico do pod
-# oc exec my-pod -c <container-name> -- /bin/date
 oc exec my-pod -c my-container -- /bin/date
 ```
 
+```markdown
+**Ação:** Exemplo prático
+```
+
 ```bash ignore-test
-# Exemplo prático
 oc exec -it mypod -- /bin/sh
 ```
 
 ### Copiar Arquivos
+```markdown
+**Ação:** Copiar arquivo para o pod
+```
+
 ```bash ignore-test
-# Copiar arquivo para o pod
 oc cp <arquivo-local> my-pod:<caminho-no-pod>
 ```
 
+```markdown
+**Ação:** Copiar arquivo do pod
+```
+
 ```bash ignore-test
-# Copiar arquivo do pod
 oc cp my-pod:<caminho-no-pod> <arquivo-local>
 ```
 
+```markdown
+**Ação:** Copiar arquivo/diretório da máquina local para o pod
+```
+
 ```bash ignore-test
-# Copiar arquivo/diretório da máquina local para o pod
 oc cp /local/dir my-pod:/container/dir
 ```
 
-```bash ignore-test
-# Sincronizar diretórios entre máquina local e pod (requer rsync no pod)
-oc rsync /local/dir my-pod:/container/dir
+```markdown
+**Ação:** Sincronizar diretórios entre máquina local e pod (requer rsync no pod)
 ```
 
 ```bash ignore-test
-# Exemplo
+oc rsync /local/dir my-pod:/container/dir
+```
+
+```markdown
+**Ação:** Exemplo
+```
+
+```bash ignore-test
 oc cp ./config.json mypod:/etc/config/config.json
 ```
 
 ---
 
 ### Reiniciar Pods
+```markdown
+**Ação:** Reiniciar deployment (recria todos os pods)
+**Exemplo:** `oc rollout restart <resource-name>/test-app`
+```
+
 ```bash
-# Reiniciar deployment (recria todos os pods)
-# oc rollout restart <resource-name>/test-app
 oc rollout restart deployment/test-app
 ```
 
+```markdown
+**Ação:** Deletar o recurso especificado
+**Exemplo:** `oc delete pod <resource-name>`
+```
+
 ```bash ignore-test
-# Deletar o recurso especificado
-# oc delete pod <resource-name>
 oc delete pod my-pod
 ```
 
+```markdown
+**Ação:** Escalar deployment para zero (parar todos os pods)
+**Exemplo:** `oc scale deployment <deployment-name> --replicas=0`
+```
+
 ```bash
-# Escalar deployment para zero (parar todos os pods)
-# oc scale deployment <deployment-name> --replicas=0
 oc scale deployment test-app --replicas=0
 ```
+```markdown
+**Ação:** Ajustar número de réplicas do deployment/replicaset
+**Exemplo:** `oc scale deployment <deployment-name> --replicas=2`
+```
+
 ```bash
-# Ajustar número de réplicas do deployment/replicaset
-# oc scale deployment <deployment-name> --replicas=2
 oc scale deployment test-app --replicas=2
 ```
 ---
@@ -236,47 +329,71 @@ oc scale deployment test-app --replicas=2
 ## Debug e Troubleshooting
 
 ### Debug Interativo
+```markdown
+**Ação:** Criar cópia de pod para debug interativo
+**Exemplo:** `oc debug pod/<pod-name>`
+```
+
 ```bash ignore-test
-# Criar cópia de pod para debug interativo
-# oc debug pod/<pod-name>
 oc debug pod/my-pod
 ```
 
+```markdown
+**Ação:** Criar pod de debug com imagem customizada
+**Exemplo:** `oc debug pod/<pod-name> --image=quay.io/chiaretto/netshoot`
+```
+
 ```bash ignore-test
-# Criar pod de debug com imagem customizada
-# oc debug pod/<pod-name> --image=quay.io/chiaretto/netshoot
 oc debug pod/my-pod-debug --image=quay.io/chiaretto/netshoot
 ```
 
+```markdown
+**Ação:** Criar pod temporário interativo (removido ao sair)
+```
+
 ```bash
-# Criar pod temporário interativo (removido ao sair)
 oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- hostname
 ```
 
+```markdown
+**Ação:** Criar pod temporário interativo (removido ao sair)
+```
+
 ```bash ignore-test
-# Criar pod temporário interativo (removido ao sair)
 oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- sh
 ```
 
 ### Verificações
+```markdown
+**Ação:** Listar pods que não estão em estado Running
+```
+
 ```bash
-# Listar pods que não estão em estado Running
 oc get pods --field-selector=status.phase!=Running
 ```
 
+```markdown
+**Ação:** Listar pods em estado Pending (aguardando)
+```
+
 ```bash
-# Listar pods em estado Pending (aguardando)
 oc get pods --field-selector=status.phase=Pending
 ```
 
-```bash
-# Listar pods que falharam
-oc get pods --field-selector=status.phase=Failed
+```markdown
+**Ação:** Listar pods que falharam
 ```
 
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe pod <resource-name> | grep -A 10 "Events:"
+oc get pods --field-selector=status.phase=Failed
+```
+
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe pod <resource-name> | grep -A 10 "Events:"`
+```
+
+```bash
 oc describe pod my-pod | grep -A 10 "Events:"
 ```
 
@@ -285,57 +402,87 @@ oc describe pod my-pod | grep -A 10 "Events:"
 ## Logs
 
 ### Ver Logs
+```markdown
+**Ação:** Exibir logs do pod especificado
+```
+
 ```bash ignore-test
-# Exibir logs do pod especificado
 oc logs my-pod
 ```
 
+```markdown
+**Ação:** Acompanhar logs em tempo real do pod
+```
+
 ```bash ignore-test
-# Acompanhar logs em tempo real do pod
 oc logs -f my-pod
 ```
 
+```markdown
+**Ação:** Exibir logs de container específico do pod
+**Exemplo:** `oc logs my-pod -c <container-name>`
+```
+
 ```bash ignore-test
-# Exibir logs de container específico do pod
-# oc logs my-pod -c <container-name>
 oc logs my-pod -c my-container
 ```
 
+```markdown
+**Ação:** Exibir logs da instância anterior do container (após crash)
+```
+
 ```bash ignore-test
-# Exibir logs da instância anterior do container (após crash)
 oc logs my-pod --previous
 ```
 
+```markdown
+**Ação:** Ver últimas N linhas dos logs
+```
+
 ```bash ignore-test
-# Ver últimas N linhas dos logs
 oc logs my-pod --tail=<numero>
 ```
 
+```markdown
+**Ação:** Exibir logs a partir de um período de tempo
+```
+
 ```bash ignore-test
-# Exibir logs a partir de um período de tempo
 oc logs my-pod --since=1h
 ```
 
+```markdown
+**Ação:** Exibir logs de todos os pods que correspondem ao label
+```
+
 ```bash
-# Exibir logs de todos os pods que correspondem ao label
 oc logs -l app=test-app
 ```
 
 ## Monitoramento e Eventos
 
 ### Ver Eventos
+```markdown
+**Ação:** Listar eventos ordenados por campo específico
+```
+
 ```bash
-# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp'
 ```
 
-```bash
-# Listar eventos ordenados por campo específico
-oc get events -n development --sort-by='.lastTimestamp'
+```markdown
+**Ação:** Listar eventos ordenados por campo específico
 ```
 
 ```bash
-# Listar eventos ordenados por campo específico
+oc get events -n development --sort-by='.lastTimestamp'
+```
+
+```markdown
+**Ação:** Listar eventos ordenados por campo específico
+```
+
+```bash
 oc get events -n development --sort-by='.lastTimestamp' | head -10
 ```
 

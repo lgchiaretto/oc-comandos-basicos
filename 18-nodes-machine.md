@@ -18,133 +18,208 @@ Este documento contém comandos para gerenciar nodes e configurações de máqui
 ## Gerenciar Nodes
 
 ### Listar e Verificar
+```markdown
+**Ação:** Listar todos os nodes do cluster
+```
+
 ```bash
-# Listar todos os nodes do cluster
 oc get nodes
 ```
 
+```markdown
+**Ação:** Listar nodes exibindo todas as labels
+```
+
 ```bash
-# Listar nodes exibindo todas as labels
 oc get nodes --show-labels
 ```
 
+```markdown
+**Ação:** Listar nodes com informações detalhadas
+```
+
 ```bash
-# Listar nodes com informações detalhadas
 oc get nodes -o wide
 ```
 
+```markdown
+**Ação:** Descrever node
+```
+
 ```bash ignore-test
-# Descrever node
 oc describe node <node-name>
 ```
 
+```markdown
+**Ação:** Ver capacidade e uso
+**Exemplo:** `oc adm top <resource-name>`
+```
+
 ```bash
-# Ver capacidade e uso
-# oc adm top <resource-name>
 oc adm top nodes
 ```
 
+```markdown
+**Ação:** Ver versão do node
+```
+
 ```bash ignore-test
-# Ver versão do node
 oc get node <node-name> -o jsonpath='{.status.nodeInfo.kubeletVersion}'
 ```
 
+```markdown
+**Ação:** Listar nodes filtrados por label
+```
+
 ```bash
-# Listar nodes filtrados por label
 oc get nodes -l node-role.kubernetes.io/master
 oc get nodes -l node-role.kubernetes.io/worker
 ```
 
 ### Labels e Taints
+```markdown
+**Ação:** Adicionar label
+```
+
 ```bash ignore-test
-# Adicionar label
 oc label node <node-name> <key>=<value>
 ```
 
+```markdown
+**Ação:** Remover label
+```
+
 ```bash ignore-test
-# Remover label
 oc label node <node-name> <key>-
 ```
 
+```markdown
+**Ação:** Ver taints
+```
+
 ```bash ignore-test
-# Ver taints
 oc describe node <node-name> | grep Taints
 ```
 
+```markdown
+**Ação:** Adicionar taint
+```
+
 ```bash ignore-test
-# Adicionar taint
 oc adm taint nodes <node-name> key=value:NoSchedule
 ```
 
-```bash ignore-test
-# Remover taint
-oc adm taint nodes <node-name> key:NoSchedule-
+```markdown
+**Ação:** Remover taint
 ```
 
 ```bash ignore-test
-# Adicionar role label
+oc adm taint nodes <node-name> key:NoSchedule-
+```
+
+```markdown
+**Ação:** Adicionar role label
+```
+
+```bash ignore-test
 oc label node <node-name> node-role.kubernetes.io/<role>=
 ```
 
 ### Drain e Cordon
+```markdown
+**Ação:** Cordon (desabilitar scheduling)
+```
+
 ```bash ignore-test
-# Cordon (desabilitar scheduling)
 oc adm cordon <node-name>
 ```
 
+```markdown
+**Ação:** Uncordon (habilitar scheduling)
+```
+
 ```bash ignore-test
-# Uncordon (habilitar scheduling)
 oc adm uncordon <node-name>
 ```
 
+```markdown
+**Ação:** Drain (esvaziar node)
+```
+
 ```bash ignore-test
-# Drain (esvaziar node)
 oc adm drain <node-name>
 ```
 
+```markdown
+**Ação:** Drain com flags
+```
+
 ```bash ignore-test
-# Drain com flags
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ```
 
-```bash ignore-test
-# Drain com grace period
-oc adm drain <node-name> --grace-period=600
+```markdown
+**Ação:** Drain com grace period
 ```
 
 ```bash ignore-test
-# Drain forçado (cuidado!)
+oc adm drain <node-name> --grace-period=600
+```
+
+```markdown
+**Ação:** Drain forçado (cuidado!)
+```
+
+```bash ignore-test
 oc adm drain <node-name> --force --delete-emptydir-data --ignore-daemonsets
 ```
 
 ### Debug de Nodes
+```markdown
+**Ação:** Debug interativo em node
+```
+
 ```bash ignore-test
-# Debug interativo em node
 oc debug node/<node-name>
 ```
 
+```markdown
+**Ação:** No shell de debug, acessar filesystem do host
+```
+
 ```bash
-# No shell de debug, acessar filesystem do host
 chroot /host
 ```
 
+```markdown
+**Ação:** Ver logs do kubelet
+```
+
 ```bash ignore-test
-# Ver logs do kubelet
 oc adm node-logs <node-name> -u kubelet
 ```
 
+```markdown
+**Ação:** Ver logs do CRI-O
+```
+
 ```bash ignore-test
-# Ver logs do CRI-O
 oc adm node-logs <node-name> -u crio
 ```
 
-```bash ignore-test
-# Ver journal do node
-oc adm node-logs <node-name> --tail=100
+```markdown
+**Ação:** Ver journal do node
 ```
 
 ```bash ignore-test
-# Executar comando em node
+oc adm node-logs <node-name> --tail=100
+```
+
+```markdown
+**Ação:** Executar comando em node
+```
+
+```bash ignore-test
 oc debug node/<node-name> -- chroot /host <comando>
 ```
 
@@ -153,69 +228,105 @@ oc debug node/<node-name> -- chroot /host <comando>
 ## Machine Config
 
 ### MachineConfigs
+```markdown
+**Ação:** Listar MachineConfigs
+```
+
 ```bash
-# Listar MachineConfigs
 oc get machineconfigs
 oc get mc
 ```
 
+```markdown
+**Ação:** Descrever MachineConfig
+```
+
 ```bash ignore-test
-# Descrever MachineConfig
 oc describe mc <mc-name>
 ```
 
+```markdown
+**Ação:** Ver conteúdo
+```
+
 ```bash ignore-test
-# Ver conteúdo
 oc get mc <mc-name> -o yaml
 ```
 
+```markdown
+**Ação:** MachineConfigs renderizados
+```
+
 ```bash
-# MachineConfigs renderizados
 oc get mc | grep rendered
 ```
 
 ### MachineConfigPools
+```markdown
+**Ação:** Listar MachineConfigPools
+```
+
 ```bash
-# Listar MachineConfigPools
 oc get machineconfigpools
 oc get mcp
 ```
 
-```bash
-# Status dos pools
-oc get mcp
+```markdown
+**Ação:** Status dos pools
 ```
 
 ```bash
-# Master pool
-# oc get mcp <resource-name>
+oc get mcp
+```
+
+```markdown
+**Ação:** Master pool
+**Exemplo:** `oc get mcp <resource-name>`
+```
+
+```bash
 oc get mcp master
 ```
 
+```markdown
+**Ação:** Worker pool
+**Exemplo:** `oc get mcp <resource-name>`
+```
+
 ```bash
-# Worker pool
-# oc get mcp <resource-name>
 oc get mcp worker
 ```
 
+```markdown
+**Ação:** Descrever pool
+```
+
 ```bash ignore-test
-# Descrever pool
 oc describe mcp <pool-name>
 ```
 
+```markdown
+**Ação:** Ver progresso de update
+```
+
 ```bash
-# Ver progresso de update
 oc get mcp
 ```
 
+```markdown
+**Ação:** Ver qual MC está sendo aplicado
+```
+
 ```bash ignore-test
-# Ver qual MC está sendo aplicado
 oc get mcp <pool-name> -o jsonpath='{.status.configuration.name}'
 ```
 
 ### Criar MachineConfig
+```markdown
+* Exemplo: criar arquivo no node
+```
+
 ```bash
-# Exemplo: criar arquivo no node
 cat <<EOF | oc apply -f -
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfig
@@ -236,8 +347,11 @@ spec:
 EOF
 ```
 
+```markdown
+* Exemplo: adicionar registry inseguro
+```
+
 ```bash ignore-test
-# Exemplo: adicionar registry inseguro
 cat <<EOF | oc apply -f -
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfig
@@ -259,18 +373,27 @@ EOF
 ```
 
 ### Pause de Updates
+```markdown
+**Ação:** Pausar MachineConfigPool
+```
+
 ```bash ignore-test
-# Pausar MachineConfigPool
 oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":true}}'
 ```
 
-```bash ignore-test
-# Despausar
-oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":false}}'
+```markdown
+**Ação:** Despausar
 ```
 
 ```bash ignore-test
-# Ver se está pausado
+oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":false}}'
+```
+
+```markdown
+**Ação:** Ver se está pausado
+```
+
+```bash ignore-test
 oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
 ```
 
@@ -279,65 +402,101 @@ oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
 ## Machine Sets
 
 ### Gerenciar MachineSets
+```markdown
+**Ação:** Listar MachineSets
+```
+
 ```bash
-# Listar MachineSets
 oc get machinesets -n openshift-machine-api
 ```
 
+```markdown
+**Ação:** Descrever MachineSet
+```
+
 ```bash ignore-test
-# Descrever MachineSet
 oc describe machineset <name> -n openshift-machine-api
 ```
 
+```markdown
+**Ação:** Ver réplicas
+```
+
 ```bash ignore-test
-# Ver réplicas
 oc get machineset <name> -n openshift-machine-api -o jsonpath='{.spec.replicas}'
 ```
 
+```markdown
+**Ação:** Escalar MachineSet
+```
+
 ```bash ignore-test
-# Escalar MachineSet
 oc scale machineset <name> -n openshift-machine-api --replicas=<N>
 ```
 
+```markdown
+**Ação:** Ver Machines
+```
+
 ```bash
-# Ver Machines
 oc get machines -n openshift-machine-api
 ```
 
+```markdown
+**Ação:** Descrever Machine
+```
+
 ```bash ignore-test
-# Descrever Machine
 oc describe machine <machine-name> -n openshift-machine-api
 ```
 
 ### Criar MachineSet
+```markdown
+**Ação:** Copiar existente
+```
+
 ```bash ignore-test
-# Copiar existente
 oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.yaml
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f new-machineset.yaml
 ```
 
+```markdown
+**Ação:** Verificar
+```
+
 ```bash
-# Verificar
 oc get machines -n openshift-machine-api
 ```
 
 ### Deletar Machines
+```markdown
+**Ação:** Deletar Machine (node será removido)
+```
+
 ```bash ignore-test
-# Deletar Machine (node será removido)
 oc delete machine <machine-name> -n openshift-machine-api
 ```
 
-```bash
-# Ver processo
-oc get machines -n openshift-machine-api
+```markdown
+**Ação:** Ver processo
 ```
 
 ```bash
-# Listar todos os nodes do cluster
+oc get machines -n openshift-machine-api
+```
+
+```markdown
+**Ação:** Listar todos os nodes do cluster
+```
+
+```bash
 oc get nodes
 ```
 
@@ -346,13 +505,19 @@ oc get nodes
 ## Node Maintenance
 
 ### Atualizar Node
-```bash ignore-test
-# 1. Cordon
-oc adm cordon <node-name>
+```markdown
+**Ação:** 1. Cordon
 ```
 
 ```bash ignore-test
-# 2. Drain
+oc adm cordon <node-name>
+```
+
+```markdown
+**Ação:** 2. Drain
+```
+
+```bash ignore-test
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ```
 
@@ -360,68 +525,104 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 # 3. Aplicar updates (MachineConfig ou manual)
 # Node vai reiniciar automaticamente se MachineConfig mudou
 ```
+```markdown
+**Ação:** Listar todos os nodes do cluster
+```
+
 ```bash
-# Listar todos os nodes do cluster
 oc get nodes
 ```
 
+```markdown
+**Ação:** 5. Uncordon
+```
+
 ```bash ignore-test
-# 5. Uncordon
 oc adm uncordon <node-name>
 ```
 
 ### Reboot de Nodes
+```markdown
+**Ação:** Via debug
+```
+
 ```bash ignore-test
-# Via debug
 oc debug node/<node-name>
 chroot /host
 systemctl reboot
 ```
 
+```markdown
+**Ação:** Listar todos os nodes do cluster
+```
+
 ```bash
-# Listar todos os nodes do cluster
 oc get nodes
 ```
 
 ### Remover Node
+```markdown
+**Ação:** 1. Drain
+```
+
 ```bash ignore-test
-# 1. Drain
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data --force
 ```
 
-```bash ignore-test
-# 2. Deletar node
-oc delete node <node-name>
+```markdown
+**Ação:** 2. Deletar node
 ```
 
 ```bash ignore-test
-# 3. Se usando Machine, deletar Machine também
+oc delete node <node-name>
+```
+
+```markdown
+**Ação:** 3. Se usando Machine, deletar Machine também
+```
+
+```bash ignore-test
 oc delete machine <machine-name> -n openshift-machine-api
 ```
 
 ### Health Checks
+```markdown
+**Ação:** Ver condições do node
+```
+
 ```bash ignore-test
-# Ver condições do node
 oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
+```markdown
+**Ação:** Exibir nodes em formato JSON
+```
+
 ```bash ignore-test
-# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
+```markdown
+**Ação:** Exibir nodes em formato JSON
+```
+
 ```bash ignore-test
-# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
-```bash ignore-test
-# Exibir nodes em formato JSON
-oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
+```markdown
+**Ação:** Exibir nodes em formato JSON
 ```
 
 ```bash ignore-test
-# Exibir nodes em formato JSON
+oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
+```
+
+```markdown
+**Ação:** Exibir nodes em formato JSON
+```
+
+```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'
 ```
 

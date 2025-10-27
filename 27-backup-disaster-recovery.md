@@ -21,8 +21,11 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 ## Backup de Aplicações
 
 ### Velero - Backup Tool
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -37,13 +40,19 @@ spec:
 EOF
 ```
 
-```bash ignore-test
-# Aguardar instalação
-oc get csv -n openshift-adp
+```markdown
+**Ação:** Aguardar instalação
 ```
 
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc get csv -n openshift-adp
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash ignore-test
 cat <<EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
 kind: DataProtectionApplication
@@ -79,8 +88,11 @@ EOF
 ## Backup de Dados
 
 ### Backup de PVCs
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
@@ -93,13 +105,19 @@ spec:
 EOF
 ```
 
-```bash
-# Verificar snapshot
-oc get volumesnapshot
+```markdown
+**Ação:** Verificar snapshot
 ```
 
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc get volumesnapshot
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -119,8 +137,11 @@ EOF
 ```
 
 ### Backup Manual de Dados em PVC
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: Pod
@@ -141,46 +162,70 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Aguardar condição específica do recurso
+**Exemplo:** `oc wait --for=condition=ready pod/<pod-name>`
+```
+
 ```bash ignore-test
-# Aguardar condição específica do recurso
-# oc wait --for=condition=ready pod/<pod-name>
 oc wait --for=condition=ready pod/backup-pod
 ```
 
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
 ```bash ignore-test
-# Executar comando dentro do pod especificado
 oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 ```
 
-```bash ignore-test
-# Copiar arquivo entre máquina local e pod
-oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
+```markdown
+**Ação:** Copiar arquivo entre máquina local e pod
 ```
 
 ```bash ignore-test
-# Deletar o recurso especificado
-# oc delete pod <resource-name>
+oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
+```
+
+```markdown
+**Ação:** Deletar o recurso especificado
+**Exemplo:** `oc delete pod <resource-name>`
+```
+
+```bash ignore-test
 oc delete pod backup-pod
 ```
 
 ### Backup de Database
+```markdown
+**Ação:** MySQL/MariaDB
+```
+
 ```bash ignore-test
-# MySQL/MariaDB
 oc exec <mysql-pod> -- mysqldump -u root -p<password> --all-databases > mysql-backup.sql
 ```
 
+```markdown
+**Ação:** PostgreSQL
+```
+
 ```bash ignore-test
-# PostgreSQL
 oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
 ```
 
-```bash ignore-test
-# MongoDB
-oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
+```markdown
+**Ação:** MongoDB
 ```
 
 ```bash ignore-test
-# Restore (exemplos)
+oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
+```
+
+```markdown
+**Ação:** Restore (exemplos)
+```
+
+```bash ignore-test
 oc exec -i <mysql-pod> -- mysql -u root -p<password> < mysql-backup.sql
 oc exec -i <postgres-pod> -- psql -U postgres < postgres-backup.sql
 oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
@@ -191,14 +236,20 @@ oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 ## Disaster Recovery
 
 ### Preparação para DR
+```markdown
+**Ação:** Checklist de preparação
+```
+
 ```bash ignore-test
-# Checklist de preparação
 cat > /tmp/dr-checklist.md << 'EOF'
 # Disaster Recovery Checklist
 ```
 
+```markdown
+**Ação:** # Backups Configurados
+```
+
 ```bash ignore-test
-## Backups Configurados
 - [ ] Etcd backup diário
 - [ ] Application manifests backup
 - [ ] PV snapshots ou backup
@@ -207,8 +258,11 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] Cluster configuration backup
 ```
 
+```markdown
+**Ação:** # Documentação
+```
+
 ```bash ignore-test
-## Documentação
 - [ ] Procedimentos de restore documentados
 - [ ] Lista de contatos de emergência
 - [ ] Diagrama de arquitetura atualizado
@@ -216,16 +270,22 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] RTO/RPO definidos por aplicação
 ```
 
+```markdown
+**Ação:** # Testes
+```
+
 ```bash ignore-test
-## Testes
 - [ ] Teste de restore de etcd
 - [ ] Teste de restore de aplicações
 - [ ] Teste de restore de dados
 - [ ] DR drill completo (anual)
 ```
 
+```markdown
+**Ação:** # Armazenamento
+```
+
 ```bash ignore-test
-## Armazenamento
 - [ ] Backups em localização offsite
 - [ ] Backups encriptados
 - [ ] Retenção de backups configurada
@@ -238,50 +298,74 @@ cat /tmp/dr-checklist.md
 ```
 
 ### Restore de Aplicação
+```markdown
+**Ação:** 1. Restore de namespace
+```
+
 ```bash ignore-test
-# 1. Restore de namespace
 tar xzf namespace-backup-myproject-*.tar.gz
 cd namespace-backup-myproject-*/
 ```
 
-```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
-oc apply -f namespace.yaml
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc apply -f namespace.yaml
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash ignore-test
 oc apply -f secrets.yaml
 oc apply -f configmaps.yaml
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f /tmp/persistentvolumeclaims.yaml
 ```
 
-```bash ignore-test
-# Listar todos os Persistent Volume Claims do namespace
-oc get pvc
+```markdown
+**Ação:** Listar todos os Persistent Volume Claims do namespace
 ```
 
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc get pvc
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash ignore-test
 oc apply -f /tmp/serviceaccounts.yaml
 oc apply -f /tmp/roles.yaml
 oc apply -f /tmp/rolebindings.yaml
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 oc apply -f /tmp/deployments.yaml
 oc apply -f /tmp/statefulsets.yaml
 oc apply -f /tmp/services.yaml
 oc apply -f /tmp/routes.yaml
 ```
 
+```markdown
+**Ação:** Listar todos os recursos principais do namespace
+```
+
 ```bash ignore-test
-# Listar todos os recursos principais do namespace
 oc get all
 ```
 

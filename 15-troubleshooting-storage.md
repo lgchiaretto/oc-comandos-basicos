@@ -38,94 +38,145 @@ EOF
 ```
 
 ### Diagnosticar PVC
+```markdown
+**Ação:** Listar todos os Persistent Volume Claims do namespace
+```
+
 ```bash
-# Listar todos os Persistent Volume Claims do namespace
 oc get pvc
 ```
 
+```markdown
+**Ação:** Exibir persistent volume claim em formato JSON
+```
+
 ```bash
-# Exibir persistent volume claim em formato JSON
 oc get pvc -o jsonpath='{.items[?(@.status.phase=="Pending")].metadata.name}'
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do persistent volume claim
+**Exemplo:** `oc describe pvc <resource-name>`
+```
+
 ```bash
-# Exibir detalhes completos do persistent volume claim
-# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 
+```markdown
+**Ação:** Listar eventos filtrados por campo específico
+```
+
 ```bash
-# Listar eventos filtrados por campo específico
 oc get events --field-selector involvedObject.name=test-app
 ```
 
-```bash
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'
-oc get pvc test-app -o jsonpath='{.spec.volumeName}'
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'`
 ```
 
 ```bash
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'
+oc get pvc test-app -o jsonpath='{.spec.volumeName}'
+```
+
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'`
+```
+
+```bash
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
 ### Diagnosticar PV
+```markdown
+**Ação:** Listar todos os Persistent Volumes do cluster
+```
+
 ```bash
-# Listar todos os Persistent Volumes do cluster
 oc get pv
 ```
 
+```markdown
+**Ação:** Exibir persistent volume em formato JSON
+```
+
 ```bash
-# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
+```markdown
+**Ação:** Exibir persistent volume em formato JSON
+```
+
 ```bash
-# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Failed")].metadata.name}'
 ```
 
+```markdown
+**Ação:** Descrever PV
+```
+
 ```bash ignore-test
-# Descrever PV
 oc describe pv <nome-do-pv>
 ```
 
-```bash ignore-test
-# Ver claim que está usando o PV
-oc get pv <nome-do-pv> -o jsonpath='{.spec.claimRef.name}'
+```markdown
+**Ação:** Ver claim que está usando o PV
 ```
 
 ```bash ignore-test
-# Ver access modes
+oc get pv <nome-do-pv> -o jsonpath='{.spec.claimRef.name}'
+```
+
+```markdown
+**Ação:** Ver access modes
+```
+
+```bash ignore-test
 oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 ```
 
 ### Pending PVC
+```markdown
+**Ação:** Exibir detalhes completos do persistent volume claim
+**Exemplo:** `oc describe pvc <resource-name> | grep -A 10 Events`
+```
+
 ```bash
-# Exibir detalhes completos do persistent volume claim
-# oc describe pvc <resource-name> | grep -A 10 Events
 oc describe pvc test-app | grep -A 10 Events
 ```
 
+```markdown
+**Ação:** Exibir persistent volume em formato JSON
+```
+
 ```bash
-# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
+```markdown
+**Ação:** Verificar StorageClass
+```
+
 ```bash
-# Verificar StorageClass
 oc get sc
 ```
 
-```bash ignore-test
-# Verificar se StorageClass existe
-oc get sc <storage-class-name>
+```markdown
+**Ação:** Verificar se StorageClass existe
 ```
 
 ```bash ignore-test
-# Ver provisioner
+oc get sc <storage-class-name>
+```
+
+```markdown
+**Ação:** Ver provisioner
+```
+
+```bash ignore-test
 oc get sc <storage-class-name> -o jsonpath='{.provisioner}'
 ```
 
@@ -134,24 +185,36 @@ oc get sc <storage-class-name> -o jsonpath='{.provisioner}'
 ## StorageClass
 
 ### Verificar StorageClasses
+```markdown
+**Ação:** Listar StorageClasses
+```
+
 ```bash
-# Listar StorageClasses
 oc get storageclass
 oc get sc
 ```
 
+```markdown
+**Ação:** Descrever StorageClass
+```
+
 ```bash ignore-test
-# Descrever StorageClass
 oc describe sc <nome-da-sc>
 ```
 
-```bash
-# Exibir storageclass em formato JSON
-oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
+```markdown
+**Ação:** Exibir storageclass em formato JSON
 ```
 
 ```bash
-# Listar storageclass com colunas customizadas
+oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
+```
+
+```markdown
+**Ação:** Listar storageclass com colunas customizadas
+```
+
+```bash
 oc get sc -o custom-columns=NAME:.metadata.name,PROVISIONER:.provisioner
 ```
 ignore-test
@@ -163,14 +226,20 @@ oc get sc <resource-name> -o yaml
 
 ### Problemas com StorageClass
 
+```markdown
+**Ação:** Ver CSI drivers
+```
+
 ```bash
-# Ver CSI drivers
 oc get csidrivers
 oc get csinodes
 ```
 
+```markdown
+**Ação:** Listar pods de todos os namespaces do cluster
+```
+
 ```bash
-# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep csi
 ```
 
@@ -179,108 +248,159 @@ oc get pods -A | grep csi
 ## Problemas Comuns
 
 ### Volume Não Monta
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe pod <resource-name> | grep -A 10 Volumes`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe pod <resource-name> | grep -A 10 Volumes
 oc describe pod my-pod | grep -A 10 Volumes
 ```
 
+```markdown
+**Ação:** Listar eventos filtrados por campo específico
+```
+
 ```bash
-# Listar eventos filtrados por campo específico
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
+```markdown
+**Ação:** Listar todos os Persistent Volume Claims do namespace
+```
+
 ```bash
-# Listar todos os Persistent Volume Claims do namespace
 oc get pvc
 ```
 
+```markdown
+**Ação:** Exibir recurso "my-pod" em formato JSON
+**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'`
+```
+
 ```bash
-# Exibir recurso "my-pod" em formato JSON
-# oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
+```markdown
+**Ação:** Debug no node
+**Ação:** Verificar mounts
+```
+
 ```bash ignore-test
-# Debug no node
 oc debug node/<node-name>
 chroot /host
-# Verificar mounts
 mount | grep <pv-name>
 df -h
 ```
 
 ### ReadOnly Filesystem
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.accessModes}'`
+```
+
 ```bash
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.spec.accessModes}'
 oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 ```
 
-```bash ignore-test
-# Verificar access mode do PV
-# oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
-oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
+```markdown
+**Ação:** Verificar access mode do PV
+**Exemplo:** `oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'`
 ```
 
 ```bash ignore-test
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'
+oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
+```
+
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.volumeName}'`
+**Ação:** oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'
+```
+
+```bash ignore-test
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
-# oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
 ### Volume Full (Cheio)
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
 ```bash ignore-test
-# Executar comando dentro do pod especificado
 oc exec my-pod -- df -h
 ```
 
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'`
+```
+
 ```bash
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.spec.resources.requests.storage}'
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
+```markdown
+**Ação:** Aplicar modificação parcial ao recurso usando patch
+**Exemplo:** `oc patch pvc <resource-name>app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'`
+```
+
 ```bash
-# Aplicar modificação parcial ao recurso usando patch
-# oc patch pvc <resource-name>app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
 oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
 ```
 
+```markdown
+**Ação:** Verificar se expansão é permitida
+```
+
 ```bash ignore-test
-# Verificar se expansão é permitida
 oc get sc <storage-class> -o jsonpath='{.allowVolumeExpansion}'
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do persistent volume claim
+**Exemplo:** `oc describe pvc <resource-name>`
+```
+
 ```bash
-# Exibir detalhes completos do persistent volume claim
-# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 
 ### PVC Stuck Terminating
+```markdown
+**Ação:** Exibir pods em formato JSON
+```
+
 ```bash ignore-test
-# Exibir pods em formato JSON
 oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolumeClaim.claimName=="test-app") | .metadata.name'
 ```
 
+```markdown
+**Ação:** Deletar recurso forçadamente (sem período de espera)
+**Exemplo:** `oc delete pod <resource-name>pod --grace-period=0 --force`
+```
+
 ```bash ignore-test
-# Deletar recurso forçadamente (sem período de espera)
-# oc delete pod <resource-name>pod --grace-period=0 --force
 oc delete pod my-pod --grace-period=0 --force
 ```
 
-```bash
-# Aplicar modificação parcial ao recurso usando patch
-# oc patch pvc <resource-name>app -p '{"metadata":{"finalizers":null}}'
-oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
+```markdown
+**Ação:** Aplicar modificação parcial ao recurso usando patch
+**Exemplo:** `oc patch pvc <resource-name>app -p '{"metadata":{"finalizers":null}}'`
 ```
 
 ```bash
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.metadata.finalizers}'
+oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
+```
+
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.metadata.finalizers}'`
+```
+
+```bash
 oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
 ```
 
@@ -289,76 +409,118 @@ oc get pvc test-app -o jsonpath='{.metadata.finalizers}'
 ## Operadores de Storage
 
 ### ODF (OpenShift Data Foundation)
+```markdown
+**Ação:** Verificar pods do ODF
+```
+
 ```bash
-# Verificar pods do ODF
 oc get pods -n openshift-storage
 ```
 
+```markdown
+**Ação:** Status do ODF
+```
+
 ```bash
-# Status do ODF
 oc get storagecluster -n openshift-storage
 ```
 
+```markdown
+**Ação:** Listar recurso filtrados por label
+```
+
 ```bash
-# Listar recurso filtrados por label
 oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph status --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
+```markdown
+**Ação:** Listar recurso filtrados por label
+```
+
 ```bash
-# Listar recurso filtrados por label
 oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph health detail --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
+```markdown
+**Ação:** Listar recurso filtrados por label
+```
+
 ```bash
-# Listar recurso filtrados por label
 oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph osd status --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
+```markdown
+**Ação:** Coletar dados de diagnóstico completo do cluster
+```
+
 ```bash ignore-test
-# Coletar dados de diagnóstico completo do cluster
 oc adm must-gather --image=registry.redhat.io/odf4/ocs-must-gather-rhel8:latest
 ```
 
 ### Local Storage Operator
+```markdown
+**Ação:** Listar recurso de todos os namespaces do cluster
+```
+
 ```bash
-# Listar recurso de todos os namespaces do cluster
 oc get localvolume -A
 ```
 
-```bash
-# Ver pods do local storage
-oc get pods -n openshift-local-storage
+```markdown
+**Ação:** Ver pods do local storage
 ```
 
 ```bash
-# Exibir logs de todos os pods que correspondem ao label
-# oc logs -n <namespace> -l name=local-storage-operator
+oc get pods -n openshift-local-storage
+```
+
+```markdown
+**Ação:** Exibir logs de todos os pods que correspondem ao label
+**Exemplo:** `oc logs -n <namespace> -l name=local-storage-operator`
+```
+
+```bash
 oc logs -n openshift-local-storage -l name=local-storage-operator
 ```
 
 ### CSI Drivers
+```markdown
+**Ação:** Listar CSI drivers instalados
+```
+
 ```bash
-# Listar CSI drivers instalados
 oc get csidrivers
 ```
 
+```markdown
+**Ação:** Listar pods de todos os namespaces do cluster
+```
+
 ```bash
-# Listar pods de todos os namespaces do cluster
 oc get pods -A | grep csi
 ```
 
+```markdown
+**Ação:** Logs do CSI driver (exemplo)
+```
+
 ```bash ignore-test
-# Logs do CSI driver (exemplo)
 oc logs -n <namespace> <csi-driver-pod> -c csi-driver
 ```
 
+```markdown
+**Ação:** Ver CSI nodes
+```
+
 ```bash
-# Ver CSI nodes
 oc get csinodes
 ```
 
+```markdown
+**Ação:** Descrever CSI node
+```
+
 ```bash ignore-test
-# Descrever CSI node
 oc describe csinode <node-name>
 ```
 
@@ -367,57 +529,87 @@ oc describe csinode <node-name>
 ## Debug Avançado
 
 ### Verificar Backend de Storage
+```markdown
+**Ação:** Debug em node específico
+```
+
 ```bash ignore-test
-# Debug em node específico
 oc debug node/<node-name>
 chroot /host
 ```
 
+```markdown
+**Ação:** Ver discos
+```
+
 ```bash ignore-test
-# Ver discos
 lsblk
 fdisk -l
 ```
 
+```markdown
+**Ação:** Ver mounts
+```
+
 ```bash ignore-test
-# Ver mounts
 mount | grep pvc
 df -h
 ```
 
-```bash ignore-test
-# Ver logs do kubelet relacionados a storage
-journalctl -u kubelet | grep -i volume
+```markdown
+**Ação:** Ver logs do kubelet relacionados a storage
 ```
 
 ```bash ignore-test
-# Ver logs do CRI-O
+journalctl -u kubelet | grep -i volume
+```
+
+```markdown
+**Ação:** Ver logs do CRI-O
+```
+
+```bash ignore-test
 journalctl -u crio | grep -i volume
 ```
 
 ### Comandos Úteis em Nodes
+```markdown
+* Dentro do debug node:
+```
+
 ```bash ignore-test
-# Dentro do debug node:
 chroot /host
 ```
 
+```markdown
+**Ação:** Ver volumes do Kubernetes
+```
+
 ```bash ignore-test
-# Ver volumes do Kubernetes
 ls -la /var/lib/kubelet/pods/
 ```
 
+```markdown
+**Ação:** Ver PVs montados
+```
+
 ```bash ignore-test
-# Ver PVs montados
 ls -la /var/lib/origin/openshift.local.volumes/
 ```
 
-```bash ignore-test
-# Verificar permissões
-ls -laZ /var/lib/kubelet/pods/<pod-id>/volumes/
+```markdown
+**Ação:** Verificar permissões
 ```
 
 ```bash ignore-test
-# Verificar SELinux contexts
+ls -laZ /var/lib/kubelet/pods/<pod-id>/volumes/
+```
+
+```markdown
+**Ação:** Verificar SELinux contexts
+```
+
+```bash ignore-test
 ls -laZ /path/to/mount
 ```
 

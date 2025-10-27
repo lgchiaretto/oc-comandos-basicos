@@ -17,37 +17,55 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 ## Services
 
 ### Básico
+```markdown
+**Ação:** Listar todos os services do namespace atual
+```
+
 ```bash
-# Listar todos os services do namespace atual
 oc get services
 oc get svc
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do service
+**Exemplo:** `oc describe svc <service-name>`
+```
+
 ```bash
-# Exibir detalhes completos do service
-# oc describe svc <service-name>
 oc describe svc test-app
 ```
 
+```markdown
+**Ação:** Criar service
+```
+
 ```bash ignore-test
-# Criar service
 oc expose deployment test-app --port=<porta>
 ```
 
+```markdown
+**Ação:** Criar service com tipo específico
+```
+
 ```bash ignore-test
-# Criar service com tipo específico
 oc create service clusterip test-app --tcp=<porta>:<porta-destino>
 ```
 
+```markdown
+**Ação:** Deletar o service especificado
+**Exemplo:** `oc delete svc <service-name>`
+```
+
 ```bash ignore-test
-# Deletar o service especificado
-# oc delete svc <service-name>
 oc delete svc test-app
 ```
 
+```markdown
+**Ação:** Ver endpoints do service
+**Exemplo:** `oc get endpoints <resource-name>`
+```
+
 ```bash
-# Ver endpoints do service
-# oc get endpoints <resource-name>
 oc get endpoints test-app
 ```
 
@@ -55,21 +73,30 @@ oc get endpoints test-app
 
 
 ### Descrever Endpoints
+```markdown
+**Ação:** Exibir detalhes completos do endpoints
+**Exemplo:** `oc describe endpoints <resource-name>`
+```
+
 ```bash
-# Exibir detalhes completos do endpoints
-# oc describe endpoints <resource-name>
 oc describe endpoints test-app
 ```
 
-```bash
-# Exibir detalhes completos do endpoints
-# oc describe endpoints <resource-name>app -n <namespace>
-oc describe endpoints test-app -n development
+```markdown
+**Ação:** Exibir detalhes completos do endpoints
+**Exemplo:** `oc describe endpoints <resource-name>app -n <namespace>`
 ```
 
 ```bash
-# Exemplo prático
-# oc describe endpoints <resource-name>app -n <namespace>
+oc describe endpoints test-app -n development
+```
+
+```markdown
+**Ação:** Exemplo prático
+**Exemplo:** `oc describe endpoints <resource-name>app -n <namespace>`
+```
+
+```bash
 oc describe endpoints test-app -n development
 ```
 
@@ -78,78 +105,117 @@ oc describe endpoints test-app -n development
 ## Routes
 
 ### Criar Routes
+```markdown
+**Ação:** Criar route para expor service externamente
+**Exemplo:** `oc expose service <service-name>`
+```
+
 ```bash ignore-test
-# Criar route para expor service externamente
-# oc expose service <service-name>
 oc expose service test-app
 ```
 
+```markdown
+**Ação:** Com hostname específico
+```
+
 ```bash ignore-test
-# Com hostname específico
 oc expose service test-app --hostname=<hostname>
 ```
 
+```markdown
+**Ação:** Criar route com path específico para o service
+**Exemplo:** `oc expose service <service-name> --path=/api`
+```
+
 ```bash ignore-test
-# Criar route com path específico para o service
-# oc expose service <service-name> --path=/api
 oc expose service test-app --path=/api
 ```
 
+```markdown
+**Ação:** Criar route com terminação TLS edge (TLS terminado no router)
+**Exemplo:** `oc create route <route-name> test-app --service=test-app`
+```
+
 ```bash ignore-test
-# Criar route com terminação TLS edge (TLS terminado no router)
-# oc create route <route-name> test-app --service=test-app
 oc create route edge test-app --service=test-app
 ```
 
+```markdown
+**Ação:** Criar route passthrough (TLS vai direto ao pod)
+**Exemplo:** `oc create route <route-name> test-app --service=test-app`
+```
+
 ```bash ignore-test
-# Criar route passthrough (TLS vai direto ao pod)
-# oc create route <route-name> test-app --service=test-app
 oc create route passthrough test-app --service=test-app
 ```
 
+```markdown
+**Ação:** Criar route reencrypt (TLS terminado e re-encriptado)
+**Exemplo:** `oc create route <route-name> test-app --service=test-app`
+```
+
 ```bash ignore-test
-# Criar route reencrypt (TLS terminado e re-encriptado)
-# oc create route <route-name> test-app --service=test-app
 oc create route reencrypt test-app --service=test-app
 ```
 
+```markdown
+**Ação:** Com certificado customizado
+```
+
 ```bash ignore-test
-# Com certificado customizado
 oc create route edge test-app --service=<svc> --cert=<cert-file> --key=<key-file>
 ```
 
+```markdown
+**Ação:** Listar todas as routes expostas no namespace
+```
+
 ```bash
-# Listar todas as routes expostas no namespace
 oc get routes
 ```
 
-```bash
-# Exibir detalhes completos do route
-# oc describe route <route-name>
-oc describe route test-app
+```markdown
+**Ação:** Exibir detalhes completos do route
+**Exemplo:** `oc describe route <route-name>`
 ```
 
 ```bash
-# Exibir route "test-app" em formato JSON
-# oc get route <route-name> -o jsonpath='{.spec.host}'
+oc describe route test-app
+```
+
+```markdown
+**Ação:** Exibir route "test-app" em formato JSON
+**Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.host}'`
+```
+
+```bash
 oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
 ### Gerenciar Routes
+```markdown
+**Ação:** Abrir editor para modificar recurso interativamente
+**Exemplo:** `oc edit route <route-name>`
+```
+
 ```bash ignore-test
-# Abrir editor para modificar recurso interativamente
-# oc edit route <route-name>
 oc edit route test-app
 ```
 
+```markdown
+**Ação:** Deletar o route especificado
+**Exemplo:** `oc delete route <route-name>`
+```
+
 ```bash ignore-test
-# Deletar o route especificado
-# oc delete route <route-name>
 oc delete route test-app
 ```
 
+```markdown
+**Ação:** Listar routes com informações detalhadas
+```
+
 ```bash
-# Listar routes com informações detalhadas
 oc get routes -o wide
 ```
 

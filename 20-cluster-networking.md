@@ -18,60 +18,93 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 ## Configuração de Rede
 
 ### Visualizar Configuração
+```markdown
+**Ação:** Exibir recurso em formato YAML
+```
+
 ```bash
-# Exibir recurso em formato YAML
 oc get network.config.openshift.io cluster -o yaml
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash
-# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash
-# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork}'
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash
-# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
 ```
 
-```bash
-# Ver network operator
-# oc get clusteroperator <resource-name>
-oc get clusteroperator network
+```markdown
+**Ação:** Ver network operator
+**Exemplo:** `oc get clusteroperator <resource-name>`
 ```
 
 ```bash
-# Exibir recurso em formato YAML
+oc get clusteroperator network
+```
+
+```markdown
+**Ação:** Exibir recurso em formato YAML
+```
+
+```bash
 oc get network.operator.openshift.io cluster -o yaml
 ```
 
 ### Pod Network
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash ignore-test
-# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*].cidr}'
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash ignore-test
-# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]}'
 ```
 
+```markdown
+**Ação:** Ver IP de um pod
+```
+
 ```bash ignore-test
-# Ver IP de um pod
 oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 ```
 
+```markdown
+**Ação:** Listar pods de todos os namespaces do cluster
+```
+
 ```bash
-# Listar pods de todos os namespaces do cluster
 oc get pods -o wide -A
 ```
 
+```markdown
+**Ação:** Listar pods de todos os namespaces do cluster
+```
+
 ```bash ignore-test
-# Listar pods de todos os namespaces do cluster
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 ```
 
@@ -79,21 +112,30 @@ oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 
 
 ### Listar Ingress Controllers
-```bash
-# Listar IngressControllers
-oc get ingresscontroller -n openshift-ingress-operator
+```markdown
+**Ação:** Listar IngressControllers
 ```
 
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe ingresscontroller -n <namespace> default
+oc get ingresscontroller -n openshift-ingress-operator
+```
+
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe ingresscontroller -n <namespace> default`
+```
+
+```bash
 oc describe ingresscontroller -n openshift-ingress-operator default
 ```
 
 ### Escalar Ingress Controller
+```markdown
+**Ação:** Ajustar número de réplicas do deployment/replicaset
+**Exemplo:** `oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default`
+```
+
 ```bash
-# Ajustar número de réplicas do deployment/replicaset
-# oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default
 oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ```
 ---
@@ -101,20 +143,29 @@ oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ## Network Policies
 
 ### Criar Network Policies
+```markdown
+**Ação:** Listar políticas de rede configuradas no namespace
+```
+
 ```bash
-# Listar políticas de rede configuradas no namespace
 oc get networkpolicy
 oc get netpol
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do network policy
+**Exemplo:** `oc describe networkpolicy <resource-name>`
+```
+
 ```bash ignore-test
-# Exibir detalhes completos do network policy
-# oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -128,8 +179,11 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -145,8 +199,11 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -167,46 +224,70 @@ EOF
 ```
 
 ### Testar Network Policies
-```bash ignore-test
-# Antes de aplicar policy, testar conectividade
-oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
+```markdown
+**Ação:** Antes de aplicar policy, testar conectividade
 ```
 
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash ignore-test
 oc apply -f networkpolicy.yaml
 ```
 
-```bash ignore-test
-# Testar novamente
-oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
+```markdown
+**Ação:** Testar novamente
 ```
 
 ```bash ignore-test
-# Verificar logs/eventos
+oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
+```
+
+```markdown
+**Ação:** Verificar logs/eventos
+```
+
+```bash ignore-test
 oc get events | grep -i network
 ```
 
 ### Debugging Network Policies
+```markdown
+**Ação:** Exibir network policy em formato YAML
+```
+
 ```bash
-# Exibir network policy em formato YAML
 oc get networkpolicy -o yaml
 ```
 
+```markdown
+**Ação:** Listar pods mostrando todas as labels associadas
+```
+
 ```bash ignore-test
-# Listar pods mostrando todas as labels associadas
 oc get pods --show-labels
 ```
 
-```bash ignore-test
-# Exibir detalhes completos do network policy
-# oc describe networkpolicy <resource-name>
-oc describe networkpolicy test-app
+```markdown
+**Ação:** Exibir detalhes completos do network policy
+**Exemplo:** `oc describe networkpolicy <resource-name>`
 ```
 
 ```bash ignore-test
-# Deletar o network policy especificado
-# oc delete networkpolicy <resource-name>
+oc describe networkpolicy test-app
+```
+
+```markdown
+**Ação:** Deletar o network policy especificado
+**Exemplo:** `oc delete networkpolicy <resource-name>`
+```
+
+```bash ignore-test
 oc delete networkpolicy test-app
 ```
 
@@ -214,13 +295,19 @@ oc delete networkpolicy test-app
 ## Configurações Avançadas
 
 ### Multus - Múltiplas Interfaces
-```bash
-# NetworkAttachmentDefinitions
-oc get network-attachment-definitions
+```markdown
+**Ação:** NetworkAttachmentDefinitions
 ```
 
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc get network-attachment-definitions
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash
 cat <<EOF | oc apply -f -
 apiVersion: k8s.cni.cncf.io/v1
 kind: NetworkAttachmentDefinition
@@ -250,24 +337,36 @@ EOF
 ```
 
 ### MTU Configuration
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash
-# Exibir recurso em formato JSON
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'
 ```
 
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
 ```bash ignore-test
-# Executar comando dentro do pod especificado
 oc exec my-pod -- ip link show eth0
 ```
 
 ### Network Diagnostics
+```markdown
+**Ação:** Listar nodes com informações detalhadas
+```
+
 ```bash
-# Listar nodes com informações detalhadas
 oc get nodes -o wide
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: apps/v1
 kind: DaemonSet
@@ -289,8 +388,11 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Listar recurso filtrados por label
+```
+
 ```bash ignore-test
-# Listar recurso filtrados por label
 for pod in $(oc get pods -l app=network-test -o name); do
   echo "=== Testing from $pod ==="
   oc exec $pod -- ping -c 2 8.8.8.8

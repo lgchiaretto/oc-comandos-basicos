@@ -24,68 +24,104 @@ Este documento contém comandos para gerenciar etcd e realizar backups do cluste
 ## Etcd Status
 
 ### Verificar Etcd
+```markdown
+**Ação:** Pods do etcd
+```
+
 ```bash
-# Pods do etcd
 oc get pods -n openshift-etcd
 ```
 
+```markdown
+**Ação:** Listar pods com informações detalhadas
+```
+
 ```bash
-# Listar pods com informações detalhadas
 oc get pods -n openshift-etcd -l app=etcd -o wide
 ```
 
+```markdown
+**Ação:** Status do etcd operator
+**Exemplo:** `oc get clusteroperator <resource-name>`
+```
+
 ```bash
-# Status do etcd operator
-# oc get clusteroperator <resource-name>
 oc get clusteroperator etcd
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do cluster operator
+**Exemplo:** `oc describe co <resource-name>`
+```
+
 ```bash
-# Exibir detalhes completos do cluster operator
-# oc describe co <resource-name>
 oc describe co etcd
 ```
 
+```markdown
+**Ação:** Logs do etcd
+```
+
 ```bash ignore-test
-# Logs do etcd
 oc logs -n openshift-etcd <etcd-pod-name>
 ```
 
-```bash ignore-test
-# Listar recurso filtrados por label
-oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
+```markdown
+**Ação:** Listar recurso filtrados por label
 ```
 
 ```bash ignore-test
-# Logs do etcd-operator
+oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
+```
+
+```markdown
+**Ação:** Logs do etcd-operator
+```
+
+```bash ignore-test
 oc logs -n openshift-etcd-operator <etcd-operator-pod>
 ```
 
 ### Etcd Health Check
-```bash ignore-test
-# Listar recurso filtrados por label
-oc rsh -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
+```markdown
+**Ação:** Listar recurso filtrados por label
 ```
 
 ```bash ignore-test
-# Dentro do pod:
+oc rsh -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
+```
+
+```markdown
+* Dentro do pod:
+```
+
+```bash ignore-test
 etcdctl endpoint health --cluster
 etcdctl endpoint status --cluster -w table
 etcdctl member list -w table
 ```
 
+```markdown
+**Ação:** Listar recurso filtrados por label
+```
+
 ```bash ignore-test
-# Listar recurso filtrados por label
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl endpoint status --cluster -w table
 ```
 
-```bash ignore-test
-# Listar recurso filtrados por label
-oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
+```markdown
+**Ação:** Listar recurso filtrados por label
 ```
 
 ```bash ignore-test
-# Listar recurso filtrados por label
+oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
+```
+
+```markdown
+**Ação:** Listar recurso filtrados por label
+```
+
+```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl alarm list
 ```
 
@@ -94,34 +130,52 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 ## Backup do Cluster
 
 ### Backup Manual do Etcd
+```markdown
+**Ação:** Conectar a um master node
+```
+
 ```bash ignore-test
-# Conectar a um master node
 oc debug node/<master-node-name>
 ```
 
+```markdown
+* No debug shell:
+```
+
 ```bash ignore-test
-# No debug shell:
 chroot /host
 ```
 
+```markdown
+**Ação:** Executar backup
+```
+
 ```bash ignore-test
-# Executar backup
 /usr/local/bin/cluster-backup.sh /home/core/backup
 ```
 
+```markdown
+**Ação:** Verificar backup criado
+```
+
 ```bash ignore-test
-# Verificar backup criado
 ls -lh /home/core/backup/
 ```
 
+```markdown
+**Ação:** Sair do debug
+```
+
 ```bash ignore-test
-# Sair do debug
 exit
 exit
 ```
 
+```markdown
+**Ação:** Copiar backup do node
+```
+
 ```bash ignore-test
-# Copiar backup do node
 oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ```
 
@@ -145,13 +199,19 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ```
 
 ### Limpar Alarmes
-```bash ignore-test
-# Se houver alarm de NOSPACE
-oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
+```markdown
+**Ação:** Se houver alarm de NOSPACE
 ```
 
 ```bash ignore-test
-# Verificar
+oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
+```
+
+```markdown
+**Ação:** Verificar
+```
+
+```bash ignore-test
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm list
 ```
 

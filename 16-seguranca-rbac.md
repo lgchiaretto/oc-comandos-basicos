@@ -19,53 +19,77 @@ Este documento contém comandos para gerenciar segurança, permissões e RBAC no
 ## RBAC Básico
 
 ### Verificar Permissões
-```bash ignore-test
-# Quem pode fazer determinada ação
-oc adm policy who-can <verbo> <recurso>
-
-# oc adm policy <resource-name> get pods
-oc adm policy who-can get pods
-
-# oc adm policy <resource-name> delete projects
-oc adm policy who-can delete projects
+```markdown
+**Ação:** Quem pode fazer determinada ação
+**Ação:** oc adm policy <resource-name> get pods
+**Ação:** oc adm policy <resource-name> delete projects
 ```
 
 ```bash ignore-test
-# Verificar minhas permissões
+oc adm policy who-can <verbo> <recurso>
+
+oc adm policy who-can get pods
+
+oc adm policy who-can delete projects
+```
+
+```markdown
+**Ação:** Verificar minhas permissões
+```
+
+```bash ignore-test
 oc auth can-i <verbo> <recurso>
 oc auth can-i create pods
 oc auth can-i delete projects
 ```
 
+```markdown
+**Ação:** Como outro usuário
+```
+
 ```bash ignore-test
-# Como outro usuário
 oc auth can-i get pods --as=<usuario>
 ```
 
+```markdown
+**Ação:** Verificar se usuário tem permissão para executar ação específica
+```
+
 ```bash
-# Verificar se usuário tem permissão para executar ação específica
 oc auth can-i --list
 ```
 
 ### Usuários e Grupos
+```markdown
+**Ação:** Listar usuários
+```
+
 ```bash
-# Listar usuários
 oc get users
 ```
 
+```markdown
+**Ação:** Listar grupos
+```
+
 ```bash
-# Listar grupos
 oc get groups
 ```
 
-```bash
-# Ver identidades
-oc get identities
+```markdown
+**Ação:** Ver identidades
 ```
 
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe user <username>
+oc get identities
+```
+
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe user <username>`
+```
+
+```bash
 oc describe user chiaretto
 ```
 
@@ -74,114 +98,171 @@ oc describe user chiaretto
 ## Roles e RoleBindings
 
 ### Cluster Roles
+```markdown
+**Ação:** Listar ClusterRoles
+```
+
 ```bash
-# Listar ClusterRoles
 oc get clusterroles
 ```
 
+```markdown
+**Ação:** Exibir cluster role "admin" em formato YAML
+**Exemplo:** `oc get clusterrole <role-name> -o yaml`
+**Ação:** oc get clusterrole <role-name> -o yaml
+**Ação:** oc get clusterrole <role-name> -o yaml
+```
+
 ```bash
-# Exibir cluster role "admin" em formato YAML
-# oc get clusterrole <role-name> -o yaml
 oc get clusterrole admin -o yaml
-# oc get clusterrole <role-name> -o yaml
 oc get clusterrole edit -o yaml
-# oc get clusterrole <role-name> -o yaml
 oc get clusterrole view -o yaml
 ```
 
+```markdown
+**Ação:** Descrever ClusterRole
+```
+
 ```bash ignore-test
-# Descrever ClusterRole
 oc describe clusterrole <nome-da-role>
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do cluster role
+**Exemplo:** `oc describe clusterrole <role-name> | grep -A 50 PolicyRule`
+```
+
 ```bash
-# Exibir detalhes completos do cluster role
-# oc describe clusterrole <role-name> | grep -A 50 PolicyRule
 oc describe clusterrole admin | grep -A 50 PolicyRule
 ```
 
 ### Roles (Namespace)
+```markdown
+**Ação:** Listar roles customizados do namespace
+```
+
 ```bash
-# Listar roles customizados do namespace
 oc get roles
 ```
 
+```markdown
+**Ação:** Criar Role customizada
+```
+
 ```bash ignore-test
-# Criar Role customizada
 oc create role test-app --verb=<verbos> --resource=<recursos>
 ```
 
+```markdown
+**Ação:** Exemplo
+**Exemplo:** `oc create role <role-name> --verb=get,list,watch --resource=pods`
+```
+
 ```bash
-# Exemplo
-# oc create role <role-name> --verb=get,list,watch --resource=pods
 oc create role pod-reader --verb=get,list,watch --resource=pods
 ```
 
+```markdown
+**Ação:** Abrir editor para modificar recurso interativamente
+**Exemplo:** `oc edit role <role-name>`
+```
+
 ```bash ignore-test
-# Abrir editor para modificar recurso interativamente
-# oc edit role <role-name>
 oc edit role pod-reader
 ```
 
+```markdown
+**Ação:** Deletar o role especificado
+**Exemplo:** `oc delete role <role-name>`
+```
+
 ```bash
-# Deletar o role especificado
-# oc delete role <role-name>
 oc delete role pod-reader
 ```
 
 ### ClusterRoleBindings
+```markdown
+**Ação:** Listar ClusterRoleBindings
+```
+
 ```bash
-# Listar ClusterRoleBindings
 oc get clusterrolebindings
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash ignore-test
-# Exibir recurso em formato JSON
 oc get clusterrolebinding -o json | jq -r '.items[] | select(.roleRef.name=="cluster-admin") | .metadata.name'
 ```
 
+```markdown
+**Ação:** Adicionar usuário como cluster-admin
+```
+
 ```bash ignore-test
-# Adicionar usuário como cluster-admin
 oc adm policy add-cluster-role-to-user cluster-admin <username>
 ```
 
-```bash ignore-test
-# Remover cluster-admin
-oc adm policy remove-cluster-role-from-user cluster-admin <username>
+```markdown
+**Ação:** Remover cluster-admin
 ```
 
 ```bash ignore-test
-# Adicionar grupo
+oc adm policy remove-cluster-role-from-user cluster-admin <username>
+```
+
+```markdown
+**Ação:** Adicionar grupo
+```
+
+```bash ignore-test
 oc adm policy add-cluster-role-to-group cluster-admin <groupname>
 ```
 
 ### RoleBindings (Namespace)
+```markdown
+**Ação:** Listar vinculações de roles no namespace atual
+```
+
 ```bash
-# Listar vinculações de roles no namespace atual
 oc get rolebindings
 ```
 
+```markdown
+**Ação:** Adicionar role a usuário no namespace
+```
+
 ```bash ignore-test
-# Adicionar role a usuário no namespace
 oc adm policy add-role-to-user <role> <username>
 oc adm policy add-role-to-user admin <username>
 oc adm policy add-role-to-user edit <username>
 oc adm policy add-role-to-user view <username>
 ```
 
+```markdown
+**Ação:** Adicionar role a grupo
+```
+
 ```bash ignore-test
-# Adicionar role a grupo
 oc adm policy add-role-to-group <role> <groupname>
 ```
 
+```markdown
+**Ação:** Remover role
+```
+
 ```bash ignore-test
-# Remover role
 oc adm policy remove-role-from-user <role> <username>
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe rolebinding <rolebinding-name>`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe rolebinding <rolebinding-name>
 oc describe rolebinding admin
 ```
 
@@ -190,62 +271,92 @@ oc describe rolebinding admin
 ## Service Accounts
 
 ### Gerenciar Service Accounts
+```markdown
+**Ação:** Listar Service Accounts
+```
+
 ```bash
-# Listar Service Accounts
 oc get serviceaccounts
 oc get sa
 ```
 
+```markdown
+**Ação:** Criar novo recurso
+**Exemplo:** `oc create serviceaccount <serviceaccount-name>`
+```
+
 ```bash
-# Criar novo recurso
-# oc create serviceaccount <serviceaccount-name>
 oc create serviceaccount test-app
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do serviceaccount
+**Exemplo:** `oc describe sa <serviceaccount-name>`
+```
+
 ```bash
-# Exibir detalhes completos do serviceaccount
-# oc describe sa <serviceaccount-name>
 oc describe sa test-app
 ```
 
-```bash ignore-test
-# Exibir serviceaccount "test-app" em formato JSON
-# oc get sa <serviceaccount-name> -o jsonpath='{.secrets[*].name}'
-oc get sa test-app -o jsonpath='{.secrets[*].name}'
+```markdown
+**Ação:** Exibir serviceaccount "test-app" em formato JSON
+**Exemplo:** `oc get sa <serviceaccount-name> -o jsonpath='{.secrets[*].name}'`
 ```
 
 ```bash ignore-test
-# Deletar o serviceaccount especificado
-# oc delete sa <serviceaccount-name>
+oc get sa test-app -o jsonpath='{.secrets[*].name}'
+```
+
+```markdown
+**Ação:** Deletar o serviceaccount especificado
+**Exemplo:** `oc delete sa <serviceaccount-name>`
+```
+
+```bash ignore-test
 oc delete sa test-app
 ```
 
 ### Usar Service Accounts
+```markdown
+**Ação:** Adicionar role a Service Account
+```
+
 ```bash ignore-test
-# Adicionar role a Service Account
 oc adm policy add-role-to-user <role> system:serviceaccount:development:test-app
 ```
 
+```markdown
+**Ação:** Exemplo: dar role edit
+**Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:development:test-app`
+```
+
 ```bash
-# Exemplo: dar role edit
-# oc adm policy <resource-name> <username> system:serviceaccount:development:test-app
 oc adm policy add-role-to-user edit system:serviceaccount:development:test-app
 ```
 
+```markdown
+**Ação:** ClusterRole para SA
+```
+
 ```bash ignore-test
-# ClusterRole para SA
 oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:test-app
 ```
 
-```bash ignore-test
-# Usar SA em deployment
-# oc set serviceaccount <serviceaccount-name>/test-app test-app
-oc set serviceaccount deployment/test-app test-app
+```markdown
+**Ação:** Usar SA em deployment
+**Exemplo:** `oc set serviceaccount <serviceaccount-name>/test-app test-app`
 ```
 
 ```bash ignore-test
-# Exibir recurso "test-app" em formato JSON
-# oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'
+oc set serviceaccount deployment/test-app test-app
+```
+
+```markdown
+**Ação:** Exibir recurso "test-app" em formato JSON
+**Exemplo:** `oc get pod <resource-name>app -o jsonpath='{.spec.serviceAccountName}'`
+```
+
+```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 ```
 
@@ -254,21 +365,30 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 ## Security Context Constraints (SCC)
 
 ### Listar e Ver SCCs
-```bash
-# Listar SCCs
-oc get scc
+```markdown
+**Ação:** Listar SCCs
 ```
 
 ```bash
-# Exibir recurso "restricted" em formato YAML
+oc get scc
+```
+
+```markdown
+**Ação:** Exibir recurso "restricted" em formato YAML
+```
+
+```bash
 oc get scc restricted -o yaml
 oc get scc privileged -o yaml
 oc get scc anyuid -o yaml
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe scc <resource-name>`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe scc <resource-name>
 oc describe scc restricted
 ```
 
@@ -278,54 +398,78 @@ oc describe scc restricted
 oc get pod test-app -o yaml | grep scc
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe scc <resource-name> | grep Users`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe scc <resource-name> | grep Users
 oc describe scc restricted | grep Users
 ```
 
 ### Adicionar Permissões SCC
+```markdown
+**Ação:** Exemplos comuns e use com moderação
+**Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>`
+**Exemplo:** `oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>`
+```
+
 ```bash
-# Exemplos comuns e use com moderação
-# oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>
 oc adm policy add-scc-to-user anyuid system:serviceaccount:development:test-app
-# oc adm policy <resource-name> <username> system:serviceaccount:<namespace>:<sa-name>
 oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-app
 ```
 
+```markdown
+**Ação:** Adicionar grupo
+**Exemplo:** `oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"`
+```
+
 ```bash
-# Adicionar grupo
-# oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 ```
 
-```bash
-# Remover SCC de grupo
-# oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
-oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
+```markdown
+**Ação:** Remover SCC de grupo
+**Exemplo:** `oc adm policy <resource-name> <group-name> "cn=ocpusers,cn=users,dc=chiaretto,dc=home"`
 ```
 
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe scc <resource-name>
+oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
+```
+
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe scc <resource-name>`
+```
+
+```bash
 oc describe scc restricted
 ```
 
 ### Troubleshoot SCC
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe pod <resource-name> | grep -i scc`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe pod <resource-name> | grep -i scc
 oc describe pod test-app | grep -i scc
 ```
 
-```bash ignore-test
-# Ver eventos relacionados a SCC
-oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
+```markdown
+**Ação:** Ver eventos relacionados a SCC
 ```
 
 ```bash ignore-test
-# Listar recurso de todos os namespaces do cluster
-# oc get pod <resource-name>app -o yaml | grep -A 10 securityContext
+oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
+```
+
+```markdown
+**Ação:** Listar recurso de todos os namespaces do cluster
+**Exemplo:** `oc get pod <resource-name>app -o yaml | grep -A 10 securityContext`
+```
+
+```bash ignore-test
 oc get pod test-app -o yaml | grep -A 10 securityContext
 ```
 
@@ -334,8 +478,11 @@ oc get pod test-app -o yaml | grep -A 10 securityContext
 ## Policies e Auditoria
 
 ### Audit Logs
+```markdown
+**Ação:** Ver audit logs (em node)
+```
+
 ```bash ignore-test
-# Ver audit logs (em node)
 oc debug node/<node-name>
 chroot /host
 cat /var/log/oauth-apiserver/audit.log
@@ -343,50 +490,77 @@ cat /var/log/openshift-apiserver/audit.log
 cat /var/log/kube-apiserver/audit.log
 ```
 
+```markdown
+**Ação:** Buscar ações de usuário específico
+```
+
 ```bash ignore-test
-# Buscar ações de usuário específico
 grep <username> /var/log/openshift-apiserver/audit.log
 ```
 
 ### OAuth e Autenticação
+```markdown
+**Ação:** Exibir recurso "cluster" em formato YAML
+```
+
 ```bash
-# Exibir recurso "cluster" em formato YAML
 oc get oauth cluster -o yaml
 ```
 
+```markdown
+**Ação:** Exibir recurso "cluster" em formato JSON
+```
+
 ```bash
-# Exibir recurso "cluster" em formato JSON
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
 ```
 
+```markdown
+**Ação:** Ver pods do OAuth
+```
+
 ```bash
-# Ver pods do OAuth
 oc get pods -n openshift-authentication
 ```
 
+```markdown
+**Ação:** Logs do OAuth
+```
+
 ```bash ignore-test
-# Logs do OAuth
 oc logs -n openshift-authentication <oauth-pod>
 ```
 
 ### Secrets de TLS
+```markdown
+**Ação:** Listar recurso filtrados por campo específico
+```
+
 ```bash
-# Listar recurso filtrados por campo específico
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 
+```markdown
+**Ação:** Ver certificado
+```
+
 ```bash ignore-test
-# Ver certificado
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
 ```
 
-```bash ignore-test
-# Verificar validade
-oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
+```markdown
+**Ação:** Verificar validade
 ```
 
 ```bash ignore-test
-# Criar secret TLS
+oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
+```
+
+```markdown
+**Ação:** Criar secret TLS
+```
+
+```bash ignore-test
 oc create secret tls test-app --cert=<cert-file> --key=<key-file>
 ```
 

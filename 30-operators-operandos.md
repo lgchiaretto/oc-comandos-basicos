@@ -18,103 +18,151 @@ Este documento contém comandos para gerenciar Operators e seus Operandos (Custo
 ## Operator Lifecycle Manager (OLM)
 
 ### Componentes do OLM
+```markdown
+**Ação:** Pods do OLM
+```
+
 ```bash
-# Pods do OLM
 oc get pods -n openshift-operator-lifecycle-manager
 ```
 
+```markdown
+**Ação:** Listar pods filtrados por label
+```
+
 ```bash
-# Listar pods filtrados por label
 oc get pods -n openshift-operator-lifecycle-manager -l app=olm-operator
 ```
 
+```markdown
+**Ação:** Listar pods filtrados por label
+```
+
 ```bash
-# Listar pods filtrados por label
 oc get pods -n openshift-operator-lifecycle-manager -l app=catalog-operator
 ```
 
-```bash
-# Listar pods filtrados por label
-oc get pods -n openshift-operator-lifecycle-manager -l app=packageserver
+```markdown
+**Ação:** Listar pods filtrados por label
 ```
 
 ```bash
-# Status do OLM
-# oc get clusteroperator <resource-name>
+oc get pods -n openshift-operator-lifecycle-manager -l app=packageserver
+```
+
+```markdown
+**Ação:** Status do OLM
+**Exemplo:** `oc get clusteroperator <resource-name>`
+**Ação:** oc get clusteroperator <resource-name>
+**Ação:** oc get clusteroperator <resource-name>
+```
+
+```bash
 oc get clusteroperator operator-lifecycle-manager
-# oc get clusteroperator <resource-name>
 oc get clusteroperator operator-lifecycle-manager-catalog
-# oc get clusteroperator <resource-name>
 oc get clusteroperator operator-lifecycle-manager-packageserver
 ```
 
 ### Catalog Sources
+```markdown
+**Ação:** Listar catalog sources
+```
+
 ```bash
-# Listar catalog sources
 oc get catalogsources -n openshift-marketplace
 ```
 
+```markdown
+**Ação:** Principais catalogs
+**Exemplo:** `oc get catalogsource <resource-name>operators -n <namespace>`
+**Ação:** oc get catalogsource <resource-name>operators -n <namespace>
+**Ação:** oc get catalogsource <resource-name>operators -n <namespace>
+**Ação:** oc get catalogsource <resource-name>marketplace -n <namespace>
+```
+
 ```bash
-# Principais catalogs
-# oc get catalogsource <resource-name>operators -n <namespace>
 oc get catalogsource redhat-operators -n openshift-marketplace
-# oc get catalogsource <resource-name>operators -n <namespace>
 oc get catalogsource certified-operators -n openshift-marketplace
-# oc get catalogsource <resource-name>operators -n <namespace>
 oc get catalogsource community-operators -n openshift-marketplace
-# oc get catalogsource <resource-name>marketplace -n <namespace>
 oc get catalogsource redhat-marketplace -n openshift-marketplace
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe catalogsource <resource-name>operators -n <namespace>`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe catalogsource <resource-name>operators -n <namespace>
 oc describe catalogsource redhat-operators -n openshift-marketplace
 ```
 
-```bash
-# Exibir recurso "redhat-operators" em formato JSON
-# oc get catalogsource <resource-name>operators -n <namespace> -o jsonpath='{.spec.image}'
-oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
+```markdown
+**Ação:** Exibir recurso "redhat-operators" em formato JSON
+**Exemplo:** `oc get catalogsource <resource-name>operators -n <namespace> -o jsonpath='{.spec.image}'`
 ```
 
 ```bash
-# Listar recurso com colunas customizadas
+oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
+```
+
+```markdown
+**Ação:** Listar recurso com colunas customizadas
+```
+
+```bash
 oc get catalogsource -n openshift-marketplace -o custom-columns=NAME:.metadata.name,STATUS:.status.connectionState.lastObservedState
 ```
 
 ### PackageManifests
+```markdown
+**Ação:** Listar operators disponíveis
+```
+
 ```bash
-# Listar operators disponíveis
 oc get packagemanifests -n openshift-marketplace
 ```
 
+```markdown
+**Ação:** Buscar operator específico
+```
+
 ```bash
-# Buscar operator específico
 oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe packagemanifest <resource-name>operator -n <namespace>`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe packagemanifest <resource-name>operator -n <namespace>
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
 ```
 
+```markdown
+**Ação:** Exibir recurso "local-storage-operator" em formato JSON
+**Exemplo:** `oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[*].name}'`
+```
+
 ```bash ignore-test
-# Exibir recurso "local-storage-operator" em formato JSON
-# oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[*].name}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[*].name}'
 ```
 
+```markdown
+**Ação:** Exibir recurso "local-storage-operator" em formato JSON
+**Exemplo:** `oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'`
+```
+
 ```bash ignore-test
-# Exibir recurso "local-storage-operator" em formato JSON
-# oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 ```
 
+```markdown
+**Ação:** Exibir recurso "local-storage-operator" em formato JSON
+**Exemplo:** `oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.defaultChannel}'`
+```
+
 ```bash
-# Exibir recurso "local-storage-operator" em formato JSON
-# oc get packagemanifest <resource-name>operator -n <namespace> -o jsonpath='{.status.defaultChannel}'
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
 ```
 
@@ -123,23 +171,35 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 ## Instalando Operators
 
 ### Passo a Passo Completo
+```markdown
+**Ação:** 1. Escolher operator
+```
+
 ```bash ignore-test
-# 1. Escolher operator
 oc get packagemanifests -n openshift-marketplace | grep <operator-name>
 ```
 
+```markdown
+**Ação:** 2. Ver detalhes
+```
+
 ```bash ignore-test
-# 2. Ver detalhes
 oc describe packagemanifest <operator-name> -n openshift-marketplace
 ```
 
-```bash ignore-test
-# 3. Criar namespace (se necessário)
-oc create namespace <operator-namespace>
+```markdown
+**Ação:** 3. Criar namespace (se necessário)
 ```
 
 ```bash ignore-test
-# 4. Criar OperatorGroup
+oc create namespace <operator-namespace>
+```
+
+```markdown
+**Ação:** 4. Criar OperatorGroup
+```
+
+```bash ignore-test
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -152,8 +212,11 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** 5. Criar Subscription
+```
+
 ```bash ignore-test
-# 5. Criar Subscription
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -169,21 +232,30 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** 6. Verificar instalação
+```
+
 ```bash ignore-test
-# 6. Verificar instalação
 oc get csv -n <operator-namespace>
 oc get pods -n <operator-namespace>
 ```
 
 ### Exemplo: Elasticsearch Operator
-```bash ignore-test
-# Criar novo recurso
-# oc create namespace <namespace-name>
-oc create namespace openshift-operators-redhat
+```markdown
+**Ação:** Criar novo recurso
+**Exemplo:** `oc create namespace <namespace-name>`
 ```
 
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
+oc create namespace openshift-operators-redhat
+```
+
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
+```bash ignore-test
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
@@ -199,41 +271,62 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Verificar
+```
+
 ```bash
-# Verificar
 oc get csv -n openshift-operators-redhat
 oc get pods -n openshift-operators-redhat
 ```
 
 ### Install Plan
+```markdown
+**Ação:** Listar install plans
+```
+
 ```bash ignore-test
-# Listar install plans
 oc get installplan -n <namespace>
 ```
 
+```markdown
+**Ação:** Descrever install plan
+```
+
 ```bash ignore-test
-# Descrever install plan
 oc describe installplan <plan-name> -n <namespace>
 ```
 
-```bash ignore-test
-# Se approval for Manual, aprovar
-oc patch installplan <plan-name> -n <namespace> --type merge -p '{"spec":{"approved":true}}'
+```markdown
+**Ação:** Se approval for Manual, aprovar
 ```
 
 ```bash ignore-test
-# Ver status
+oc patch installplan <plan-name> -n <namespace> --type merge -p '{"spec":{"approved":true}}'
+```
+
+```markdown
+**Ação:** Ver status
+```
+
+```bash ignore-test
 oc get installplan <plan-name> -n <namespace> -o jsonpath='{.status.phase}'
 ```
 
 ### OperatorGroup
+```markdown
+**Ação:** Listar recurso de todos os namespaces do cluster
+```
+
 ```bash
-# Listar recurso de todos os namespaces do cluster
 oc get operatorgroups -A
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -246,8 +339,11 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -262,8 +358,11 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
@@ -279,43 +378,64 @@ EOF
 ## Custom Resources (Operandos)
 
 ### Listar CRDs
+```markdown
+**Ação:** Todos os CRDs
+```
+
 ```bash
-# Todos os CRDs
 oc get crd
 ```
 
+```markdown
+**Ação:** CRDs de um operator específico
+```
+
 ```bash
-# CRDs de um operator específico
 oc get crd | grep ingresscontrollers
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe crd <resource-name>.operator.openshift.io`
+```
+
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe crd <resource-name>.operator.openshift.io
 oc describe crd ingresscontrollers.operator.openshift.io
 ```
 
-```bash
-# Exibir recurso "ingresscontrollers.operator.openshift.io" em formato YAML
-# oc get crd <resource-name>.operator.openshift.io -o yaml
-oc get crd ingresscontrollers.operator.openshift.io -o yaml
+```markdown
+**Ação:** Exibir recurso "ingresscontrollers.operator.openshift.io" em formato YAML
+**Exemplo:** `oc get crd <resource-name>.operator.openshift.io -o yaml`
 ```
 
 ```bash
-# Exibir recurso "ingresscontrollers.operator.openshift.io" em formato JSON
-# oc get crd <resource-name>.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
+oc get crd ingresscontrollers.operator.openshift.io -o yaml
+```
+
+```markdown
+**Ação:** Exibir recurso "ingresscontrollers.operator.openshift.io" em formato JSON
+**Exemplo:** `oc get crd <resource-name>.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'`
+```
+
+```bash
 oc get crd ingresscontrollers.operator.openshift.io -o jsonpath='{.spec.versions[*].name}'
 ```
 
 ### Criar Custom Resources
+```markdown
+**Ação:** Ver exemplos no CSV
+```
+
 ```bash ignore-test
-# Ver exemplos no CSV
 CSV_NAME=$(oc get csv -n <namespace> -o name | head -1)
 oc get $CSV_NAME -n <namespace> -o yaml | grep -A 50 alm-examples
 ```
 
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash ignore-test
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: logging.openshift.io/v1
 kind: Elasticsearch
@@ -334,62 +454,95 @@ spec:
 EOF
 ```
 
+```markdown
+**Ação:** Verificar CR
+**Ação:** oc describe elasticsearch elasticsearch -n <namespace>
+```
+
 ```bash ignore-test
-# Verificar CR
 oc get elasticsearch -n openshift-logging
-# oc describe elasticsearch elasticsearch -n <namespace>
 oc describe elasticsearch elasticsearch -n openshift-logging
 ```
 
 ### Gerenciar CRs
+```markdown
+**Ação:** Listar CRs de um tipo
+```
+
 ```bash ignore-test
-# Listar CRs de um tipo
 oc get <crd-resource-name>
 ```
 
+```markdown
+**Ação:** Listar recurso com colunas customizadas
+```
+
 ```bash ignore-test
-# Listar recurso com colunas customizadas
 oc get elasticsearch -o custom-columns=NAME:.metadata.name,STATUS:.status.cluster.status
 ```
 
+```markdown
+**Ação:** Edit CR
+```
+
 ```bash ignore-test
-# Edit CR
 oc edit elasticsearch <name>
 ```
 
+```markdown
+**Ação:** Patch CR
+```
+
 ```bash ignore-test
-# Patch CR
 oc patch elasticsearch <name> -p '{"spec":{"redundancyPolicy":"FullRedundancy"}}'
 ```
 
-```bash ignore-test
-# Delete CR
-oc delete elasticsearch <name>
+```markdown
+**Ação:** Delete CR
 ```
 
 ```bash ignore-test
-# Ver eventos relacionados
+oc delete elasticsearch <name>
+```
+
+```markdown
+**Ação:** Ver eventos relacionados
+```
+
+```bash ignore-test
 oc get events --field-selector involvedObject.name=<cr-name>
 ```
 
 ### Ver Status de CRs
+```markdown
+**Ação:** Status geral
+```
+
 ```bash ignore-test
-# Status geral
 oc get <cr-type> <name> -o jsonpath='{.status}'
 ```
 
+```markdown
+**Ação:** Condições
+```
+
 ```bash ignore-test
-# Condições
 oc get <cr-type> <name> -o jsonpath='{.status.conditions}'
 ```
 
-```bash ignore-test
-# Exemplo específico
-oc get elasticsearch <name> -o jsonpath='{.status.cluster.status}'
+```markdown
+**Ação:** Exemplo específico
 ```
 
 ```bash ignore-test
-# Watch status
+oc get elasticsearch <name> -o jsonpath='{.status.cluster.status}'
+```
+
+```markdown
+**Ação:** Watch status
+```
+
+```bash ignore-test
 oc get <cr-type> <name>
 ```
 
@@ -398,176 +551,272 @@ oc get <cr-type> <name>
 ## Troubleshooting Operators
 
 ### CSV (ClusterServiceVersion)
+```markdown
+**Ação:** Listar recurso de todos os namespaces do cluster
+```
+
 ```bash
-# Listar recurso de todos os namespaces do cluster
 oc get csv -A
 ```
 
+```markdown
+**Ação:** CSV em namespace específico
+```
+
 ```bash ignore-test
-# CSV em namespace específico
 oc get csv -n <namespace>
 ```
 
+```markdown
+**Ação:** Descrever CSV
+```
+
 ```bash ignore-test
-# Descrever CSV
 oc describe csv <csv-name> -n <namespace>
 ```
 
+```markdown
+**Ação:** Ver fase do CSV
+```
+
 ```bash ignore-test
-# Ver fase do CSV
 oc get csv <csv-name> -n <namespace> -o jsonpath='{.status.phase}'
 ```
 
-```bash ignore-test
-# Ver mensagem de erro
-oc get csv <csv-name> -n <namespace> -o jsonpath='{.status.message}'
+```markdown
+**Ação:** Ver mensagem de erro
 ```
 
 ```bash ignore-test
-# Ver pods gerenciados pelo CSV
+oc get csv <csv-name> -n <namespace> -o jsonpath='{.status.message}'
+```
+
+```markdown
+**Ação:** Ver pods gerenciados pelo CSV
+```
+
+```bash ignore-test
 oc get csv <csv-name> -n <namespace> -o jsonpath='{.spec.install.spec.deployments[*].name}'
 ```
 
 ### Logs do Operator
+```markdown
+**Ação:** Ver deployment do operator
+```
+
 ```bash ignore-test
-# Ver deployment do operator
 oc get deployment -n <namespace>
 ```
 
+```markdown
+**Ação:** Pods do operator
+```
+
 ```bash ignore-test
-# Pods do operator
 oc get pods -n <namespace> -l name=<operator-name>
 ```
 
+```markdown
+**Ação:** Logs
+```
+
 ```bash ignore-test
-# Logs
 oc logs -n <namespace> deployment/<operator-deployment>
 ```
 
-```bash ignore-test
-# Logs com follow
-oc logs -n <namespace> deployment/<operator-deployment> -f
+```markdown
+**Ação:** Logs com follow
 ```
 
 ```bash ignore-test
-# Logs anteriores (se crashou)
+oc logs -n <namespace> deployment/<operator-deployment> -f
+```
+
+```markdown
+**Ação:** Logs anteriores (se crashou)
+```
+
+```bash ignore-test
 oc logs -n <namespace> <operator-pod> --previous
 ```
 
 ### Troubleshoot Subscription
+```markdown
+**Ação:** Ver subscription
+```
+
 ```bash ignore-test
-# Ver subscription
 oc get subscription <name> -n <namespace> -o yaml
 ```
 
+```markdown
+**Ação:** Ver status
+```
+
 ```bash ignore-test
-# Ver status
 oc get subscription <name> -n <namespace> -o jsonpath='{.status}'
 ```
 
+```markdown
+**Ação:** Ver CSV instalado
+```
+
 ```bash ignore-test
-# Ver CSV instalado
 oc get subscription <name> -n <namespace> -o jsonpath='{.status.installedCSV}'
 ```
 
+```markdown
+**Ação:** Ver conditions
+```
+
 ```bash ignore-test
-# Ver conditions
 oc get subscription <name> -n <namespace> -o jsonpath='{.status.conditions}'
 ```
 
+```markdown
+**Ação:** Recrear subscription (deletar e criar novamente)
+* Recriar...
+```
+
 ```bash ignore-test
-# Recrear subscription (deletar e criar novamente)
 oc delete subscription <name> -n <namespace>
-# Recriar...
 ```
 
 ### Operator Não Instala
+```markdown
+**Ação:** Verificar catalog source
+```
+
 ```bash
-# Verificar catalog source
 oc get catalogsource -n openshift-marketplace
 oc get pods -n openshift-marketplace
 ```
 
-```bash ignore-test
-# Ver packagemanifest
-oc get packagemanifest <operator> -n openshift-marketplace
+```markdown
+**Ação:** Ver packagemanifest
 ```
 
 ```bash ignore-test
-# Verificar install plan
+oc get packagemanifest <operator> -n openshift-marketplace
+```
+
+```markdown
+**Ação:** Verificar install plan
+```
+
+```bash ignore-test
 oc get installplan -n <namespace>
 oc describe installplan <plan> -n <namespace>
 ```
 
+```markdown
+**Ação:** Exibir logs do pod especificado
+**Exemplo:** `oc logs -n <namespace> deployment/olm-operator`
+**Ação:** oc logs -n <namespace> deployment/catalog-operator
+```
+
 ```bash
-# Exibir logs do pod especificado
-# oc logs -n <namespace> deployment/olm-operator
 oc logs -n openshift-operator-lifecycle-manager deployment/olm-operator
-# oc logs -n <namespace> deployment/catalog-operator
 oc logs -n openshift-operator-lifecycle-manager deployment/catalog-operator
 ```
 
+```markdown
+**Ação:** Eventos
+```
+
 ```bash ignore-test
-# Eventos
 oc get events -n <namespace> --sort-by='.lastTimestamp'
 ```
 
 ### CR Não Cria Recursos
+```markdown
+**Ação:** Verificar se operator está rodando
+```
+
 ```bash ignore-test
-# Verificar se operator está rodando
 oc get pods -n <operator-namespace>
 ```
 
+```markdown
+**Ação:** Logs do operator
+```
+
 ```bash ignore-test
-# Logs do operator
 oc logs -n <operator-namespace> <operator-pod>
 ```
 
+```markdown
+**Ação:** Ver status do CR
+```
+
 ```bash ignore-test
-# Ver status do CR
 oc describe <cr-type> <cr-name>
 ```
 
+```markdown
+**Ação:** Ver eventos
+```
+
 ```bash ignore-test
-# Ver eventos
 oc get events --field-selector involvedObject.name=<cr-name>
 ```
 
-```bash ignore-test
-# Verificar RBAC
-oc auth can-i create pods --as=system:serviceaccount:<namespace>:<sa>
+```markdown
+**Ação:** Verificar RBAC
 ```
 
 ```bash ignore-test
-# Ver service account do operator
+oc auth can-i create pods --as=system:serviceaccount:<namespace>:<sa>
+```
+
+```markdown
+**Ação:** Ver service account do operator
+```
+
+```bash ignore-test
 oc get deployment <operator> -n <namespace> -o jsonpath='{.spec.template.spec.serviceAccountName}'
 oc describe sa <sa-name> -n <namespace>
 ```
 
 ### Remover Operator
+```markdown
+**Ação:** 1. Deletar todos os CRs criados
+```
+
 ```bash ignore-test
-# 1. Deletar todos os CRs criados
 oc get <cr-type> -A
 oc delete <cr-type> <name> -n <namespace>
 ```
 
+```markdown
+**Ação:** 2. Deletar subscription
+```
+
 ```bash ignore-test
-# 2. Deletar subscription
 oc delete subscription <name> -n <namespace>
 ```
 
+```markdown
+**Ação:** 3. Deletar CSV
+```
+
 ```bash ignore-test
-# 3. Deletar CSV
 oc delete csv <csv-name> -n <namespace>
 ```
 
-```bash ignore-test
-# 4. (Opcional) Deletar CRDs
-oc delete crd <crd-name>
+```markdown
+**Ação:** 4. (Opcional) Deletar CRDs
 ```
 
 ```bash ignore-test
-# 5. (Opcional) Deletar namespace
+oc delete crd <crd-name>
+```
+
+```markdown
+**Ação:** 5. (Opcional) Deletar namespace
+```
+
+```bash ignore-test
 oc delete namespace <namespace>
 ```
 

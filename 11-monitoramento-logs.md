@@ -18,63 +18,96 @@ Este documento contém comandos para monitoramento, métricas e logs no OpenShif
 ## Logs
 
 ### Logs de Pods
+```markdown
+**Ação:** Exibir logs do pod especificado
+```
+
 ```bash
-# Exibir logs do pod especificado
 oc logs my-pod
 ```
 
+```markdown
+**Ação:** Acompanhar logs em tempo real do pod
+```
+
 ```bash ignore-test
-# Acompanhar logs em tempo real do pod
 oc logs -f my-pod
 ```
 
+```markdown
+**Ação:** Exibir logs de container específico do pod
+**Exemplo:** `oc logs my-pod -c <container-name>`
+```
+
 ```bash
-# Exibir logs de container específico do pod
-# oc logs my-pod -c <container-name>
 oc logs my-pod -c my-container
 ```
 
-```bash
-# Exibir últimas N linhas dos logs
-oc logs my-pod --tail=100
+```markdown
+**Ação:** Exibir últimas N linhas dos logs
 ```
 
 ```bash
-# Exibir logs a partir de um período de tempo
+oc logs my-pod --tail=100
+```
+
+```markdown
+**Ação:** Exibir logs a partir de um período de tempo
+```
+
+```bash
 oc logs my-pod --since=1h
 oc logs my-pod --since-time=2025-01-01T00:00:00Z
 ```
 
+```markdown
+**Ação:** Exibir logs da instância anterior do container (após crash)
+```
+
 ```bash ignore-test
-# Exibir logs da instância anterior do container (após crash)
 oc logs my-pod --previous
 oc logs my-pod -p
 ```
 
-```bash
-# Exibir logs do pod especificado
-# oc logs deployment/<deployment-name>
-oc logs deployment/test-app
+```markdown
+**Ação:** Exibir logs do pod especificado
+**Exemplo:** `oc logs deployment/<deployment-name>`
 ```
 
 ```bash
-# Exibir logs do pod especificado
+oc logs deployment/test-app
+```
+
+```markdown
+**Ação:** Exibir logs do pod especificado
+```
+
+```bash
 oc logs my-pod --timestamps
 ```
 
 ### Logs do Cluster
+```markdown
+**Ação:** Logs de node específico
+```
+
 ```bash ignore-test
-# Logs de node específico
 oc adm node-logs <nome-do-node>
 ```
 
-```bash ignore-test
-# Logs do journal
-oc adm node-logs <nome-do-node> -u kubelet
+```markdown
+**Ação:** Logs do journal
 ```
 
 ```bash ignore-test
-# Logs do CRI-O
+oc adm node-logs <nome-do-node> -u kubelet
+```
+
+```markdown
+**Ação:** Logs do CRI-O
+```
+
+```bash ignore-test
 oc adm node-logs <nome-do-node> -u crio
 ```
 
@@ -83,43 +116,67 @@ oc adm node-logs <nome-do-node> -u crio
 ## Eventos
 
 ### Visualizar Eventos
+```markdown
+**Ação:** Listar eventos do namespace atual
+```
+
 ```bash
-# Listar eventos do namespace atual
 oc get events
 ```
 
+```markdown
+**Ação:** Listar eventos ordenados por campo específico
+```
+
 ```bash
-# Listar eventos ordenados por campo específico
 oc get events --sort-by='.lastTimestamp'
 ```
 
+```markdown
+**Ação:** Eventos de um namespace específico
+```
+
 ```bash ignore-test
-# Eventos de um namespace específico
 oc get events -n <namespace>
 ```
 
+```markdown
+**Ação:** Listar eventos de todos os namespaces do cluster
+```
+
 ```bash
-# Listar eventos de todos os namespaces do cluster
 oc get events -A
 ```
 
+```markdown
+**Ação:** Listar eventos filtrados por campo específico
+```
+
 ```bash
-# Listar eventos filtrados por campo específico
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
+```markdown
+**Ação:** Listar apenas eventos do tipo Warning
+```
+
 ```bash
-# Listar apenas eventos do tipo Warning
 oc get events --field-selector type=Warning
 ```
 
-```bash
-# Listar eventos ordenados por campo específico
-oc get events --field-selector involvedObject.kind=Pod --sort-by='.lastTimestamp' | tail -20
+```markdown
+**Ação:** Listar eventos ordenados por campo específico
 ```
 
 ```bash
-# Listar eventos do namespace atual
+oc get events --field-selector involvedObject.kind=Pod --sort-by='.lastTimestamp' | tail -20
+```
+
+```markdown
+**Ação:** Listar eventos do namespace atual
+```
+
+```bash
 oc get events
 ```
 
@@ -128,57 +185,87 @@ oc get events
 ## Métricas e Top
 
 ### Uso de Recursos
+```markdown
+**Ação:** Top nodes (CPU e memória)
+**Exemplo:** `oc adm top <resource-name>`
+```
+
 ```bash
-# Top nodes (CPU e memória)
-# oc adm top <resource-name>
 oc adm top nodes
 ```
 
+```markdown
+**Ação:** Top nodes com labels
+```
+
 ```bash ignore-test
-# Top nodes com labels
 oc adm top nodes --selector=node-role.kubernetes.io/worker=""
 ```
 
+```markdown
+**Ação:** Top pods
+**Exemplo:** `oc adm top <resource-name>`
+```
+
 ```bash ignore-test
-# Top pods
-# oc adm top <resource-name>
 oc adm top pods
 ```
 
+```markdown
+**Ação:** Top pods de todos namespaces
+```
+
 ```bash ignore-test
-# Top pods de todos namespaces
 oc adm top pods -A
 ```
 
+```markdown
+**Ação:** Top pods com containers
+```
+
 ```bash ignore-test
-# Top pods com containers
 oc adm top pods --containers
 ```
 
+```markdown
+**Ação:** Ordenar por CPU
+```
+
 ```bash ignore-test
-# Ordenar por CPU
 oc adm top pods --sort-by=cpu
 ```
 
-```bash ignore-test
-# Ordenar por memória
-oc adm top pods --sort-by=memory
+```markdown
+**Ação:** Ordenar por memória
 ```
 
 ```bash ignore-test
-# Top de um pod específico
-# oc adm top <resource-name> my-pod
+oc adm top pods --sort-by=memory
+```
+
+```markdown
+**Ação:** Top de um pod específico
+**Exemplo:** `oc adm top <resource-name> my-pod`
+```
+
+```bash ignore-test
 oc adm top pod my-pod
 ```
 
 ### Métricas Detalhadas
-```bash ignore-test
-# Ver uso atual vs requests/limits
-oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
+```markdown
+**Ação:** Ver uso atual vs requests/limits
 ```
 
 ```bash ignore-test
-# Exibir pods em formato JSON
+oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
+```
+
+```markdown
+**Ação:** Exibir pods em formato JSON
+```
+
+```bash ignore-test
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.containers[0].resources.requests.cpu) MEM:\(.spec.containers[0].resources.requests.memory)"'
 ```
 
@@ -187,24 +274,36 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.container
 ## Prometheus e Alertas
 
 ### Acessar Prometheus
+```markdown
+**Ação:** Ver route do Prometheus
+```
+
 ```bash
-# Ver route do Prometheus
 oc get route -n openshift-monitoring
 ```
 
-```bash
-# Listar recurso de todos os namespaces do cluster
-oc get prometheusrule -A
+```markdown
+**Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
 ```bash
-# Ver pods do monitoring
+oc get prometheusrule -A
+```
+
+```markdown
+**Ação:** Ver pods do monitoring
+```
+
+```bash
 oc get pods -n openshift-monitoring
 ```
 
 ### Configurar Monitoring
+```markdown
+**Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
+```
+
 ```bash
-# Aplicar configuração do arquivo YAML/JSON ao cluster
 cat <<EOF | oc apply -f -
 apiVersion: v1
 kind: ConfigMap
@@ -217,26 +316,38 @@ data:
 EOF
 ```
 
+```markdown
+**Ação:** Exibir recurso "cluster-monitoring-config" em formato YAML
+**Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
+```
+
 ```bash ignore-test
-# Exibir recurso "cluster-monitoring-config" em formato YAML
-# oc get configmap <configmap-name> -n <namespace> -o yaml
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
+```markdown
+**Ação:** Ver status do monitoring
+**Exemplo:** `oc get clusteroperator <resource-name>`
+```
+
 ```bash
-# Ver status do monitoring
-# oc get clusteroperator <resource-name>
 oc get clusteroperator monitoring
 ```
 
 ### ServiceMonitor
+```markdown
+**Ação:** Listar recurso de todos os namespaces do cluster
+```
+
 ```bash
-# Listar recurso de todos os namespaces do cluster
 oc get servicemonitor -A
 ```
 
+```markdown
+**Ação:** Criar ServiceMonitor para app
+```
+
 ```bash ignore-test
-# Criar ServiceMonitor para app
 cat <<EOF | oc apply -f -
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor

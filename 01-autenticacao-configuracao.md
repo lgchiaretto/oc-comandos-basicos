@@ -19,60 +19,93 @@ Este documento contém comandos essenciais para autenticação e configuração 
 ## Login e Logout
 
 ### Login Básico
+```markdown
+**Ação:** Login no cluster OpenShift
+```
+
 ```bash ignore-test
-# Login no cluster OpenShift
 oc login <url-do-cluster>
 ```
 
+```markdown
+**Ação:** Login com usuário e senha
+```
+
 ```bash ignore-test
-# Login com usuário e senha
 oc login <url-do-cluster> -u <usuario> -p <senha>
 ```
 
-```bash ignore-test
-# Login com token
-oc login --token=<token> --server=<url-do-cluster>
+```markdown
+**Ação:** Login com token
 ```
 
 ```bash ignore-test
-# Exemplo prático
+oc login --token=<token> --server=<url-do-cluster>
+```
+
+```markdown
+**Ação:** Exemplo prático
+```
+
+```bash ignore-test
 oc login https://api.cluster.example.com:6443 -u developer -p mypassword
 ```
 
 ### Verificar Autenticação
+```markdown
+**Ação:** Exibir o nome do usuário autenticado atualmente
+```
+
 ```bash
-# Exibir o nome do usuário autenticado atualmente
 oc whoami
 ```
 
+```markdown
+**Ação:** Exibir o token de autenticação do usuário atual
+```
+
 ```bash
-# Exibir o token de autenticação do usuário atual
 oc whoami -t
 ```
 
+```markdown
+**Ação:** Exibir o contexto atual do kubeconfig
+```
+
 ```bash
-# Exibir o contexto atual do kubeconfig
 oc whoami --show-context
 ```
 
-```bash
-# Exibir a URL da console web do cluster
-oc whoami --show-console
+```markdown
+**Ação:** Exibir a URL da console web do cluster
 ```
 
 ```bash
-# Exibir a URL do servidor API conectado
+oc whoami --show-console
+```
+
+```markdown
+**Ação:** Exibir a URL do servidor API conectado
+```
+
+```bash
 oc whoami --show-server
 ```
 
 ### Logout
-```bash ignore-test
-# Fazer logout
-oc logout
+```markdown
+**Ação:** Fazer logout
 ```
 
 ```bash ignore-test
-# Fazer logout e limpar contexto
+oc logout
+```
+
+```markdown
+**Ação:** Fazer logout e limpar contexto
+```
+
+```bash ignore-test
 oc logout && rm -f ~/.kube/config
 ```
 
@@ -82,79 +115,121 @@ oc logout && rm -f ~/.kube/config
 
 
 ### Listar API Resources
+```markdown
+**Ação:** Listar todos os recursos da API disponíveis no cluster
+```
+
 ```bash
-# Listar todos os recursos da API disponíveis no cluster
 oc api-resources
 ```
 
+```markdown
+**Ação:** Filtrar por verbo
+```
+
 ```bash
-# Filtrar por verbo
 oc api-resources --verbs=list,get
 ```
 
-```bash
-# Filtrar por grupo de API
-oc api-resources --api-group=apps
+```markdown
+**Ação:** Filtrar por grupo de API
 ```
 
 ```bash
-# Ver recursos com alias
+oc api-resources --api-group=apps
+```
+
+```markdown
+**Ação:** Ver recursos com alias
+```
+
+```bash
 oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 ```
 
 ### Listar API Versions
+```markdown
+**Ação:** Listar todas as versões de API disponíveis
+```
+
 ```bash
-# Listar todas as versões de API disponíveis
 oc api-versions
 ```
 
-```bash
-# Ver versões específicas do grupo
-oc api-versions | grep apps
+```markdown
+**Ação:** Ver versões específicas do grupo
 ```
 
 ```bash
-# Ver versões do core
+oc api-versions | grep apps
+```
+
+```markdown
+**Ação:** Ver versões do core
+```
+
+```bash
 oc api-versions | grep -v "/"
 ```
 
 ## Configuração do Cliente
 
 ### Versão e Informações
+```markdown
+**Ação:** Exibir versão do cliente oc e do servidor OpenShift
+```
+
 ```bash
-# Exibir versão do cliente oc e do servidor OpenShift
 oc version
 ```
 
-```bash
-# Exibir informações básicas do cluster
-oc cluster-info
+```markdown
+**Ação:** Exibir informações básicas do cluster
 ```
 
 ```bash
-# Ver informações do servidor
+oc cluster-info
+```
+
+```markdown
+**Ação:** Ver informações do servidor
+```
+
+```bash
 oc cluster-info dump
 ```
 
 ### Configuração
+```markdown
+**Ação:** Exibir configuração atual do kubeconfig
+```
+
 ```bash
-# Exibir configuração atual do kubeconfig
 oc config view
 ```
 
-```bash
-# Exibir configuração com credenciais (cuidado!)
-oc config view --raw
+```markdown
+**Ação:** Exibir configuração com credenciais (cuidado!)
 ```
 
 ```bash
-# Exibir conteúdo do arquivo de configuração do kubectl/oc
+oc config view --raw
+```
+
+```markdown
+**Ação:** Exibir conteúdo do arquivo de configuração do kubectl/oc
+```
+
+```bash
 cat ~/.kube/config
 ```
 
 ### Namespace Padrão
+```markdown
+**Ação:** Definir namespace padrão para o contexto atual
+```
+
 ```bash
-# Definir namespace padrão para o contexto atual
 oc config set-context --current --namespace=development
 ```
 ---
@@ -162,63 +237,93 @@ oc config set-context --current --namespace=development
 ## Contextos
 
 ### Listar e Gerenciar Contextos
+```markdown
+**Ação:** Listar todos os contextos disponíveis
+```
+
 ```bash
-# Listar todos os contextos disponíveis
 oc config get-contexts
 ```
 
+```markdown
+**Ação:** Exibir o contexto atual do kubeconfig
+```
+
 ```bash
-# Exibir o contexto atual do kubeconfig
 oc config current-context
 ```
 
+```markdown
+**Ação:** Trocar de contexto
+```
+
 ```bash ignore-test
-# Trocar de contexto
 oc config use-context <nome-do-contexto>
 ```
 
-```bash ignore-test
-# Renomear contexto
-oc config rename-context <nome-antigo> <nome-novo>
+```markdown
+**Ação:** Renomear contexto
 ```
 
 ```bash ignore-test
-# Deletar contexto
+oc config rename-context <nome-antigo> <nome-novo>
+```
+
+```markdown
+**Ação:** Deletar contexto
+```
+
+```bash ignore-test
 oc config delete-context <nome-do-contexto>
 ```
 
 ### Criar Contextos Customizados
+```markdown
+**Ação:** Criar novo contexto
+```
+
 ```bash ignore-test
-# Criar novo contexto
 oc config set-context <nome-do-contexto> \
   --cluster=<cluster> \
   --user=<usuario> \
   --namespace=<namespace>
 ```
 
+```markdown
+**Ação:** Exemplo
+```
+
 ```bash ignore-test
-# Exemplo
 oc config set-context dev-context \
   --cluster=dev-cluster \
   --user=developer \
   --namespace=development
 ```
 
+```markdown
+**Ação:** Criar contexto para o cluster
+```
+
 ```bash ignore-test
-# Criar contexto para o cluster
 oc config set-context <contexto> \
   --cluster=<cluster> \
   --user=<usuario>
 ```
 
 ### Variáveis de Ambiente
-```bash ignore-test
-# Definir KUBECONFIG customizado
-export KUBECONFIG=/path/to/kubeconfig
+```markdown
+**Ação:** Definir KUBECONFIG customizado
 ```
 
 ```bash ignore-test
-# Múltiplos kubeconfigs
+export KUBECONFIG=/path/to/kubeconfig
+```
+
+```markdown
+**Ação:** Múltiplos kubeconfigs
+```
+
+```bash ignore-test
 export KUBECONFIG=/path/to/config1:/path/to/config2
 ```
 ---
@@ -258,15 +363,3 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 ---
 
 **Última atualização**: Outubro 2025
-
-
-```markdown
-**Ação:** Deletar recurso forçadamente (sem período de espera).
-
-* `--grace-period=0`: Define o período de espera para zero, forçando a remoção imediata.
-* `--force`: Força a deleção do recurso.
-```
-
-```bash
-oc delete pod my-pod --grace-period=0 --force
-```

@@ -225,26 +225,29 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 
 ### Comandos Mais Usados
 
+```markdown
+**Ação:** Listar pods com problemas
+**Ação:** Aprovar todos os CSRs pendentes
+**Ação:** Ver cluster operators com problemas
+**Ação:** Must-gather básico
+**Ação:** Ver logs de um pod crasheado
+**Ação:** Debug de um node
+**Ação:** Listar eventos de erro
+```
+
 ```bash
-# Listar pods com problemas
 oc get pods -A | grep -E -v "Running|Completed"
 
-# Aprovar todos os CSRs pendentes
 oc get csr -o name | xargs oc adm certificate approve
 
-# Ver cluster operators com problemas
 oc get co | grep -v "True.*False.*False"
 
-# Must-gather básico
 oc adm must-gather
 
-# Ver logs de um pod crasheado
 oc logs <pod> --previous
 
-# Debug de um node
 oc debug node/<node-name>
 
-# Listar eventos de erro
 oc get events --field-selector type=Warning
 ```
 
@@ -253,11 +256,14 @@ oc get events --field-selector type=Warning
 ## Dicas Gerais
 
 ### Watch Commands
+```markdown
+**Ação:** Ver pods em tempo real
+**Ação:** Ver eventos em tempo real
+```
+
 ```bash
-# Ver pods em tempo real
 watch -n 2 oc get pods
 
-# Ver eventos em tempo real
 oc get events --watch
 ```
 

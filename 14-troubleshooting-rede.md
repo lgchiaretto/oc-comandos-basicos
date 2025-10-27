@@ -20,52 +20,79 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ## Diagnóstico Básico
 
 ### Conectividade de Pod
+```markdown
+**Ação:** Exibir recurso "my-pod" em formato JSON
+**Exemplo:** `oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'`
+```
+
 ```bash
-# Exibir recurso "my-pod" em formato JSON
-# oc get pod <resource-name>pod -o jsonpath='{.status.podIP}'
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
+```markdown
+**Ação:** Testar conectividade entre pods
+```
+
 ```bash ignore-test
-# Testar conectividade entre pods
 oc exec my-pod -- ping <ip-pod-destino>
 oc exec my-pod -- curl <ip-pod-destino>:<porta>
 ```
 
+```markdown
+**Ação:** Testar service por nome
+```
+
 ```bash ignore-test
-# Testar service por nome
 oc exec my-pod -- curl <nome-service>:<porta>
 ```
 
+```markdown
+**Ação:** Testar DNS
+```
+
 ```bash ignore-test
-# Testar DNS
 oc exec my-pod -- nslookup <nome-service>
 ```
 
-```bash
-# Executar comando dentro do pod especificado
-oc exec my-pod -- ip route
+```markdown
+**Ação:** Executar comando dentro do pod especificado
 ```
 
 ```bash
-# Executar comando dentro do pod especificado
+oc exec my-pod -- ip route
+```
+
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
+```bash
 oc exec my-pod -- ip addr
 ```
 
 ### Network Policies
+```markdown
+**Ação:** Listar políticas de rede configuradas no namespace
+```
+
 ```bash
-# Listar políticas de rede configuradas no namespace
 oc get networkpolicy
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do network policy
+**Exemplo:** `oc describe networkpolicy <resource-name>`
+```
+
 ```bash ignore-test
-# Exibir detalhes completos do network policy
-# oc describe networkpolicy <resource-name>
 oc describe networkpolicy test-app
 ```
 
+```markdown
+**Ação:** Exibir network policy em formato YAML
+```
+
 ```bash
-# Exibir network policy em formato YAML
 oc get networkpolicy -o yaml
 ```
 
@@ -86,63 +113,93 @@ oc describe pod test-app | grep -i network
 ## Services e Endpoints
 
 ### Verificar Services
+```markdown
+**Ação:** Listar todos os services do namespace atual
+**Exemplo:** `oc get svc <service-name>`
+```
+
 ```bash
-# Listar todos os services do namespace atual
-# oc get svc <service-name>
 oc get svc
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do service
+**Exemplo:** `oc describe svc <service-name>`
+```
+
 ```bash
-# Exibir detalhes completos do service
-# oc describe svc <service-name>
 oc describe svc test-app
 ```
 
+```markdown
+**Ação:** Exibir service "test-app" em formato JSON
+**Exemplo:** `oc get svc <service-name> -o jsonpath='{.spec.clusterIP}'`
+```
+
 ```bash
-# Exibir service "test-app" em formato JSON
-# oc get svc <service-name> -o jsonpath='{.spec.clusterIP}'
 oc get svc test-app -o jsonpath='{.spec.clusterIP}'
 ```
 
+```markdown
+**Ação:** Exibir service "test-app" em formato JSON
+**Exemplo:** `oc get svc <service-name> -o jsonpath='{.spec.ports}'`
+```
+
 ```bash
-# Exibir service "test-app" em formato JSON
-# oc get svc <service-name> -o jsonpath='{.spec.ports}'
 oc get svc test-app -o jsonpath='{.spec.ports}'
 ```
 
+```markdown
+**Ação:** Testar service de dentro do cluster
+```
+
 ```bash ignore-test
-# Testar service de dentro do cluster
 oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <service-name>:<port>
 ```
 
 ### Endpoints
+```markdown
+**Ação:** Listar endpoints
+```
+
 ```bash
-# Listar endpoints
 oc get endpoints
 ```
 
+```markdown
+**Ação:** Endpoints de service específico
+**Exemplo:** `oc get endpoints <resource-name>`
+```
+
 ```bash
-# Endpoints de service específico
-# oc get endpoints <resource-name>
 oc get endpoints test-app
 ```
 
-```bash ignore-test
-# Exibir endpoints "test-app" em formato JSON
-# oc get endpoints <resource-name>app -o jsonpath='{.subsets[*].addresses[*].ip}'
-oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
+```markdown
+**Ação:** Exibir endpoints "test-app" em formato JSON
+**Exemplo:** `oc get endpoints <resource-name>app -o jsonpath='{.subsets[*].addresses[*].ip}'`
 ```
 
 ```bash ignore-test
-# Exibir service "test-app" em formato JSON
-# oc get svc <service-name> -o jsonpath='{.spec.selector}'
+oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
+```
+
+```markdown
+**Ação:** Exibir service "test-app" em formato JSON
+**Exemplo:** `oc get svc <service-name> -o jsonpath='{.spec.selector}'`
+```
+
+```bash ignore-test
 oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do service
+**Exemplo:** `oc describe svc <service-name> | grep Selector`
+```
+
 ```bash
-# Exibir detalhes completos do service
-# oc describe svc <service-name> | grep Selector
 oc describe svc test-app | grep Selector
 oc get pods --show-labels
 ```
@@ -152,70 +209,106 @@ oc get pods --show-labels
 ## Routes e Ingress
 
 ### Troubleshoot Routes
+```markdown
+**Ação:** Listar todas as routes expostas no namespace
+```
+
 ```bash
-# Listar todas as routes expostas no namespace
 oc get routes
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do route
+**Exemplo:** `oc describe route <route-name>>`
+```
+
 ```bash
-# Exibir detalhes completos do route
-# oc describe route <route-name>>
 oc describe route test-app
 ```
 
+```markdown
+**Ação:** Exibir route "test-app" em formato JSON
+**Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.host}'`
+```
+
 ```bash
-# Exibir route "test-app" em formato JSON
-# oc get route <route-name> -o jsonpath='{.spec.host}'
 oc get route test-app -o jsonpath='{.spec.host}'
 ```
 
+```markdown
+**Ação:** Testar route externamente
+```
+
 ```bash ignore-test
-# Testar route externamente
 curl -v https://<hostname-da-route>
 ```
 
+```markdown
+**Ação:** Exibir route "test-app" em formato JSON
+**Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.tls}'`
+```
+
 ```bash
-# Exibir route "test-app" em formato JSON
-# oc get route <route-name> -o jsonpath='{.spec.tls}'
 oc get route test-app -o jsonpath='{.spec.tls}'
 ```
 
+```markdown
+**Ação:** Exibir route "test-app" em formato JSON
+**Exemplo:** `oc get route <route-name> -o jsonpath='{.spec.to.name}'`
+```
+
 ```bash
-# Exibir route "test-app" em formato JSON
-# oc get route <route-name> -o jsonpath='{.spec.to.name}'
 oc get route test-app -o jsonpath='{.spec.to.name}'
 ```
 
+```markdown
+**Ação:** Ver se service existe
+```
+
 ```bash ignore-test
-# Ver se service existe
 oc get svc <service-name>
 ```
 
 ### Ingress Controller
+```markdown
+**Ação:** Status do router
+```
+
 ```bash
-# Status do router
 oc get pods -n openshift-ingress
 ```
 
+```markdown
+**Ação:** Exibir logs de todos os pods que correspondem ao label
+**Exemplo:** `oc logs -n <namespace> -l app=router`
+```
+
 ```bash
-# Exibir logs de todos os pods que correspondem ao label
-# oc logs -n <namespace> -l app=router
 oc logs -n openshift-ingress -l app=router
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash
-# Exibir recurso em formato JSON
 oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
 ```
 
-```bash
-# IngressController config
-oc get ingresscontroller -n openshift-ingress-operator
+```markdown
+**Ação:** IngressController config
 ```
 
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe ingresscontroller default -n <namespace>
+oc get ingresscontroller -n openshift-ingress-operator
+```
+
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe ingresscontroller default -n <namespace>`
+```
+
+```bash
 oc describe ingresscontroller default -n openshift-ingress-operator
 ```
 
@@ -224,68 +317,104 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 ## SDN/OVN
 
 ### Verificar Rede do Cluster
+```markdown
+**Ação:** Exibir recurso em formato JSON
+```
+
 ```bash
-# Exibir recurso em formato JSON
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
+```markdown
+**Ação:** Exibir recurso em formato YAML
+```
+
 ```bash
-# Exibir recurso em formato YAML
 oc get network.config.openshift.io cluster -o yaml
 ```
 
+```markdown
+**Ação:** Pods de rede
+* ou para OVN:
+```
+
 ```bash
-# Pods de rede
 oc get pods -n openshift-sdn
-# ou para OVN:
 oc get pods -n openshift-ovn-kubernetes
 ```
 
-```bash ignore-test
-# Logs de rede (SDN)
-oc logs -n openshift-sdn <sdn-pod-name>
+```markdown
+**Ação:** Logs de rede (SDN)
 ```
 
 ```bash ignore-test
-# Logs de rede (OVN)
+oc logs -n openshift-sdn <sdn-pod-name>
+```
+
+```markdown
+**Ação:** Logs de rede (OVN)
+```
+
+```bash ignore-test
 oc logs -n openshift-ovn-kubernetes <ovn-pod-name>
 ```
 
 ### OVN-Kubernetes Debug
+```markdown
+**Ação:** Ver flows OVN
+```
+
 ```bash ignore-test
-# Ver flows OVN
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-ofctl dump-flows br-int
 ```
 
+```markdown
+**Ação:** Ver interfaces
+```
+
 ```bash ignore-test
-# Ver interfaces
 oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-vsctl show
 ```
 
-```bash ignore-test
-# Trace de pacote
-oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-appctl ofproto/trace br-int <flow>
+```markdown
+**Ação:** Trace de pacote
 ```
 
 ```bash ignore-test
-# Ver tabelas OVN
+oc -n openshift-ovn-kubernetes exec <ovnkube-node-pod> -- ovs-appctl ofproto/trace br-int <flow>
+```
+
+```markdown
+**Ação:** Ver tabelas OVN
+```
+
+```bash ignore-test
 oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-nbctl show
 oc -n openshift-ovn-kubernetes exec <ovnkube-master-pod> -- ovn-sbctl show
 ```
 
 ### Multus e CNI
+```markdown
+**Ação:** Listar NetworkAttachmentDefinitions
+```
+
 ```bash
-# Listar NetworkAttachmentDefinitions
 oc get network-attachment-definitions
 ```
 
+```markdown
+**Ação:** Ver CNI configs
+```
+
 ```bash
-# Ver CNI configs
 oc get pods -n openshift-multus
 ```
 
+```markdown
+**Ação:** Logs do Multus
+```
+
 ```bash ignore-test
-# Logs do Multus
 oc logs -n openshift-multus <multus-pod>
 ```
 
@@ -294,63 +423,96 @@ oc logs -n openshift-multus <multus-pod>
 ## DNS
 
 ### Diagnóstico DNS
+```markdown
+**Ação:** Pods do CoreDNS/DNS
+```
+
 ```bash
-# Pods do CoreDNS/DNS
 oc get pods -n openshift-dns
 ```
 
-```bash ignore-test
-# Logs do DNS
-oc logs -n openshift-dns <dns-pod-name>
+```markdown
+**Ação:** Logs do DNS
 ```
 
 ```bash ignore-test
-# Executar comando dentro do pod especificado
+oc logs -n openshift-dns <dns-pod-name>
+```
+
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
+```bash ignore-test
 oc exec my-pod -- nslookup kubernetes.default
 oc exec my-pod -- nslookup <service-name>
 oc exec my-pod -- nslookup <service-name>.<namespace>.svc.cluster.local
 ```
 
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
 ```bash
-# Executar comando dentro do pod especificado
 oc exec my-pod -- cat /etc/resolv.conf
 ```
 
-```bash
-# Verificar DNS operator
-# oc get clusteroperator <resource-name>
-oc get clusteroperator dns
+```markdown
+**Ação:** Verificar DNS operator
+**Exemplo:** `oc get clusteroperator <resource-name>`
 ```
 
 ```bash
-# Exibir recurso em formato YAML
+oc get clusteroperator dns
+```
+
+```markdown
+**Ação:** Exibir recurso em formato YAML
+```
+
+```bash
 oc get dns.operator/default -o yaml
 ```
 
 ### Problemas Comuns de DNS
+```markdown
+**Ação:** Verificar se DNS pods estão rodando
+```
+
 ```bash
-# Verificar se DNS pods estão rodando
 oc get pods -n openshift-dns
 ```
 
+```markdown
+**Ação:** Deletar o recurso especificado
+**Exemplo:** `oc delete pod -n <namespace> --all`
+```
+
 ```bash ignore-test
-# Deletar o recurso especificado
-# oc delete pod -n <namespace> --all
 oc delete pod -n openshift-dns --all
 ```
 
+```markdown
+**Ação:** Verificar se service do DNS existe
+```
+
 ```bash
-# Verificar se service do DNS existe
 oc get svc -n openshift-dns
 ```
 
-```bash
-# Executar comando dentro do pod especificado
-oc exec my-pod -- nslookup redhat.com
+```markdown
+**Ação:** Executar comando dentro do pod especificado
 ```
 
 ```bash
-# Executar comando dentro do pod especificado
+oc exec my-pod -- nslookup redhat.com
+```
+
+```markdown
+**Ação:** Executar comando dentro do pod especificado
+```
+
+```bash
 oc exec my-pod -- nslookup kubernetes.default.svc.cluster.local
 ```
 
@@ -359,13 +521,19 @@ oc exec my-pod -- nslookup kubernetes.default.svc.cluster.local
 ## Ferramentas de Debug
 
 ### Pod de Debug de Rede
-```bash ignore-test
-# Criar e executar pod
-oc run netshoot --rm -i --tty --image quay.io/chiaretto/netshoot -- /bin/bash
+```markdown
+**Ação:** Criar e executar pod
 ```
 
 ```bash ignore-test
-# Criar e executar pod
+oc run netshoot --rm -i --tty --image quay.io/chiaretto/netshoot -- /bin/bash
+```
+
+```markdown
+**Ação:** Criar e executar pod
+```
+
+```bash ignore-test
 oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bin/bash
 ```
 
@@ -379,24 +547,36 @@ oc run debug --rm -i --tty --image=registry.redhat.io/rhel8/support-tools -- /bi
 ```
 
 ### Captura de Pacotes
+```markdown
+**Ação:** Debug node e captura de pacotes
+```
+
 ```bash ignore-test
-# Debug node e captura de pacotes
 oc debug node/<node-name>
 ```
 
-```bash ignore-test
-# No node (chroot):
-chroot /host
+```markdown
+* No node (chroot):
 ```
 
 ```bash ignore-test
-# Capturar tráfego
+chroot /host
+```
+
+```markdown
+**Ação:** Capturar tráfego
+```
+
+```bash ignore-test
 tcpdump -i any -n host <ip-do-pod>
 tcpdump -i any -n port <porta>
 ```
 
+```markdown
+**Ação:** Salvar captura
+```
+
 ```bash ignore-test
-# Salvar captura
 tcpdump -i any -w /tmp/capture.pcap
 ```
 

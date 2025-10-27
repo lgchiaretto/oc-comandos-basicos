@@ -7,119 +7,152 @@ Este é um guia rápido para você começar a usar os comandos do OpenShift imed
 ## Top 20 Comandos Mais Usados
 
 ### 1. Login e Contexto
+```markdown
+**Ação:** Login no cluster
+**Ação:** Ver usuário atual
+**Ação:** Ver projeto atual
+```
+
 ```bash
-# Login no cluster
 oc login <url> -u <usuario> -p <senha>
 
-# Ver usuário atual
 oc whoami
 
-# Ver projeto atual
 oc project
 ```
 
 ### 2. Listar Recursos
+```markdown
+**Ação:** Listar pods
+**Ação:** Listar tudo
+**Ação:** Listar pods com problemas
+```
+
 ```bash
-# Listar pods
 oc get pods
 
-# Listar tudo
 oc get all
 
-# Listar pods com problemas
 oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ### 3. Debug de Pods
+```markdown
+**Ação:** Ver logs
+**Ação:** Logs em tempo real
+**Ação:** Logs de pod crasheado
+**Ação:** Acessar shell do pod
+```
+
 ```bash
-# Ver logs
 oc logs <pod-name>
 
-# Logs em tempo real
 oc logs -f <pod-name>
 
-# Logs de pod crasheado
 oc logs <pod-name> --previous
 
-# Acessar shell do pod
 oc rsh <pod-name>
 ```
 
 ### 4. Descrever Recursos
+```markdown
+**Ação:** Descrever pod
+**Ação:** Ver eventos
+```
+
 ```bash
-# Descrever pod
 oc describe pod <pod-name>
 
-# Ver eventos
 oc get events --sort-by='.lastTimestamp' | tail -20
 ```
 
 ### 5. Cluster Operators
+```markdown
+**Ação:** Ver status dos operators
+**Ação:** Operators com problemas
+```
+
 ```bash
-# Ver status dos operators
 oc get co
 
-# Operators com problemas
 oc get co | grep -v "True.*False.*False"
 ```
 
 ### 6. Upgrade do Cluster
+```markdown
+**Ação:** Ver versão atual e status do upgrade
+**Ação:** Ver progresso do upgrade
+**Ação:** Ver se há operadores bloqueando upgrade
+```
+
 ```bash
-# Ver versão atual e status do upgrade
 oc get clusterversion
 
-# Ver progresso do upgrade
 oc adm upgrade
 
-# Ver se há operadores bloqueando upgrade
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | .metadata.name'
 ```
 
 ### 7. Nodes
+```markdown
+**Ação:** Listar nodes
+**Ação:** Ver uso de recursos dos nodes
+```
+
 ```bash
-# Listar nodes
 oc get nodes
 
-# Ver uso de recursos dos nodes
 oc adm top nodes
 ```
 
 ### 8. CSR (Certificate Signing Requests)
+```markdown
+**Ação:** Listar CSRs
+**Ação:** Aprovar todos os CSRs pendentes
+```
+
 ```bash
-# Listar CSRs
 oc get csr
 
-# Aprovar todos os CSRs pendentes
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ### 9. Scaling
+```markdown
+**Ação:** Escalar deployment
+**Ação:** Ver status do rollout
+```
+
 ```bash
-# Escalar deployment
 oc scale deployment test-app --replicas=3
 
-# Ver status do rollout
 oc rollout status deployment/test-app
 ```
 
 ### 10. Criar Aplicação
+```markdown
+**Ação:** Criar app a partir de imagem
+**Ação:** Criar app a partir de git
+**Ação:** Expor service
+```
+
 ```bash
-# Criar app a partir de imagem
 oc new-app <imagem>
 
-# Criar app a partir de git
 oc new-app <url-git>
 
-# Expor service
 oc expose service test-app
 ```
 
 ### 10. ConfigMaps e Secrets
+```markdown
+**Ação:** Criar configmap
+**Ação:** Criar secret
+```
+
 ```bash
-# Criar configmap
 oc create configmap test-app --from-literal=key=value
 
-# Criar secret
 oc create secret generic test-app --from-literal=key=value
 ```
 
@@ -128,8 +161,12 @@ oc create secret generic test-app --from-literal=key=value
 ## Comandos de Emergência
 
 ### Troubleshooting Rápido
+```markdown
+**Ação:** Health check completo do cluster
+**Ação:** Must-gather para suporte
+```
+
 ```bash
-# Health check completo do cluster
 echo "=== Pods com Problemas ===" && \
 (oc get pods -A | grep -E -v "Running|Completed" || echo "Nenhum pod com problema") && \
 echo "" && \
@@ -142,25 +179,30 @@ echo "" && \
 echo "=== Nodes ===" && \
 oc get nodes
 
-# Must-gather para suporte
 oc adm must-gather --dest-dir=/tmp/must-gather-$(date +%Y%m%d-%H%M%S)
 ```
 
 ### Resolver CSRs Pendentes
+```markdown
+**Ação:** Aprovar todos de uma vez
+```
+
 ```bash
-# Aprovar todos de uma vez
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ### Cordon e Drain de Node
+```markdown
+**Ação:** Tornar node não agendável
+**Ação:** Drenar pods do node
+**Ação:** Voltar a agendar no node
+```
+
 ```bash
-# Tornar node não agendável
 oc adm cordon <node-name>
 
-# Drenar pods do node
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 
-# Voltar a agendar no node
 oc adm uncordon <node-name>
 ```
 
@@ -188,58 +230,67 @@ oc adm uncordon <node-name>
 ## Fluxos de Trabalho Comuns
 
 ### Deploy de Nova Aplicação
+```markdown
+**Ação:** 1. Criar projeto
+**Ação:** 2. Criar aplicação
+**Ação:** 3. Expor service
+**Ação:** 4. Ver status
+**Ação:** 5. Ver logs
+```
+
 ```bash
-# 1. Criar projeto
 oc new-project development
 
-# 2. Criar aplicação
 oc new-app <imagem-ou-git>
 
-# 3. Expor service
 oc expose service test-app
 
-# 4. Ver status
 oc status
 
-# 5. Ver logs
 oc logs -f deployment/test-app
 ```
 
 ### Debug de Pod com Problema
+```markdown
+**Ação:** 1. Identificar o problema
+**Ação:** 2. Descrever o pod
+**Ação:** 3. Ver logs
+**Ação:** 4. Se crasheado, ver logs anteriores
+**Ação:** 5. Ver eventos
+**Ação:** 6. Se necessário, debug interativo
+```
+
 ```bash
-# 1. Identificar o problema
 oc get pods | grep -v Running
 
-# 2. Descrever o pod
 oc describe pod <pod-name>
 
-# 3. Ver logs
 oc logs <pod-name>
 
-# 4. Se crasheado, ver logs anteriores
 oc logs <pod-name> --previous
 
-# 5. Ver eventos
 oc get events --field-selector involvedObject.name=<pod-name>
 
-# 6. Se necessário, debug interativo
 oc debug pod/<pod-name>
 ```
 
 ### Manutenção de Node
+```markdown
+**Ação:** 1. Cordon (não agendar novos pods)
+**Ação:** 2. Drain (remover pods existentes)
+**Ação:** 3. Realizar manutenção...
+* 4. Uncordon (voltar a agendar)
+**Ação:** 5. Verificar
+```
+
 ```bash
-# 1. Cordon (não agendar novos pods)
 oc adm cordon <node-name>
 
-# 2. Drain (remover pods existentes)
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 
-# 3. Realizar manutenção...
 
-# 4. Uncordon (voltar a agendar)
 oc adm uncordon <node-name>
 
-# 5. Verificar
 oc get nodes
 ```
 
@@ -248,29 +299,38 @@ oc get nodes
 ## Ferramentas Complementares
 
 ### JQ - Processar JSON
+```markdown
+**Ação:** Instalar
+**Ação:** Exemplo de uso
+```
+
 ```bash
-# Instalar
 sudo dnf install jq  # RHEL/Fedora
 
-# Exemplo de uso
 oc get pods -o json | jq '.items[].metadata.name'
 ```
 
 ### Watch - Monitorar mudanças
+```markdown
+**Ação:** Ver pods em tempo real
+**Ação:** Ver nodes em tempo real
+```
+
 ```bash
-# Ver pods em tempo real
 watch -n 2 oc get pods
 
-# Ver nodes em tempo real
 watch -n 5 oc get nodes
 ```
 
 ### Bash Completion
+```markdown
+**Ação:** Habilitar completion
+**Ação:** Recarregar shell
+```
+
 ```bash
-# Habilitar completion
 oc completion bash > oc && sudo mv oc /etc/bash_completion.d/oc
 
-# Recarregar shell
 source ~/.bashrc
 ```
 
@@ -309,32 +369,41 @@ source ~/.bashrc
 ## Ajuda Rápida
 
 ### Comando não funciona?
+```markdown
+**Ação:** Ver ajuda do comando
+**Ação:** Ver exemplos
+**Ação:** Explicar recurso da API
+```
+
 ```bash
-# Ver ajuda do comando
 oc <comando> --help
 
-# Ver exemplos
 oc <comando> --help | grep -A 5 "Examples:"
 
-# Explicar recurso da API
 oc explain <recurso>
 ```
 
 ### Erro de permissão?
+```markdown
+**Ação:** Verificar suas permissões
+**Ação:** Ver todas as permissões
+```
+
 ```bash
-# Verificar suas permissões
 oc auth can-i <verbo> <recurso>
 
-# Ver todas as permissões
 oc auth can-i --list
 ```
 
 ### Não encontra o pod?
+```markdown
+**Ação:** Listar em todos os namespaces
+**Ação:** Buscar por nome parcial
+```
+
 ```bash
-# Listar em todos os namespaces
 oc get pods -A
 
-# Buscar por nome parcial
 oc get pods -A | grep <parte-do-nome>
 ```
 

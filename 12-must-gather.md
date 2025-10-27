@@ -18,39 +18,60 @@ Este documento contém comandos para coleta de diagnósticos e troubleshooting n
 ## Must-Gather Básico
 
 ### Coletar Dados do Cluster
+```markdown
+**Ação:** Coletar dados de diagnóstico completo do cluster
+```
+
 ```bash ignore-test
-# Coletar dados de diagnóstico completo do cluster
 oc adm must-gather
 ```
 
-```bash ignore-test
-# Coletar dados de diagnóstico em diretório específico
-oc adm must-gather --dest-dir=/tmp/must-gather
+```markdown
+**Ação:** Coletar dados de diagnóstico em diretório específico
 ```
 
 ```bash ignore-test
-# Coletar dados de diagnóstico completo do cluster
+oc adm must-gather --dest-dir=/tmp/must-gather
+```
+
+```markdown
+**Ação:** Coletar dados de diagnóstico completo do cluster
+```
+
+```bash ignore-test
 oc adm must-gather -v=4
 ```
 
-```bash ignore-test
-# Coletar dados de diagnóstico em diretório específico
-oc adm must-gather --dest-dir=/tmp/must-gather
+```markdown
+**Ação:** Coletar dados de diagnóstico em diretório específico
 ```
 
 ```bash ignore-test
-# Ver pods do must-gather
+oc adm must-gather --dest-dir=/tmp/must-gather
+```
+
+```markdown
+**Ação:** Ver pods do must-gather
+```
+
+```bash ignore-test
 oc get pods -n openshift-must-gather-*
 ```
 
 ### Coleta por Tempo
-```bash ignore-test
-# Coletar logs a partir de período específico
-oc adm must-gather --since 2h
+```markdown
+**Ação:** Coletar logs a partir de período específico
 ```
 
 ```bash ignore-test
-# Executar o pod do must-gather no node <node-name>
+oc adm must-gather --since 2h
+```
+
+```markdown
+**Ação:** Executar o pod do must-gather no node <node-name>
+```
+
+```bash ignore-test
 oc adm must-gather --node-name=<node-name>
 ```
 
@@ -68,35 +89,53 @@ https://access.redhat.com/solutions/5459251
 ## Inspect
 
 ### Inspecionar Recursos
+```markdown
+**Ação:** Inspect de namespace completo
+```
+
 ```bash ignore-test
-# Inspect de namespace completo
 oc adm inspect ns/<namespace> --dest-dir=/tmp/inspect
 ```
 
+```markdown
+**Ação:** Coletar informações de debug de todos os cluster operators
+```
+
 ```bash ignore-test
-# Coletar informações de debug de todos os cluster operators
 oc adm inspect clusteroperators --dest-dir=/tmp/inspect
 ```
 
+```markdown
+**Ação:** Coletar informações de debug de todos os nodes
+```
+
 ```bash ignore-test
-# Coletar informações de debug de todos os nodes
 oc adm inspect nodes --dest-dir=/tmp/inspect
 ```
 
-```bash ignore-test
-# Inspecionar e coletar informações de recursos específicos
-# oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect
-oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
+```markdown
+**Ação:** Inspecionar e coletar informações de recursos específicos
+**Exemplo:** `oc adm inspect <resource-name>/test-app --dest-dir=/tmp/inspect`
 ```
 
 ```bash ignore-test
-# Inspect com logs
+oc adm inspect deployment/test-app --dest-dir=/tmp/inspect
+```
+
+```markdown
+**Ação:** Inspect com logs
+```
+
+```bash ignore-test
 oc adm inspect ns/<namespace> --since=2h --dest-dir=/tmp/inspect
 ```
 
 ### Múltiplos Recursos
+```markdown
+**Ação:** Inspecionar e coletar informações de recursos específicos
+```
+
 ```bash ignore-test
-# Inspecionar e coletar informações de recursos específicos
 oc adm inspect \
   clusteroperators \
   nodes \
@@ -104,8 +143,11 @@ oc adm inspect \
   --dest-dir=/tmp/inspect
 ```
 
+```markdown
+**Ação:** Inspecionar e coletar informações de recursos específicos
+```
+
 ```bash ignore-test
-# Inspecionar e coletar informações de recursos específicos
 oc adm inspect ns -A --dest-dir=/tmp/inspect
 ```
 
@@ -114,36 +156,54 @@ oc adm inspect ns -A --dest-dir=/tmp/inspect
 ## Diagnósticos Rápidos
 
 ### Verificações Básicas
+```markdown
+**Ação:** Listar status de todos os cluster operators
+```
+
 ```bash
-# Listar status de todos os cluster operators
 oc get clusteroperators
 oc get nodes
 oc get clusterversion
 ```
 
+```markdown
+**Ação:** Listar pods de todos os namespaces do cluster
+```
+
 ```bash
-# Listar pods de todos os namespaces do cluster
 oc get pods -A --field-selector=status.phase!=Running,status.phase!=Succeeded
 ```
 
+```markdown
+**Ação:** Listar pods de todos os namespaces do cluster
+```
+
 ```bash ignore-test
-# Listar pods de todos os namespaces do cluster
 oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 ```
 
+```markdown
+**Ação:** Listar eventos de todos os namespaces do cluster
+```
+
 ```bash
-# Listar eventos de todos os namespaces do cluster
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 ```
 
+```markdown
+**Ação:** Exibir nodes em formato JSON
+```
+
 ```bash ignore-test
-# Exibir nodes em formato JSON
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
 ### Coleta Rápida
+```markdown
+**Ação:** Script de diagnóstico rápido
+```
+
 ```bash
-# Script de diagnóstico rápido
 cat > /tmp/quick-diag.sh << 'EOF'
 #!/bin/bash
 echo "=== Cluster Version ==="

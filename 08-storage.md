@@ -17,34 +17,52 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 
 ## PersistentVolumes (PV)
 
+```markdown
+**Ação:** Listar todos os Persistent Volumes do cluster
+```
+
 ```bash
-# Listar todos os Persistent Volumes do cluster
 oc get pv
 oc get persistentvolumes
 ```
 
+```markdown
+**Ação:** Descrever PV
+```
+
 ```bash ignore-test
-# Descrever PV
 oc describe pv <nome-do-pv>
 ```
 
+```markdown
+**Ação:** Ver em detalhes
+```
+
 ```bash ignore-test
-# Ver em detalhes
 oc get pv <nome-do-pv> -o yaml
 ```
 
+```markdown
+**Ação:** Exibir persistent volume em formato JSON
+```
+
 ```bash
-# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
+```markdown
+**Ação:** Exibir persistent volume em formato JSON
+```
+
 ```bash
-# Exibir persistent volume em formato JSON
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
+```markdown
+**Ação:** Deletar PV
+```
+
 ```bash ignore-test
-# Deletar PV
 oc delete pv <nome-do-pv>
 ```
 
@@ -53,39 +71,57 @@ oc delete pv <nome-do-pv>
 ## PersistentVolumeClaims (PVC)
 
 ### Criar e Gerenciar
+```markdown
+**Ação:** Listar todos os Persistent Volume Claims do namespace
+```
+
 ```bash
-# Listar todos os Persistent Volume Claims do namespace
 oc get pvc
 oc get persistentvolumeclaims
 ```
 
+```markdown
+**Ação:** Exibir detalhes completos do persistent volume claim
+**Exemplo:** `oc describe pvc <resource-name>`
+```
+
 ```bash ignore-test
-# Exibir detalhes completos do persistent volume claim
-# oc describe pvc <resource-name>
 oc describe pvc test-app
 ```
 
+```markdown
+**Ação:** Criar PVC
+```
+
 ```bash ignore-test
-# Criar PVC
 oc create -f <pvc-definition.yaml>
 ```
 
-```bash ignore-test
-# Exibir persistent volume claim "test-app" em formato JSON
-# oc get pvc <resource-name>app -o jsonpath='{.status.phase}'
-oc get pvc test-app -o jsonpath='{.status.phase}'
+```markdown
+**Ação:** Exibir persistent volume claim "test-app" em formato JSON
+**Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.status.phase}'`
 ```
 
 ```bash ignore-test
-# Deletar o persistent volume claim especificado
-# oc delete pvc <resource-name>
+oc get pvc test-app -o jsonpath='{.status.phase}'
+```
+
+```markdown
+**Ação:** Deletar o persistent volume claim especificado
+**Exemplo:** `oc delete pvc <resource-name>`
+```
+
+```bash ignore-test
 oc delete pvc test-app
 ```
 
 ### Usando em Deployments
+```markdown
+**Ação:** Adicionar volume PVC a deployment
+**Exemplo:** `oc set volume <resource-name>/test-app`
+```
+
 ```bash ignore-test
-# Adicionar volume PVC a deployment
-# oc set volume <resource-name>/test-app
 oc set volume deployment/test-app \
   --add --name=<volume-name> \
   --type=persistentVolumeClaim \
@@ -93,8 +129,11 @@ oc set volume deployment/test-app \
   --mount-path=<path>
 ```
 
+```markdown
+**Ação:** Remover volume
+```
+
 ```bash ignore-test
-# Remover volume
 oc set volume deployment/test-app --remove --name=<volume-name>
 ```
 
@@ -102,24 +141,36 @@ oc set volume deployment/test-app --remove --name=<volume-name>
 
 ## StorageClasses
 
+```markdown
+**Ação:** Listar StorageClasses
+```
+
 ```bash
-# Listar StorageClasses
 oc get storageclass
 oc get sc
 ```
 
+```markdown
+**Ação:** Descrever StorageClass
+```
+
 ```bash ignore-test
-# Descrever StorageClass
 oc describe sc <nome-da-sc>
 ```
 
-```bash ignore-test
-# Definir StorageClass padrão
-oc patch storageclass <nome-da-sc> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```markdown
+**Ação:** Definir StorageClass padrão
 ```
 
 ```bash ignore-test
-# Exibir storageclass em formato JSON
+oc patch storageclass <nome-da-sc> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+```markdown
+**Ação:** Exibir storageclass em formato JSON
+```
+
+```bash ignore-test
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
 ```
 ---
@@ -127,27 +178,39 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ## Volumes em Pods
 
 ### Tipos de Volumes
+```markdown
+**Ação:** EmptyDir
+**Exemplo:** `oc set volume <resource-name>/test-app --add --add --name=emptydir --type=emptyDir --mount-path=/emptydir`
+```
+
 ```bash
-# EmptyDir
-# oc set volume <resource-name>/test-app --add --add --name=emptydir --type=emptyDir --mount-path=/emptydir
 oc set volume deployment/test-app --add --name=emptydir --type=emptyDir --mount-path=/emptydir
 ```
 
+```markdown
+**Ação:** HostPath (requer privilégios)
+**Exemplo:** `oc set volume <resource-name>/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data`
+```
+
 ```bash ignore-test
-# HostPath (requer privilégios)
-# oc set volume <resource-name>/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 ```
 
-```bash
-# Listar volumes de um deployment
-# oc set volume <resource-name>/test-app
-oc set volume deployment/test-app
+```markdown
+**Ação:** Listar volumes de um deployment
+**Exemplo:** `oc set volume <resource-name>/test-app`
 ```
 
 ```bash
-# Exibir detalhes completos do recurso
-# oc describe pod <resource-name> | grep -A 5 Volumes
+oc set volume deployment/test-app
+```
+
+```markdown
+**Ação:** Exibir detalhes completos do recurso
+**Exemplo:** `oc describe pod <resource-name> | grep -A 5 Volumes`
+```
+
+```bash
 oc describe pod my-pod | grep -A 5 Volumes
 ```
 
