@@ -18,6 +18,7 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 ## CSR (Certificate Signing Requests)
 
 ### Visualizar CSRs
+```markdown
 **Ação:** Listar Certificate Signing Requests pendentes
 ```
 
@@ -25,6 +26,7 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 oc get csr
 ```
 
+```markdown
 **Ação:** CSRs pendentes
 ```
 
@@ -32,6 +34,7 @@ oc get csr
 oc get csr | grep Pending
 ```
 
+```markdown
 **Ação:** Listar certificate signing request com informações detalhadas
 ```
 
@@ -39,6 +42,7 @@ oc get csr | grep Pending
 oc get csr -o wide
 ```
 
+```markdown
 **Ação:** Ver CSR específico
 ```
 
@@ -46,6 +50,7 @@ oc get csr -o wide
 oc describe csr <csr-name>
 ```
 
+```markdown
 **Ação:** Ver certificado em CSR
 ```
 
@@ -54,6 +59,7 @@ oc get csr <csr-name> -o jsonpath='{.spec.request}' | base64 -d | openssl req -t
 ```
 
 ### Aprovar CSRs
+```markdown
 **Ação:** Aprovar CSR específico
 ```
 
@@ -61,6 +67,7 @@ oc get csr <csr-name> -o jsonpath='{.spec.request}' | base64 -d | openssl req -t
 oc adm certificate approve <csr-name>
 ```
 
+```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
 ```
 
@@ -68,6 +75,7 @@ oc adm certificate approve <csr-name>
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
+```markdown
 **Ação:** Exibir certificate signing request em formato JSON
 ```
 
@@ -75,6 +83,7 @@ oc get csr -o name | xargs oc adm certificate approve
 oc get csr -o json | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
 ```
 
+```markdown
 **Ação:** Exibir certificate signing request em formato JSON
 ```
 
@@ -83,6 +92,7 @@ oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:
 ```
 
 ### Negar CSRs
+```markdown
 **Ação:** Negar CSR
 ```
 
@@ -90,6 +100,7 @@ oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:
 oc adm certificate deny <csr-name>
 ```
 
+```markdown
 **Ação:** Deletar CSR
 ```
 
@@ -98,6 +109,7 @@ oc delete csr <csr-name>
 ```
 
 ### Monitorar CSRs
+```markdown
 **Ação:** Listar Certificate Signing Requests pendentes
 ```
 
@@ -105,6 +117,7 @@ oc delete csr <csr-name>
 oc get csr
 ```
 
+```markdown
 **Ação:** Listar certificate signing request ordenados por campo específico
 ```
 
@@ -112,6 +125,7 @@ oc get csr
 oc get csr --sort-by='.metadata.creationTimestamp'
 ```
 
+```markdown
 **Ação:** Exibir certificate signing request em formato JSON
 ```
 
@@ -124,6 +138,7 @@ oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | 
 ## Certificados do Cluster
 
 ### API Server Certificates
+```markdown
 **Ação:** Ver certificados do API server
 ```
 
@@ -131,6 +146,7 @@ oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | 
 oc get secret -n openshift-kube-apiserver
 ```
 
+```markdown
 **Ação:** Certificado do serving
 ```
 
@@ -138,6 +154,7 @@ oc get secret -n openshift-kube-apiserver
 oc get secret -n openshift-kube-apiserver | grep serving
 ```
 
+```markdown
 **Ação:** Ver validade do certificado
 ```
 
@@ -145,6 +162,7 @@ oc get secret -n openshift-kube-apiserver | grep serving
 oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
+```markdown
 **Ação:** Ver detalhes do certificado
 ```
 
@@ -153,6 +171,7 @@ oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\
 ```
 
 ### Ingress Certificates
+```markdown
 **Ação:** Certificado padrão do ingress
 ```
 
@@ -160,6 +179,7 @@ oc get secret <secret-name> -n openshift-kube-apiserver -o jsonpath='{.data.tls\
 oc get secret -n openshift-ingress
 ```
 
+```markdown
 **Ação:** Exibir secret "apps-cert" em formato YAML
 **Exemplo:** `oc get secret <secret-name> -n <namespace> -o yaml`
 ```
@@ -168,6 +188,7 @@ oc get secret -n openshift-ingress
 oc get secret apps-cert -n openshift-ingress -o yaml
 ```
 
+```markdown
 **Ação:** Exibir secret "apps-cert" em formato JSON
 **Exemplo:** `oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout`
 ```
@@ -176,6 +197,7 @@ oc get secret apps-cert -n openshift-ingress -o yaml
 oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -enddate -noout
 ```
 
+```markdown
 **Ação:** Substituir certificado do ingress
 ```
 
@@ -183,6 +205,7 @@ oc get secret apps-cert -n openshift-ingress -o jsonpath='{.data.tls\.crt}' | ba
 oc create secret tls custom-certs --cert=<cert-file> --key=<key-file> -n openshift-ingress
 ```
 
+```markdown
 **Exemplo:** `oc patch ingresscontroller default -n <namespace> --type=merge -p '{"spec":{"defaultCertificate":{"name":"apps-cert"}}}'`
 ```
 
@@ -191,6 +214,7 @@ oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p
 ```
 
 ### Service Serving Certificates
+```markdown
 **Ação:** Listar recurso filtrados por campo específico
 ```
 
@@ -198,6 +222,7 @@ oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p
 oc get secrets --field-selector type=kubernetes.io/tls
 ```
 
+```markdown
 **Ação:** Ver secret específico
 ```
 
@@ -205,6 +230,7 @@ oc get secrets --field-selector type=kubernetes.io/tls
 oc get secret <secret-name> -o yaml
 ```
 
+```markdown
 **Ação:** Anotar service para gerar certificado automático
 ```
 
@@ -212,6 +238,7 @@ oc get secret <secret-name> -o yaml
 oc annotate service <service-name> service.beta.openshift.io/serving-cert-secret-name=<secret-name>
 ```
 
+```markdown
 **Ação:** Verificar certificado gerado
 ```
 
@@ -224,6 +251,7 @@ oc get secret <secret-name>
 ## Certificados de API
 
 ### Custom API Certificates
+```markdown
 **Ação:** Configurar certificado customizado para API
 ```
 
@@ -231,6 +259,7 @@ oc get secret <secret-name>
 oc create secret tls api-certs --cert=<cert-file> --key=<key-file> -n openshift-config
 ```
 
+```markdown
 **Ação:** Aplicar certificado
 ```
 
@@ -238,6 +267,7 @@ oc create secret tls api-certs --cert=<cert-file> --key=<key-file> -n openshift-
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts":{"namedCertificates":[{"names":["<api-hostname>"],"servingCertificate":{"name":"api-certs"}}]}}}'
 ```
 
+```markdown
 **Ação:** Exibir recurso "cluster" em formato YAML
 ```
 
@@ -246,6 +276,7 @@ oc get apiserver cluster -o yaml
 ```
 
 ### OAuth Certificates
+```markdown
 **Ação:** Configurar certificado para OAuth
 ```
 
@@ -253,6 +284,7 @@ oc get apiserver cluster -o yaml
 oc create secret tls oauth-certs --cert=<cert-file> --key=<key-file> -n openshift-config
 ```
 
+```markdown
 **Ação:** Aplicar
 ```
 
@@ -265,6 +297,7 @@ oc patch oauths cluster --type=merge -p '{"spec":{"componentRoutes":[{"hostname"
 ## Troubleshooting
 
 ### Problemas com Certificados
+```markdown
 **Ação:** Verificar expiração de todos os certificados importantes
 ```
 
@@ -279,6 +312,7 @@ for ns in openshift-kube-apiserver openshift-ingress openshift-authentication; d
 done
 ```
 
+```markdown
 **Ação:** Verificar certificado de um pod
 ```
 
@@ -286,6 +320,7 @@ done
 oc exec my-pod -- openssl s_client -connect <host>:<port> -showcerts
 ```
 
+```markdown
 **Ação:** Verificar trust bundle
 ```
 
@@ -293,6 +328,7 @@ oc exec my-pod -- openssl s_client -connect <host>:<port> -showcerts
 oc get configmap -n openshift-config-managed
 ```
 
+```markdown
 **Ação:** Exibir recurso "default-ingress-cert" em formato YAML
 **Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
 ```
@@ -306,6 +342,7 @@ oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 # Certificados são renovados automaticamente
 # Forçar renovação deletando secrets (serão recriados)
 ```
+```markdown
 * CUIDADO: Isso pode causar downtime!
 ```
 
@@ -313,6 +350,7 @@ oc get configmap default-ingress-cert -n openshift-config-managed -o yaml
 oc delete secret <secret-name> -n <namespace>
 ```
 
+```markdown
 **Ação:** Aguardar recreação
 ```
 
@@ -320,6 +358,7 @@ oc delete secret <secret-name> -n <namespace>
 oc get secret <secret-name> -n <namespace>
 ```
 
+```markdown
 **Ação:** Verificar novo certificado
 ```
 
@@ -328,6 +367,7 @@ oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base
 ```
 
 ### CSR Não Aprovado Automaticamente
+```markdown
 **Ação:** Ver por que CSR não foi aprovado
 ```
 
@@ -335,6 +375,7 @@ oc get secret <secret-name> -n <namespace> -o jsonpath='{.data.tls\.crt}' | base
 oc describe csr <csr-name>
 ```
 
+```markdown
 **Ação:** Verificar CSR signer
 ```
 
@@ -342,6 +383,7 @@ oc describe csr <csr-name>
 oc get csr <csr-name> -o jsonpath='{.spec.signerName}'
 ```
 
+```markdown
 **Ação:** Verificar usages
 ```
 
@@ -349,6 +391,7 @@ oc get csr <csr-name> -o jsonpath='{.spec.signerName}'
 oc get csr <csr-name> -o jsonpath='{.spec.usages}'
 ```
 
+```markdown
 **Ação:** Ver username que criou
 ```
 
@@ -356,6 +399,7 @@ oc get csr <csr-name> -o jsonpath='{.spec.usages}'
 oc get csr <csr-name> -o jsonpath='{.spec.username}'
 ```
 
+```markdown
 **Ação:** Logs do cluster-signing-controller
 ```
 
@@ -364,6 +408,7 @@ oc logs -n openshift-kube-controller-manager <pod-name> | grep csr
 ```
 
 ### Bulk CSR Operations
+```markdown
 **Ação:** Script para aprovar CSRs de nodes periodicamente
 ```
 
@@ -383,6 +428,7 @@ chmod +x /tmp/approve-csrs.sh
 /tmp/approve-csrs.sh &
 ```
 
+```markdown
 **Ação:** Exibir certificate signing request em formato JSON
 ```
 

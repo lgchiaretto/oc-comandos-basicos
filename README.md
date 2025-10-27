@@ -225,6 +225,7 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 
 ### Comandos Mais Usados
 
+```markdown
 **Ação:** Listar pods com problemas
 **Ação:** Aprovar todos os CSRs pendentes
 **Ação:** Ver cluster operators com problemas
@@ -255,6 +256,7 @@ oc get events --field-selector type=Warning
 ## Dicas Gerais
 
 ### Watch Commands
+```markdown
 **Ação:** Ver pods em tempo real
 **Ação:** Ver eventos em tempo real
 ```

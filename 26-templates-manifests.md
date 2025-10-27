@@ -18,6 +18,7 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 ## Templates
 
 ### Listar Templates
+```markdown
 **Ação:** Templates do projeto atual
 ```
 
@@ -25,6 +26,7 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 oc get templates
 ```
 
+```markdown
 **Ação:** Listar templates disponíveis no namespace openshift
 ```
 
@@ -32,6 +34,7 @@ oc get templates
 oc get templates -n openshift
 ```
 
+```markdown
 **Ação:** Descrever template
 ```
 
@@ -39,6 +42,7 @@ oc get templates -n openshift
 oc describe template <template-name> -n openshift
 ```
 
+```markdown
 **Ação:** Ver YAML do template
 ```
 
@@ -46,6 +50,7 @@ oc describe template <template-name> -n openshift
 oc get template <template-name> -n openshift -o yaml
 ```
 
+```markdown
 **Ação:** Buscar templates disponíveis
 ```
 
@@ -54,6 +59,7 @@ oc get templates -n openshift | grep <keyword>
 ```
 
 ### Criar Template
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -100,6 +106,7 @@ EOF
 ```
 
 ### Template Completo
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -219,6 +226,7 @@ EOF
 ## Processing Templates
 
 ### Processar Template
+```markdown
 **Ação:** Process e display (não cria recursos)
 ```
 
@@ -226,6 +234,7 @@ EOF
 oc process <template-name>
 ```
 
+```markdown
 **Ação:** Com parâmetros
 ```
 
@@ -233,6 +242,7 @@ oc process <template-name>
 oc process <template-name> -p APP_NAME=test-app -p REPLICAS=3
 ```
 
+```markdown
 **Ação:** Process e create
 ```
 
@@ -240,6 +250,7 @@ oc process <template-name> -p APP_NAME=test-app -p REPLICAS=3
 oc process <template-name> -p APP_NAME=test-app | oc create -f -
 ```
 
+```markdown
 **Ação:** De um template no openshift namespace
 ```
 
@@ -247,6 +258,7 @@ oc process <template-name> -p APP_NAME=test-app | oc create -f -
 oc process -n openshift <template-name> -p PARAM=value | oc create -f -
 ```
 
+```markdown
 **Ação:** Criar novo recurso
 ```
 
@@ -255,6 +267,7 @@ oc process -f template.yaml -p APP_NAME=test-app | oc create -f -
 ```
 
 ### Ver Parâmetros
+```markdown
 **Ação:** Listar parâmetros de um template
 ```
 
@@ -262,6 +275,7 @@ oc process -f template.yaml -p APP_NAME=test-app | oc create -f -
 oc process <template-name> --parameters
 ```
 
+```markdown
 **Ação:** De template no openshift namespace
 ```
 
@@ -269,6 +283,7 @@ oc process <template-name> --parameters
 oc process -n openshift <template-name> --parameters
 ```
 
+```markdown
 **Ação:** Formato mais legível
 ```
 
@@ -277,6 +292,7 @@ oc process -n openshift <template-name> --parameters | column -t
 ```
 
 ### Usar Arquivo de Parâmetros
+```markdown
 **Ação:** Criar arquivo de parâmetros
 ```
 
@@ -290,6 +306,7 @@ DB_NAME=production
 EOF
 ```
 
+```markdown
 **Ação:** Usar com template
 ```
 
@@ -297,6 +314,7 @@ EOF
 oc process <template-name> --param-file=/tmp/params.env | oc create -f -
 ```
 
+```markdown
 **Ação:** Ou combinar arquivo + override
 ```
 
@@ -309,6 +327,7 @@ oc process <template-name> --param-file=/tmp/params.env -p REPLICAS=5 | oc creat
 ## Parameters
 
 ### Tipos de Parâmetros
+```markdown
 **Ação:** Parâmetro obrigatório
 ```
 
@@ -318,6 +337,7 @@ parameters:
   required: true
 ```
 
+```markdown
 **Ação:** Com valor default
 ```
 
@@ -327,6 +347,7 @@ parameters:
   value: "1"
 ```
 
+```markdown
 **Ação:** Com generate (senha aleatória, por exemplo)
 ```
 
@@ -339,6 +360,7 @@ parameters:
   from: "[a-zA-Z0-9]{16}"
 ```
 
+```markdown
 **Ação:** Com validation regex
 * (validation é aplicada no processing)
 ```
@@ -351,6 +373,7 @@ parameters:
 ```
 
 ### Generate Values
+```markdown
 **Ação:** Gerar valores aleatórios
 ```
 
@@ -378,6 +401,7 @@ parameters:
 ## Export e Manifests
 
 ### Export de Recursos
+```markdown
 **Ação:** oc get pod <resource-name>app -o yaml > /tmp/pod.yaml
 ```
 
@@ -385,6 +409,7 @@ parameters:
 oc get pod test-app -o yaml > /tmp/pod.yaml
 ```
 
+```markdown
 **Ação:** Exibir recurso "test-app" em formato YAML
 **Exemplo:** `oc get deployment <deployment-name> -o yaml > /tmp/deployment.yaml`
 ```
@@ -393,6 +418,7 @@ oc get pod test-app -o yaml > /tmp/pod.yaml
 oc get deployment test-app -o yaml > /tmp/deployment.yaml
 ```
 
+```markdown
 **Ação:** Exibir service "test-app" em formato YAML
 **Exemplo:** `oc get svc <service-name> -o yaml > /tmp/service.yaml>`
 ```
@@ -401,6 +427,7 @@ oc get deployment test-app -o yaml > /tmp/deployment.yaml
 oc get svc test-app -o yaml > /tmp/service.yaml
 ```
 
+```markdown
 **Ação:** Exibir route "test-app" em formato YAML
 **Exemplo:** `oc get route <route-name> -o yaml > /tmp/route.yaml`
 ```
@@ -409,6 +436,7 @@ oc get svc test-app -o yaml > /tmp/service.yaml
 oc get route test-app -o yaml > /tmp/route.yaml
 ```
 
+```markdown
 **Ação:** Exibir deployments em formato YAML
 ```
 
@@ -417,12 +445,14 @@ oc get deployments -o yaml > /tmp/all-deployments.yaml
 ```
 
 ### Criar Template de Recursos Existentes
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
 ```bash
 oc get deployment,svc,route -l app=test-app -o yaml
 ```
+```markdown
 **Ação:** oc create template <resource-name>template --dry-run=client -o yaml > /tmp/test-app-template.yaml
 ```
 
@@ -430,6 +460,7 @@ oc get deployment,svc,route -l app=test-app -o yaml
 oc create template test-app-template --dry-run=client -o yaml > /tmp/test-app-template.yaml
 ```
 
+```markdown
 **Ação:** Ou manualmente
 ```
 
@@ -443,6 +474,7 @@ objects:
 EOF
 ```
 
+```markdown
 **Ação:** Exibir recurso "test-app" em formato YAML
 **Exemplo:** `oc get deployment <deployment-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml`
 **Ação:** oc get svc <service-name> -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
@@ -460,6 +492,7 @@ oc get svc test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 ```
 
 ### Manifests e Kustomize
+```markdown
 **Ação:** Estrutura Kustomize
 ```
 
@@ -467,6 +500,7 @@ oc get svc test-app -o yaml | sed 's/^/  /' >> /tmp/app-template.yaml
 mkdir -p app/{base,overlays/{dev,prod}}
 ```
 
+```markdown
 **Ação:** Base
 ```
 

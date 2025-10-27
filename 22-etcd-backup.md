@@ -24,6 +24,7 @@ Este documento contém comandos para gerenciar etcd e realizar backups do cluste
 ## Etcd Status
 
 ### Verificar Etcd
+```markdown
 **Ação:** Pods do etcd
 ```
 
@@ -31,6 +32,7 @@ Este documento contém comandos para gerenciar etcd e realizar backups do cluste
 oc get pods -n openshift-etcd
 ```
 
+```markdown
 **Ação:** Listar pods com informações detalhadas
 ```
 
@@ -38,6 +40,7 @@ oc get pods -n openshift-etcd
 oc get pods -n openshift-etcd -l app=etcd -o wide
 ```
 
+```markdown
 **Ação:** Status do etcd operator
 **Exemplo:** `oc get clusteroperator <resource-name>`
 ```
@@ -46,6 +49,7 @@ oc get pods -n openshift-etcd -l app=etcd -o wide
 oc get clusteroperator etcd
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do cluster operator
 **Exemplo:** `oc describe co <resource-name>`
 ```
@@ -54,6 +58,7 @@ oc get clusteroperator etcd
 oc describe co etcd
 ```
 
+```markdown
 **Ação:** Logs do etcd
 ```
 
@@ -61,6 +66,7 @@ oc describe co etcd
 oc logs -n openshift-etcd <etcd-pod-name>
 ```
 
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
@@ -68,6 +74,7 @@ oc logs -n openshift-etcd <etcd-pod-name>
 oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
+```markdown
 **Ação:** Logs do etcd-operator
 ```
 
@@ -76,6 +83,7 @@ oc logs -n openshift-etcd-operator <etcd-operator-pod>
 ```
 
 ### Etcd Health Check
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
@@ -83,6 +91,7 @@ oc logs -n openshift-etcd-operator <etcd-operator-pod>
 oc rsh -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
 ```
 
+```markdown
 * Dentro do pod:
 ```
 
@@ -92,6 +101,7 @@ etcdctl endpoint status --cluster -w table
 etcdctl member list -w table
 ```
 
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
@@ -99,6 +109,7 @@ etcdctl member list -w table
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl endpoint status --cluster -w table
 ```
 
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
@@ -106,6 +117,7 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
 ```
 
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 
@@ -118,6 +130,7 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 ## Backup do Cluster
 
 ### Backup Manual do Etcd
+```markdown
 **Ação:** Conectar a um master node
 ```
 
@@ -125,6 +138,7 @@ oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpat
 oc debug node/<master-node-name>
 ```
 
+```markdown
 * No debug shell:
 ```
 
@@ -132,6 +146,7 @@ oc debug node/<master-node-name>
 chroot /host
 ```
 
+```markdown
 **Ação:** Executar backup
 ```
 
@@ -139,6 +154,7 @@ chroot /host
 /usr/local/bin/cluster-backup.sh /home/core/backup
 ```
 
+```markdown
 **Ação:** Verificar backup criado
 ```
 
@@ -146,6 +162,7 @@ chroot /host
 ls -lh /home/core/backup/
 ```
 
+```markdown
 **Ação:** Sair do debug
 ```
 
@@ -154,6 +171,7 @@ exit
 exit
 ```
 
+```markdown
 **Ação:** Copiar backup do node
 ```
 
@@ -181,6 +199,7 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 ```
 
 ### Limpar Alarmes
+```markdown
 **Ação:** Se houver alarm de NOSPACE
 ```
 
@@ -188,6 +207,7 @@ oc rsync <master-node-name>:/home/core/backup/ ./cluster-backup/
 oc exec -n openshift-etcd <etcd-pod-name> -- etcdctl alarm disarm
 ```
 
+```markdown
 **Ação:** Verificar
 ```
 

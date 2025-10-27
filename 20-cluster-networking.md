@@ -18,6 +18,7 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 ## Configuração de Rede
 
 ### Visualizar Configuração
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -25,6 +26,7 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 oc get network.config.openshift.io cluster -o yaml
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -32,6 +34,7 @@ oc get network.config.openshift.io cluster -o yaml
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -39,6 +42,7 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork}'
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -46,6 +50,7 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork}'
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
 ```
 
+```markdown
 **Ação:** Ver network operator
 **Exemplo:** `oc get clusteroperator <resource-name>`
 ```
@@ -54,6 +59,7 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
 oc get clusteroperator network
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -62,6 +68,7 @@ oc get network.operator.openshift.io cluster -o yaml
 ```
 
 ### Pod Network
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -69,6 +76,7 @@ oc get network.operator.openshift.io cluster -o yaml
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*].cidr}'
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -76,6 +84,7 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*]
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]}'
 ```
 
+```markdown
 **Ação:** Ver IP de um pod
 ```
 
@@ -83,6 +92,7 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]
 oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 ```
 
+```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -90,6 +100,7 @@ oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 oc get pods -o wide -A
 ```
 
+```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -101,6 +112,7 @@ oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 
 
 ### Listar Ingress Controllers
+```markdown
 **Ação:** Listar IngressControllers
 ```
 
@@ -108,6 +120,7 @@ oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 oc get ingresscontroller -n openshift-ingress-operator
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe ingresscontroller -n <namespace> default`
 ```
@@ -117,6 +130,7 @@ oc describe ingresscontroller -n openshift-ingress-operator default
 ```
 
 ### Escalar Ingress Controller
+```markdown
 **Ação:** Ajustar número de réplicas do deployment/replicaset
 **Exemplo:** `oc scale ingresscontroller -n openshift-ingress-operator --replicas=<N> default`
 ```
@@ -129,6 +143,7 @@ oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 ## Network Policies
 
 ### Criar Network Policies
+```markdown
 **Ação:** Listar políticas de rede configuradas no namespace
 ```
 
@@ -137,6 +152,7 @@ oc get networkpolicy
 oc get netpol
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do network policy
 **Exemplo:** `oc describe networkpolicy <resource-name>`
 ```
@@ -145,6 +161,7 @@ oc get netpol
 oc describe networkpolicy test-app
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -162,6 +179,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -181,6 +199,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -205,6 +224,7 @@ EOF
 ```
 
 ### Testar Network Policies
+```markdown
 **Ação:** Antes de aplicar policy, testar conectividade
 ```
 
@@ -212,6 +232,7 @@ EOF
 oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -219,6 +240,7 @@ oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- w
 oc apply -f networkpolicy.yaml
 ```
 
+```markdown
 **Ação:** Testar novamente
 ```
 
@@ -226,6 +248,7 @@ oc apply -f networkpolicy.yaml
 oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
+```markdown
 **Ação:** Verificar logs/eventos
 ```
 
@@ -234,6 +257,7 @@ oc get events | grep -i network
 ```
 
 ### Debugging Network Policies
+```markdown
 **Ação:** Exibir network policy em formato YAML
 ```
 
@@ -241,6 +265,7 @@ oc get events | grep -i network
 oc get networkpolicy -o yaml
 ```
 
+```markdown
 **Ação:** Listar pods mostrando todas as labels associadas
 ```
 
@@ -248,6 +273,7 @@ oc get networkpolicy -o yaml
 oc get pods --show-labels
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do network policy
 **Exemplo:** `oc describe networkpolicy <resource-name>`
 ```
@@ -256,6 +282,7 @@ oc get pods --show-labels
 oc describe networkpolicy test-app
 ```
 
+```markdown
 **Ação:** Deletar o network policy especificado
 **Exemplo:** `oc delete networkpolicy <resource-name>`
 ```
@@ -268,6 +295,7 @@ oc delete networkpolicy test-app
 ## Configurações Avançadas
 
 ### Multus - Múltiplas Interfaces
+```markdown
 **Ação:** NetworkAttachmentDefinitions
 ```
 
@@ -275,6 +303,7 @@ oc delete networkpolicy test-app
 oc get network-attachment-definitions
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -308,6 +337,7 @@ EOF
 ```
 
 ### MTU Configuration
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -315,6 +345,7 @@ EOF
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'
 ```
 
+```markdown
 **Ação:** Executar comando dentro do pod especificado
 ```
 
@@ -323,6 +354,7 @@ oc exec my-pod -- ip link show eth0
 ```
 
 ### Network Diagnostics
+```markdown
 **Ação:** Listar nodes com informações detalhadas
 ```
 
@@ -330,6 +362,7 @@ oc exec my-pod -- ip link show eth0
 oc get nodes -o wide
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -355,6 +388,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Listar recurso filtrados por label
 ```
 

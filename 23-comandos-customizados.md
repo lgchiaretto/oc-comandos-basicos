@@ -23,6 +23,7 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 ## Comandos com AWK
 
 ### CSR Management com AWK
+```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
 ```
 
@@ -30,6 +31,7 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
 ```
 
+```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
 ```
 
@@ -37,6 +39,7 @@ oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
 oc adm certificate approve $(oc get csr | grep -v -E "Approved|NAME" | awk '{print $1}')
 ```
 
+```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
 ```
 
@@ -45,6 +48,7 @@ oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
 ```
 
 ### Análise de Recursos com AWK
+```markdown
 **Ação:** Listar status dos cluster operators com awk
 ```
 
@@ -52,6 +56,7 @@ oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
 oc get co --no-headers | awk '{print $1,$3,$4,$5}'
 ```
 
+```markdown
 **Ação:** Listar nodes com informações detalhadas
 ```
 
@@ -59,6 +64,7 @@ oc get co --no-headers | awk '{print $1,$3,$4,$5}'
 oc get nodes -o wide --no-headers | awk '{print $1, $6}'
 ```
 
+```markdown
 **Ação:** Listar pods com informações detalhadas
 ```
 
@@ -66,6 +72,7 @@ oc get nodes -o wide --no-headers | awk '{print $1, $6}'
 oc get pods -o wide --no-headers | awk '{print $1, $7}'
 ```
 
+```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -73,12 +80,14 @@ oc get pods -o wide --no-headers | awk '{print $1, $7}'
 oc get pods -o wide -A --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
+```markdown
 **Ação:** Listar pods com uso de CPU (requer metrics-server)
 ```
 
 ```bash
 oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
 ```
+```markdown
 **Ação:** Listar pods com uso de CPU no cluster todo (requer metrics-server)
 ```
 
@@ -86,6 +95,7 @@ oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
 oc adm top pods -A --no-headers | awk '{print $2, $3}' | sort -k2 -h
 ```
 
+```markdown
 **Ação:** Encontrar pods com mais memória
 ```
 
@@ -93,6 +103,7 @@ oc adm top pods -A --no-headers | awk '{print $2, $3}' | sort -k2 -h
 oc adm top pods --no-headers | awk '{print $1, $3}' | sort -k2 -h
 ```
 
+```markdown
 **Ação:** Encontrar pods com mais memória no cluster todo
 ```
 
@@ -101,6 +112,7 @@ oc adm top pods -A --no-headers | awk '{print $2, $4}' | sort -k2 -h
 ```
 
 ### Builds com AWK
+```markdown
 **Ação:** Listar build de todos os namespaces do cluster
 ```
 
@@ -108,6 +120,7 @@ oc adm top pods -A --no-headers | awk '{print $2, $4}' | sort -k2 -h
 oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}'
 ```
 
+```markdown
 **Ação:** Listar build de todos os namespaces do cluster
 ```
 
@@ -115,6 +128,7 @@ oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}'
 oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}' | sh | egrep "Name:|From Image:"
 ```
 
+```markdown
 **Ação:** Listar build de todos os namespaces do cluster
 ```
 
@@ -123,6 +137,7 @@ oc get build -A --no-headers | awk '{print "oc describe build -n " $1 " " $2}' |
 ```
 
 ### Service Mesh com AWK
+```markdown
 **Ação:** Extrair versão do Service Mesh Operator
 ```
 
@@ -135,6 +150,7 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 ## Comandos com JQ
 
 ### Análise de Cluster Operators
+```markdown
 **Ação:** Exibir cluster operators em formato JSON
 ```
 
@@ -142,6 +158,7 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.conditions[] | select(.type=="Progressing").status), (.status.conditions[] | select(.type=="Degraded").status), (.status.conditions[] | select(.type=="Degraded").message)] | @tsv'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -149,6 +166,7 @@ oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.co
 oc get clusteroperator/operator-lifecycle-manager-packageserver -o json | jq
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -157,6 +175,7 @@ oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="
 ```
 
 ### Análise de Pods
+```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -164,6 +183,7 @@ oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="
 oc get pods -o json | jq '.items[] | select(.status.containerStatuses[]?.lastState.terminated.reason=="OOMKilled") | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -171,6 +191,7 @@ oc get pods -o json | jq '.items[] | select(.status.containerStatuses[]?.lastSta
 oc get pods -o json | jq '.items[] | {name: .metadata.name, cpu: .spec.containers[].resources.requests.cpu, memory: .spec.containers[].resources.requests.memory}'
 ```
 
+```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -178,6 +199,7 @@ oc get pods -o json | jq '.items[] | {name: .metadata.name, cpu: .spec.container
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir pods em formato JSON
 ```
 
@@ -186,6 +208,7 @@ oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 ```
 
 ### Análise de Applications (ArgoCD)
+```markdown
 **Ação:** Exibir recurso "workshop-vms-prd" em formato JSON
 **Exemplo:** `oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions}' | jq .`
 ```
@@ -194,6 +217,7 @@ oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
 oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.conditions}' | jq .
 ```
 
+```markdown
 **Ação:** Exibir recurso "workshop-gitops-vms-hml" em formato JSON
 **Exemplo:** `oc get application <resource-name>hml -n <namespace> -o jsonpath='{.spec.syncPolicy}' | jq`
 ```
@@ -202,6 +226,7 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o jsonpath='{.spec.syncPolicy}' | jq
 ```
 
+```markdown
 **Ação:** Exibir recurso "workshop-vms-dev" em formato JSON
 **Exemplo:** `oc get application <resource-name>dev -n <namespace> -o json | jq '.status.resources[] | select(.kind == "Pod")'`
 ```
@@ -211,6 +236,7 @@ oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.re
 ```
 
 ### Análise de ClusterLogForwarder
+```markdown
 **Ação:** Exibir recurso "instance" em formato JSON
 **Exemplo:** `oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'`
 ```
@@ -219,6 +245,7 @@ oc get application workshop-vms-dev -n openshift-gitops -o json | jq '.status.re
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.conditions[?(@.type=="Ready")]}' | jq '.'
 ```
 
+```markdown
 **Ação:** Exibir recurso "instance" em formato JSON
 **Exemplo:** `oc get clusterlogforwarder instance -n <namespace> -o jsonpath='{.status.filterConditions}' | jq '.'`
 ```
@@ -228,6 +255,7 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.f
 ```
 
 ### CSR com JQ
+```markdown
 **Ação:** Aprovar Certificate Signing Request (CSR)
 ```
 
@@ -235,6 +263,7 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.f
 oc get csr -ojson | jq -r '.items[] | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
+```markdown
 **Ação:** Exibir certificate signing request em formato JSON
 ```
 
@@ -243,6 +272,7 @@ oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: 
 ```
 
 ### Análise de Secrets
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -250,6 +280,7 @@ oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: 
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -258,6 +289,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 ```
 
 ### Must-Gather Dinâmico com JQ
+```markdown
 **Ação:** Coletar dados de diagnóstico completo do cluster
 ```
 
@@ -277,6 +309,7 @@ oc adm must-gather \
 ## Comandos com GREP 
 
 ### Filtros Complexos
+```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -284,6 +317,7 @@ oc adm must-gather \
 oc get pods -A | grep -E -v "Running|Completed"
 ```
 
+```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -291,6 +325,7 @@ oc get pods -A | grep -E -v "Running|Completed"
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff"
 ```
 
+```markdown
 **Ação:** Cluster operators com problemas
 ```
 
@@ -298,6 +333,7 @@ oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff"
 oc get co | grep -v "True.*False.*False"
 ```
 
+```markdown
 **Ação:** Nodes não-Ready
 ```
 
@@ -305,6 +341,7 @@ oc get co | grep -v "True.*False.*False"
 oc get nodes | grep -v "Ready"
 ```
 
+```markdown
 **Ação:** Filtrar eventos importantes
 ```
 
@@ -313,6 +350,7 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 ```
 
 ### Análise de Configurações
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -320,6 +358,7 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 oc get all -o yaml | grep -A5 limits
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -327,6 +366,7 @@ oc get all -o yaml | grep -A5 limits
 oc get all -A | grep redhat-operator
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -334,6 +374,7 @@ oc get all -A | grep redhat-operator
 oc get all -A | grep metrics
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -342,6 +383,7 @@ oc get all -o yaml | grep 5000
 ```
 
 ### Busca em AdminNetworkPolicy
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get adminnetworkpolicy <resource-name>communication -o yaml | grep -A 30 "ingress:" | head -40`
 ```
@@ -351,6 +393,7 @@ oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 3
 ```
 
 ### Análise de ArgoCD
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 10 source`
 ```
@@ -359,6 +402,7 @@ oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 3
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get application.argoproj.io workshop-vms-dev -n <namespace> -o yaml | grep -A 5 destination`
 ```
@@ -367,6 +411,7 @@ oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | gr
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get application <resource-name>hml -n <namespace> -o yaml | grep -A 5 -B 5 sync`
 ```
@@ -375,6 +420,7 @@ oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | gr
 oc get application workshop-gitops-vms-hml -n openshift-gitops -o yaml | grep -A 5 -B 5 sync
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get application <resource-name>dev -n <namespace> -o yaml | grep -A 20 -B 5 "message"`
 ```
@@ -384,6 +430,7 @@ oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 
 ```
 
 ### Filtros em CatalogSource
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 **Exemplo:** `oc get catalogsource <resource-name>operators -n <namespace> -o yaml | grep -A 10 status:`
 ```
@@ -392,6 +439,7 @@ oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 
 oc get catalogsource certified-operators -n openshift-marketplace -o yaml | grep -A 10 status:
 ```
 
+```markdown
 **Ação:** Filtrar catalogs da Red Hat
 ```
 
@@ -404,6 +452,7 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 ## Pipes Complexos
 
 ### Análise de API Requests
+```markdown
 **Ação:** Exibir recurso "ingresses.v1beta1.extensions" em formato JSON
 **Exemplo:** `oc get apirequestcounts <resource-name>.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT`
 ```
@@ -412,6 +461,7 @@ oc get catalogsource -n openshift-marketplace | grep redhat
 oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
+```markdown
 **Ação:** Exibir recurso "ingresses.v1beta1.networking.k8s.io" em formato JSON
 **Exemplo:** `oc get apirequestcounts <resource-name>.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT`
 ```
@@ -420,6 +470,7 @@ oc get apirequestcounts ingresses.v1beta1.extensions -o jsonpath='{range .status
 oc get apirequestcounts ingresses.v1beta1.networking.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT
 ```
 
+```markdown
 **Ação:** Exibir recurso "roles.v1beta1.rbac.authorization.k8s.io" em formato JSON
 **Exemplo:** `oc get apirequestcounts <resource-name>.v1beta1.rbac.authorization.k8s.io -o jsonpath='{range .status.currentHour..byUser[*]}{..byVerb[*].verb}{","}{.username}{","}{.userAgent}{"\n"}{end}' | sort -k 2 -t, -u | column -t -s, -NVERBS,USERNAME,USERAGENT`
 ```
@@ -429,6 +480,7 @@ oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{ra
 ```
 
 ### Análise de ClusterOperators com Tabela
+```markdown
 **Ação:** Exibir cluster operators em formato JSON
 ```
 
@@ -437,6 +489,7 @@ oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{ran
 ```
 
 ### Exportar Applications ArgoCD
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -444,6 +497,7 @@ oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{ran
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d'
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -451,6 +505,7 @@ oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d'
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d' > /tmp/argocd-apps-$(date +'%d%m%y_%H%M%S').yaml
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -459,6 +514,7 @@ oc get application -A -o yaml | sed '/status:/d'
 ```
 
 ### Verificações Condicionais
+```markdown
 **Ação:** Verificar se aplicação existe
 **Exemplo:** `oc get applications.argoproj.io -n <namespace>  || echo "No applications found"`
 ```
@@ -467,6 +523,7 @@ oc get application -A -o yaml | sed '/status:/d'
 oc get applications.argoproj.io -n openshift-gitops  || echo "No applications found"
 ```
 
+```markdown
 **Ação:** Exibir recurso "workshop-gitops-vms-dev" em formato JSON
 **Exemplo:** `oc get application <resource-name>dev -n <namespace> -o jsonpath='{.status.health.status}'  || echo "Application not found"`
 ```
@@ -475,6 +532,7 @@ oc get applications.argoproj.io -n openshift-gitops  || echo "No applications fo
 oc get application workshop-gitops-vms-dev -n openshift-gitops -o jsonpath='{.status.health.status}'  || echo "Application not found"
 ```
 
+```markdown
 **Ação:** Exibir recurso "workshop-vms-prd" em formato JSON
 **Exemplo:** `oc get application <resource-name>prd -n <namespace> -o jsonpath='{.status.conditions[0].message}'  || echo "No error condition found"`
 ```
@@ -488,6 +546,7 @@ oc get application workshop-vms-prd -n openshift-gitops -o jsonpath='{.status.co
 ## Automação e Scripts
 
 ### Loop para Coletar Logs
+```markdown
 **Ação:** Coletar logs de todos os pods em um arquivo
 ```
 
@@ -498,6 +557,7 @@ for pod in $(oc get pods -o name); do
 done
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -509,6 +569,7 @@ done
 ```
 
 ### Verificação de ArgoCD Apps
+```markdown
 **Ação:** Loop para verificar múltiplas aplicações
 ```
 
@@ -521,6 +582,7 @@ done
 ```
 
 ### Aprovar CSRs em Loop
+```markdown
 **Ação:** Aprovar CSRs pendentes até não haver mais
 ```
 
@@ -536,6 +598,7 @@ while true; do
 done
 ```
 
+```markdown
 **Ação:** Aprovar CSRs até executar o cancelamento (pressione ctrl+c para cancelar)
 ```
 
@@ -552,6 +615,7 @@ done
 ```
 
 ### Verificação de Nodes
+```markdown
 **Ação:** Verificar status de todos os nodes
 ```
 
@@ -568,6 +632,7 @@ done
 ## Análise de Cluster Operators
 
 ### Status Completo
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -575,6 +640,7 @@ done
 oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.conditions[] | select(.type=="Available").status), Progressing=\(.status.conditions[] | select(.type=="Progressing").status), Degraded=\(.status.conditions[] | select(.type=="Degraded").status)"'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -582,6 +648,7 @@ oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.co
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -590,6 +657,7 @@ oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[
 ```
 
 ### APIServices
+```markdown
 **Ação:** Ver apiservices com problemas
 ```
 
@@ -597,6 +665,7 @@ oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[
 oc get apiservice | grep -v True
 ```
 
+```markdown
 **Ação:** Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON
 **Exemplo:** `oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text`
 ```
@@ -605,6 +674,7 @@ oc get apiservice | grep -v True
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
+```markdown
 **Ação:** Exibir recurso "v1.packages.operators.coreos.com" em formato JSON
 **Exemplo:** `oc get apiservice <service-name>.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -noout -text`
 ```
@@ -618,6 +688,7 @@ oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}
 ## Extração de Certificados
 
 ### Extrair e Analisar Certificados
+```markdown
 **Ação:** Extrair certificado de service
 ```
 
@@ -625,6 +696,7 @@ oc get apiservice v1.packages.operators.coreos.com -o jsonpath='{.spec.caBundle}
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -text -noout
 ```
 
+```markdown
 **Ação:** Ver expiração do certificado
 ```
 
@@ -632,6 +704,7 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl x509 -noout -enddate
 ```
 
+```markdown
 **Ação:** Exibir recurso "v1beta1.metrics.k8s.io" em formato JSON
 **Exemplo:** `oc get apiservice <service-name>.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text`
 ```
@@ -640,6 +713,7 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -652,6 +726,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 ## Dicas e Truques
 
 ### Combinando Comandos
+```markdown
 **Ação:** Ver pods com mais uso de CPU
 ```
 
@@ -659,6 +734,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 oc adm top pods -A --no-headers | sort -k3 -nr | head -10
 ```
 
+```markdown
 **Ação:** Listar pods de todos os namespaces do cluster
 ```
 
@@ -666,6 +742,7 @@ oc adm top pods -A --no-headers | sort -k3 -nr | head -10
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c | sort -nr
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -674,6 +751,7 @@ oc get all -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```
 
 ### Aliases Úteis para Scripts
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -685,6 +763,7 @@ alias octop='oc adm top pods -A --no-headers | sort -k3 -nr | head -10'
 ```
 
 ### Verificações Rápidas
+```markdown
 **Ação:** Health check completo do cluster
 ```
 

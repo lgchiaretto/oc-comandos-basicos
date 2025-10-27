@@ -7,6 +7,7 @@ Este é um guia rápido para você começar a usar os comandos do OpenShift imed
 ## Top 20 Comandos Mais Usados
 
 ### 1. Login e Contexto
+```markdown
 **Ação:** Login no cluster
 **Ação:** Ver usuário atual
 **Ação:** Ver projeto atual
@@ -21,6 +22,7 @@ oc project
 ```
 
 ### 2. Listar Recursos
+```markdown
 **Ação:** Listar pods
 **Ação:** Listar tudo
 **Ação:** Listar pods com problemas
@@ -35,6 +37,7 @@ oc get pods -A | grep -E -v "Running|Completed"
 ```
 
 ### 3. Debug de Pods
+```markdown
 **Ação:** Ver logs
 **Ação:** Logs em tempo real
 **Ação:** Logs de pod crasheado
@@ -52,6 +55,7 @@ oc rsh <pod-name>
 ```
 
 ### 4. Descrever Recursos
+```markdown
 **Ação:** Descrever pod
 **Ação:** Ver eventos
 ```
@@ -63,6 +67,7 @@ oc get events --sort-by='.lastTimestamp' | tail -20
 ```
 
 ### 5. Cluster Operators
+```markdown
 **Ação:** Ver status dos operators
 **Ação:** Operators com problemas
 ```
@@ -74,6 +79,7 @@ oc get co | grep -v "True.*False.*False"
 ```
 
 ### 6. Upgrade do Cluster
+```markdown
 **Ação:** Ver versão atual e status do upgrade
 **Ação:** Ver progresso do upgrade
 **Ação:** Ver se há operadores bloqueando upgrade
@@ -88,6 +94,7 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 ```
 
 ### 7. Nodes
+```markdown
 **Ação:** Listar nodes
 **Ação:** Ver uso de recursos dos nodes
 ```
@@ -99,6 +106,7 @@ oc adm top nodes
 ```
 
 ### 8. CSR (Certificate Signing Requests)
+```markdown
 **Ação:** Listar CSRs
 **Ação:** Aprovar todos os CSRs pendentes
 ```
@@ -110,6 +118,7 @@ oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ### 9. Scaling
+```markdown
 **Ação:** Escalar deployment
 **Ação:** Ver status do rollout
 ```
@@ -121,6 +130,7 @@ oc rollout status deployment/test-app
 ```
 
 ### 10. Criar Aplicação
+```markdown
 **Ação:** Criar app a partir de imagem
 **Ação:** Criar app a partir de git
 **Ação:** Expor service
@@ -135,6 +145,7 @@ oc expose service test-app
 ```
 
 ### 10. ConfigMaps e Secrets
+```markdown
 **Ação:** Criar configmap
 **Ação:** Criar secret
 ```
@@ -150,6 +161,7 @@ oc create secret generic test-app --from-literal=key=value
 ## Comandos de Emergência
 
 ### Troubleshooting Rápido
+```markdown
 **Ação:** Health check completo do cluster
 **Ação:** Must-gather para suporte
 ```
@@ -171,6 +183,7 @@ oc adm must-gather --dest-dir=/tmp/must-gather-$(date +%Y%m%d-%H%M%S)
 ```
 
 ### Resolver CSRs Pendentes
+```markdown
 **Ação:** Aprovar todos de uma vez
 ```
 
@@ -179,6 +192,7 @@ oc get csr -o name | xargs oc adm certificate approve
 ```
 
 ### Cordon e Drain de Node
+```markdown
 **Ação:** Tornar node não agendável
 **Ação:** Drenar pods do node
 **Ação:** Voltar a agendar no node
@@ -216,6 +230,7 @@ oc adm uncordon <node-name>
 ## Fluxos de Trabalho Comuns
 
 ### Deploy de Nova Aplicação
+```markdown
 **Ação:** 1. Criar projeto
 **Ação:** 2. Criar aplicação
 **Ação:** 3. Expor service
@@ -236,6 +251,7 @@ oc logs -f deployment/test-app
 ```
 
 ### Debug de Pod com Problema
+```markdown
 **Ação:** 1. Identificar o problema
 **Ação:** 2. Descrever o pod
 **Ação:** 3. Ver logs
@@ -259,6 +275,7 @@ oc debug pod/<pod-name>
 ```
 
 ### Manutenção de Node
+```markdown
 **Ação:** 1. Cordon (não agendar novos pods)
 **Ação:** 2. Drain (remover pods existentes)
 **Ação:** 3. Realizar manutenção...
@@ -282,6 +299,7 @@ oc get nodes
 ## Ferramentas Complementares
 
 ### JQ - Processar JSON
+```markdown
 **Ação:** Instalar
 **Ação:** Exemplo de uso
 ```
@@ -293,6 +311,7 @@ oc get pods -o json | jq '.items[].metadata.name'
 ```
 
 ### Watch - Monitorar mudanças
+```markdown
 **Ação:** Ver pods em tempo real
 **Ação:** Ver nodes em tempo real
 ```
@@ -304,6 +323,7 @@ watch -n 5 oc get nodes
 ```
 
 ### Bash Completion
+```markdown
 **Ação:** Habilitar completion
 **Ação:** Recarregar shell
 ```
@@ -349,6 +369,7 @@ source ~/.bashrc
 ## Ajuda Rápida
 
 ### Comando não funciona?
+```markdown
 **Ação:** Ver ajuda do comando
 **Ação:** Ver exemplos
 **Ação:** Explicar recurso da API
@@ -363,6 +384,7 @@ oc explain <recurso>
 ```
 
 ### Erro de permissão?
+```markdown
 **Ação:** Verificar suas permissões
 **Ação:** Ver todas as permissões
 ```
@@ -374,6 +396,7 @@ oc auth can-i --list
 ```
 
 ### Não encontra o pod?
+```markdown
 **Ação:** Listar em todos os namespaces
 **Ação:** Buscar por nome parcial
 ```

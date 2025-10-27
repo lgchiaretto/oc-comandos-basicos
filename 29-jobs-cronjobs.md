@@ -17,6 +17,7 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ## Jobs
 
 ### Criar Jobs
+```markdown
 **Ação:** Criar novo Job para execução única de tarefa
 **Exemplo:** `oc create job <job-name> --image=quay.io/chiaretto/netshoot -- echo "Hello World"`
 ```
@@ -25,6 +26,7 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -46,6 +48,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -68,6 +71,7 @@ EOF
 ```
 
 ### Gerenciar Jobs
+```markdown
 **Ação:** Listar jobs
 ```
 
@@ -75,6 +79,7 @@ EOF
 oc get jobs
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do job
 **Exemplo:** `oc describe job <job-name>`
 ```
@@ -83,6 +88,7 @@ oc get jobs
 oc describe job test-app-job
 ```
 
+```markdown
 **Ação:** Exibir logs do pod especificado
 ```
 
@@ -90,6 +96,7 @@ oc describe job test-app-job
 oc logs job/test-app-job
 ```
 
+```markdown
 **Ação:** Listar pods filtrados por label
 ```
 
@@ -97,6 +104,7 @@ oc logs job/test-app-job
 oc get pods -l job-name=test-app-job
 ```
 
+```markdown
 **Ação:** Deletar o job especificado
 **Exemplo:** `oc delete job <job-name>`
 ```
@@ -105,6 +113,7 @@ oc get pods -l job-name=test-app-job
 oc delete job test-app-job
 ```
 
+```markdown
 **Ação:** Deletar job e aguardar exclusão de recursos dependentes
 **Exemplo:** `oc delete job <job-name> --cascade=foreground`
 ```
@@ -114,6 +123,7 @@ oc delete job test-app --cascade=foreground
 ```
 
 ### Jobs Paralelos
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -136,6 +146,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Monitorar
 **Exemplo:** `oc get job <job-name>`
 ```
@@ -146,6 +157,7 @@ oc get pods -l job-name=parallel-job
 ```
 
 ### Jobs com TTL
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -172,6 +184,7 @@ EOF
 ##  CronJobs
 
 ### Criar CronJobs
+```markdown
 **Ação:** Criar novo Job para execução única de tarefa
 **Exemplo:** `oc create cronjob <job-name> --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"`
 ```
@@ -180,6 +193,7 @@ EOF
 oc create cronjob test-app-job --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -204,6 +218,7 @@ EOF
 ```
 
 ### Gerenciar CronJobs
+```markdown
 **Ação:** Listar cronjobs
 ```
 
@@ -212,6 +227,7 @@ oc get cronjobs
 oc get cj
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe cronjob <job-name>`
 ```
@@ -220,6 +236,7 @@ oc get cj
 oc describe cronjob test-app-job
 ```
 
+```markdown
 **Ação:** Ver jobs criados pelo cronjob
 ```
 
@@ -227,6 +244,7 @@ oc describe cronjob test-app-job
 oc get jobs -l cronjob=<cronjob-name>
 ```
 
+```markdown
 **Ação:** Ver último job
 ```
 
@@ -234,6 +252,7 @@ oc get jobs -l cronjob=<cronjob-name>
 oc get jobs --sort-by=.metadata.creationTimestamp | grep <cronjob-name> | tail -1
 ```
 
+```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 **Exemplo:** `oc patch cronjob <job-name> -p '{"spec":{"suspend":true}}'`
 ```
@@ -242,6 +261,7 @@ oc get jobs --sort-by=.metadata.creationTimestamp | grep <cronjob-name> | tail -
 oc patch cronjob test-app-job -p '{"spec":{"suspend":true}}'
 ```
 
+```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 **Exemplo:** `oc patch cronjob <job-name> -p '{"spec":{"suspend":false}}'`
 ```
@@ -250,6 +270,7 @@ oc patch cronjob test-app-job -p '{"spec":{"suspend":true}}'
 oc patch cronjob test-app-job -p '{"spec":{"suspend":false}}'
 ```
 
+```markdown
 **Ação:** Deletar o recurso especificado
 **Exemplo:** `oc delete cronjob <job-name>`
 ```
@@ -258,6 +279,7 @@ oc patch cronjob test-app-job -p '{"spec":{"suspend":false}}'
 oc delete cronjob test-app-job
 ```
 
+```markdown
 **Ação:** Deletar recurso e aguardar exclusão de recursos dependentes
 **Exemplo:** `oc delete cronjob <job-name> --cascade=foreground`
 ```
@@ -267,6 +289,7 @@ oc delete cronjob test-app --cascade=foreground
 ```
 
 ### CronJob Avançado
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -304,6 +327,7 @@ EOF
 ```
 
 ### Concurrency Policy
+```markdown
 **Ação:** Allow - Permitir jobs simultâneos (padrão)
 ```
 
@@ -311,6 +335,7 @@ EOF
 concurrencyPolicy: Allow
 ```
 
+```markdown
 **Ação:** Forbid - Não permitir simultâneos (pula se ainda rodando)
 ```
 
@@ -318,6 +343,7 @@ concurrencyPolicy: Allow
 concurrencyPolicy: Forbid
 ```
 
+```markdown
 **Ação:** Replace - Cancela job atual e inicia novo
 ```
 
@@ -330,6 +356,7 @@ concurrencyPolicy: Replace
 ## Troubleshooting
 
 ### Debug de Jobs
+```markdown
 **Ação:** Exibir job "test-app-job" em formato YAML
 **Exemplo:** `oc get job <job-name> -o yaml`
 ```
@@ -338,6 +365,7 @@ concurrencyPolicy: Replace
 oc get job test-app-job -o yaml
 ```
 
+```markdown
 **Ação:** Exibir job "test-app-job" em formato JSON
 **Exemplo:** `oc get job <job-name> -o jsonpath='{.status.conditions}'`
 ```
@@ -346,6 +374,7 @@ oc get job test-app-job -o yaml
 oc get job test-app-job -o jsonpath='{.status.conditions}'
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do job
 **Exemplo:** `oc describe job <job-name>`
 ```
@@ -354,6 +383,7 @@ oc get job test-app-job -o jsonpath='{.status.conditions}'
 oc describe job test-app-job
 ```
 
+```markdown
 **Ação:** Exibir logs da instância anterior do container (após crash)
 ```
 
@@ -361,6 +391,7 @@ oc describe job test-app-job
 oc logs $POD --previous
 ```
 
+```markdown
 **Ação:** Listar eventos filtrados por campo específico
 ```
 
@@ -369,6 +400,7 @@ oc get events --field-selector involvedObject.name=test-app-job
 ```
 
 ### Debug de CronJobs
+```markdown
 **Ação:** Exibir recurso "test-app-job" em formato YAML
 **Exemplo:** `oc get cronjob <job-name> -o yaml`
 ```
@@ -377,6 +409,7 @@ oc get events --field-selector involvedObject.name=test-app-job
 oc get cronjob test-app-job -o yaml
 ```
 
+```markdown
 **Ação:** Exibir recurso "test-app-job" em formato JSON
 **Exemplo:** `oc get cronjob <job-name> -o jsonpath='{.status.lastScheduleTime}'`
 ```
@@ -385,6 +418,7 @@ oc get cronjob test-app-job -o yaml
 oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'
 ```
 
+```markdown
 **Ação:** Criar job manual para testar
 ```
 
@@ -392,6 +426,7 @@ oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'
 oc create job test-job --from=cronjob/<cronjob-name>
 ```
 
+```markdown
 **Ação:** Listar recurso ordenados por campo específico
 ```
 
@@ -399,6 +434,7 @@ oc create job test-job --from=cronjob/<cronjob-name>
 oc get jobs --sort-by=.metadata.creationTimestamp -l cronjob=test-app-job
 ```
 
+```markdown
 **Ação:** Listar recurso ordenados por campo específico
 ```
 
@@ -408,6 +444,7 @@ oc logs $LAST_JOB
 ```
 
 ### Jobs Travados
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -415,6 +452,7 @@ oc logs $LAST_JOB
 oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadata.name) - \(.metadata.creationTimestamp)"'
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -422,6 +460,7 @@ oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadat
 oc get jobs -o json | jq -r '.items[] | select(.status.completionTime != null) | select(.status.completionTime < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete job
 ```
 
+```markdown
 **Ação:** Ou com script
 ```
 

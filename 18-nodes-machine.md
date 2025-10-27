@@ -18,6 +18,7 @@ Este documento contém comandos para gerenciar nodes e configurações de máqui
 ## Gerenciar Nodes
 
 ### Listar e Verificar
+```markdown
 **Ação:** Listar todos os nodes do cluster
 ```
 
@@ -25,6 +26,7 @@ Este documento contém comandos para gerenciar nodes e configurações de máqui
 oc get nodes
 ```
 
+```markdown
 **Ação:** Listar nodes exibindo todas as labels
 ```
 
@@ -32,6 +34,7 @@ oc get nodes
 oc get nodes --show-labels
 ```
 
+```markdown
 **Ação:** Listar nodes com informações detalhadas
 ```
 
@@ -39,6 +42,7 @@ oc get nodes --show-labels
 oc get nodes -o wide
 ```
 
+```markdown
 **Ação:** Descrever node
 ```
 
@@ -46,6 +50,7 @@ oc get nodes -o wide
 oc describe node <node-name>
 ```
 
+```markdown
 **Ação:** Ver capacidade e uso
 **Exemplo:** `oc adm top <resource-name>`
 ```
@@ -54,6 +59,7 @@ oc describe node <node-name>
 oc adm top nodes
 ```
 
+```markdown
 **Ação:** Ver versão do node
 ```
 
@@ -61,6 +67,7 @@ oc adm top nodes
 oc get node <node-name> -o jsonpath='{.status.nodeInfo.kubeletVersion}'
 ```
 
+```markdown
 **Ação:** Listar nodes filtrados por label
 ```
 
@@ -70,6 +77,7 @@ oc get nodes -l node-role.kubernetes.io/worker
 ```
 
 ### Labels e Taints
+```markdown
 **Ação:** Adicionar label
 ```
 
@@ -77,6 +85,7 @@ oc get nodes -l node-role.kubernetes.io/worker
 oc label node <node-name> <key>=<value>
 ```
 
+```markdown
 **Ação:** Remover label
 ```
 
@@ -84,6 +93,7 @@ oc label node <node-name> <key>=<value>
 oc label node <node-name> <key>-
 ```
 
+```markdown
 **Ação:** Ver taints
 ```
 
@@ -91,6 +101,7 @@ oc label node <node-name> <key>-
 oc describe node <node-name> | grep Taints
 ```
 
+```markdown
 **Ação:** Adicionar taint
 ```
 
@@ -98,6 +109,7 @@ oc describe node <node-name> | grep Taints
 oc adm taint nodes <node-name> key=value:NoSchedule
 ```
 
+```markdown
 **Ação:** Remover taint
 ```
 
@@ -105,6 +117,7 @@ oc adm taint nodes <node-name> key=value:NoSchedule
 oc adm taint nodes <node-name> key:NoSchedule-
 ```
 
+```markdown
 **Ação:** Adicionar role label
 ```
 
@@ -113,6 +126,7 @@ oc label node <node-name> node-role.kubernetes.io/<role>=
 ```
 
 ### Drain e Cordon
+```markdown
 **Ação:** Cordon (desabilitar scheduling)
 ```
 
@@ -120,6 +134,7 @@ oc label node <node-name> node-role.kubernetes.io/<role>=
 oc adm cordon <node-name>
 ```
 
+```markdown
 **Ação:** Uncordon (habilitar scheduling)
 ```
 
@@ -127,6 +142,7 @@ oc adm cordon <node-name>
 oc adm uncordon <node-name>
 ```
 
+```markdown
 **Ação:** Drain (esvaziar node)
 ```
 
@@ -134,6 +150,7 @@ oc adm uncordon <node-name>
 oc adm drain <node-name>
 ```
 
+```markdown
 **Ação:** Drain com flags
 ```
 
@@ -141,6 +158,7 @@ oc adm drain <node-name>
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 ```
 
+```markdown
 **Ação:** Drain com grace period
 ```
 
@@ -148,6 +166,7 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 oc adm drain <node-name> --grace-period=600
 ```
 
+```markdown
 **Ação:** Drain forçado (cuidado!)
 ```
 
@@ -156,6 +175,7 @@ oc adm drain <node-name> --force --delete-emptydir-data --ignore-daemonsets
 ```
 
 ### Debug de Nodes
+```markdown
 **Ação:** Debug interativo em node
 ```
 
@@ -163,6 +183,7 @@ oc adm drain <node-name> --force --delete-emptydir-data --ignore-daemonsets
 oc debug node/<node-name>
 ```
 
+```markdown
 **Ação:** No shell de debug, acessar filesystem do host
 ```
 
@@ -170,6 +191,7 @@ oc debug node/<node-name>
 chroot /host
 ```
 
+```markdown
 **Ação:** Ver logs do kubelet
 ```
 
@@ -177,6 +199,7 @@ chroot /host
 oc adm node-logs <node-name> -u kubelet
 ```
 
+```markdown
 **Ação:** Ver logs do CRI-O
 ```
 
@@ -184,6 +207,7 @@ oc adm node-logs <node-name> -u kubelet
 oc adm node-logs <node-name> -u crio
 ```
 
+```markdown
 **Ação:** Ver journal do node
 ```
 
@@ -191,6 +215,7 @@ oc adm node-logs <node-name> -u crio
 oc adm node-logs <node-name> --tail=100
 ```
 
+```markdown
 **Ação:** Executar comando em node
 ```
 
@@ -203,6 +228,7 @@ oc debug node/<node-name> -- chroot /host <comando>
 ## Machine Config
 
 ### MachineConfigs
+```markdown
 **Ação:** Listar MachineConfigs
 ```
 
@@ -211,6 +237,7 @@ oc get machineconfigs
 oc get mc
 ```
 
+```markdown
 **Ação:** Descrever MachineConfig
 ```
 
@@ -218,6 +245,7 @@ oc get mc
 oc describe mc <mc-name>
 ```
 
+```markdown
 **Ação:** Ver conteúdo
 ```
 
@@ -225,6 +253,7 @@ oc describe mc <mc-name>
 oc get mc <mc-name> -o yaml
 ```
 
+```markdown
 **Ação:** MachineConfigs renderizados
 ```
 
@@ -233,6 +262,7 @@ oc get mc | grep rendered
 ```
 
 ### MachineConfigPools
+```markdown
 **Ação:** Listar MachineConfigPools
 ```
 
@@ -241,6 +271,7 @@ oc get machineconfigpools
 oc get mcp
 ```
 
+```markdown
 **Ação:** Status dos pools
 ```
 
@@ -248,6 +279,7 @@ oc get mcp
 oc get mcp
 ```
 
+```markdown
 **Ação:** Master pool
 **Exemplo:** `oc get mcp <resource-name>`
 ```
@@ -256,6 +288,7 @@ oc get mcp
 oc get mcp master
 ```
 
+```markdown
 **Ação:** Worker pool
 **Exemplo:** `oc get mcp <resource-name>`
 ```
@@ -264,6 +297,7 @@ oc get mcp master
 oc get mcp worker
 ```
 
+```markdown
 **Ação:** Descrever pool
 ```
 
@@ -271,6 +305,7 @@ oc get mcp worker
 oc describe mcp <pool-name>
 ```
 
+```markdown
 **Ação:** Ver progresso de update
 ```
 
@@ -278,6 +313,7 @@ oc describe mcp <pool-name>
 oc get mcp
 ```
 
+```markdown
 **Ação:** Ver qual MC está sendo aplicado
 ```
 
@@ -286,6 +322,7 @@ oc get mcp <pool-name> -o jsonpath='{.status.configuration.name}'
 ```
 
 ### Criar MachineConfig
+```markdown
 * Exemplo: criar arquivo no node
 ```
 
@@ -310,6 +347,7 @@ spec:
 EOF
 ```
 
+```markdown
 * Exemplo: adicionar registry inseguro
 ```
 
@@ -335,6 +373,7 @@ EOF
 ```
 
 ### Pause de Updates
+```markdown
 **Ação:** Pausar MachineConfigPool
 ```
 
@@ -342,6 +381,7 @@ EOF
 oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":true}}'
 ```
 
+```markdown
 **Ação:** Despausar
 ```
 
@@ -349,6 +389,7 @@ oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":true}}'
 oc patch mcp <pool-name> --type merge -p '{"spec":{"paused":false}}'
 ```
 
+```markdown
 **Ação:** Ver se está pausado
 ```
 
@@ -361,6 +402,7 @@ oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
 ## Machine Sets
 
 ### Gerenciar MachineSets
+```markdown
 **Ação:** Listar MachineSets
 ```
 
@@ -368,6 +410,7 @@ oc get mcp <pool-name> -o jsonpath='{.spec.paused}'
 oc get machinesets -n openshift-machine-api
 ```
 
+```markdown
 **Ação:** Descrever MachineSet
 ```
 
@@ -375,6 +418,7 @@ oc get machinesets -n openshift-machine-api
 oc describe machineset <name> -n openshift-machine-api
 ```
 
+```markdown
 **Ação:** Ver réplicas
 ```
 
@@ -382,6 +426,7 @@ oc describe machineset <name> -n openshift-machine-api
 oc get machineset <name> -n openshift-machine-api -o jsonpath='{.spec.replicas}'
 ```
 
+```markdown
 **Ação:** Escalar MachineSet
 ```
 
@@ -389,6 +434,7 @@ oc get machineset <name> -n openshift-machine-api -o jsonpath='{.spec.replicas}'
 oc scale machineset <name> -n openshift-machine-api --replicas=<N>
 ```
 
+```markdown
 **Ação:** Ver Machines
 ```
 
@@ -396,6 +442,7 @@ oc scale machineset <name> -n openshift-machine-api --replicas=<N>
 oc get machines -n openshift-machine-api
 ```
 
+```markdown
 **Ação:** Descrever Machine
 ```
 
@@ -404,6 +451,7 @@ oc describe machine <machine-name> -n openshift-machine-api
 ```
 
 ### Criar MachineSet
+```markdown
 **Ação:** Copiar existente
 ```
 
@@ -411,6 +459,7 @@ oc describe machine <machine-name> -n openshift-machine-api
 oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.yaml
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -418,6 +467,7 @@ oc get machineset <existing> -n openshift-machine-api -o yaml > new-machineset.y
 oc apply -f new-machineset.yaml
 ```
 
+```markdown
 **Ação:** Verificar
 ```
 
@@ -426,6 +476,7 @@ oc get machines -n openshift-machine-api
 ```
 
 ### Deletar Machines
+```markdown
 **Ação:** Deletar Machine (node será removido)
 ```
 
@@ -433,6 +484,7 @@ oc get machines -n openshift-machine-api
 oc delete machine <machine-name> -n openshift-machine-api
 ```
 
+```markdown
 **Ação:** Ver processo
 ```
 
@@ -440,6 +492,7 @@ oc delete machine <machine-name> -n openshift-machine-api
 oc get machines -n openshift-machine-api
 ```
 
+```markdown
 **Ação:** Listar todos os nodes do cluster
 ```
 
@@ -452,6 +505,7 @@ oc get nodes
 ## Node Maintenance
 
 ### Atualizar Node
+```markdown
 **Ação:** 1. Cordon
 ```
 
@@ -459,6 +513,7 @@ oc get nodes
 oc adm cordon <node-name>
 ```
 
+```markdown
 **Ação:** 2. Drain
 ```
 
@@ -470,6 +525,7 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 # 3. Aplicar updates (MachineConfig ou manual)
 # Node vai reiniciar automaticamente se MachineConfig mudou
 ```
+```markdown
 **Ação:** Listar todos os nodes do cluster
 ```
 
@@ -477,6 +533,7 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data
 oc get nodes
 ```
 
+```markdown
 **Ação:** 5. Uncordon
 ```
 
@@ -485,6 +542,7 @@ oc adm uncordon <node-name>
 ```
 
 ### Reboot de Nodes
+```markdown
 **Ação:** Via debug
 ```
 
@@ -494,6 +552,7 @@ chroot /host
 systemctl reboot
 ```
 
+```markdown
 **Ação:** Listar todos os nodes do cluster
 ```
 
@@ -502,6 +561,7 @@ oc get nodes
 ```
 
 ### Remover Node
+```markdown
 **Ação:** 1. Drain
 ```
 
@@ -509,6 +569,7 @@ oc get nodes
 oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data --force
 ```
 
+```markdown
 **Ação:** 2. Deletar node
 ```
 
@@ -516,6 +577,7 @@ oc adm drain <node-name> --ignore-daemonsets --delete-emptydir-data --force
 oc delete node <node-name>
 ```
 
+```markdown
 **Ação:** 3. Se usando Machine, deletar Machine também
 ```
 
@@ -524,6 +586,7 @@ oc delete machine <machine-name> -n openshift-machine-api
 ```
 
 ### Health Checks
+```markdown
 **Ação:** Ver condições do node
 ```
 
@@ -531,6 +594,7 @@ oc delete machine <machine-name> -n openshift-machine-api
 oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
+```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -538,6 +602,7 @@ oc get node <node-name> -o json | jq '.status.conditions'
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -545,6 +610,7 @@ oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.t
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 
@@ -552,6 +618,7 @@ oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.t
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir nodes em formato JSON
 ```
 

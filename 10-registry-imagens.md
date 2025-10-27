@@ -18,6 +18,7 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 ## Registry Interno
 
 ### Acessar Registry
+```markdown
 **Ação:** Ver URL do registry interno
 ```
 
@@ -25,6 +26,7 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 oc get route -n openshift-image-registry
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -32,6 +34,7 @@ oc get route -n openshift-image-registry
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 ```
 
+```markdown
 **Ação:** Ver status do registry
 **Exemplo:** `oc get clusteroperator <resource-name>`
 ```
@@ -41,6 +44,7 @@ oc get clusteroperator image-registry
 ```
 
 ### Configurar Registry
+```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 ```
 
@@ -48,6 +52,7 @@ oc get clusteroperator image-registry
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"defaultRoute":true}}'
 ```
 
+```markdown
 **Ação:** Ver route criada
 ```
 
@@ -55,6 +60,7 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 oc get route -n openshift-image-registry
 ```
 
+```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 ```
 
@@ -67,6 +73,7 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 ## Push e Pull de Imagens
 
 ### Push de Imagens
+```markdown
 **Ação:** Tag para registry interno
 ```
 
@@ -74,6 +81,7 @@ oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"
 docker tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
+```markdown
 **Ação:** Push para registry interno
 ```
 
@@ -81,6 +89,7 @@ docker tag <imagem-local> <registry-interno>/<projeto>/test-app:<tag>
 docker push <registry-interno>/<projeto>/test-app:<tag>
 ```
 
+```markdown
 **Ação:** Usando Podman
 ```
 
@@ -88,6 +97,7 @@ docker push <registry-interno>/<projeto>/test-app:<tag>
 podman push <imagem> <registry-interno>/<projeto>/test-app:<tag>
 ```
 
+```markdown
 **Ação:** Criar secret para registry externo
 ```
 
@@ -98,6 +108,7 @@ oc create secret docker-registry <secret-name> \
   --docker-password=<pass>
 ```
 
+```markdown
 **Ação:** Linkar secret para pull
 ```
 
@@ -106,6 +117,7 @@ oc secrets link default <secret-name> --for=pull
 ```
 
 ### Pull de Imagens
+```markdown
 **Ação:** Pull de registry interno
 ```
 
@@ -113,6 +125,7 @@ oc secrets link default <secret-name> --for=pull
 docker pull <registry-interno>/<projeto>/test-app:<tag>
 ```
 
+```markdown
 **Ação:** Exibir imagestream "s2i-chiaretto" em formato YAML
 **Exemplo:** `oc get is <imagestream-name> -o yaml`
 ```
@@ -121,6 +134,7 @@ docker pull <registry-interno>/<projeto>/test-app:<tag>
 oc get is s2i-chiaretto -o yaml
 ```
 
+```markdown
 **Ação:** Importar imagem externa
 ```
 
@@ -133,6 +147,7 @@ oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 ## Image Mirroring
 
 ### Configurar Mirroring
+```markdown
 **Ação:** Ver ImageContentSourcePolicy
 ```
 
@@ -140,6 +155,7 @@ oc import-image test-app:<tag> --from=<registry-externo>/<image>:<tag> --confirm
 oc get imagecontentsourcepolicy
 ```
 
+```markdown
 **Ação:** Criar ICSP para mirror
 ```
 
@@ -157,6 +173,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -165,6 +182,7 @@ oc get imagecontentsourcepolicy -o yaml
 ```
 
 ### Mirror com oc-mirror
+```markdown
 **Ação:** Mirror de operator catalogs
 ```
 
@@ -172,6 +190,7 @@ oc get imagecontentsourcepolicy -o yaml
 oc mirror --config=imageset-config.yaml docker://<mirror-registry>
 ```
 
+```markdown
 **Ação:** Ver resultados do mirror
 ```
 
@@ -184,6 +203,7 @@ oc mirror list operators --catalog=<catalog-image>
 ## Image Pruning
 
 ### Limpeza de Imagens
+```markdown
 **Ação:** Executar image pruner manual
 ```
 
@@ -191,6 +211,7 @@ oc mirror list operators --catalog=<catalog-image>
 oc adm prune images --confirm
 ```
 
+```markdown
 **Ação:** Dry-run (sem deletar)
 **Exemplo:** `oc adm prune <resource-name>`
 ```
@@ -199,6 +220,7 @@ oc adm prune images --confirm
 oc adm prune images
 ```
 
+```markdown
 **Ação:** Prune de imagens antigas
 ```
 
@@ -206,6 +228,7 @@ oc adm prune images
 oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -213,6 +236,7 @@ oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 oc get imagepruner/cluster -o yaml
 ```
 
+```markdown
 **Ação:** Aplicar modificação parcial ao recurso usando patch
 ```
 
@@ -220,6 +244,7 @@ oc get imagepruner/cluster -o yaml
 oc patch imagepruners.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"schedule":"0 0 * * *","suspend":false,"keepTagRevisions":3}}'
 ```
 
+```markdown
 **Ação:** Ver jobs de pruning
 ```
 
@@ -228,6 +253,7 @@ oc get jobs -n openshift-image-registry
 ```
 
 ### Limpeza de Builds
+```markdown
 **Ação:** Prune de builds antigos
 ```
 
@@ -235,6 +261,7 @@ oc get jobs -n openshift-image-registry
 oc adm prune builds --confirm
 ```
 
+```markdown
 **Ação:** Manter apenas N builds
 ```
 
@@ -242,6 +269,7 @@ oc adm prune builds --confirm
 oc adm prune builds --keep-complete=5 --keep-failed=1 --confirm
 ```
 
+```markdown
 **Ação:** Prune por idade
 ```
 

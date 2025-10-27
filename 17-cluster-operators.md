@@ -18,6 +18,7 @@ Este documento contém comandos para gerenciar e diagnosticar Cluster Operators 
 ## Verificar Status
 
 ### Status Geral
+```markdown
 **Ação:** Listar status de todos os cluster operators
 ```
 
@@ -26,6 +27,7 @@ oc get clusteroperators
 oc get co
 ```
 
+```markdown
 **Ação:** Listar cluster operator com colunas customizadas
 ```
 
@@ -33,6 +35,7 @@ oc get co
 oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].version
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -40,6 +43,7 @@ oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].vers
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -47,6 +51,7 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator em formato JSON
 ```
 
@@ -54,6 +59,7 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
 ```
 
+```markdown
 **Ação:** Watch operators
 ```
 
@@ -62,6 +68,7 @@ watch oc get co
 ```
 
 ### Status Detalhado
+```markdown
 **Ação:** Exibir detalhes completos do cluster operator
 **Exemplo:** `oc describe co <resource-name>`
 ```
@@ -70,6 +77,7 @@ watch oc get co
 oc describe co authentication
 ```
 
+```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'`
 ```
@@ -78,6 +86,7 @@ oc describe co authentication
 oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status.conditions[*].status}'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'`
 ```
@@ -86,6 +95,7 @@ oc get co authentication -o jsonpath='{.status.conditions[*].type}{"\n"}{.status
 oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")].message}'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.versions[0].version}'`
 ```
@@ -94,6 +104,7 @@ oc get co authentication -o jsonpath='{.status.conditions[?(@.type=="Degraded")]
 oc get co authentication -o jsonpath='{.status.versions[0].version}'
 ```
 
+```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.relatedObjects}'`
 ```
@@ -107,6 +118,7 @@ oc get co authentication -o jsonpath='{.status.relatedObjects}'
 ## Troubleshooting
 
 ### Diagnosticar Problemas
+```markdown
 **Ação:** Exibir cluster operator "authentication" em formato JSON
 **Exemplo:** `oc get co <resource-name>app -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}`
 ```
@@ -115,6 +127,7 @@ oc get co authentication -o jsonpath='{.status.relatedObjects}'
 oc get co authentication -o jsonpath='{.status.relatedObjects[?(@.resource=="namespaces")].name}' | xargs -I {} oc get pods -n {}
 ```
 
+```markdown
 **Ação:** Logs do operator
 ```
 
@@ -122,6 +135,7 @@ oc get co authentication -o jsonpath='{.status.relatedObjects[?(@.resource=="nam
 oc logs -n <namespace-do-operator> <pod-name>
 ```
 
+```markdown
 **Ação:** Eventos relacionados
 ```
 
@@ -129,6 +143,7 @@ oc logs -n <namespace-do-operator> <pod-name>
 oc get events -n <namespace-do-operator> --sort-by='.lastTimestamp'
 ```
 
+```markdown
 **Ação:** Ver deployment do operator
 ```
 
@@ -136,6 +151,7 @@ oc get events -n <namespace-do-operator> --sort-by='.lastTimestamp'
 oc get deploy -n <namespace-do-operator>
 ```
 
+```markdown
 **Ação:** Descrever deployment
 ```
 
@@ -144,6 +160,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 ```
 
 ### Forçar Reconciliation
+```markdown
 **Ação:** Atualizar annotation existente com novo valor
 ```
 
@@ -151,6 +168,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 oc annotate co/authentication --overwrite operator.openshift.io/refresh="$(date +%s)"
 ```
 
+```markdown
 **Ação:** Restart do operator (deletar pod)
 ```
 
@@ -158,6 +176,7 @@ oc annotate co/authentication --overwrite operator.openshift.io/refresh="$(date 
 oc delete pod -n <namespace-do-operator> <pod-name>
 ```
 
+```markdown
 **Ação:** Ver progresso
 ```
 
@@ -166,6 +185,7 @@ oc get co/authentication
 ```
 
 ### Must-Gather de Operadores
+```markdown
 **Ação:** Coletar dados de diagnóstico em diretório específico
 ```
 
@@ -173,6 +193,7 @@ oc get co/authentication
 oc adm must-gather --dest-dir=/tmp/must-gather
 ```
 
+```markdown
 **Ação:** Ver logs dos operators no must-gather
 ```
 
@@ -186,6 +207,7 @@ find . -name "*operator*" -type d
 ## Operadores Principais
 
 ### Authentication Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -194,6 +216,7 @@ find . -name "*operator*" -type d
 oc get co authentication
 ```
 
+```markdown
 **Ação:** Pods
 ```
 
@@ -201,6 +224,7 @@ oc get co authentication
 oc get pods -n openshift-authentication
 ```
 
+```markdown
 **Ação:** Exibir recurso "cluster" em formato YAML
 ```
 
@@ -208,6 +232,7 @@ oc get pods -n openshift-authentication
 oc get oauth cluster -o yaml
 ```
 
+```markdown
 **Ação:** Logs
 ```
 
@@ -216,6 +241,7 @@ oc logs -n openshift-authentication-operator <pod-name>
 ```
 
 ### Ingress Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -224,6 +250,7 @@ oc logs -n openshift-authentication-operator <pod-name>
 oc get co ingress
 ```
 
+```markdown
 **Ação:** IngressControllers
 ```
 
@@ -231,6 +258,7 @@ oc get co ingress
 oc get ingresscontroller -n openshift-ingress-operator
 ```
 
+```markdown
 **Ação:** Pods do router
 ```
 
@@ -238,6 +266,7 @@ oc get ingresscontroller -n openshift-ingress-operator
 oc get pods -n openshift-ingress
 ```
 
+```markdown
 **Ação:** Exibir logs de todos os pods que correspondem ao label
 **Exemplo:** `oc logs -n <namespace> -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default`
 ```
@@ -246,6 +275,7 @@ oc get pods -n openshift-ingress
 oc logs -n openshift-ingress -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe ingresscontroller default -n <namespace>`
 ```
@@ -255,6 +285,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 ```
 
 ### Network Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -263,6 +294,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 oc get co network
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -270,6 +302,7 @@ oc get co network
 oc get network.config.openshift.io cluster -o yaml
 ```
 
+```markdown
 **Ação:** Pods de rede (OVN)
 ```
 
@@ -277,6 +310,7 @@ oc get network.config.openshift.io cluster -o yaml
 oc get pods -n openshift-ovn-kubernetes
 ```
 
+```markdown
 **Ação:** Pods de rede (SDN)
 ```
 
@@ -284,6 +318,7 @@ oc get pods -n openshift-ovn-kubernetes
 oc get pods -n openshift-sdn
 ```
 
+```markdown
 **Ação:** Logs operator network
 ```
 
@@ -292,6 +327,7 @@ oc logs -n openshift-network-operator <pod-name>
 ```
 
 ### DNS Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -300,6 +336,7 @@ oc logs -n openshift-network-operator <pod-name>
 oc get co dns
 ```
 
+```markdown
 **Ação:** DNS pods
 ```
 
@@ -307,6 +344,7 @@ oc get co dns
 oc get pods -n openshift-dns
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -314,6 +352,7 @@ oc get pods -n openshift-dns
 oc get dns.operator/default -o yaml
 ```
 
+```markdown
 **Ação:** Logs
 ```
 
@@ -322,6 +361,7 @@ oc logs -n openshift-dns <dns-pod>
 ```
 
 ### Image Registry Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -330,6 +370,7 @@ oc logs -n openshift-dns <dns-pod>
 oc get co image-registry
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato YAML
 ```
 
@@ -337,6 +378,7 @@ oc get co image-registry
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 ```
 
+```markdown
 **Ação:** Pods
 ```
 
@@ -344,6 +386,7 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 oc get pods -n openshift-image-registry
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -352,6 +395,7 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.s
 ```
 
 ### Storage Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -360,6 +404,7 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.s
 oc get co storage
 ```
 
+```markdown
 **Ação:** CSI Drivers
 ```
 
@@ -367,6 +412,7 @@ oc get co storage
 oc get csidrivers
 ```
 
+```markdown
 **Ação:** CSI Nodes
 ```
 
@@ -374,6 +420,7 @@ oc get csidrivers
 oc get csinodes
 ```
 
+```markdown
 **Ação:** Storage classes
 ```
 
@@ -382,6 +429,7 @@ oc get sc
 ```
 
 ### Monitoring Operator
+```markdown
 **Ação:** Status
 **Exemplo:** `oc get co <resource-name>`
 ```
@@ -390,6 +438,7 @@ oc get sc
 oc get co monitoring
 ```
 
+```markdown
 **Ação:** Pods de monitoring
 ```
 
@@ -397,6 +446,7 @@ oc get co monitoring
 oc get pods -n openshift-monitoring
 ```
 
+```markdown
 **Ação:** Exibir recurso "cluster-monitoring-config" em formato YAML
 **Exemplo:** `oc get configmap <configmap-name> -n <namespace> -o yaml`
 ```
@@ -405,6 +455,7 @@ oc get pods -n openshift-monitoring
 oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 ```
 
+```markdown
 **Ação:** Prometheus
 ```
 
@@ -412,6 +463,7 @@ oc get configmap cluster-monitoring-config -n openshift-monitoring -o yaml
 oc get prometheus -n openshift-monitoring
 ```
 
+```markdown
 **Ação:** Alertmanager
 ```
 
@@ -424,6 +476,7 @@ oc get alertmanager -n openshift-monitoring
 ## OLM (Operator Lifecycle Manager)
 
 ### Gerenciar Operadores Instalados
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -431,6 +484,7 @@ oc get alertmanager -n openshift-monitoring
 oc get subscriptions -A
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -438,6 +492,7 @@ oc get subscriptions -A
 oc get csv -A
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -445,6 +500,7 @@ oc get csv -A
 oc get operators -A
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -452,6 +508,7 @@ oc get operators -A
 oc get installplans -A
 ```
 
+```markdown
 **Ação:** CatalogSources
 ```
 
@@ -459,6 +516,7 @@ oc get installplans -A
 oc get catalogsources -n openshift-marketplace
 ```
 
+```markdown
 **Ação:** Listar recurso de todos os namespaces do cluster
 ```
 
@@ -467,6 +525,7 @@ oc get operatorgroups -A
 ```
 
 ### Instalar Operadores
+```markdown
 **Ação:** Ver operators disponíveis
 ```
 
@@ -474,6 +533,7 @@ oc get operatorgroups -A
 oc get packagemanifests -n openshift-marketplace
 ```
 
+```markdown
 **Ação:** Buscar operator específico
 ```
 
@@ -481,6 +541,7 @@ oc get packagemanifests -n openshift-marketplace
 oc get packagemanifests -n openshift-marketplace | grep odf-operator
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe packagemanifest <resource-name>app -n <namespace>`
 ```
@@ -489,6 +550,7 @@ oc get packagemanifests -n openshift-marketplace | grep odf-operator
 oc describe packagemanifest odf-operator -n openshift-marketplace
 ```
 
+```markdown
 **Ação:** Criar subscription
 ```
 
@@ -507,6 +569,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Ver progresso da instalação
 ```
 
@@ -515,6 +578,7 @@ oc get csv -n <namespace>
 ```
 
 ### Troubleshoot Operadores OLM
+```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe subscription -n <namespace>   local-storage-operator`
 ```
@@ -523,6 +587,7 @@ oc get csv -n <namespace>
 oc describe subscription -n openshift-local-storage   local-storage-operator
 ```
 
+```markdown
 **Ação:** Ver CSV
 ```
 
@@ -530,6 +595,7 @@ oc describe subscription -n openshift-local-storage   local-storage-operator
 oc describe csv <csv-name> -n <namespace>
 ```
 
+```markdown
 **Ação:** Ver install plan
 ```
 
@@ -537,6 +603,7 @@ oc describe csv <csv-name> -n <namespace>
 oc get installplan -n <namespace>
 ```
 
+```markdown
 **Ação:** Aprovar install plan manual
 ```
 
@@ -544,6 +611,7 @@ oc get installplan -n <namespace>
 oc patch installplan test-app -n <namespace> --type merge -p '{"spec":{"approved":true}}'
 ```
 
+```markdown
 **Ação:** Logs do OLM
 ```
 
@@ -551,6 +619,7 @@ oc patch installplan test-app -n <namespace> --type merge -p '{"spec":{"approved
 oc logs -n openshift-operator-lifecycle-manager <olm-operator-pod>
 ```
 
+```markdown
 **Ação:** Catalog operator logs
 ```
 
@@ -559,6 +628,7 @@ oc logs -n openshift-operator-lifecycle-manager <catalog-operator-pod>
 ```
 
 ### Atualizar Operadores
+```markdown
 **Ação:** Ver versão atual
 ```
 
@@ -566,6 +636,7 @@ oc logs -n openshift-operator-lifecycle-manager <catalog-operator-pod>
 oc get csv -n <namespace>
 ```
 
+```markdown
 **Ação:** Exibir recurso em formato JSON
 ```
 
@@ -573,6 +644,7 @@ oc get csv -n <namespace>
 oc get subscription  -n openshift-local-storage   local-storage-operator -o jsonpath='{.spec.installPlanApproval}'
 ```
 
+```markdown
 **Ação:** Mudar para manual
 ```
 
@@ -580,6 +652,7 @@ oc get subscription  -n openshift-local-storage   local-storage-operator -o json
 oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Manual"}}'
 ```
 
+```markdown
 **Ação:** Mudar para automatic
 ```
 
@@ -587,6 +660,7 @@ oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"install
 oc patch subscription test-app -n <namespace> --type merge -p '{"spec":{"installPlanApproval":"Automatic"}}'
 ```
 
+```markdown
 **Ação:** Ver install plans pendentes
 ```
 

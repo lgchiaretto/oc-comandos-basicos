@@ -17,6 +17,7 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 
 ## PersistentVolumes (PV)
 
+```markdown
 **Ação:** Listar todos os Persistent Volumes do cluster
 ```
 
@@ -25,6 +26,7 @@ oc get pv
 oc get persistentvolumes
 ```
 
+```markdown
 **Ação:** Descrever PV
 ```
 
@@ -32,6 +34,7 @@ oc get persistentvolumes
 oc describe pv <nome-do-pv>
 ```
 
+```markdown
 **Ação:** Ver em detalhes
 ```
 
@@ -39,6 +42,7 @@ oc describe pv <nome-do-pv>
 oc get pv <nome-do-pv> -o yaml
 ```
 
+```markdown
 **Ação:** Exibir persistent volume em formato JSON
 ```
 
@@ -46,6 +50,7 @@ oc get pv <nome-do-pv> -o yaml
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
+```markdown
 **Ação:** Exibir persistent volume em formato JSON
 ```
 
@@ -53,6 +58,7 @@ oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
+```markdown
 **Ação:** Deletar PV
 ```
 
@@ -65,6 +71,7 @@ oc delete pv <nome-do-pv>
 ## PersistentVolumeClaims (PVC)
 
 ### Criar e Gerenciar
+```markdown
 **Ação:** Listar todos os Persistent Volume Claims do namespace
 ```
 
@@ -73,6 +80,7 @@ oc get pvc
 oc get persistentvolumeclaims
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do persistent volume claim
 **Exemplo:** `oc describe pvc <resource-name>`
 ```
@@ -81,6 +89,7 @@ oc get persistentvolumeclaims
 oc describe pvc test-app
 ```
 
+```markdown
 **Ação:** Criar PVC
 ```
 
@@ -88,6 +97,7 @@ oc describe pvc test-app
 oc create -f <pvc-definition.yaml>
 ```
 
+```markdown
 **Ação:** Exibir persistent volume claim "test-app" em formato JSON
 **Exemplo:** `oc get pvc <resource-name>app -o jsonpath='{.status.phase}'`
 ```
@@ -96,6 +106,7 @@ oc create -f <pvc-definition.yaml>
 oc get pvc test-app -o jsonpath='{.status.phase}'
 ```
 
+```markdown
 **Ação:** Deletar o persistent volume claim especificado
 **Exemplo:** `oc delete pvc <resource-name>`
 ```
@@ -105,6 +116,7 @@ oc delete pvc test-app
 ```
 
 ### Usando em Deployments
+```markdown
 **Ação:** Adicionar volume PVC a deployment
 **Exemplo:** `oc set volume <resource-name>/test-app`
 ```
@@ -117,6 +129,7 @@ oc set volume deployment/test-app \
   --mount-path=<path>
 ```
 
+```markdown
 **Ação:** Remover volume
 ```
 
@@ -128,6 +141,7 @@ oc set volume deployment/test-app --remove --name=<volume-name>
 
 ## StorageClasses
 
+```markdown
 **Ação:** Listar StorageClasses
 ```
 
@@ -136,6 +150,7 @@ oc get storageclass
 oc get sc
 ```
 
+```markdown
 **Ação:** Descrever StorageClass
 ```
 
@@ -143,6 +158,7 @@ oc get sc
 oc describe sc <nome-da-sc>
 ```
 
+```markdown
 **Ação:** Definir StorageClass padrão
 ```
 
@@ -150,6 +166,7 @@ oc describe sc <nome-da-sc>
 oc patch storageclass <nome-da-sc> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
+```markdown
 **Ação:** Exibir storageclass em formato JSON
 ```
 
@@ -161,6 +178,7 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ## Volumes em Pods
 
 ### Tipos de Volumes
+```markdown
 **Ação:** EmptyDir
 **Exemplo:** `oc set volume <resource-name>/test-app --add --add --name=emptydir --type=emptyDir --mount-path=/emptydir`
 ```
@@ -169,6 +187,7 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 oc set volume deployment/test-app --add --name=emptydir --type=emptyDir --mount-path=/emptydir
 ```
 
+```markdown
 **Ação:** HostPath (requer privilégios)
 **Exemplo:** `oc set volume <resource-name>/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data`
 ```
@@ -177,6 +196,7 @@ oc set volume deployment/test-app --add --name=emptydir --type=emptyDir --mount-
 oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data --mount-path=/data
 ```
 
+```markdown
 **Ação:** Listar volumes de um deployment
 **Exemplo:** `oc set volume <resource-name>/test-app`
 ```
@@ -185,6 +205,7 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 oc set volume deployment/test-app
 ```
 
+```markdown
 **Ação:** Exibir detalhes completos do recurso
 **Exemplo:** `oc describe pod <resource-name> | grep -A 5 Volumes`
 ```

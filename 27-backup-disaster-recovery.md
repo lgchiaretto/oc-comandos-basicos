@@ -21,6 +21,7 @@ Este documento contém estratégias e comandos para backup e recuperação de de
 ## Backup de Aplicações
 
 ### Velero - Backup Tool
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -39,6 +40,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Aguardar instalação
 ```
 
@@ -46,6 +48,7 @@ EOF
 oc get csv -n openshift-adp
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -85,6 +88,7 @@ EOF
 ## Backup de Dados
 
 ### Backup de PVCs
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -101,6 +105,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Verificar snapshot
 ```
 
@@ -108,6 +113,7 @@ EOF
 oc get volumesnapshot
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -131,6 +137,7 @@ EOF
 ```
 
 ### Backup Manual de Dados em PVC
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -155,6 +162,7 @@ spec:
 EOF
 ```
 
+```markdown
 **Ação:** Aguardar condição específica do recurso
 **Exemplo:** `oc wait --for=condition=ready pod/<pod-name>`
 ```
@@ -163,6 +171,7 @@ EOF
 oc wait --for=condition=ready pod/backup-pod
 ```
 
+```markdown
 **Ação:** Executar comando dentro do pod especificado
 ```
 
@@ -170,6 +179,7 @@ oc wait --for=condition=ready pod/backup-pod
 oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 ```
 
+```markdown
 **Ação:** Copiar arquivo entre máquina local e pod
 ```
 
@@ -177,6 +187,7 @@ oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 ```
 
+```markdown
 **Ação:** Deletar o recurso especificado
 **Exemplo:** `oc delete pod <resource-name>`
 ```
@@ -186,6 +197,7 @@ oc delete pod backup-pod
 ```
 
 ### Backup de Database
+```markdown
 **Ação:** MySQL/MariaDB
 ```
 
@@ -193,6 +205,7 @@ oc delete pod backup-pod
 oc exec <mysql-pod> -- mysqldump -u root -p<password> --all-databases > mysql-backup.sql
 ```
 
+```markdown
 **Ação:** PostgreSQL
 ```
 
@@ -200,6 +213,7 @@ oc exec <mysql-pod> -- mysqldump -u root -p<password> --all-databases > mysql-ba
 oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
 ```
 
+```markdown
 **Ação:** MongoDB
 ```
 
@@ -207,6 +221,7 @@ oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
 oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
 ```
 
+```markdown
 **Ação:** Restore (exemplos)
 ```
 
@@ -221,6 +236,7 @@ oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 ## Disaster Recovery
 
 ### Preparação para DR
+```markdown
 **Ação:** Checklist de preparação
 ```
 
@@ -229,6 +245,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 # Disaster Recovery Checklist
 ```
 
+```markdown
 **Ação:** # Backups Configurados
 ```
 
@@ -241,6 +258,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] Cluster configuration backup
 ```
 
+```markdown
 **Ação:** # Documentação
 ```
 
@@ -252,6 +270,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] RTO/RPO definidos por aplicação
 ```
 
+```markdown
 **Ação:** # Testes
 ```
 
@@ -262,6 +281,7 @@ cat > /tmp/dr-checklist.md << 'EOF'
 - [ ] DR drill completo (anual)
 ```
 
+```markdown
 **Ação:** # Armazenamento
 ```
 
@@ -278,6 +298,7 @@ cat /tmp/dr-checklist.md
 ```
 
 ### Restore de Aplicação
+```markdown
 **Ação:** 1. Restore de namespace
 ```
 
@@ -286,6 +307,7 @@ tar xzf namespace-backup-myproject-*.tar.gz
 cd namespace-backup-myproject-*/
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -293,6 +315,7 @@ cd namespace-backup-myproject-*/
 oc apply -f namespace.yaml
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -301,6 +324,7 @@ oc apply -f secrets.yaml
 oc apply -f configmaps.yaml
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -308,6 +332,7 @@ oc apply -f configmaps.yaml
 oc apply -f /tmp/persistentvolumeclaims.yaml
 ```
 
+```markdown
 **Ação:** Listar todos os Persistent Volume Claims do namespace
 ```
 
@@ -315,6 +340,7 @@ oc apply -f /tmp/persistentvolumeclaims.yaml
 oc get pvc
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -324,6 +350,7 @@ oc apply -f /tmp/roles.yaml
 oc apply -f /tmp/rolebindings.yaml
 ```
 
+```markdown
 **Ação:** Aplicar configuração do arquivo YAML/JSON ao cluster
 ```
 
@@ -334,6 +361,7 @@ oc apply -f /tmp/services.yaml
 oc apply -f /tmp/routes.yaml
 ```
 
+```markdown
 **Ação:** Listar todos os recursos principais do namespace
 ```
 
