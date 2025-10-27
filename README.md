@@ -4,19 +4,25 @@ Este é um guia abrangente de comandos do OpenShift (OCP) organizado por categor
 
 ---
 
+## Início Rápido
+
+**Novo no OpenShift?** Comece com o [**Guia de Início Rápido**](INICIO-RAPIDO.md) que contém os 20 comandos mais utilizados!
+
+---
+
 ## Como Usar Este Guia
 
 ### Para Iniciantes
 Comece pelos documentos essenciais (1-6) para entender os conceitos básicos do OpenShift.
 
 ### Para Administradores
-Foque nos documentos de administração avançada (19-22) e troubleshooting (13-15).
+Foque nos documentos de administração avançada (17-22) e troubleshooting (13-15).
 
 ### Para DevOps
 Concentre-se em Build/CI/CD (9-10), aplicações (3) e observabilidade (11-12).
 
 ### Para Troubleshooting
-Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e openshift upgrade (31).
+Vá direto para os documentos de troubleshooting (13-15, 31), must-gather (12) e segurança (16).
 
 ---
 
@@ -27,13 +33,13 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 - **Deployments**: Documento 5
 - **Services**: Documento 6
 - **Storage**: Documentos 8, 15
-- **Nodes**: Documento 20
+- **Nodes**: Documento 18
 
 ### Por Função
 - **Criação**: Documentos 2, 3, 7, 9
-- **Troubleshooting**: Documentos 13, 14, 15
+- **Troubleshooting**: Documentos 13, 14, 15, 31
 - **Monitoramento**: Documentos 11, 12
-- **Segurança**: Documentos 16, 17, 18
+- **Segurança**: Documento 16
 
 ### Por Nível
 - **Básico**: Documentos 1-6
@@ -46,7 +52,7 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 ## Importante
 
 > **Nota**: Sempre teste comandos destrutivos (delete, drain, etc.) em ambientes não produtivos antes de executar em produção.
-> 
+
 ---
 
 ## Índice de Documentos
@@ -60,7 +66,7 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 2. [**Projetos**](02-projetos.md)
    - Criar, listar e gerenciar projetos
    - Node selectors
-   - Templates de projeto
+   - Quotas e limits
 
 3. [**Aplicações**](03-aplicacoes.md)
    - Criar aplicações
@@ -133,41 +139,42 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
     - Storage classes
 
 ### Segurança e RBAC
-16. [**Usuários e Permissões**](16-usuarios-permissoes.md)
+16. [**Segurança e RBAC**](16-seguranca-rbac.md)
     - Service Accounts
     - Roles e RoleBindings
-    - RBAC
-
-17. [**Grupos e LDAP**](17-grupos-ldap.md)
-    - Criar grupos
-    - Sincronização LDAP/AD
-    - Whitelist
-
-18. [**Security Context Constraints**](18-scc.md)
-    - Listar SCCs
-    - Adicionar SCCs
-    - Troubleshooting SCC
+    - Security Context Constraints (SCC)
+    - Permissões e políticas
 
 ### Administração Avançada
-19. [**Cluster Operators**](19-cluster-operators.md)
+17. [**Cluster Operators**](17-cluster-operators.md)
     - Status dos operators
     - Troubleshooting
     - Versões
 
-20. [**Nodes e Machines**](20-nodes-machines.md)
+18. [**Nodes e Machine Config**](18-nodes-machine.md)
     - Gerenciar nodes
     - Cordon e drain
     - MachineConfig e MachineSets
 
-21. [**Certificate Signing Requests**](21-csr.md)
+19. [**Certificados e CSR**](19-certificados-csr.md)
     - Aprovar CSRs
     - Troubleshooting de certificados
     - Comandos em batch
 
-22. [**Networking Avançado**](22-networking.md)
+20. [**Cluster Networking**](20-cluster-networking.md)
     - Network Policies
     - Ingress/Egress
     - SDN troubleshooting
+
+21. [**Cluster Version e Updates**](21-cluster-version-updates.md)
+    - Verificar versão do cluster
+    - Atualizar cluster
+    - Histórico de updates
+
+22. [**ETCD Backup**](22-etcd-backup.md)
+    - Backup de etcd
+    - Restore de etcd
+    - Disaster recovery
 
 ### Comandos Utilitários
 23. [**Comandos Customizados com AWK, jq e GREP**](23-comandos-customizados.md)
@@ -186,18 +193,19 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
     - Custom columns
     - YAML e JSON
 
-26. [**Templates**](26-templates.md)
+26. [**Templates e Manifests**](26-templates-manifests.md)
     - Templates de aplicação
-    - Templates de projeto
-    - Templates de login
+    - Kustomize
+    - Helm charts
+    - Manifests YAML
 
 ### Operações e Manutenção
-27. [**Backup e Restore**](27-backup-restore.md)
+27. [**Backup e Disaster Recovery**](27-backup-disaster-recovery.md)
     - Exportar recursos
-    - Backup de etcd
+    - Backup de aplicações
     - Disaster recovery
 
-28. [**Patch e Updates**](28-patch-updates.md)
+28. [**Patch e Edit**](28-patch-edit.md)
     - Patch de recursos
     - Labels e annotations
     - Merge strategies
@@ -207,7 +215,7 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
     - Agendar tarefas
     - Troubleshooting
 
-30. [**Operators e OLM**](30-operators-olm.md)
+30. [**Operators e Operandos**](30-operators-operandos.md)
     - Operator Lifecycle Manager
     - Instalar operators
     - Troubleshooting
@@ -225,64 +233,87 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
 
 ### Comandos Mais Usados
 
-**Listar pods com problemas**
-**Aprovar todos os CSRs pendentes**
-**Ver cluster operators com problemas**
-**Must-gather básico**
-**Ver logs de um pod crasheado**
-**Debug de um node**
-**Listar eventos de erro**
-
-```bash
-oc get pods -A | grep -E -v "Running|Completed"
-
-oc get csr -o name | xargs oc adm certificate approve
-
-oc get co | grep -v "True.*False.*False"
-
-oc adm must-gather
-
-oc logs <pod> --previous
-
-oc debug node/<node-name>
-
-oc get events --field-selector type=Warning
-```
+| Comando | Descrição |
+|---------|-----------|
+| `oc get pods -A \| grep -Ev "Running\|Completed"` | Listar pods com problemas |
+| `oc get csr -o name \| xargs oc adm certificate approve` | Aprovar todos os CSRs pendentes |
+| `oc get co \| grep -v "True.*False.*False"` | Ver cluster operators com problemas |
+| `oc adm must-gather` | Must-gather básico |
+| `oc logs <pod> --previous` | Ver logs de um pod crasheado |
+| `oc debug node/<node-name>` | Debug de um node |
+| `oc get events --field-selector type=Warning` | Listar eventos de erro |
 
 ---
 
 ## Dicas Gerais
 
 ### Watch Commands
-**Ver pods em tempo real**
-**Ver eventos em tempo real**
-
 ```bash
+# Ver pods em tempo real
 watch -n 2 oc get pods
 
+# Ver eventos em tempo real
 oc get events --watch
 ```
+
+### Comandos de Aprovação em Batch
+```bash
+# Aprovar todos os CSRs pendentes
+oc get csr | grep Pending | awk '{print $1}' | xargs oc adm certificate approve
+
+# Deletar pods com erro
+oc get pods -A | grep Error | awk '{print $1" "$2}' | xargs -n2 sh -c 'oc delete pod $1 -n $0'
+```
+
+---
+
+## Estrutura do Projeto
+
+Este repositório está organizado em módulos de documentação numerados (01-31), cada um focado em um aspecto específico do OpenShift. Cada documento contém:
+
+- Comandos básicos e avançados
+- Exemplos práticos testados
+- Dicas de troubleshooting
+- Casos de uso reais
+
+### Suíte de Testes Automatizados
+
+O projeto inclui uma suíte completa de testes para validar todos os comandos documentados:
+
+- **`tests/`**: Módulos de teste individuais para cada documento
+- **`scripts/test-commands.sh`**: Script principal para executar os testes
+- **`lib/common.sh`**: Funções compartilhadas para os testes
+
+Para mais informações sobre os testes, consulte [`scripts/README.md`](scripts/README.md).
 
 ---
 
 ## Recursos Adicionais
 
 - **Documentação Oficial**: https://docs.redhat.com/en/documentation/openshift_container_platform/
+- **OpenShift CLI (oc) Reference**: https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html
 
 ---
 
 ## Contribuindo
 
-Este guia é baseado em experiência prática e comandos reais. Se você tiver sugestões ou novos comandos úteis, sinta-se à vontade para contribuir!
+Este guia é baseado em experiência prática e comandos reais testados em produção. Se você tiver sugestões ou novos comandos úteis, sinta-se à vontade para contribuir!
+
+### Como Contribuir
+1. Adicione ou modifique comandos nos documentos apropriados
+2. Atualize os testes correspondentes em `tests/XX-topic/test.sh`
+3. Execute a suíte de testes: `./scripts/test-commands.sh`
+4. Submeta um pull request
 
 ---
 
 ## Navegação
 
-- **Próximo**: [Autenticação e Configuração →](01-autenticacao-configuracao.md)
-- **Ver todos os documentos**: Lista acima
+- **Início Rápido**: [Top 20 Comandos →](INICIO-RAPIDO.md)
+- **Primeiro Documento**: [Autenticação e Configuração →](01-autenticacao-configuracao.md)
 
 ---
 
-**Última atualização**: Outubro 2025
-**Versão do OpenShift**: 4.19
+**Última atualização**: Outubro 2025  
+**Versão do OpenShift**: 4.19  
+**Compatível com**: OpenShift 4.x

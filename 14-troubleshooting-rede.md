@@ -252,7 +252,6 @@ oc get network.config.openshift.io cluster -o yaml
 ```
 
 **Pods de rede**
-* ou para OVN:
 
 ```bash
 oc get pods -n openshift-sdn
