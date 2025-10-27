@@ -170,7 +170,7 @@ Vá direto para os documentos de troubleshooting (13-15), must-gather (12) e ope
     - SDN troubleshooting
 
 ### Comandos Utilitários
-23. [**Comandos Customizados com AWK, JQ e GREP**](23-comandos-customizados.md)
+23. [**Comandos Customizados com AWK, jq e GREP**](23-comandos-customizados.md)
     - Scripts com awk
     - Filtros com jq
     - Pipes complexos

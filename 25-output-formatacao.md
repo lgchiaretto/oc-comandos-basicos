@@ -9,7 +9,7 @@ Este documento contém comandos para formatar e extrair informações específic
 1. [Índice](#índice)
 2. [Jsonpath](#jsonpath)
 3. [Go-Template](#go-template)
-4. [JQ - JSON Processor](#jq-json-processor)
+4. [jq - JSON Processor](#jq-json-processor)
 5. [Custom Columns](#custom-columns)
 6. [Formatação de Saída](#formatação-de-saída)
 7. [Documentação Oficial](#documentação-oficial)
@@ -194,7 +194,7 @@ oc get pods -o go-template-file=/tmp/pod-template.tmpl
 
 ---
 
-## JQ - JSON Processor
+## jq - JSON Processor
 
 ### Instalação e Uso Básico
 ```bash
@@ -256,7 +256,7 @@ oc get pods -A -o json | jq -r 'group_by(.metadata.namespace) | .[] | "\(.[0].me
 oc get pods -o json | jq '.items | sort_by(.metadata.creationTimestamp)'
 ```
 
-### Exemplos Práticos com JQ
+### Exemplos Práticos com jq
 **Listar pods de todos os namespaces do cluster**
 
 ```bash ignore-test

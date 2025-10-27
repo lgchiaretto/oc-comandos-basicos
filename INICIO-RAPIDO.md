@@ -264,7 +264,7 @@ oc get nodes
 
 ## Ferramentas Complementares
 
-### JQ - Processar JSON
+### jq - Processar JSON
 **Instalar**
 **Exemplo de uso**
 

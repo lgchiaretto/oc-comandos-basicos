@@ -1,4 +1,4 @@
-# Comandos Customizados com AWK, JQ, GREP e Pipes
+# Comandos Customizados com AWK, jq, GREP e Pipes
 
 Este documento contém comandos avançados do OpenShift combinados com ferramentas Unix para automação e análise de dados.
 
@@ -8,7 +8,7 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 
 1. [Índice](#índice)
 2. [Comandos com AWK](#comandos-com-awk)
-3. [Comandos com JQ](#comandos-com-jq)
+3. [Comandos com jq](#comandos-com-jq)
 4. [Comandos com GREP](#comandos-com-grep)
 5. [Pipes Complexos](#pipes-complexos)
 6. [Automação e Scripts](#automação-e-scripts)
@@ -66,12 +66,12 @@ oc get pods -o wide --no-headers | awk '{print $1, $7}'
 oc get pods -o wide -A --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
-**Listar pods com uso de CPU (requer metrics-server)**
+**Listar pods com uso de CPU**
 
 ```bash
 oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
 ```
-**Listar pods com uso de CPU no cluster todo (requer metrics-server)**
+**Listar pods com uso de CPU no cluster todo**
 
 ```bash
 oc adm top pods -A --no-headers | awk '{print $2, $3}' | sort -k2 -h
@@ -117,7 +117,7 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 
 ---
 
-## Comandos com JQ
+## Comandos com jq
 
 ### Análise de Cluster Operators
 **Exibir cluster operators em formato JSON**
@@ -205,7 +205,7 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.c
 oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.filterConditions}' | jq '.'
 ```
 
-### CSR com JQ
+### CSR com jq
 **Aprovar Certificate Signing Request (CSR)**
 
 ```bash ignore-test
@@ -231,7 +231,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/bundle-ca.crt
 ```
 
-### Must-Gather Dinâmico com JQ
+### Must-Gather Dinâmico com jq
 **Coletar dados de diagnóstico completo do cluster**
 
 ```bash ignore-test
@@ -640,7 +640,7 @@ echo "=== Non-Ready Nodes ===" && (oc get nodes | grep -v "Ready" || echo "Todos
 
 ## Recursos Adicionais
 
-- **JQ Manual**: https://stedolan.github.io/jq/manual/
+- **jq Manual**: https://stedolan.github.io/jq/manual/
 - **AWK Tutorial**: https://www.gnu.org/software/gawk/manual/
 - **GREP Guide**: https://www.gnu.org/software/grep/manual/
 
