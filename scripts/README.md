@@ -350,13 +350,14 @@ Antes de executar, o script verifica:
 ║                    RELATORIO DE VALIDACAO                      ║
 ╚════════════════════════════════════════════════════════════════╝
 
-[INFO] Finalizado em Sun Oct 26 22:40:55 PM -03 2025
+[INFO] Finalizado em Sun Oct 26 10:42:44 PM -03 2025
 
 Total de testes: 830
 Passou: 830
 Falhou: 0
 
 Taxa de sucesso: 100.00%
+
 ```
 
 ### Com Range
