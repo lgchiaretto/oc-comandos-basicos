@@ -124,7 +124,7 @@ oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.statu
 oc describe pod my-pod
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash
 oc get pod my-pod -o yaml
@@ -165,7 +165,7 @@ oc rsh my-pod
 oc exec my-pod -- <comando>
 ```
 
-**Executar comando interativo dentro do pod**
+**Executar comando dentro do pod especificado**
 
 ```bash
 oc exec -it my-pod -- /bin/date

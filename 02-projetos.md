@@ -147,7 +147,7 @@ oc label namespace production test-validation=true pod-security.kubernetes.io/en
 oc annotate namespace development description="Meu projeto"
 ```
 
-**Adicionar nova label ao namespace**
+**Remover label do namespace**
 
 ```bash
 oc label namespace development env-
