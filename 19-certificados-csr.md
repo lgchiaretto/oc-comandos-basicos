@@ -206,7 +206,7 @@ oc create secret tls api-certs --cert=<cert-file> --key=<key-file> -n openshift-
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts":{"namedCertificates":[{"names":["<api-hostname>"],"servingCertificate":{"name":"api-certs"}}]}}}'
 ```
 
-**Exibir apiserver em formato YAML**
+**Exibir apiserver em formato YAML completo**
 
 ```bash
 oc get apiserver cluster -o yaml

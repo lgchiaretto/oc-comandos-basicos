@@ -352,7 +352,7 @@ oc adm must-gather --image=registry.redhat.io/odf4/ocs-must-gather-rhel8:latest
 ```
 
 ### Local Storage Operator
-**Listar recurso de todos os namespaces do cluster**
+**Listar localvolume de todos os namespaces do cluster**
 
 ```bash
 oc get localvolume -A

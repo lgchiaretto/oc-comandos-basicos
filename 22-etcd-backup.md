@@ -47,7 +47,7 @@ oc describe co etcd
 oc logs -n openshift-etcd <etcd-pod-name>
 ```
 
-**Listar recurso filtrados por label**
+**Exibir logs de todos os pods que correspondem ao label**
 
 ```bash ignore-test
 oc logs -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}')
@@ -74,19 +74,19 @@ etcdctl endpoint status --cluster -w table
 etcdctl member list -w table
 ```
 
-**Listar recurso filtrados por label**
+**Executar comando dentro do pod especificado**
 
 ```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl endpoint status --cluster -w table
 ```
 
-**Listar recurso filtrados por label**
+**Executar comando dentro do pod especificado**
 
 ```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[1].metadata.name}') -- etcdctl member list -w table
 ```
 
-**Listar recurso filtrados por label**
+**Executar comando dentro do pod especificado**
 
 ```bash ignore-test
 oc exec -n openshift-etcd $(oc get pods -n openshift-etcd -l app=etcd -o jsonpath='{.items[0].metadata.name}') -- etcdctl alarm list

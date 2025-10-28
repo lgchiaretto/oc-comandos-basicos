@@ -30,38 +30,38 @@ oc get clusterversion
 oc describe clusterversion version
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir versão desejada para o cluster**
 
 ```bash ignore-test
 oc get clusterversion -o jsonpath='{.items[0].status.desired.version}{"\n"}'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir histórico de versões do cluster**
 
 ```bash ignore-test
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq .
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir clusterversion usando JSONPath customizado**
 
 ```bash ignore-test
 oc get clusterversion -o jsonpath='{.items[0].spec.clusterID}{"\n"}'
 ```
 
 ### Status do Cluster
-**Exibir clusterversion em formato YAML**
+**Exibir clusterversion em formato YAML completo**
 
 ```bash
 oc get clusterversion version -o yaml
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir status da progressão da atualização**
 
 ```bash ignore-test
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir mensagem da progressão da atualização**
 
 ```bash ignore-test
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
@@ -96,7 +96,7 @@ oc adm upgrade
 oc adm upgrade --to-latest=false
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir canal de atualização configurado**
 
 ```bash ignore-test
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
@@ -169,7 +169,7 @@ oc get clusterversion -o json | jq '.items[0].status.history'
 ## Update Channels
 
 ### Ver e Mudar Channel
-**Exibir clusterversion em formato JSON**
+**Exibir clusterversion usando JSONPath customizado**
 
 ```bash
 oc get clusterversion version -o jsonpath='{.spec.channel}{"\n"}'
@@ -200,7 +200,7 @@ oc patch clusterversion version --type merge -p '{"spec":{"channel":"fast-4.19"}
 oc patch clusterversion version --type merge -p '{"spec":{"channel":"eus-4.19"}}'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir canal de atualização configurado**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
@@ -213,7 +213,7 @@ oc adm upgrade
 ```
 
 ### Upstream Update Server
-**Exibir clusterversion em formato JSON**
+**Exibir clusterversion usando JSONPath customizado**
 
 ```bash
 oc get clusterversion version -o jsonpath='{.spec.upstream}{"\n"}'
@@ -266,7 +266,7 @@ oc logs -n <operator-namespace> <pod-name>
 oc get events -n <operator-namespace> --sort-by='.lastTimestamp'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir status da progressão da atualização**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].status}{"\n"}'

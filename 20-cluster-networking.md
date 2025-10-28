@@ -207,7 +207,7 @@ oc get events | grep -i network
 ```
 
 ### Debugging Network Policies
-**Exibir política de rede em formato YAML**
+**Exibir política de rede em formato YAML completo**
 
 ```bash
 oc get networkpolicy -o yaml

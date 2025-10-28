@@ -324,13 +324,13 @@ oc get events --field-selector involvedObject.name=test-app-job
 ```
 
 ### Debug de CronJobs
-**Exibir cronjob em formato YAML**
+**Exibir cronjob em formato YAML completo**
 
 ```bash ignore-test
 oc get cronjob test-app-job -o yaml
 ```
 
-**Exibir cronjob em formato JSON**
+**Exibir cronjob usando JSONPath customizado**
 
 ```bash ignore-test
 oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'

@@ -271,7 +271,7 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 ```
 
 ### Análise de Configurações
-**Exibir recurso em formato YAML**
+**Exibir recurso em formato YAML completo**
 
 ```bash
 oc get all -o yaml | grep -A5 limits
@@ -289,14 +289,14 @@ oc get all -A | grep redhat-operator
 oc get all -A | grep metrics
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir recurso em formato YAML completo**
 
 ```bash
 oc get all -o yaml | grep 5000
 ```
 
 ### Busca em AdminNetworkPolicy
-**Exibir recurso em formato YAML**
+**Exibir adminnetworkpolicy em formato YAML completo**
 
 ```bash
 oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 30 "ingress:" | head -40
@@ -364,26 +364,26 @@ oc get apirequestcounts roles.v1beta1.rbac.authorization.k8s.io -o jsonpath='{ra
 ```
 
 ### Análise de ClusterOperators com Tabela
-**Exibir cluster operators em formato JSON**
+**Exibir cluster operators usando JSONPath customizado**
 
 ```bash ignore-test
 oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .status.conditions[?(@.type=="Progressing")]}{.status}{"\t"}{end}{range .status.conditions[?(@.type=="Degraded")]}{.status}{"\t"}{.message}{"\n"}{end}{end}' | column -t -s $'\t'
 ```
 
 ### Exportar Applications ArgoCD
-**Exibir recurso em formato YAML**
+**Exibir aplicação em formato YAML completo**
 
 ```bash
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d'
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir aplicação em formato YAML completo**
 
 ```bash
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d' > /tmp/argocd-apps-$(date +'%d%m%y_%H%M%S').yaml
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir aplicação em formato YAML completo**
 
 ```bash
 oc get application -A -o yaml | sed '/status:/d'
@@ -499,7 +499,7 @@ oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.co
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator usando JSONPath customizado**
 
 ```bash
 oc get co -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.versions[0].version}{"\n"}{end}' | column -t

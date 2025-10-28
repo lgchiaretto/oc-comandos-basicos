@@ -147,13 +147,13 @@ oc get builds --field-selector status=Failed
 ```
 
 ### Services
-**Exibir service em formato JSON**
+**Exibir service usando JSONPath customizado**
 
 ```bash
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='LoadBalancer')]}{.metadata.name}{'\n'}{end}"
 ```
 
-**Exibir service em formato JSON**
+**Exibir service usando JSONPath customizado**
 
 ```bash
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.name}{'\n'}{end}"

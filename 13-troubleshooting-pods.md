@@ -54,7 +54,7 @@ oc describe pod my-pod
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash
 oc get pod my-pod -o yaml
@@ -114,7 +114,7 @@ oc get is
 oc debug node/<node-name> -- chroot /host podman pull <image>
 ```
 
-**Exibir pod em formato JSON**
+**Exibir imagem do primeiro container do pod**
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
@@ -133,7 +133,7 @@ oc logs my-pod --previous
 oc describe pod my-pod | grep -i "exit code"
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
@@ -161,7 +161,7 @@ oc debug deployment/test-app
 oc describe pod my-pod | grep -A 20 Events
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 5 resources
@@ -179,7 +179,7 @@ oc adm top nodes
 oc get nodes
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep nodeSelector
@@ -192,7 +192,7 @@ oc describe nodes | grep Taints
 ```
 
 ### OOMKilled
-**Exibir pod em formato JSON**
+**Exibir limite de memória do primeiro container**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
@@ -210,13 +210,13 @@ oc adm top pod my-pod
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
-**Exibir pod em formato JSON**
+**Exibir número de reinicializações do container principal**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
-**Exibir pod em formato JSON**
+**Exibir motivo da última terminação do container**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
@@ -389,7 +389,7 @@ oc exec my-pod -- curl -v <service-name>:<port>
 oc exec my-pod -- nslookup <service-name>
 ```
 
-**Exibir pod em formato JSON**
+**Exibir endereço IP do pod**
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.status.podIP}'
@@ -402,7 +402,7 @@ oc get pod my-pod -o jsonpath='{.status.podIP}'
 oc get sa
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep scc
@@ -414,7 +414,7 @@ oc get pod my-pod -o yaml | grep scc
 oc adm policy who-can <verbo> <recurso>
 ```
 
-**Exibir pod em formato JSON**
+**Exibir UID do usuário que executa o pod**
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'

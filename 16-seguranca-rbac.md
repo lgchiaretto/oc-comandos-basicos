@@ -104,7 +104,7 @@ oc get clusterrole view -o yaml
 oc describe clusterrole <nome-da-role>
 ```
 
-**Exibir detalhes completos do cluster role**
+**Exibir detalhes completos do clusterrole**
 
 ```bash
 oc describe clusterrole admin | grep -A 50 PolicyRule
@@ -267,7 +267,7 @@ oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:
 oc set serviceaccount deployment/test-app test-app
 ```
 
-**Exibir pod em formato JSON**
+**Exibir pod usando JSONPath customizado**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
@@ -284,7 +284,7 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 oc get scc
 ```
 
-**Exibir scc em formato YAML**
+**Exibir scc em formato YAML completo**
 
 ```bash
 oc get scc restricted -o yaml
@@ -350,7 +350,7 @@ oc describe pod test-app | grep -i scc
 oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash ignore-test
 oc get pod test-app -o yaml | grep -A 10 securityContext
@@ -378,13 +378,13 @@ grep <username> /var/log/openshift-apiserver/audit.log
 ```
 
 ### OAuth e Autenticação
-**Exibir oauth em formato YAML**
+**Exibir oauth em formato YAML completo**
 
 ```bash
 oc get oauth cluster -o yaml
 ```
 
-**Exibir oauth em formato JSON**
+**Exibir oauth usando JSONPath customizado**
 
 ```bash
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'

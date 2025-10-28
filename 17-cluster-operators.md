@@ -171,7 +171,7 @@ oc get co authentication
 oc get pods -n openshift-authentication
 ```
 
-**Exibir oauth em formato YAML**
+**Exibir oauth em formato YAML completo**
 
 ```bash
 oc get oauth cluster -o yaml

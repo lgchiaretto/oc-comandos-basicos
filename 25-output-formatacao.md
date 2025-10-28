@@ -19,99 +19,99 @@ Este documento contém comandos para formatar e extrair informações específic
 ## Jsonpath
 
 ### Básico
-**Exibir pod em formato JSON**
+**Exibir nome do pod**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.metadata.name}'
 ```
 
-**Exibir pod em formato JSON**
+**Exibir nome do pod**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
 ```
 
-**Exibir pods em formato JSON**
+**Listar nomes de todos os podss (em uma linha)**
 
 ```bash
 oc get pods -o jsonpath='{.items[*].metadata.name}'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods usando JSONPath customizado**
 
 ```bash
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 ```
 
-**Exibir pod em formato JSON**
+**Exibir imagem do primeiro container do pod**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.containers[0].image}'
 ```
 
-**Exibir pod em formato JSON**
+**Exibir pod usando JSONPath customizado**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 ```
 
 ### Filtros e Condições
-**Exibir pods em formato JSON**
+**Listar nomes de podss em estado Running**
 
 ```bash
 oc get pods -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}'
 ```
 
-**Exibir pods em formato JSON**
+**Listar podss que reiniciaram pelo menos uma vez**
 
 ```bash
 oc get pods -o jsonpath='{.items[?(@.status.containerStatuses[0].restartCount>0)].metadata.name}'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes usando JSONPath customizado**
 
 ```bash
 oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status=="True")]}{.metadata.name}{"\n"}{end}'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes usando JSONPath customizado**
 
 ```bash
 oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status!="True")]}{.metadata.name}{"\n"}{end}'
 ```
 
-**Exibir persistent volume claim em formato JSON**
+**Listar nomes de persistent volume claims em estado Bound (vinculados)**
 
 ```bash ignore-test
 oc get pvc -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
 ```
 
 ### Exemplos Práticos
-**Exibir pods em formato JSON**
+**Exibir pods usando JSONPath customizado**
 
 ```bash ignore-test
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.podIP}{"\n"}{end}'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods usando JSONPath customizado**
 
 ```bash ignore-test
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.containers[*].image}{"\n"}{end}'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes usando JSONPath customizado**
 
 ```bash ignore-test
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.node-role\.kubernetes\.io/worker}{"\n"}{end}'
 ```
 
-**Exibir persistent volume em formato JSON**
+**Exibir persistent volume usando JSONPath customizado**
 
 ```bash ignore-test
 oc get pv -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.claimRef.name}{"\n"}{end}'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods usando JSONPath customizado**
 
 ```bash ignore-test
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\tCPU:"}{.spec.containers[0].resources.requests.cpu}{"\tMEM:"}{.spec.containers[0].resources.requests.memory}{"\n"}{end}'
@@ -367,7 +367,7 @@ oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 oc get pods -o wide
 ```
 
-**Exibir configuração completa do pod em formato YAML**
+**Exibir pod em formato YAML completo**
 
 ```bash ignore-test
 oc get pod test-app -o yaml

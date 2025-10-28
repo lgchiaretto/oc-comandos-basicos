@@ -20,7 +20,7 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ## Diagnóstico Básico
 
 ### Conectividade de Pod
-**Exibir pod em formato JSON**
+**Exibir endereço IP do pod**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.podIP}'
@@ -70,7 +70,7 @@ oc get networkpolicy
 oc describe networkpolicy test-app
 ```
 
-**Exibir política de rede em formato YAML**
+**Exibir política de rede em formato YAML completo**
 
 ```bash
 oc get networkpolicy -o yaml

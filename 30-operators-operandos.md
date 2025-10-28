@@ -73,7 +73,7 @@ oc get catalogsource community-operators -n openshift-marketplace
 oc get catalogsource redhat-marketplace -n openshift-marketplace
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do catalogsource**
 
 ```bash
 oc describe catalogsource redhat-operators -n openshift-marketplace

@@ -42,7 +42,7 @@ oc get pv <nome-do-pv> -o yaml
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
-**Exibir persistent volume em formato JSON**
+**Listar nomes de persistent volumes em estado Bound (vinculados)**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'

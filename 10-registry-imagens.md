@@ -147,7 +147,7 @@ spec:
 EOF
 ```
 
-**Exibir imagecontentsourcepolicy em formato YAML**
+**Exibir imagecontentsourcepolicy em formato YAML completo**
 
 ```bash
 oc get imagecontentsourcepolicy -o yaml

@@ -51,19 +51,19 @@ oc logs -n openshift-machine-config-operator $(oc get pods -n openshift-machine-
 oc get clusterversion
 ```
 
-**Exibir clusterversion em formato YAML**
+**Exibir clusterversion em formato YAML completo**
 
 ```bash
 oc get clusterversion version -o yaml
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir canal de atualização configurado**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir atualização desejada configurada**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
@@ -71,7 +71,7 @@ oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
 
 ### Status do Upgrade
 
-**Exibir clusterversion em formato JSON**
+**Exibir status da progressão da atualização**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")]}{"\n"}' | jq
@@ -83,13 +83,13 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 oc adm upgrade
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir histórico de versões do cluster**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir mensagem da progressão da atualização**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
@@ -103,19 +103,19 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 oc get clusterversion -o json | jq '.items[0].status.conditions'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir condição de disponibilidade do cluster**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Available")]}{"\n"}' | jq
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir condição de falha do cluster**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Failing")]}{"\n"}' | jq
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir condição de falha do cluster**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="RetrieveUpdatesFailing")]}{"\n"}' | jq
@@ -159,7 +159,7 @@ oc get all -n openshift-cluster-version
 oc get clusterversion version -o json | jq '.spec.overrides'
 ```
 
-**Exibir clusterversion em formato JSON**
+**Exibir overrides (sobrescritas) de versão configurados**
 
 ```bash
 oc get clusterversion version -o jsonpath='{.spec.overrides[*].name}{"\n"}'
@@ -282,13 +282,13 @@ oc describe node <node-name> | grep -A 10 Conditions
 
 ### Versões dos Nodes
 
-**Exibir nodes em formato JSON**
+**Exibir nodes usando JSONPath customizado**
 
 ```bash
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.kubeletVersion}{"\n"}{end}'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes usando JSONPath customizado**
 
 ```bash
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.osImage}{"\n"}{end}'
@@ -312,13 +312,13 @@ oc get nodes -o wide
 oc get mcp
 ```
 
-**Exibir mcp em formato YAML**
+**Exibir mcp em formato YAML completo**
 
 ```bash
 oc get mcp master -o yaml
 ```
 
-**Exibir mcp em formato YAML**
+**Exibir mcp em formato YAML completo**
 
 ```bash
 oc get mcp worker -o yaml
@@ -338,13 +338,13 @@ oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.typ
 
 ### Progresso da Atualização dos MCPs
 
-**Exibir mcp em formato JSON**
+**Exibir contadores de máquinas atualizadas/total/degradadas**
 
 ```bash
 oc get mcp worker -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
 ```
 
-**Exibir mcp em formato JSON**
+**Exibir contadores de máquinas atualizadas/total/degradadas**
 
 ```bash
 oc get mcp master -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
@@ -364,7 +364,7 @@ oc get machines -n openshift-machine-api
 oc get mc
 ```
 
-**Exibir mcp em formato JSON**
+**Exibir nome da configuração atual do mcp**
 
 ```bash
 oc get mcp worker -o jsonpath='{.status.configuration.name}{"\n"}'
@@ -452,7 +452,7 @@ oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/t
 
 ### Verificar Bloqueios de Upgrade
 
-**Exibir clusterversion em formato JSON**
+**Exibir clusterversion usando JSONPath customizado**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Upgradeable")]}{"\n"}' | jq

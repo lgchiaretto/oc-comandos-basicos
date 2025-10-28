@@ -50,7 +50,7 @@ oc edit deployment test-app -n development
 ```
 
 ### Edit em Arquivo Temporário
-**Exibir configuração completa do deployment em formato YAML**
+**Exibir deployment em formato YAML completo**
 
 ```bash ignore-test
 oc get deployment test-app -o yaml > /tmp/deploy.yaml
