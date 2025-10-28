@@ -6,22 +6,13 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 
 ## Índice
 
-- [Registry e Gestão de Imagens](#registry-e-gestão-de-imagens)
-  - [Índice](#índice)
-  - [Registry Interno](#registry-interno)
-    - [Acessar Registry](#acessar-registry)
-    - [Habilitar Registry e adicionar PVC](#habilitar-registry-e-adicionar-pvc)
-  - [Push e Pull de Imagens](#push-e-pull-de-imagens)
-    - [Push de Imagens](#push-de-imagens)
-    - [Pull de Imagens](#pull-de-imagens)
-  - [Image Mirroring](#image-mirroring)
-    - [Configurar Mirroring](#configurar-mirroring)
-    - [Mirror com oc-mirror](#mirror-com-oc-mirror)
-  - [Image Pruning](#image-pruning)
-    - [Limpeza de Imagens](#limpeza-de-imagens)
-    - [Limpeza de Builds](#limpeza-de-builds)
-  - [Documentação Oficial](#documentação-oficial)
-  - [Navegação](#navegação)
+1. [Índice](#índice)
+2. [Registry Interno](#registry-interno)
+3. [Push e Pull de Imagens](#push-e-pull-de-imagens)
+4. [Image Mirroring](#image-mirroring)
+5. [Image Pruning](#image-pruning)
+6. [Documentação Oficial](#documentação-oficial)
+7. [Navegação](#navegação)
 ---
 
 ## Registry Interno
