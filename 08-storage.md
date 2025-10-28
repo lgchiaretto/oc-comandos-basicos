@@ -36,7 +36,7 @@ oc describe pv <nome-do-pv>
 oc get pv <nome-do-pv> -o yaml
 ```
 
-**Exibir persistent volume em formato JSON**
+**Listar nomes de persistent volumes em estado Available**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
@@ -130,7 +130,7 @@ oc describe sc <nome-da-sc>
 oc patch storageclass <nome-da-sc> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
-**Exibir storageclass em formato JSON**
+**Exibir storageclass em formato JSON completo**
 
 ```bash ignore-test
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
@@ -158,7 +158,7 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 oc set volume deployment/test-app
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash
 oc describe pod my-pod | grep -A 5 Volumes

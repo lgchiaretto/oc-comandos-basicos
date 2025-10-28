@@ -18,25 +18,25 @@ Este documento contém comandos para configuração e troubleshooting de rede do
 ## Configuração de Rede
 
 ### Visualizar Configuração
-**Exibir recurso em formato YAML**
+**Exibir network.config.openshift.io em formato YAML**
 
 ```bash
 oc get network.config.openshift.io cluster -o yaml
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir network.config.openshift.io em formato JSON**
 
 ```bash
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir network.config.openshift.io em formato JSON**
 
 ```bash
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork}'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir network.config.openshift.io em formato JSON**
 
 ```bash
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
@@ -48,20 +48,20 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork}'
 oc get clusteroperator network
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir network.operator.openshift.io em formato YAML**
 
 ```bash
 oc get network.operator.openshift.io cluster -o yaml
 ```
 
 ### Pod Network
-**Exibir recurso em formato JSON**
+**Exibir network.config.openshift.io em formato JSON**
 
 ```bash ignore-test
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.clusterNetwork[*].cidr}'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir network.config.openshift.io em formato JSON**
 
 ```bash ignore-test
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]}'
@@ -73,13 +73,13 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.serviceNetwork[*]
 oc get pod <pod-name> -o jsonpath='{.status.podIP}'
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods com informações adicionais (formato wide)**
 
 ```bash
 oc get pods -o wide -A
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
@@ -95,7 +95,7 @@ oc get pods -A -o json | jq -r '.items[].status.podIP' | sort -V | uniq
 oc get ingresscontroller -n openshift-ingress-operator
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do ingresscontroller**
 
 ```bash
 oc describe ingresscontroller -n openshift-ingress-operator default
@@ -119,7 +119,7 @@ oc get networkpolicy
 oc get netpol
 ```
 
-**Exibir detalhes completos do network policy**
+**Exibir detalhes completos do política de rede**
 
 ```bash ignore-test
 oc describe networkpolicy test-app
@@ -207,7 +207,7 @@ oc get events | grep -i network
 ```
 
 ### Debugging Network Policies
-**Exibir network policy em formato YAML**
+**Exibir política de rede em formato YAML**
 
 ```bash
 oc get networkpolicy -o yaml
@@ -219,7 +219,7 @@ oc get networkpolicy -o yaml
 oc get pods --show-labels
 ```
 
-**Exibir detalhes completos do network policy**
+**Exibir detalhes completos do política de rede**
 
 ```bash ignore-test
 oc describe networkpolicy test-app
@@ -273,7 +273,7 @@ EOF
 ```
 
 ### MTU Configuration
-**Exibir recurso em formato JSON**
+**Exibir network.operator.openshift.io em formato JSON**
 
 ```bash
 oc get network.operator.openshift.io cluster -o jsonpath='{.spec.defaultNetwork.ovnKubernetesConfig.mtu}'

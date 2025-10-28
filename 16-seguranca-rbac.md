@@ -70,7 +70,7 @@ oc get groups
 oc get identities
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do user**
 
 ```bash
 oc describe user chiaretto
@@ -148,7 +148,7 @@ oc delete role pod-reader
 oc get clusterrolebindings
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir cluster role binding em formato JSON completo**
 
 ```bash ignore-test
 oc get clusterrolebinding -o json | jq -r '.items[] | select(.roleRef.name=="cluster-admin") | .metadata.name'
@@ -200,7 +200,7 @@ oc adm policy add-role-to-group <role> <groupname>
 oc adm policy remove-role-from-user <role> <username>
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do vinculação de role**
 
 ```bash
 oc describe rolebinding admin
@@ -224,7 +224,7 @@ oc get sa
 oc create serviceaccount test-app
 ```
 
-**Exibir detalhes completos do serviceaccount**
+**Exibir detalhes completos do ServiceAccount**
 
 ```bash
 oc describe sa test-app
@@ -267,7 +267,7 @@ oc adm policy add-cluster-role-to-user <role> system:serviceaccount:development:
 oc set serviceaccount deployment/test-app test-app
 ```
 
-**Exibir recurso "test-app" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
@@ -284,7 +284,7 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 oc get scc
 ```
 
-**Exibir recurso "restricted" em formato YAML**
+**Exibir scc em formato YAML**
 
 ```bash
 oc get scc restricted -o yaml
@@ -292,7 +292,7 @@ oc get scc privileged -o yaml
 oc get scc anyuid -o yaml
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do scc**
 
 ```bash
 oc describe scc restricted
@@ -304,7 +304,7 @@ oc describe scc restricted
 oc get pod test-app -o yaml | grep scc
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do scc**
 
 ```bash
 oc describe scc restricted | grep Users
@@ -331,14 +331,14 @@ oc adm policy add-scc-to-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=
 oc adm policy remove-scc-from-group restricted "cn=ocpusers,cn=users,dc=chiaretto,dc=home"
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do scc**
 
 ```bash
 oc describe scc restricted
 ```
 
 ### Troubleshoot SCC
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash
 oc describe pod test-app | grep -i scc
@@ -350,7 +350,7 @@ oc describe pod test-app | grep -i scc
 oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash ignore-test
 oc get pod test-app -o yaml | grep -A 10 securityContext
@@ -378,13 +378,13 @@ grep <username> /var/log/openshift-apiserver/audit.log
 ```
 
 ### OAuth e Autenticação
-**Exibir recurso "cluster" em formato YAML**
+**Exibir oauth em formato YAML**
 
 ```bash
 oc get oauth cluster -o yaml
 ```
 
-**Exibir recurso "cluster" em formato JSON**
+**Exibir oauth em formato JSON**
 
 ```bash
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
@@ -403,7 +403,7 @@ oc logs -n openshift-authentication <oauth-pod>
 ```
 
 ### Secrets de TLS
-**Listar recurso filtrados por campo específico**
+**Listar secrets filtrados por campo específico**
 
 ```bash
 oc get secrets --field-selector type=kubernetes.io/tls

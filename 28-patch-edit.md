@@ -50,7 +50,7 @@ oc edit deployment test-app -n development
 ```
 
 ### Edit em Arquivo Temporário
-**Exibir recurso "test-app" em formato YAML**
+**Exibir configuração completa do deployment em formato YAML**
 
 ```bash ignore-test
 oc get deployment test-app -o yaml > /tmp/deploy.yaml
@@ -77,7 +77,7 @@ oc replace -f /tmp/deploy.yaml --force
 ### Patch Types
 
 #### Strategic Merge Patch
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash
 oc patch deployment test-app -p '{"spec":{"replicas":3}}'
@@ -89,19 +89,19 @@ oc patch deployment test-app -p '{"spec":{"replicas":3}}'
 oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash
 oc patch deployment test-app -p '{"metadata":{"labels":{"env":"production"}}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash
 oc patch deployment test-app -p '{"metadata":{"annotations":{"description":"My app"}}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash ignore-test
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"new-image:tag"}]}}}}'
@@ -164,13 +164,13 @@ oc patch deployment test-app --type merge -p '{"metadata":{"annotations":{"old-a
 ### Patch de Recursos Comuns
 
 #### Deployments
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash
 oc patch deployment test-app -p '{"spec":{"replicas":5}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash
 oc patch deployment test-app -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}}'
@@ -182,7 +182,7 @@ oc patch deployment test-app -p '{"spec":{"strategy":{"type":"RollingUpdate","ro
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"<container>","image":"new-image:v2"}]}}}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao deployment usando patch**
 
 ```bash ignore-test
 oc patch deployment test-app -p '{"spec":{"template":{"spec":{"containers":[{"name":"app","image":"registry.redhat.io/rhel8/httpd-24","resources":{"limits":{"memory":"1Gi","cpu":"1000m"},"requests":{"memory":"512Mi","cpu":"500m"}}}]}}}}'
@@ -195,26 +195,26 @@ oc patch deployment test-app --type json -p='[{"op":"add","path":"/spec/template
 ```
 
 #### Services
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao service usando patch**
 
 ```bash ignore-test
 oc patch svc test-app -p '{"spec":{"ports":[{"port":8080,"targetPort":8080}]}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao service usando patch**
 
 ```bash
 oc patch svc test-app -p '{"spec":{"type":"NodePort"}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao service usando patch**
 
 ```bash
 oc patch svc test-app -p '{"spec":{"selector":{"app":"new-app"}}}'
 ```
 
 #### ConfigMaps
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao cm usando patch**
 
 ```bash
 oc patch cm test-app -p '{"data":{"key1":"new-value"}}'
@@ -233,19 +233,19 @@ oc patch cm test-app --type json -p='[{"op":"remove","path":"/data/old-key"}]'
 ```
 
 #### Routes
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao route usando patch**
 
 ```bash
 oc patch route test-app -p '{"spec":{"host":"new-hostname.example.com"}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao route usando patch**
 
 ```bash
 oc patch route test-app -p '{"spec":{"tls":{"termination":"edge"}}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao route usando patch**
 
 ```bash
 oc patch route test-app -p '{"spec":{"to":{"name":"new-service"}}}'
@@ -258,7 +258,7 @@ oc patch route test-app -p '{"spec":{"to":{"name":"new-service"}}}'
 oc patch hpa test-app -p '{"spec":{"minReplicas":2,"maxReplicas":10}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao horizontal pod autoscaler usando patch**
 
 ```bash ignore-test
 oc patch hpa test-app -p '{"spec":{"targetCPUUtilizationPercentage":70}}'
@@ -279,7 +279,7 @@ done
 oc get deploy -l env=production -o name | xargs -I {} oc patch {} -p '{"spec":{"replicas":3}}'
 ```
 
-**Exibir deployment em formato JSON**
+**Exibir deploy em formato JSON completo**
 
 ```bash ignore-test
 oc get deploy -o json | jq -r '.items[] | select(.spec.replicas < 2) | .metadata.name' | \
@@ -317,7 +317,7 @@ oc set image deployment/test-app container1=image1:v2 container2=image2:v2
 oc set image dc/test-app httpd=<new-image>
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir deployment/test-app em formato JSON**
 
 ```bash ignore-test
 oc get deployment/test-app -o jsonpath='{.spec.template.spec.containers[0].image}'
@@ -517,7 +517,7 @@ oc replace -f resource.yaml --force
 cat resource.yaml | oc replace -f -
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir deployment/test-app em formato YAML**
 
 ```bash ignore-test
 oc get deployment/test-app -o yaml > /tmp/deploy.yaml

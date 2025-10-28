@@ -60,7 +60,7 @@ oc get nodes -o wide --no-headers | awk '{print $1, $6}'
 oc get pods -o wide --no-headers | awk '{print $1, $7}'
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods com informações adicionais (formato wide)**
 
 ```bash
 oc get pods -o wide -A --no-headers | awk '{print $8}' | sort | uniq -c
@@ -120,44 +120,44 @@ oc -n openshift-operators get deployment.apps/istio-operator -o jsonpath='{.meta
 ## Comandos com jq
 
 ### Análise de Cluster Operators
-**Exibir cluster operators em formato JSON**
+**Exibir cluster operators em formato JSON completo**
 
 ```bash ignore-test
 oc get clusteroperators -o json | jq -r '.items[] | [.metadata.name, (.status.conditions[] | select(.type=="Progressing").status), (.status.conditions[] | select(.type=="Degraded").status), (.status.conditions[] | select(.type=="Degraded").message)] | @tsv'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir clusteroperator/operator-lifecycle-manager-packageserver em formato JSON completo**
 
 ```bash
 oc get clusteroperator/operator-lifecycle-manager-packageserver -o json | jq
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash ignore-test
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
 ### Análise de Pods
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '.items[] | select(.status.containerStatuses[]?.lastState.terminated.reason=="OOMKilled") | .metadata.name'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '.items[] | {name: .metadata.name, cpu: .spec.containers[].resources.requests.cpu, memory: .spec.containers[].resources.requests.memory}'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '.items[].spec.containers[].image' | sort -u
@@ -202,7 +202,7 @@ oc get clusterlogforwarder instance -n openshift-logging -o jsonpath='{.status.f
 oc get csr -ojson | jq -r '.items[] | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
 ```
 
-**Exibir certificate signing request em formato JSON**
+**Exibir certificate signing request em formato JSON completo**
 
 ```bash ignore-test
 oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: .metadata.name, user: .spec.username}'
@@ -271,7 +271,7 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 ```
 
 ### Análise de Configurações
-**Listar recurso de todos os namespaces do cluster**
+**Exibir recurso em formato YAML**
 
 ```bash
 oc get all -o yaml | grep -A5 limits
@@ -296,7 +296,7 @@ oc get all -o yaml | grep 5000
 ```
 
 ### Busca em AdminNetworkPolicy
-**Listar recurso de todos os namespaces do cluster**
+**Exibir recurso em formato YAML**
 
 ```bash
 oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 30 "ingress:" | head -40
@@ -371,19 +371,19 @@ oc get clusteroperators -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{ran
 ```
 
 ### Exportar Applications ArgoCD
-**Listar recurso de todos os namespaces do cluster**
+**Exibir recurso em formato YAML**
 
 ```bash
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d'
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Exibir recurso em formato YAML**
 
 ```bash
 oc get application -A -o yaml | sed '/creationTimestamp\|resourceVersion\|uid/d' > /tmp/argocd-apps-$(date +'%d%m%y_%H%M%S').yaml
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Exibir recurso em formato YAML**
 
 ```bash
 oc get application -A -o yaml | sed '/status:/d'
@@ -487,13 +487,13 @@ done
 ## Análise de Cluster Operators
 
 ### Status Completo
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | "\(.metadata.name): Available=\(.status.conditions[] | select(.type=="Available").status), Progressing=\(.status.conditions[] | select(.type=="Progressing").status), Degraded=\(.status.conditions[] | select(.type=="Degraded").status)"'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | {name: .metadata.name, message: (.status.conditions[] | select(.type=="Degraded").message)}'

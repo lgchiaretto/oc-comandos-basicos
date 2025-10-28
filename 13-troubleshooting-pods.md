@@ -18,7 +18,7 @@ Este documento contém comandos para diagnosticar problemas com pods no OpenShif
 ## Diagnóstico Básico
 
 ### Verificar Status
-**Listar todos os pods de todos os namespaces do cluster**
+**Listar pods de todos os namespaces do cluster**
 
 ```bash
 oc get pods -A
@@ -42,7 +42,7 @@ oc get pods -A --field-selector=status.phase=Failed
 oc get pods --field-selector=status.phase=Pending
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash
 oc describe pod my-pod
@@ -54,7 +54,7 @@ oc describe pod my-pod
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
-**Exibir recurso "my-pod" em formato YAML**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash
 oc get pod my-pod -o yaml
@@ -96,7 +96,7 @@ oc logs my-pod --tail=100
 ## Pods com Problemas
 
 ### ImagePullBackOff
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Events
@@ -114,7 +114,7 @@ oc get is
 oc debug node/<node-name> -- chroot /host podman pull <image>
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
@@ -127,13 +127,13 @@ oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
 oc logs my-pod --previous
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -i "exit code"
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
@@ -155,13 +155,13 @@ oc debug deployment/test-app
 ```
 
 ### Pending (Não Agendado)
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 20 Events
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 5 resources
@@ -179,7 +179,7 @@ oc adm top nodes
 oc get nodes
 ```
 
-**Exibir recurso "my-pod" em formato YAML**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep nodeSelector
@@ -192,7 +192,7 @@ oc describe nodes | grep Taints
 ```
 
 ### OOMKilled
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
@@ -210,13 +210,13 @@ oc adm top pod my-pod
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'
@@ -327,7 +327,7 @@ oc get pvc
 oc describe pvc test-app
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Mounts
@@ -389,7 +389,7 @@ oc exec my-pod -- curl -v <service-name>:<port>
 oc exec my-pod -- nslookup <service-name>
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.status.podIP}'
@@ -402,7 +402,7 @@ oc get pod my-pod -o jsonpath='{.status.podIP}'
 oc get sa
 ```
 
-**Exibir recurso "my-pod" em formato YAML**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep scc
@@ -414,7 +414,7 @@ oc get pod my-pod -o yaml | grep scc
 oc adm policy who-can <verbo> <recurso>
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod my-pod -o jsonpath='{.spec.securityContext.runAsUser}'

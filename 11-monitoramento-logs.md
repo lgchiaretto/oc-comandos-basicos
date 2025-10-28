@@ -122,7 +122,7 @@ oc get events -A
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
-**Listar apenas eventos do tipo Warning**
+**Listar eventos filtrados por campo específico**
 
 ```bash
 oc get events --field-selector type=Warning
@@ -200,7 +200,7 @@ oc adm top pod my-pod
 oc describe node <nome-do-node> | grep -A 5 "Allocated resources"
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.containers[0].resources.requests.cpu) MEM:\(.spec.containers[0].resources.requests.memory)"'
@@ -217,7 +217,7 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) CPU:\(.spec.container
 oc get route -n openshift-monitoring
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar prometheusrule de todos os namespaces do cluster**
 
 ```bash
 oc get prometheusrule -A
@@ -258,7 +258,7 @@ oc get clusteroperator monitoring
 ```
 
 ### ServiceMonitor
-**Listar recurso de todos os namespaces do cluster**
+**Listar servicemonitor de todos os namespaces do cluster**
 
 ```bash
 oc get servicemonitor -A

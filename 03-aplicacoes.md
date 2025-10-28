@@ -183,7 +183,7 @@ oc delete all -l app=test-app
 oc delete all --selector app=test-app
 ```
 
-**Deletar o recurso especificado**
+**Deletar o deployment especificado**
 
 ```bash ignore-test
 oc delete deployment test-app
@@ -226,13 +226,13 @@ oc status -n development
 ```
 
 ### Descrever Recursos
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do deployment**
 
 ```bash
 oc describe deployment test-app
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do deployment**
 
 ```bash
 oc describe deployment test-app -n development

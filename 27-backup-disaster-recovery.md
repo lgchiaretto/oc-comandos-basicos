@@ -162,7 +162,7 @@ oc exec backup-pod -- tar czf /tmp/backup.tar.gz /data
 oc cp backup-pod:/tmp/backup.tar.gz ./pvc-backup.tar.gz
 ```
 
-**Deletar o recurso especificado**
+**Deletar o pod especificado**
 
 ```bash ignore-test
 oc delete pod backup-pod

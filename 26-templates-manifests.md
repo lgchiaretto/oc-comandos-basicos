@@ -361,7 +361,7 @@ parameters:
 oc get pod test-app -o yaml > /tmp/pod.yaml
 ```
 
-**Exibir recurso "test-app" em formato YAML**
+**Exibir configuração completa do deployment em formato YAML**
 
 ```bash
 oc get deployment test-app -o yaml > /tmp/deployment.yaml

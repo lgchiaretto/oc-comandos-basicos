@@ -57,7 +57,7 @@ EOF
 oc apply -f pod.yaml
 ```
 
-**Deletar o recurso especificado**
+**Deletar o pod especificado**
 
 ```bash ignore-test
 oc delete pod my-pod
@@ -82,7 +82,7 @@ oc delete pods -l app=test-app
 oc get pods
 ```
 
-**Listar todos os pods de todos os namespaces do cluster**
+**Listar pods de todos os namespaces do cluster**
 
 ```bash
 oc get pods -A
@@ -118,25 +118,25 @@ oc get pods -n development
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash
 oc describe pod my-pod
 ```
 
-**Exibir recurso "my-pod" em formato YAML**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash
 oc get pod my-pod -o yaml
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir configuração completa do pod em formato JSON**
 
 ```bash
 oc get pod my-pod -o json
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir status/fase atual do pod**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.phase}'
@@ -159,7 +159,7 @@ oc wait --for=condition=Ready pod/my-pod
 oc rsh my-pod
 ```
 
-**Executar comando em um pod**
+**Executar comando dentro do pod especificado**
 
 ```bash ignore-test
 oc exec my-pod -- <comando>
@@ -223,7 +223,7 @@ oc cp ./config.json mypod:/etc/config/config.json
 oc rollout restart deployment/test-app
 ```
 
-**Deletar o recurso especificado**
+**Deletar o pod especificado**
 
 ```bash ignore-test
 oc delete pod my-pod
@@ -287,7 +287,7 @@ oc get pods --field-selector=status.phase=Pending
 oc get pods --field-selector=status.phase=Failed
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash
 oc describe pod my-pod | grep -A 10 "Events:"

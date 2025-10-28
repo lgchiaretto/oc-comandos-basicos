@@ -129,7 +129,7 @@ oc get project development -o yaml > /tmp/projeto.yaml
 oc edit project development
 ```
 
-**Adicionar nova label ao recurso**
+**Adicionar nova label ao namespace**
 
 ```bash
 oc label namespace development test-validation=true pod-security.kubernetes.io/enforce=privileged
@@ -141,19 +141,19 @@ oc label namespace development test-validation=true pod-security.kubernetes.io/e
 oc label namespace production test-validation=true pod-security.kubernetes.io/enforce=privileged --overwrite
 ```
 
-**Adicionar annotation ao recurso**
+**Adicionar annotation ao namespace**
 
 ```bash
 oc annotate namespace development description="Meu projeto"
 ```
 
-**Remover label do recurso**
+**Adicionar nova label ao namespace**
 
 ```bash
 oc label namespace development env-
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao namespace usando patch**
 
 ```bash
 oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
@@ -210,13 +210,13 @@ oc new-project production --node-selector='env=production'
 ```
 
 ### Modificar Node Selector Existente
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao namespace usando patch**
 
 ```bash
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":"env=development"}}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao namespace usando patch**
 
 ```bash
 oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/node-selector":""}}}'
@@ -226,7 +226,7 @@ oc patch namespace development -p '{"metadata":{"annotations":{"openshift.io/nod
 
 
 ### Labels em Namespaces
-**Adicionar labels ao namespace**
+**Adicionar nova label ao namespace**
 
 ```bash ignore-test
 oc label namespace development <key>=<value>
@@ -393,13 +393,13 @@ oc status --suggest
 oc get projects | grep dev
 ```
 
-**Exibir projetos em formato JSON**
+**Listar nomes de projetoss em estado Active**
 
 ```bash ignore-test
 oc get projects -o jsonpath='{.items[?(@.status.phase=="Active")].metadata.name}'
 ```
 
-**Exibir projetos em formato JSON**
+**Listar nomes de projetoss em processo de terminação**
 
 ```bash ignore-test
 oc get projects -o jsonpath='{.items[?(@.status.phase=="Terminating")].metadata.name}'
@@ -424,7 +424,7 @@ oc get projects --sort-by='.metadata.creationTimestamp'
 oc get projects -l env=development
 ```
 
-**Exibir projetos em formato JSON**
+**Exibir projetos em formato JSON completo**
 
 ```bash
 oc get projects -o json > /tmp/all-projects.json
@@ -478,7 +478,7 @@ oc new-project meu-app-dev \
   --display-name="Meu App - DEV"
 ```
 
-**Adicionar nova label ao recurso**
+**Adicionar nova label ao projeto**
 
 ```bash ignore-test
 oc label project meu-app-dev env=dev tier=backend team=devops

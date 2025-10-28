@@ -461,25 +461,25 @@ oc delete machine <machine-name> -n openshift-machine-api
 oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'

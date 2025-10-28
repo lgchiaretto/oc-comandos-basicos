@@ -67,7 +67,7 @@ oc get pods -A --field-selector=metadata.namespace=default,metadata.namespace=ku
 ```
 
 ### Filtrar Eventos
-**Listar apenas eventos do tipo Warning**
+**Listar eventos filtrados por campo específico**
 
 ```bash
 oc get events --field-selector type=Warning
@@ -128,19 +128,19 @@ oc get csr | grep Pending
 ```
 
 ### Builds
-**Listar recurso filtrados por campo específico**
+**Listar builds filtrados por campo específico**
 
 ```bash
 oc get builds --field-selector status!=Complete
 ```
 
-**Listar recurso filtrados por campo específico**
+**Listar builds filtrados por campo específico**
 
 ```bash
 oc get builds --field-selector status=Complete
 ```
 
-**Listar recurso filtrados por campo específico**
+**Listar builds filtrados por campo específico**
 
 ```bash
 oc get builds --field-selector status=Failed
@@ -280,7 +280,7 @@ oc get pods --field-selector=status.phase=Running,spec.nodeName=<node-name>
 oc get pods -A --field-selector=spec.nodeName=worker-1
 ```
 
-**Listar apenas eventos do tipo Warning**
+**Listar eventos filtrados por campo específico**
 
 ```bash
 oc get events --field-selector=type=Warning,involvedObject.namespace=development

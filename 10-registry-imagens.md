@@ -33,7 +33,7 @@ Este documento contém comandos para gerenciar o registry interno e imagens no O
 oc get route -n openshift-image-registry
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir configs.imageregistry.operator.openshift.io/cluster em formato YAML**
 
 ```bash
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
@@ -147,7 +147,7 @@ spec:
 EOF
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir imagecontentsourcepolicy em formato YAML**
 
 ```bash
 oc get imagecontentsourcepolicy -o yaml
@@ -189,7 +189,7 @@ oc adm prune images
 oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir imagepruner/cluster em formato YAML**
 
 ```bash
 oc get imagepruner/cluster -o yaml

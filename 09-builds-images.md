@@ -25,7 +25,7 @@ oc get buildconfig
 oc get bc
 ```
 
-**Exibir detalhes completos do buildconfig**
+**Exibir detalhes completos do bc**
 
 ```bash
 oc describe bc s2i-chiaretto
@@ -65,7 +65,7 @@ oc set triggers bc/s2i-chiaretto --from-webhook
 oc set triggers bc/s2i-chiaretto --remove-all
 ```
 
-**Exibir detalhes completos do buildconfig**
+**Exibir detalhes completos do bc**
 
 ```bash
 oc describe bc s2i-chiaretto | grep Triggered
@@ -118,7 +118,7 @@ oc cancel-build s2i-chiaretto-2
 oc delete build s2i-chiaretto-2
 ```
 
-**Listar recurso ordenados por campo específico**
+**Listar builds ordenados por campo específico**
 
 ```bash
 oc get builds --sort-by=.metadata.creationTimestamp
@@ -191,7 +191,7 @@ oc get imagestream
 oc get is
 ```
 
-**Exibir detalhes completos do imagestream**
+**Exibir detalhes completos do is**
 
 ```bash
 oc describe is s2i-chiaretto
@@ -235,7 +235,7 @@ oc get imagestreamtag
 oc get istag
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do istag**
 
 ```bash ignore-test
 oc describe istag s2i-chiaretto:latest

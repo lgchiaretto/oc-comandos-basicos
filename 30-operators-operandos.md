@@ -104,7 +104,7 @@ oc get packagemanifests -n openshift-marketplace
 oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do packagemanifest**
 
 ```bash
 oc describe packagemanifest local-storage-operator -n openshift-marketplace
@@ -249,7 +249,7 @@ oc get installplan <plan-name> -n <namespace> -o jsonpath='{.status.phase}'
 ```
 
 ### OperatorGroup
-**Listar recurso de todos os namespaces do cluster**
+**Listar operatorgroups de todos os namespaces do cluster**
 
 ```bash
 oc get operatorgroups -A
@@ -317,7 +317,7 @@ oc get crd
 oc get crd | grep ingresscontrollers
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do crd**
 
 ```bash
 oc describe crd ingresscontrollers.operator.openshift.io
@@ -379,7 +379,7 @@ oc describe elasticsearch elasticsearch -n openshift-logging
 oc get <crd-resource-name>
 ```
 
-**Listar recurso com colunas customizadas**
+**Listar elasticsearch com colunas customizadas**
 
 ```bash ignore-test
 oc get elasticsearch -o custom-columns=NAME:.metadata.name,STATUS:.status.cluster.status
@@ -439,7 +439,7 @@ oc get <cr-type> <name>
 ## Troubleshooting Operators
 
 ### CSV (ClusterServiceVersion)
-**Listar recurso de todos os namespaces do cluster**
+**Listar csv de todos os namespaces do cluster**
 
 ```bash
 oc get csv -A

@@ -191,7 +191,7 @@ oc get cronjobs
 oc get cj
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do cronjob**
 
 ```bash ignore-test
 oc describe cronjob test-app-job
@@ -209,19 +209,19 @@ oc get jobs -l cronjob=<cronjob-name>
 oc get jobs --sort-by=.metadata.creationTimestamp | grep <cronjob-name> | tail -1
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao cronjob usando patch**
 
 ```bash ignore-test
 oc patch cronjob test-app-job -p '{"spec":{"suspend":true}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao cronjob usando patch**
 
 ```bash ignore-test
 oc patch cronjob test-app-job -p '{"spec":{"suspend":false}}'
 ```
 
-**Deletar o recurso especificado**
+**Deletar o cronjob especificado**
 
 ```bash
 oc delete cronjob test-app-job
@@ -324,13 +324,13 @@ oc get events --field-selector involvedObject.name=test-app-job
 ```
 
 ### Debug de CronJobs
-**Exibir recurso "test-app-job" em formato YAML**
+**Exibir cronjob em formato YAML**
 
 ```bash ignore-test
 oc get cronjob test-app-job -o yaml
 ```
 
-**Exibir recurso "test-app-job" em formato JSON**
+**Exibir cronjob em formato JSON**
 
 ```bash ignore-test
 oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'
@@ -342,7 +342,7 @@ oc get cronjob test-app-job -o jsonpath='{.status.lastScheduleTime}'
 oc create job test-job --from=cronjob/<cronjob-name>
 ```
 
-**Listar recurso ordenados por campo específico**
+**Listar jobs ordenados por campo específico**
 
 ```bash ignore-test
 oc get jobs --sort-by=.metadata.creationTimestamp -l cronjob=test-app-job
@@ -356,13 +356,13 @@ oc logs $LAST_JOB
 ```
 
 ### Jobs Travados
-**Exibir recurso em formato JSON**
+**Exibir jobs em formato JSON completo**
 
 ```bash
 oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadata.name) - \(.metadata.creationTimestamp)"'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir jobs em formato JSON completo**
 
 ```bash ignore-test
 oc get jobs -o json | jq -r '.items[] | select(.status.completionTime != null) | select(.status.completionTime < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete job

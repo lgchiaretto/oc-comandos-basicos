@@ -77,13 +77,13 @@ oc get cm test-app -o jsonpath='{.data}'
 
 
 ### Descrever ConfigMap
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do configmap**
 
 ```bash
 oc describe configmap test-app
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do configmap**
 
 ```bash
 oc describe configmap test-app -n development

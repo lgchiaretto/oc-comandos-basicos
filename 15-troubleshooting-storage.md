@@ -44,7 +44,7 @@ EOF
 oc get pvc
 ```
 
-**Exibir persistent volume claim em formato JSON**
+**Listar nomes de persistent volume claims em estado Pending**
 
 ```bash
 oc get pvc -o jsonpath='{.items[?(@.status.phase=="Pending")].metadata.name}'
@@ -81,13 +81,13 @@ oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 oc get pv
 ```
 
-**Exibir persistent volume em formato JSON**
+**Listar nomes de persistent volumes em estado Available**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
-**Exibir persistent volume em formato JSON**
+**Listar nomes de persistent volumes em estado Failed**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Failed")].metadata.name}'
@@ -118,7 +118,7 @@ oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 oc describe pvc test-app | grep -A 10 Events
 ```
 
-**Exibir persistent volume em formato JSON**
+**Listar nomes de persistent volumes em estado Available**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
@@ -160,7 +160,7 @@ oc get sc
 oc describe sc ocs-storagecluster-ceph-rbd
 ```
 
-**Exibir storageclass em formato JSON**
+**Exibir storageclass em formato JSON completo**
 
 ```bash
 oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass.kubernetes.io/is-default-class"=="true") | .metadata.name'
@@ -198,7 +198,7 @@ oc get pods -A | grep csi
 ## Problemas Comuns
 
 ### Volume Não Monta
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do pod**
 
 ```bash
 oc describe pod my-pod | grep -A 10 Volumes
@@ -216,7 +216,7 @@ oc get events --field-selector involvedObject.name=my-pod
 oc get pvc
 ```
 
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir o node onde o pod está executando**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
@@ -267,7 +267,7 @@ oc exec my-pod -- df -h
 oc get pvc test-app -o jsonpath='{.spec.resources.requests.storage}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao persistent volume claim usando patch**
 
 ```bash
 oc patch pvc test-app -p '{"spec":{"resources":{"requests":{"storage":"20Gi"}}}}'
@@ -286,7 +286,7 @@ oc describe pvc test-app
 ```
 
 ### PVC Stuck Terminating
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash
 oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolumeClaim.claimName=="test-app") | .metadata.name'
@@ -298,7 +298,7 @@ oc get pods -o json | jq -r '.items[] | select(.spec.volumes[]?.persistentVolume
 oc delete pod my-pod --grace-period=0 --force
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Aplicar modificação parcial ao persistent volume claim usando patch**
 
 ```bash
 oc patch pvc test-app -p '{"metadata":{"finalizers":null}}'
@@ -327,19 +327,19 @@ oc get pods -n openshift-storage
 oc get storagecluster -n openshift-storage
 ```
 
-**Listar recurso filtrados por label**
+**Listar pods filtrados por label**
 
 ```bash
 oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph status --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
-**Listar recurso filtrados por label**
+**Listar pods filtrados por label**
 
 ```bash
 oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph health detail --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring
 ```
 
-**Listar recurso filtrados por label**
+**Listar pods filtrados por label**
 
 ```bash
 oc exec -it $(oc get pods -l app=rook-ceph-operator -o jsonpath='{.items[*].metadata.name}' -n openshift-storage) -n openshift-storage --   ceph osd status --cluster=openshift-storage --conf=/var/lib/rook/openshift-storage/openshift-storage.config --keyring=/var/lib/rook/openshift-storage/client.admin.keyring

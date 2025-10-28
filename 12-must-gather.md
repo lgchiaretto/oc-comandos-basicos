@@ -153,7 +153,7 @@ oc get pods -A --sort-by='.status.containerStatuses[0].restartCount' | tail -20
 oc get events -A --field-selector type=Warning --sort-by='.lastTimestamp' | tail -20
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'

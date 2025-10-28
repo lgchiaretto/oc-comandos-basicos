@@ -19,13 +19,13 @@ Este documento contém comandos para formatar e extrair informações específic
 ## Jsonpath
 
 ### Básico
-**Exibir recurso "test-app" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.metadata.name}'
 ```
 
-**Exibir recurso "test-app" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.metadata.name}{" "}{.status.phase}{"\n"}'
@@ -43,13 +43,13 @@ oc get pods -o jsonpath='{.items[*].metadata.name}'
 oc get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
 ```
 
-**Exibir recurso "test-app" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.containers[0].image}'
 ```
 
-**Exibir recurso "test-app" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash ignore-test
 oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
@@ -193,93 +193,93 @@ oc get pods -o go-template-file=/tmp/pod-template.tmpl
 # Instalar jq (se não estiver instalado)
 # sudo dnf install jq -y
 ```
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash
 oc get pods -o json | jq .
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash
 oc get pods -o json | jq '.'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '.items[].metadata.name'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '.items[] | select(.status.phase=="Running") | .metadata.name'
 ```
 
 ### Filtros Avançados
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq -r '.items[] | "\(.metadata.name) \(.status.phase)"'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -o json | jq '[.items[] | {name: .metadata.name, phase: .status.phase}]'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash
 oc get pods -o json | jq '.items | length'
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -A -o json | jq -r 'group_by(.metadata.namespace) | .[] | "\(.[0].metadata.namespace): \(length) pods"'
 ```
 
-**Exibir pods em formato JSON**
+**Exibir pods em formato JSON completo**
 
 ```bash
 oc get pods -o json | jq '.items | sort_by(.metadata.creationTimestamp)'
 ```
 
 ### Exemplos Práticos com jq
-**Listar pods de todos os namespaces do cluster**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -A -o json | jq -r '.items[] | select(.status.phase != "Running" and .status.phase != "Succeeded") | "\(.metadata.namespace)/\(.metadata.name): \(.status.phase)"'
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Exibir pods em formato JSON completo**
 
 ```bash ignore-test
 oc get pods -A -o json | jq -r '.items[] | "\(.status.containerStatuses[0].restartCount) \(.metadata.namespace)/\(.metadata.name)"' | sort -rn | head -10
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash ignore-test
 oc get nodes -o json | jq -r '.items[] | "\(.metadata.name): \(.status.addresses[] | select(.type=="InternalIP") | .address)"'
 ```
 
-**Listar persistent volume claim de todos os namespaces do cluster**
+**Exibir configuração completa do PVC em formato JSON**
 
 ```bash ignore-test
 oc get pvc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name): \(.spec.resources.requests.storage)"'
 ```
 
-**Listar service de todos os namespaces do cluster**
+**Exibir service em formato JSON completo**
 
 ```bash ignore-test
 oc get svc -A -o json | jq -r '.items[] | "\(.metadata.namespace)/\(.metadata.name): \(.spec.clusterIP)"'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash ignore-test
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
@@ -367,13 +367,13 @@ oc get pods -o custom-columns-file=/tmp/custom-cols.txt
 oc get pods -o wide
 ```
 
-**Exibir recurso "test-app" em formato YAML**
+**Exibir configuração completa do pod em formato YAML**
 
 ```bash ignore-test
 oc get pod test-app -o yaml
 ```
 
-**Exibir recurso "test-app" em formato JSON**
+**Exibir configuração completa do pod em formato JSON**
 
 ```bash ignore-test
 oc get pod test-app -o json

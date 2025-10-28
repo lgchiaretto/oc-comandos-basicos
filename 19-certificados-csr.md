@@ -61,13 +61,13 @@ oc adm certificate approve <csr-name>
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
-**Exibir certificate signing request em formato JSON**
+**Exibir certificate signing request em formato JSON completo**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
 ```
 
-**Exibir certificate signing request em formato JSON**
+**Exibir certificate signing request em formato JSON completo**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:node:worker")) | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
@@ -99,7 +99,7 @@ oc get csr
 oc get csr --sort-by='.metadata.creationTimestamp'
 ```
 
-**Exibir certificate signing request em formato JSON**
+**Exibir certificate signing request em formato JSON completo**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | uniq -c
@@ -165,7 +165,7 @@ oc patch ingresscontroller default -n openshift-ingress-operator --type=merge -p
 ```
 
 ### Service Serving Certificates
-**Listar recurso filtrados por campo específico**
+**Listar secrets filtrados por campo específico**
 
 ```bash
 oc get secrets --field-selector type=kubernetes.io/tls
@@ -206,7 +206,7 @@ oc create secret tls api-certs --cert=<cert-file> --key=<key-file> -n openshift-
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts":{"namedCertificates":[{"names":["<api-hostname>"],"servingCertificate":{"name":"api-certs"}}]}}}'
 ```
 
-**Exibir recurso "cluster" em formato YAML**
+**Exibir apiserver em formato YAML**
 
 ```bash
 oc get apiserver cluster -o yaml
@@ -334,7 +334,7 @@ chmod +x /tmp/approve-csrs.sh
 /tmp/approve-csrs.sh &
 ```
 
-**Exibir certificate signing request em formato JSON**
+**Exibir certificate signing request em formato JSON completo**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.metadata.creationTimestamp < "'$(date -d '7 days ago' -Ins --utc | sed 's/+00:00/Z/')'" ) | .metadata.name' | xargs oc delete csr

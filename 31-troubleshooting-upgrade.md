@@ -51,19 +51,19 @@ oc logs -n openshift-machine-config-operator $(oc get pods -n openshift-machine-
 oc get clusterversion
 ```
 
-**Exibir recurso "version" em formato YAML**
+**Exibir clusterversion em formato YAML**
 
 ```bash
 oc get clusterversion version -o yaml
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.channel}{"\n"}'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
@@ -71,7 +71,7 @@ oc get clusterversion -o jsonpath='{.items[0].spec.desiredUpdate}{"\n"}'
 
 ### Status do Upgrade
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")]}{"\n"}' | jq
@@ -83,13 +83,13 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 oc adm upgrade
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.history}' | jq
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progressing")].message}{"\n"}'
@@ -97,25 +97,25 @@ oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Progr
 
 ### Condições de Saúde
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON completo**
 
 ```bash
 oc get clusterversion -o json | jq '.items[0].status.conditions'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Available")]}{"\n"}' | jq
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Failing")]}{"\n"}' | jq
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="RetrieveUpdatesFailing")]}{"\n"}' | jq
@@ -153,13 +153,13 @@ oc get all -n openshift-cluster-version
 
 ### Overrides do CVO
 
-**Exibir recurso "version" em formato JSON**
+**Exibir clusterversion em formato JSON completo**
 
 ```bash
 oc get clusterversion version -o json | jq '.spec.overrides'
 ```
 
-**Exibir recurso "version" em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion version -o jsonpath='{.spec.overrides[*].name}{"\n"}'
@@ -183,19 +183,19 @@ oc patch clusterversion version --type=json -p '[{"op":"remove","path":"/spec/ov
 oc get co
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
@@ -312,25 +312,25 @@ oc get nodes -o wide
 oc get mcp
 ```
 
-**Exibir recurso "master" em formato YAML**
+**Exibir mcp em formato YAML**
 
 ```bash
 oc get mcp master -o yaml
 ```
 
-**Exibir recurso "worker" em formato YAML**
+**Exibir mcp em formato YAML**
 
 ```bash
 oc get mcp worker -o yaml
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir mcp em formato JSON completo**
 
 ```bash
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Updating" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir mcp em formato JSON completo**
 
 ```bash
 oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
@@ -338,13 +338,13 @@ oc get mcp -o json | jq -r '.items[] | select(.status.conditions[] | select(.typ
 
 ### Progresso da Atualização dos MCPs
 
-**Exibir recurso "worker" em formato JSON**
+**Exibir mcp em formato JSON**
 
 ```bash
 oc get mcp worker -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
 ```
 
-**Exibir recurso "master" em formato JSON**
+**Exibir mcp em formato JSON**
 
 ```bash
 oc get mcp master -o jsonpath='Updated: {.status.updatedMachineCount}/{.status.machineCount}{"\n"}Degraded: {.status.degradedMachineCount}{"\n"}'
@@ -364,7 +364,7 @@ oc get machines -n openshift-machine-api
 oc get mc
 ```
 
-**Exibir recurso "worker" em formato JSON**
+**Exibir mcp em formato JSON**
 
 ```bash
 oc get mcp worker -o jsonpath='{.status.configuration.name}{"\n"}'
@@ -452,19 +452,19 @@ oc adm must-gather --image=$(oc adm release info --image-for=etcd) --dest-dir=/t
 
 ### Verificar Bloqueios de Upgrade
 
-**Exibir recurso em formato JSON**
+**Exibir clusterversion em formato JSON**
 
 ```bash
 oc get clusterversion -o jsonpath='{.items[0].status.conditions[?(@.type=="Upgradeable")]}{"\n"}' | jq
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Upgradeable" and .status=="False")) | {name: .metadata.name, reason: .status.conditions[] | select(.type=="Upgradeable") | .reason, message: .status.conditions[] | select(.type=="Upgradeable") | .message}'
@@ -484,7 +484,7 @@ oc get pods -A | grep -E 'Error|CrashLoopBackOff|ImagePullBackOff'
 oc get pvc -A | grep Pending
 ```
 
-**Exibir nodes em formato JSON**
+**Exibir nodes em formato JSON completo**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
@@ -498,13 +498,13 @@ oc get pods -A | grep Evicted
 
 ### Resource Quota e Limits
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar resourcequotas de todos os namespaces do cluster**
 
 ```bash
 oc get resourcequotas -A
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar limitranges de todos os namespaces do cluster**
 
 ```bash
 oc get limitranges -A
@@ -534,7 +534,7 @@ Em caso de falha, não tente reverter o processoee o procedimento correto é abr
 oc delete pods -A --field-selector=status.phase=Failed
 ```
 
-**Deletar o recurso especificado**
+**Deletar o jobs especificado**
 
 ```bash ignore-test
 oc delete jobs -A --field-selector=status.successful=1

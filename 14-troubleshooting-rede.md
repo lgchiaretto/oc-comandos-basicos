@@ -20,7 +20,7 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ## Diagnóstico Básico
 
 ### Conectividade de Pod
-**Exibir recurso "my-pod" em formato JSON**
+**Exibir pod em formato JSON**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.podIP}'
@@ -64,13 +64,13 @@ oc exec my-pod -- ip addr
 oc get networkpolicy
 ```
 
-**Exibir detalhes completos do network policy**
+**Exibir detalhes completos do política de rede**
 
 ```bash ignore-test
 oc describe networkpolicy test-app
 ```
 
-**Exibir network policy em formato YAML**
+**Exibir política de rede em formato YAML**
 
 ```bash
 oc get networkpolicy -o yaml
@@ -216,7 +216,7 @@ oc get pods -n openshift-ingress
 oc logs -n openshift-ingress -l app=router
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir ingresses.config.openshift.io em formato JSON**
 
 ```bash
 oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
@@ -228,7 +228,7 @@ oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
 oc get ingresscontroller -n openshift-ingress-operator
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do ingresscontroller**
 
 ```bash
 oc describe ingresscontroller default -n openshift-ingress-operator
@@ -239,13 +239,13 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 ## SDN/OVN
 
 ### Verificar Rede do Cluster
-**Exibir recurso em formato JSON**
+**Exibir network.config.openshift.io em formato JSON**
 
 ```bash
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir network.config.openshift.io em formato YAML**
 
 ```bash
 oc get network.config.openshift.io cluster -o yaml
@@ -352,7 +352,7 @@ oc exec my-pod -- cat /etc/resolv.conf
 oc get clusteroperator dns
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir dns.operator/default em formato YAML**
 
 ```bash
 oc get dns.operator/default -o yaml
@@ -365,7 +365,7 @@ oc get dns.operator/default -o yaml
 oc get pods -n openshift-dns
 ```
 
-**Deletar o recurso especificado**
+**Deletar o pod especificado**
 
 ```bash ignore-test
 oc delete pod -n openshift-dns --all

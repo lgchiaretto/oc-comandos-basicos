@@ -31,19 +31,19 @@ oc get co
 oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].version
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON**
+**Exibir cluster operator em formato JSON completo**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
@@ -171,7 +171,7 @@ oc get co authentication
 oc get pods -n openshift-authentication
 ```
 
-**Exibir recurso "cluster" em formato YAML**
+**Exibir oauth em formato YAML**
 
 ```bash
 oc get oauth cluster -o yaml
@@ -208,7 +208,7 @@ oc get pods -n openshift-ingress
 oc logs -n openshift-ingress -l ingresscontroller.operator.openshift.io/deployment-ingresscontroller=default
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do ingresscontroller**
 
 ```bash
 oc describe ingresscontroller default -n openshift-ingress-operator
@@ -221,7 +221,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 oc get co network
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir network.config.openshift.io em formato YAML**
 
 ```bash
 oc get network.config.openshift.io cluster -o yaml
@@ -258,7 +258,7 @@ oc get co dns
 oc get pods -n openshift-dns
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir dns.operator/default em formato YAML**
 
 ```bash
 oc get dns.operator/default -o yaml
@@ -277,7 +277,7 @@ oc logs -n openshift-dns <dns-pod>
 oc get co image-registry
 ```
 
-**Exibir recurso em formato YAML**
+**Exibir configs.imageregistry.operator.openshift.io/cluster em formato YAML**
 
 ```bash
 oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
@@ -289,7 +289,7 @@ oc get configs.imageregistry.operator.openshift.io/cluster -o yaml
 oc get pods -n openshift-image-registry
 ```
 
-**Exibir recurso em formato JSON**
+**Exibir configs.imageregistry.operator.openshift.io/cluster em formato JSON**
 
 ```bash
 oc get configs.imageregistry.operator.openshift.io/cluster -o jsonpath='{.spec.storage}'
@@ -356,25 +356,25 @@ oc get alertmanager -n openshift-monitoring
 ## OLM (Operator Lifecycle Manager)
 
 ### Gerenciar Operadores Instalados
-**Listar recurso de todos os namespaces do cluster**
+**Listar subscriptions de todos os namespaces do cluster**
 
 ```bash
 oc get subscriptions -A
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar csv de todos os namespaces do cluster**
 
 ```bash
 oc get csv -A
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar operators de todos os namespaces do cluster**
 
 ```bash
 oc get operators -A
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar installplans de todos os namespaces do cluster**
 
 ```bash
 oc get installplans -A
@@ -386,7 +386,7 @@ oc get installplans -A
 oc get catalogsources -n openshift-marketplace
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar operatorgroups de todos os namespaces do cluster**
 
 ```bash
 oc get operatorgroups -A
@@ -405,7 +405,7 @@ oc get packagemanifests -n openshift-marketplace
 oc get packagemanifests -n openshift-marketplace | grep odf-operator
 ```
 
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do packagemanifest**
 
 ```bash
 oc describe packagemanifest odf-operator -n openshift-marketplace
@@ -435,7 +435,7 @@ oc get csv -n <namespace>
 ```
 
 ### Troubleshoot Operadores OLM
-**Exibir detalhes completos do recurso**
+**Exibir detalhes completos do subscription**
 
 ```bash
 oc describe subscription -n openshift-local-storage   local-storage-operator
