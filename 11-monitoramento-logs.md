@@ -194,7 +194,7 @@ oc adm top pod my-pod
 ```
 
 ### Métricas Detalhadas
-**Ver uso atual vs requests/limits**
+**Exibir detalhes completos do node filtrando por Allocated resources**
 
 ```bash ignore-test
 oc describe node <nome-do-node> | grep -A 5 "Allocated resources"

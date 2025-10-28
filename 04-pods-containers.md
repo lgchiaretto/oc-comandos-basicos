@@ -287,7 +287,7 @@ oc get pods --field-selector=status.phase=Pending
 oc get pods --field-selector=status.phase=Failed
 ```
 
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Events:**
 
 ```bash
 oc describe pod my-pod | grep -A 10 "Events:"

@@ -398,7 +398,7 @@ oc get pods --no-headers
 oc get pods --no-headers | awk '{print $1}'
 ```
 
-**Nodes com grep e awk**
+**Listar nodes filtrando por estado Ready**
 
 ```bash
 oc get nodes --no-headers | grep Ready | awk '{print $1}'

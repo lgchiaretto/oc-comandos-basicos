@@ -158,7 +158,7 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 oc set volume deployment/test-app
 ```
 
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Volumes**
 
 ```bash
 oc describe pod my-pod | grep -A 5 Volumes

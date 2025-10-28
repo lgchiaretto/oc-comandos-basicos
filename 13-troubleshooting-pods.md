@@ -96,7 +96,7 @@ oc logs my-pod --tail=100
 ## Pods com Problemas
 
 ### ImagePullBackOff
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Events**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Events
@@ -127,13 +127,13 @@ oc get pod my-pod -o jsonpath='{.spec.containers[0].image}'
 oc logs my-pod --previous
 ```
 
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Exit code**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -i "exit code"
 ```
 
-**Exibir pod em formato YAML completo**
+**Listar pod filtrando por Livenessprobe**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
@@ -155,13 +155,13 @@ oc debug deployment/test-app
 ```
 
 ### Pending (Não Agendado)
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Events**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 20 Events
 ```
 
-**Exibir pod em formato YAML completo**
+**Listar pod filtrando por Resources**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep -A 5 resources
@@ -179,13 +179,13 @@ oc adm top nodes
 oc get nodes
 ```
 
-**Exibir pod em formato YAML completo**
+**Listar pod filtrando por Nodeselector**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep nodeSelector
 ```
 
-**Exibir detalhes completos do nodes**
+**Exibir detalhes completos do node filtrando por taints**
 
 ```bash
 oc describe nodes | grep Taints
@@ -327,7 +327,7 @@ oc get pvc
 oc describe pvc test-app
 ```
 
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por montagens**
 
 ```bash ignore-test
 oc describe pod my-pod | grep -A 10 Mounts
@@ -402,7 +402,7 @@ oc get pod my-pod -o jsonpath='{.status.podIP}'
 oc get sa
 ```
 
-**Exibir pod em formato YAML completo**
+**Listar pod filtrando por scc**
 
 ```bash ignore-test
 oc get pod my-pod -o yaml | grep scc

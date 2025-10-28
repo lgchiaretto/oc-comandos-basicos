@@ -24,7 +24,7 @@ Este documento contém comandos para gerenciar certificados e Certificate Signin
 oc get csr
 ```
 
-**CSRs pendentes**
+**Listar recursos filtrando por estado Pending**
 
 ```bash ignore-test
 oc get csr | grep Pending
@@ -116,7 +116,7 @@ oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | 
 oc get secret -n openshift-kube-apiserver
 ```
 
-**Certificado do serving**
+**Listar recursos filtrando por Serving**
 
 ```bash
 oc get secret -n openshift-kube-apiserver | grep serving
@@ -309,7 +309,7 @@ oc get csr <csr-name> -o jsonpath='{.spec.usages}'
 oc get csr <csr-name> -o jsonpath='{.spec.username}'
 ```
 
-**Logs do cluster-signing-controller**
+**Exibir logs filtrando por Csr**
 
 ```bash ignore-test
 oc logs -n openshift-kube-controller-manager <pod-name> | grep csr

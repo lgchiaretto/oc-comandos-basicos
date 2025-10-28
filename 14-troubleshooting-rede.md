@@ -149,7 +149,7 @@ oc get svc test-app -o jsonpath='{.spec.selector}'
 oc get pods --selector=<label-do-service>
 ```
 
-**Exibir detalhes completos do service**
+**Exibir detalhes completos do service filtrando por seletores**
 
 ```bash
 oc describe svc test-app | grep Selector

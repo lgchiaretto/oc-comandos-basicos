@@ -23,7 +23,7 @@ Este documento contém comandos avançados do OpenShift combinados com ferrament
 ## Comandos com AWK
 
 ### CSR Management com AWK
-**Aprovar Certificate Signing Request (CSR)**
+**Exibir detalhes completos do csr filtrando por estado Pending**
 
 ```bash ignore-test
 oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
@@ -35,7 +35,7 @@ oc adm certificate approve $(oc get csr | grep Pending | awk '{print $1}')
 oc adm certificate approve $(oc get csr | grep -v -E "Approved|NAME" | awk '{print $1}')
 ```
 
-**Aprovar Certificate Signing Request (CSR)**
+**Exibir detalhes completos do csr filtrando por estado Pending**
 
 ```bash ignore-test
 oc adm certificate approve $(oc get csr | grep -i pending | awk '{print $1}')
@@ -209,13 +209,13 @@ oc get csr -o json | jq '.items[] | select(.status.conditions == null) | {name: 
 ```
 
 ### Análise de Secrets
-**Exibir recurso em formato JSON**
+**Listar recursos filtrando por Oauth-openshift-token**
 
 ```bash
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d
 ```
 
-**Exibir recurso em formato JSON**
+**Listar recursos filtrando por Oauth-openshift-token**
 
 ```bash
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/bundle-ca.crt
@@ -264,7 +264,7 @@ oc get co | grep -v "True.*False.*False"
 oc get nodes | grep -v "Ready"
 ```
 
-**Filtrar eventos importantes**
+**Exibir detalhes completos do pod filtrando por Events:**
 
 ```bash ignore-test
 oc describe pod <pod-name> | grep -A 10 "Events:"
@@ -277,13 +277,13 @@ oc describe pod <pod-name> | grep -A 10 "Events:"
 oc get all -o yaml | grep -A5 limits
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar recursos filtrando por Redhat-operator**
 
 ```bash
 oc get all -A | grep redhat-operator
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar recursos filtrando por Metrics**
 
 ```bash
 oc get all -A | grep metrics
@@ -296,20 +296,20 @@ oc get all -o yaml | grep 5000
 ```
 
 ### Busca em AdminNetworkPolicy
-**Exibir adminnetworkpolicy em formato YAML completo**
+**Listar recursos filtrando por Ingress:**
 
 ```bash
 oc get adminnetworkpolicy deny-cross-namespace-communication -o yaml | grep -A 30 "ingress:" | head -40
 ```
 
 ### Análise de ArgoCD
-**Listar recurso de todos os namespaces do cluster**
+**Listar recursos filtrando por Source**
 
 ```bash ignore-test
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 10 source
 ```
 
-**Listar recurso de todos os namespaces do cluster**
+**Listar recursos filtrando por Destination**
 
 ```bash ignore-test
 oc get application.argoproj.io workshop-vms-dev -n openshift-gitops -o yaml | grep -A 5 destination
@@ -328,13 +328,13 @@ oc get application workshop-vms-dev -n openshift-gitops -o yaml | grep -A 20 -B 
 ```
 
 ### Filtros em CatalogSource
-**Listar recurso de todos os namespaces do cluster**
+**Listar recursos filtrando por Status:**
 
 ```bash
 oc get catalogsource certified-operators -n openshift-marketplace -o yaml | grep -A 10 status:
 ```
 
-**Filtrar catalogs da Red Hat**
+**Listar recursos filtrando por Redhat**
 
 ```bash
 oc get catalogsource -n openshift-marketplace | grep redhat
@@ -547,7 +547,7 @@ oc get secret <secret-name> -o jsonpath='{.data.tls\.crt}' | base64 -d | openssl
 oc get apiservice v1beta1.metrics.k8s.io -o jsonpath='{.spec.caBundle}' | base64 -d | openssl x509 -text
 ```
 
-**Exibir recurso em formato JSON**
+**Listar recursos filtrando por Oauth-openshift-token**
 
 ```bash
 oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshift-token | tail -1) -n openshift-authentication -o jsonpath='{.data.ca\.crt}' | base64 -d > /tmp/oauth-ca-bundle.crt

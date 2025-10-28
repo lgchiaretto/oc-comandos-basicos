@@ -200,7 +200,7 @@ oc apply -f networkpolicy.yaml
 oc run test-pod --image=quay.io/chiaretto/netshoot --rm -it --restart=Never -- wget -O- <target-service>
 ```
 
-**Verificar logs/eventos**
+**Listar eventos filtrando por configurações de rede**
 
 ```bash ignore-test
 oc get events | grep -i network

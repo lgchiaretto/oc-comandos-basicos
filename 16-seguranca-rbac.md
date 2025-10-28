@@ -104,7 +104,7 @@ oc get clusterrole view -o yaml
 oc describe clusterrole <nome-da-role>
 ```
 
-**Exibir detalhes completos do clusterrole**
+**Exibir detalhes completos do recurso filtrando por Policyrule**
 
 ```bash
 oc describe clusterrole admin | grep -A 50 PolicyRule
@@ -304,7 +304,7 @@ oc describe scc restricted
 oc get pod test-app -o yaml | grep scc
 ```
 
-**Exibir detalhes completos do scc**
+**Exibir detalhes completos do recurso filtrando por usuários**
 
 ```bash
 oc describe scc restricted | grep Users
@@ -338,19 +338,19 @@ oc describe scc restricted
 ```
 
 ### Troubleshoot SCC
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Scc**
 
 ```bash
 oc describe pod test-app | grep -i scc
 ```
 
-**Ver eventos relacionados a SCC**
+**Listar pods filtrando por Scc**
 
 ```bash ignore-test
 oc get events --field-selector involvedObject.name=<pod-name> | grep -i scc
 ```
 
-**Exibir pod em formato YAML completo**
+**Listar pods filtrando por Securitycontext**
 
 ```bash ignore-test
 oc get pod test-app -o yaml | grep -A 10 securityContext

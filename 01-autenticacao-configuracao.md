@@ -124,7 +124,7 @@ oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 oc api-versions
 ```
 
-**Ver versões específicas do grupo**
+**Filtrar saída filtrando por Apps**
 
 ```bash
 oc api-versions | grep apps

@@ -112,7 +112,7 @@ oc get pv <nome-do-pv> -o jsonpath='{.spec.accessModes}'
 ```
 
 ### Pending PVC
-**Exibir detalhes completos do persistent volume claim**
+**Exibir detalhes completos do pvc filtrando por Events**
 
 ```bash
 oc describe pvc test-app | grep -A 10 Events
@@ -187,7 +187,7 @@ oc get csidrivers
 oc get csinodes
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods filtrando por Csi**
 
 ```bash
 oc get pods -A | grep csi
@@ -198,7 +198,7 @@ oc get pods -A | grep csi
 ## Problemas Comuns
 
 ### Volume Não Monta
-**Exibir detalhes completos do pod**
+**Exibir detalhes completos do pod filtrando por Volumes**
 
 ```bash
 oc describe pod my-pod | grep -A 10 Volumes
@@ -377,7 +377,7 @@ oc logs -n openshift-local-storage -l name=local-storage-operator
 oc get csidrivers
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods filtrando por Csi**
 
 ```bash
 oc get pods -A | grep csi
@@ -420,20 +420,20 @@ lsblk
 fdisk -l
 ```
 
-**Ver mounts**
+**Filtrar saída filtrando por PVCs**
 
 ```bash ignore-test
 mount | grep pvc
 df -h
 ```
 
-**Ver logs do kubelet relacionados a storage**
+**Filtrar saída filtrando por Volumes**
 
 ```bash ignore-test
 journalctl -u kubelet | grep -i volume
 ```
 
-**Ver logs do CRI-O**
+**Filtrar saída filtrando por Volumes**
 
 ```bash ignore-test
 journalctl -u crio | grep -i volume

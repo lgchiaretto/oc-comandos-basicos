@@ -74,7 +74,7 @@ oc label node <node-name> <key>=<value>
 oc label node <node-name> <key>-
 ```
 
-**Ver taints**
+**Exibir detalhes completos do node filtrando por taints**
 
 ```bash ignore-test
 oc describe node <node-name> | grep Taints
@@ -196,7 +196,7 @@ oc describe mc <mc-name>
 oc get mc <mc-name> -o yaml
 ```
 
-**MachineConfigs renderizados**
+**Listar recursos filtrando por Rendered**
 
 ```bash
 oc get mc | grep rendered

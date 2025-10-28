@@ -109,7 +109,7 @@ oc get nodes --field-selector spec.unschedulable=false
 ## Field Selectors Avançados
 
 ### CSR (Certificate Signing Requests)
-**CSRs pendentes**
+**Listar recursos filtrando por estado Pending**
 
 ```bash ignore-test
 oc get csr | grep -i Pending
@@ -121,7 +121,7 @@ oc get csr | grep -i Pending
 oc get csr
 ```
 
-**Listar todos os CSRs pendentes (alternativa)**
+**Listar recursos filtrando por estado Pending**
 
 ```bash ignore-test
 oc get csr | grep Pending
@@ -506,7 +506,7 @@ oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 oc get pods -A -o wide | awk '$5 > 5 {print $0}'
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods filtrando por Crashloopbackoff**
 
 ```bash
 oc get pods -A | grep CrashLoopBackOff

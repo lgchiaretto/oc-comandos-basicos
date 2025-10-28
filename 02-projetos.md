@@ -387,7 +387,7 @@ oc status --suggest
 ## Busca e Filtros
 
 ### Filtrar Projetos
-**Projetos com nome contendo string**
+**Listar recursos filtrando por Dev**
 
 ```bash
 oc get projects | grep dev

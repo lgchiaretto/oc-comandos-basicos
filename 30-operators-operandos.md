@@ -98,7 +98,7 @@ oc get catalogsource -n openshift-marketplace -o custom-columns=NAME:.metadata.n
 oc get packagemanifests -n openshift-marketplace
 ```
 
-**Buscar operator específico**
+**Listar recursos filtrando por Elasticsearch**
 
 ```bash
 oc get packagemanifests -n openshift-marketplace | grep -i elasticsearch
@@ -311,7 +311,7 @@ EOF
 oc get crd
 ```
 
-**CRDs de um operator específico**
+**Listar recursos filtrando por Ingresscontrollers**
 
 ```bash
 oc get crd | grep ingresscontrollers

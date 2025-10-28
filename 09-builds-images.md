@@ -65,7 +65,7 @@ oc set triggers bc/s2i-chiaretto --from-webhook
 oc set triggers bc/s2i-chiaretto --remove-all
 ```
 
-**Exibir detalhes completos do bc**
+**Exibir detalhes completos do recurso filtrando por Triggered**
 
 ```bash
 oc describe bc s2i-chiaretto | grep Triggered

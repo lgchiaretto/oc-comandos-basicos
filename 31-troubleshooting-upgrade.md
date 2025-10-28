@@ -274,7 +274,7 @@ oc get nodes | grep -v Ready
 oc get nodes --show-labels
 ```
 
-**Verificar condições de um node**
+**Exibir detalhes completos do node filtrando por Conditions**
 
 ```bash ignore-test
 oc describe node <node-name> | grep -A 10 Conditions
@@ -478,7 +478,7 @@ oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type
 oc get pods -A | grep -E 'Error|CrashLoopBackOff|ImagePullBackOff'
 ```
 
-**Listar persistent volume claim de todos os namespaces do cluster**
+**Listar recursos filtrando por estado Pending**
 
 ```bash
 oc get pvc -A | grep Pending
@@ -490,7 +490,7 @@ oc get pvc -A | grep Pending
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods filtrando por Evicted**
 
 ```bash ignore-test
 oc get pods -A | grep Evicted
@@ -570,7 +570,7 @@ oc get nodes
 oc get mcp
 ```
 
-**Verificar se há operadores degraded**
+**Listar cluster operators filtrando por False**
 
 ```bash
 oc get co | grep -i false
@@ -616,7 +616,7 @@ oc adm top nodes
 oc get pods -A | grep -v Running | grep -v Completed
 ```
 
-**Exibir detalhes completos do nodes**
+**Exibir detalhes completos do recurso filtrando por Allocated resources**
 
 ```bash
 oc describe nodes | grep -A 5 "Allocated resources"

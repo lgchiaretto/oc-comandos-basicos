@@ -399,7 +399,7 @@ oc get operatorgroups -A
 oc get packagemanifests -n openshift-marketplace
 ```
 
-**Buscar operator específico**
+**Listar recursos filtrando por Odf-operator**
 
 ```bash ignore-test
 oc get packagemanifests -n openshift-marketplace | grep odf-operator
