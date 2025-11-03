@@ -744,7 +744,7 @@ oc get pvc -A
 
 ---
 
-**Última atualização**: Outubro 2025  
+**Última atualização**: Novembro 2025  
 **Versão**: OpenShift 4.x
 
 [⬅️ Voltar para: 30 - Operators e Operandos](30-operators-operandos.md) | [🏠 Início](README.md)

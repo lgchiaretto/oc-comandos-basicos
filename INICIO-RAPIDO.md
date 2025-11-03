@@ -372,5 +372,5 @@ oc get pods -A | grep <parte-do-nome>
 
 ---
 
-**Última atualização**: Outubro 2025  
+**Última atualização**: Novembro 2025  
 **Dica**: Imprima ou salve este guia para consulta rápida!
