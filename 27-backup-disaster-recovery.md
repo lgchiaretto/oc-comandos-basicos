@@ -187,11 +187,21 @@ oc exec <postgres-pod> -- pg_dumpall -U postgres > postgres-backup.sql
 oc exec <mongodb-pod> -- mongodump --archive > mongodb-backup.archive
 ```
 
-**Restore (exemplos)**
+**Restore MySQL/MariaDB**
 
 ```bash ignore-test
 oc exec -i <mysql-pod> -- mysql -u root -p<password> < mysql-backup.sql
+```
+
+**Restore PostgreSQL**
+
+```bash ignore-test
 oc exec -i <postgres-pod> -- psql -U postgres < postgres-backup.sql
+```
+
+**Restore MongoDB**
+
+```bash ignore-test
 oc exec -i <mongodb-pod> -- mongorestore --archive < mongodb-backup.archive
 ```
 
@@ -265,10 +275,15 @@ cd namespace-backup-myproject-*/
 oc apply -f namespace.yaml
 ```
 
-**Aplicar configuração do arquivo YAML/JSON ao cluster**
+**Aplicar secrets**
 
 ```bash ignore-test
 oc apply -f secrets.yaml
+```
+
+**Aplicar configmaps**
+
+```bash ignore-test
 oc apply -f configmaps.yaml
 ```
 
@@ -284,20 +299,45 @@ oc apply -f /tmp/persistentvolumeclaims.yaml
 oc get pvc
 ```
 
-**Aplicar configuração do arquivo YAML/JSON ao cluster**
+**Aplicar service accounts**
 
 ```bash ignore-test
 oc apply -f /tmp/serviceaccounts.yaml
+```
+
+**Aplicar roles**
+
+```bash ignore-test
 oc apply -f /tmp/roles.yaml
+```
+
+**Aplicar rolebindings**
+
+```bash ignore-test
 oc apply -f /tmp/rolebindings.yaml
 ```
 
-**Aplicar configuração do arquivo YAML/JSON ao cluster**
+**Aplicar deployments**
 
 ```bash ignore-test
 oc apply -f /tmp/deployments.yaml
+```
+
+**Aplicar statefulsets**
+
+```bash ignore-test
 oc apply -f /tmp/statefulsets.yaml
+```
+
+**Aplicar services**
+
+```bash ignore-test
 oc apply -f /tmp/services.yaml
+```
+
+**Aplicar routes**
+
+```bash ignore-test
 oc apply -f /tmp/routes.yaml
 ```
 
@@ -326,4 +366,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

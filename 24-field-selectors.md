@@ -147,13 +147,13 @@ oc get builds --field-selector status=Failed
 ```
 
 ### Services
-**Exibir service usando JSONPath customizado**
+**Listar services do tipo LoadBalancer**
 
 ```bash
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='LoadBalancer')]}{.metadata.name}{'\n'}{end}"
 ```
 
-**Exibir service usando JSONPath customizado**
+**Listar services do tipo NodePort**
 
 ```bash
 oc get svc -o jsonpath="{range .items[?(@.spec.type=='NodePort')]}{.metadata.name}{'\n'}{end}"
@@ -452,19 +452,19 @@ fi
 ```
 
 ### Contadores
-**Listar pods de todos os namespaces do cluster**
+**Contar pods por status (Running, Pending, etc.)**
 
 ```bash
 oc get pods -A --no-headers | awk '{print $4}' | sort | uniq -c
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Contar pods por namespace**
 
 ```bash
 oc get pods -A --no-headers | awk '{print $1}' | sort | uniq -c
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Contar pods por node**
 
 ```bash
 oc get pods -A -o wide --no-headers | awk '{print $8}' | sort | uniq -c
@@ -500,7 +500,7 @@ oc adm top pods -A --no-headers | awk 'int($4) > 80 {print $1, $2, $4}'
 ## Troubleshooting com Filtros
 
 ### Encontrar Pods com Problemas Específicos
-**Listar pods de todos os namespaces do cluster**
+**Listar pods com mais de 5 restarts (possíveis problemas)**
 
 ```bash
 oc get pods -A -o wide | awk '$5 > 5 {print $0}'
@@ -570,4 +570,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

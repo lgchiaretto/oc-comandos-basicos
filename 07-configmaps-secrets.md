@@ -21,10 +21,15 @@ Este documento contém comandos para gerenciar ConfigMaps e Secrets no OpenShift
 
 ```bash
 oc get configmaps
+```
+
+**Listar ConfigMaps (forma abreviada)**
+
+```bash
 oc get cm
 ```
 
-**Criar novo recurso**
+**Criar ConfigMap a partir de pares chave=valor**
 
 ```bash
 oc create configmap test-app --from-literal=chave=valor
@@ -67,7 +72,7 @@ oc delete cm test-app
 oc create cm test-app --from-literal=database.host=db.example.com --from-literal=database.port=5432
 ```
 
-**Exibir configmap "test-app" em formato JSON**
+**Extrair apenas os dados do ConfigMap (sem metadados)**
 
 ```bash
 oc get cm test-app -o jsonpath='{.data}'
@@ -138,7 +143,7 @@ oc get secrets
 oc get secret test-app -o yaml
 ```
 
-**Exibir secret "test-app" em formato JSON**
+**Extrair e decodificar valor específico do secret (base64)**
 
 ```bash
 oc get secret test-app -o jsonpath='{.data.chave}' | base64 -d
@@ -218,7 +223,7 @@ oc set env deployment/test-app minhachave=valor --from=configmap/test-app
 ```
 
 ### Como Volumes
-**Patch deployment para montar ConfigMap**
+**Montar ConfigMap como volume no deployment**
 
 ```bash
 oc set volume --add --type=configmap deployment/test-app --configmap-name test-app --mount-path=/config
@@ -248,5 +253,5 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025
 

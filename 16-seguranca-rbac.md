@@ -35,7 +35,17 @@ oc adm policy who-can delete projects
 
 ```bash ignore-test
 oc auth can-i <verbo> <recurso>
+```
+
+**Verificar se posso criar pods**
+
+```bash ignore-test
 oc auth can-i create pods
+```
+
+**Verificar se posso deletar projetos**
+
+```bash ignore-test
 oc auth can-i delete projects
 ```
 
@@ -45,7 +55,7 @@ oc auth can-i delete projects
 oc auth can-i get pods --as=<usuario>
 ```
 
-**Verificar se usuário tem permissão para executar ação específica**
+**Listar todas as permissões do usuário atual**
 
 ```bash
 oc auth can-i --list
@@ -89,12 +99,19 @@ oc get clusterroles
 
 **Exibir cluster role "admin" em formato YAML**
 
-**oc get clusterrole <role-name> -o yaml**
-**oc get clusterrole <role-name> -o yaml**
-
 ```bash
 oc get clusterrole admin -o yaml
+```
+
+**Exibir cluster role "edit" em formato YAML**
+
+```bash
 oc get clusterrole edit -o yaml
+```
+
+**Exibir cluster role "view" em formato YAML**
+
+```bash
 oc get clusterrole view -o yaml
 ```
 
@@ -104,7 +121,7 @@ oc get clusterrole view -o yaml
 oc describe clusterrole <nome-da-role>
 ```
 
-**Exibir detalhes completos do recurso filtrando por Policyrule**
+**Ver permissões detalhadas da role admin**
 
 ```bash
 oc describe clusterrole admin | grep -A 50 PolicyRule
@@ -183,8 +200,23 @@ oc get rolebindings
 
 ```bash ignore-test
 oc adm policy add-role-to-user <role> <username>
+```
+
+**Adicionar role admin a usuário**
+
+```bash ignore-test
 oc adm policy add-role-to-user admin <username>
+```
+
+**Adicionar role edit a usuário**
+
+```bash ignore-test
 oc adm policy add-role-to-user edit <username>
+```
+
+**Adicionar role view a usuário**
+
+```bash ignore-test
 oc adm policy add-role-to-user view <username>
 ```
 
@@ -215,6 +247,11 @@ oc describe rolebinding admin
 
 ```bash
 oc get serviceaccounts
+```
+
+**Listar Service Accounts (forma abreviada)**
+
+```bash
 oc get sa
 ```
 
@@ -284,11 +321,21 @@ oc get pod test-app -o jsonpath='{.spec.serviceAccountName}'
 oc get scc
 ```
 
-**Exibir scc em formato YAML completo**
+**Exibir SCC restricted em formato YAML**
 
 ```bash
 oc get scc restricted -o yaml
+```
+
+**Exibir SCC privileged em formato YAML**
+
+```bash
 oc get scc privileged -o yaml
+```
+
+**Exibir SCC anyuid em formato YAML**
+
+```bash
 oc get scc anyuid -o yaml
 ```
 
@@ -314,8 +361,15 @@ oc describe scc restricted | grep Users
 **Exemplos comuns e use com moderação**
 
 
+**Permitir que service account execute como qualquer UID (anyuid)**
+
 ```bash
 oc adm policy add-scc-to-user anyuid system:serviceaccount:development:test-app
+```
+
+**Conceder acesso privilegiado à service account (use com cuidado!)**
+
+```bash
 oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-app
 ```
 
@@ -384,7 +438,7 @@ grep <username> /var/log/openshift-apiserver/audit.log
 oc get oauth cluster -o yaml
 ```
 
-**Exibir oauth usando JSONPath customizado**
+**Ver provedores de identidade configurados (LDAP, HTPasswd, etc.)**
 
 ```bash
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'
@@ -446,4 +500,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

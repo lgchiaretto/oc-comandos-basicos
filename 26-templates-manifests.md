@@ -24,7 +24,7 @@ Este documento contém comandos para trabalhar com templates e manifests do Open
 oc get templates
 ```
 
-**Listar templates disponíveis no namespace openshift**
+**Listar templates disponíveis no namespace OpenShift**
 
 ```bash
 oc get templates -n openshift
@@ -480,4 +480,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

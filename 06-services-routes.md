@@ -21,6 +21,11 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 
 ```bash
 oc get services
+```
+
+**Listar todos os services do namespace atual (forma abreviada)**
+
+```bash
 oc get svc
 ```
 
@@ -105,13 +110,13 @@ oc expose service test-app --path=/api
 oc create route edge test-app --service=test-app
 ```
 
-**Criar route passthrough (TLS vai direto ao pod)**
+**Criar route passthrough (TLS end-to-end, terminado no pod)**
 
 ```bash ignore-test
 oc create route passthrough test-app --service=test-app
 ```
 
-**Criar route reencrypt (TLS terminado e re-encriptado)**
+**Criar route reencrypt (TLS terminado no router e re-encriptado até o pod)**
 
 ```bash ignore-test
 oc create route reencrypt test-app --service=test-app
@@ -135,7 +140,7 @@ oc get routes
 oc describe route test-app
 ```
 
-**Exibir route "test-app" em formato JSON**
+**Extrair apenas o hostname da route**
 
 ```bash
 oc get route test-app -o jsonpath='{.spec.host}'
@@ -179,4 +184,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

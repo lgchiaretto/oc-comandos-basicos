@@ -709,13 +709,13 @@ watch -n 30 'oc adm top nodes'
 oc adm top pods -A --sort-by=memory
 ```
 
-**Listar todos os Persistent Volumes do cluster**
+**Verificar Persistent Volumes**
 
 ```bash
 oc get pv
 ```
 
-**Listar persistent volume claim de todos os namespaces do cluster**
+**Verificar Persistent Volume Claims**
 
 ```bash
 oc get pvc -A
@@ -744,7 +744,7 @@ oc get pvc -A
 
 ---
 
-**Última atualização**: Novembro 2025  
+**Última atualização**: Dezembro 2025  
 **Versão**: OpenShift 4.x
 
 [⬅️ Voltar para: 30 - Operators e Operandos](30-operators-operandos.md) | [🏠 Início](README.md)

@@ -20,16 +20,21 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ## Diagnóstico Básico
 
 ### Conectividade de Pod
-**Exibir endereço IP do pod**
+**Obter endereço IP interno do pod**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
-**Testar conectividade entre pods**
+**Testar conectividade entre pods com ping**
 
 ```bash ignore-test
 oc exec my-pod -- ping <ip-pod-destino>
+```
+
+**Testar conectividade entre pods com curl**
+
+```bash ignore-test
 oc exec my-pod -- curl <ip-pod-destino>:<porta>
 ```
 
@@ -45,13 +50,13 @@ oc exec my-pod -- curl <nome-service>:<porta>
 oc exec my-pod -- nslookup <nome-service>
 ```
 
-**Executar comando dentro do pod especificado**
+**Ver tabela de rotas de rede dentro do pod**
 
 ```bash
 oc exec my-pod -- ip route
 ```
 
-**Executar comando dentro do pod especificado**
+**Ver interfaces de rede dentro do pod**
 
 ```bash
 oc exec my-pod -- ip addr
@@ -142,17 +147,27 @@ oc get endpoints test-app
 oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
-**Exibir service "test-app" em formato JSON**
+**Exibir selector do service em formato JSON**
 
 ```bash ignore-test
 oc get svc test-app -o jsonpath='{.spec.selector}'
+```
+
+**Listar pods que correspondem ao selector do service**
+
+```bash ignore-test
 oc get pods --selector=<label-do-service>
 ```
 
-**Exibir detalhes completos do service filtrando por seletores**
+**Exibir selector do service usando describe**
 
 ```bash
 oc describe svc test-app | grep Selector
+```
+
+**Listar pods mostrando todas as labels**
+
+```bash
 oc get pods --show-labels
 ```
 
@@ -216,7 +231,7 @@ oc get pods -n openshift-ingress
 oc logs -n openshift-ingress -l app=router
 ```
 
-**Exibir ingresses.config.openshift.io em formato JSON**
+**Obter domínio base do cluster (ex: apps.cluster.example.com)**
 
 ```bash
 oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
@@ -239,7 +254,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 ## SDN/OVN
 
 ### Verificar Rede do Cluster
-**Exibir network.config.openshift.io em formato JSON**
+**Verificar tipo de rede do cluster (OVNKubernetes ou OpenShiftSDN)**
 
 ```bash
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
@@ -251,10 +266,15 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 oc get network.config.openshift.io cluster -o yaml
 ```
 
-**Pods de rede**
+**Pods de rede (SDN)**
 
 ```bash
 oc get pods -n openshift-sdn
+```
+
+**Pods de rede (OVN)**
+
+```bash
 oc get pods -n openshift-ovn-kubernetes
 ```
 
@@ -332,15 +352,19 @@ oc get pods -n openshift-dns
 oc logs -n openshift-dns <dns-pod-name>
 ```
 
-**Executar comando dentro do pod especificado**
+**Testar resolução DNS do kubernetes**
 
 ```bash ignore-test
 oc exec my-pod -- nslookup kubernetes.default
-oc exec my-pod -- nslookup <service-name>
-oc exec my-pod -- nslookup <service-name>.<namespace>.svc.cluster.local
 ```
 
-**Executar comando dentro do pod especificado**
+**Testar resolução DNS de um service**
+
+```bash ignore-test
+oc exec my-pod -- nslookup <service-name>
+```
+
+**Verificar configuração DNS do pod (nameservers)**
 
 ```bash
 oc exec my-pod -- cat /etc/resolv.conf
@@ -458,4 +482,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

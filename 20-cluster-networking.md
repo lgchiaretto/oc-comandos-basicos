@@ -116,6 +116,11 @@ oc scale ingresscontroller -n openshift-ingress-operator --replicas=2 default
 
 ```bash
 oc get networkpolicy
+```
+
+**Listar políticas de rede configuradas no namespace (forma abreviada)**
+
+```bash
 oc get netpol
 ```
 
@@ -343,4 +348,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

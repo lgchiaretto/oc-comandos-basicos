@@ -22,6 +22,11 @@ Este documento contém comandos para gerenciar e diagnosticar Cluster Operators 
 
 ```bash
 oc get clusteroperators
+```
+
+**Listar status de todos os cluster operators (forma abreviada)**
+
+```bash
 oc get co
 ```
 
@@ -31,19 +36,19 @@ oc get co
 oc get co -o custom-columns=NAME:.metadata.name,VERSION:.status.versions[0].version
 ```
 
-**Exibir cluster operator em formato JSON completo**
+**Listar cluster operators que NÃO estão disponíveis**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Available" and .status!="True")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON completo**
+**Listar cluster operators em estado degradado (com problemas)**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Degraded" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir cluster operator em formato JSON completo**
+**Listar cluster operators em progresso (atualizando)**
 
 ```bash
 oc get co -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Progressing" and .status=="True")) | .metadata.name'
@@ -122,7 +127,7 @@ oc describe deploy -n <namespace-do-operator> <deploy-name>
 ```
 
 ### Forçar Reconciliation
-**Atualizar annotation existente com novo valor**
+**Forçar reconciliação do operator (trigger de refresh)**
 
 ```bash
 oc annotate co/authentication --overwrite operator.openshift.io/refresh="$(date +%s)"
@@ -521,4 +526,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

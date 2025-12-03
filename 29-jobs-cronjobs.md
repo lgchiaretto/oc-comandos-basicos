@@ -17,7 +17,7 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ## Jobs
 
 ### Criar Jobs
-**Criar novo Job para execução única de tarefa**
+**Criar Job simples para execução única**
 
 ```bash
 oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
@@ -122,10 +122,15 @@ spec:
 EOF
 ```
 
-**Monitorar**
+**Verificar status do job paralelo**
 
 ```bash ignore-test
 oc get job parallel-job
+```
+
+**Listar pods do job paralelo**
+
+```bash ignore-test
 oc get pods -l job-name=parallel-job
 ```
 
@@ -155,7 +160,7 @@ EOF
 ##  CronJobs
 
 ### Criar CronJobs
-**Criar novo Job para execução única de tarefa**
+**Criar CronJob que executa a cada 5 minutos**
 
 ```bash
 oc create cronjob test-app-job --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
@@ -188,6 +193,11 @@ EOF
 
 ```bash
 oc get cronjobs
+```
+
+**Listar cronjobs (forma abreviada)**
+
+```bash
 oc get cj
 ```
 
@@ -356,7 +366,7 @@ oc logs $LAST_JOB
 ```
 
 ### Jobs Travados
-**Exibir jobs em formato JSON completo**
+**Listar jobs que ainda estão em execução (possivelmente travados)**
 
 ```bash
 oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadata.name) - \(.metadata.creationTimestamp)"'
@@ -432,4 +442,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

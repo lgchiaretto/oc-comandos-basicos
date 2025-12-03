@@ -54,10 +54,15 @@ oc adm top nodes
 oc get node <node-name> -o jsonpath='{.status.nodeInfo.kubeletVersion}'
 ```
 
-**Listar nodes filtrados por label**
+**Listar nodes master**
 
 ```bash
 oc get nodes -l node-role.kubernetes.io/master
+```
+
+**Listar nodes worker**
+
+```bash
 oc get nodes -l node-role.kubernetes.io/worker
 ```
 
@@ -181,6 +186,11 @@ oc debug node/<node-name> -- chroot /host <comando>
 
 ```bash
 oc get machineconfigs
+```
+
+**Listar MachineConfigs (forma abreviada)**
+
+```bash
 oc get mc
 ```
 
@@ -207,6 +217,11 @@ oc get mc | grep rendered
 
 ```bash
 oc get machineconfigpools
+```
+
+**Listar MachineConfigPools (forma abreviada)**
+
+```bash
 oc get mcp
 ```
 
@@ -240,7 +255,7 @@ oc describe mcp worker
 oc get mcp
 ```
 
-**Ver qual MC está sendo aplicado**
+**Ver MachineConfig atualmente aplicado no pool worker**
 
 ```bash
 oc get mcp worker -o jsonpath='{.status.configuration.name}'
@@ -461,25 +476,25 @@ oc delete machine <machine-name> -n openshift-machine-api
 oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes que NÃO estão Ready (com problemas)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes com pressão de disco (disco cheio)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes com pressão de memória (memória baixa)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes com pressão de PIDs (muitos processos)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'
@@ -503,4 +518,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

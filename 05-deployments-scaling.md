@@ -30,7 +30,7 @@ oc scale dc <nome-do-dc> --replicas=<numero>
 ```
 
 ### Autoscaling (HPA)
-**Criar Horizontal Pod Autoscaler (HPA) para escalar automaticamente**
+**Criar HPA: escalar entre 2-10 réplicas quando CPU > 80%**
 
 ```bash
 oc autoscale deployment test-app --min=2 --max=10 --cpu-percent=80
@@ -77,7 +77,7 @@ oc rollout status deployment/test-app
 ```
 
 ### Pausar e Retomar
-**Pausar rollout do deployment (impede novas atualizações)**
+**Pausar rollout para fazer múltiplas alterações sem disparar atualizações**
 
 ```bash
 oc rollout pause deployment/test-app
@@ -96,7 +96,7 @@ oc rollout restart deployment/test-app
 ```
 
 ### Rollback
-**Fazer rollback para revisão anterior do deployment**
+**Reverter para a versão anterior do deployment (rollback)**
 
 ```bash
 oc rollout undo deployment/test-app
@@ -122,6 +122,11 @@ oc rollout history deployment/test-app --revision=3
 
 ```bash
 oc get replicasets
+```
+
+**Listar todos os ReplicaSets do namespace (forma abreviada)**
+
+```bash
 oc get rs
 ```
 
@@ -162,4 +167,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

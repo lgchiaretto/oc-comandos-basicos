@@ -60,13 +60,13 @@ oc get nodes -o wide --no-headers | awk '{print $1, $6}'
 oc get pods -o wide --no-headers | awk '{print $1, $7}'
 ```
 
-**Listar pods com informações adicionais (formato wide)**
+**Contar pods por node (distribuição de carga)**
 
 ```bash
 oc get pods -o wide -A --no-headers | awk '{print $8}' | sort | uniq -c
 ```
 
-**Listar pods com uso de CPU**
+**Ordenar pods por consumo de CPU (ascendente)**
 
 ```bash
 oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
@@ -77,7 +77,7 @@ oc adm top pods --no-headers | awk '{print $1, $2}' | sort -k2 -h
 oc adm top pods -A --no-headers | awk '{print $2, $3}' | sort -k2 -h
 ```
 
-**Encontrar pods com mais memória**
+**Ordenar pods por consumo de memória (ascendente)**
 
 ```bash
 oc adm top pods --no-headers | awk '{print $1, $3}' | sort -k2 -h
@@ -246,13 +246,13 @@ oc adm must-gather \
 oc get pods -A | grep -E -v "Running|Completed"
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods com erros (Error, CrashLoop, ImagePull)**
 
 ```bash
 oc get pods -A | grep -E "Error|CrashLoopBackOff|ImagePullBackOff"
 ```
 
-**Cluster operators com problemas**
+**Listar cluster operators com problemas (não estão True/False/False)**
 
 ```bash
 oc get co | grep -v "True.*False.*False"
@@ -558,7 +558,7 @@ oc get $(oc get secrets -n openshift-authentication -o name | grep oauth-openshi
 ## Dicas e Truques
 
 ### Combinando Comandos
-**Ver pods com mais uso de CPU**
+**Top 10 pods com maior consumo de CPU no cluster**
 
 ```bash
 oc adm top pods -A --no-headers | sort -k3 -nr | head -10
@@ -620,4 +620,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

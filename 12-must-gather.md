@@ -131,7 +131,17 @@ oc adm inspect ns -A --dest-dir=/tmp/inspect
 
 ```bash
 oc get clusteroperators
+```
+
+**Listar todos os nodes do cluster**
+
+```bash
 oc get nodes
+```
+
+**Listar versão do cluster**
+
+```bash
 oc get clusterversion
 ```
 
@@ -199,4 +209,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

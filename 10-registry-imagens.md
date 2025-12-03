@@ -37,13 +37,13 @@ oc get clusteroperator image-registry
 ```
 
 ### Habilitar Registry e adicionar PVC 
-**Aplicar modificação parcial ao recurso usando patch**
+**Habilitar o registry interno (mudar de Removed para Managed)**
 
 ```bash
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch para adicionar um disco ao registry com a storageclass default**
+**Configurar PVC com StorageClass default para o registry**
 
 ```bash
 oc patch configs.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"storage":{"pvc":{"claim":""}}}}'
@@ -186,7 +186,7 @@ oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
 oc get imagepruner/cluster -o yaml
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Configurar pruning automático diário mantendo 3 revisões de tags**
 
 ```bash
 oc patch imagepruners.imageregistry.operator.openshift.io/cluster --type merge -p '{"spec":{"schedule":"0 0 * * *","suspend":false,"keepTagRevisions":3}}'
@@ -236,4 +236,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

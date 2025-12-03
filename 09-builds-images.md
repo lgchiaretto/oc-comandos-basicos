@@ -22,6 +22,11 @@ Este documento contém comandos para gerenciar builds e imagens no OpenShift.
 
 ```bash
 oc get buildconfig
+```
+
+**Listar BuildConfigs (forma abreviada)**
+
+```bash
 oc get bc
 ```
 
@@ -50,16 +55,19 @@ oc logs -f bc/s2i-chiaretto
 ```
 
 ### Triggers
-**Adicionar webhook trigger**
-
-**oc set triggers <resource-name>/s2i-chiaretto --from-webhook**
+**Adicionar trigger para builds automáticos via webhook do GitHub**
 
 ```bash
 oc set triggers bc/s2i-chiaretto --from-github
+```
+
+**Adicionar webhook trigger**
+
+```bash
 oc set triggers bc/s2i-chiaretto --from-webhook
 ```
 
-**Remover triggers**
+**Remover todos os triggers do BuildConfig**
 
 ```bash
 oc set triggers bc/s2i-chiaretto --remove-all
@@ -76,7 +84,7 @@ oc describe bc s2i-chiaretto | grep Triggered
 ## Builds
 
 ### Executar e Monitorar
-**Iniciar novo build**
+**Iniciar novo build manualmente**
 
 ```bash
 oc start-build s2i-chiaretto
@@ -188,6 +196,11 @@ oc start-build --from-build=s2i-chiaretto-2
 
 ```bash
 oc get imagestream
+```
+
+**Listar ImageStreams (forma abreviada)**
+
+```bash
 oc get is
 ```
 
@@ -197,7 +210,7 @@ oc get is
 oc describe is s2i-chiaretto
 ```
 
-**Exibir imagestream "s2i-chiaretto" em formato JSON**
+**Listar todas as tags disponíveis de um ImageStream**
 
 ```bash
 oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'
@@ -232,6 +245,11 @@ oc get is s2i-chiaretto -o jsonpath='{.status.tags[?(@.tag=="latest")].items[0].
 
 ```bash
 oc get imagestreamtag
+```
+
+**Listar tags (forma abreviada)**
+
+```bash
 oc get istag
 ```
 
@@ -278,4 +296,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025
