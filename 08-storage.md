@@ -21,6 +21,11 @@ Este documento contém comandos para gerenciar storage no OpenShift.
 
 ```bash
 oc get pv
+```
+
+**Listar todos os Persistent Volumes do cluster (forma completa)**
+
+```bash
 oc get persistentvolumes
 ```
 
@@ -63,6 +68,11 @@ oc delete pv <nome-do-pv>
 
 ```bash
 oc get pvc
+```
+
+**Listar todos os Persistent Volume Claims do namespace (forma completa)**
+
+```bash
 oc get persistentvolumeclaims
 ```
 
@@ -115,6 +125,11 @@ oc set volume deployment/test-app --remove --name=<volume-name>
 
 ```bash
 oc get storageclass
+```
+
+**Listar StorageClasses (forma abreviada)**
+
+```bash
 oc get sc
 ```
 
@@ -183,4 +198,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

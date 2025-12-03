@@ -21,6 +21,11 @@ Este documento contém comandos para gerenciar services e routes no OpenShift.
 
 ```bash
 oc get services
+```
+
+**Listar todos os services do namespace atual (forma abreviada)**
+
+```bash
 oc get svc
 ```
 
@@ -179,4 +184,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

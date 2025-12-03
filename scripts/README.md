@@ -274,4 +274,4 @@ Para ver todas as opções disponíveis:
 
 ---
 
-**Última atualização**: Novembro 2025  
+**Última atualização**: Dezembro 2025  

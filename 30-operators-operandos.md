@@ -42,14 +42,21 @@ oc get pods -n openshift-operator-lifecycle-manager -l app=catalog-operator
 oc get pods -n openshift-operator-lifecycle-manager -l app=packageserver
 ```
 
-**Status do OLM**
-
-**oc get clusteroperator <resource-name>**
-**oc get clusteroperator <resource-name>**
+**Status do OLM - operator-lifecycle-manager**
 
 ```bash
 oc get clusteroperator operator-lifecycle-manager
+```
+
+**Status do OLM - catalog**
+
+```bash
 oc get clusteroperator operator-lifecycle-manager-catalog
+```
+
+**Status do OLM - packageserver**
+
+```bash
 oc get clusteroperator operator-lifecycle-manager-packageserver
 ```
 
@@ -60,16 +67,27 @@ oc get clusteroperator operator-lifecycle-manager-packageserver
 oc get catalogsources -n openshift-marketplace
 ```
 
-**Principais catalogs**
-
-**oc get catalogsource <resource-name>operators -n <namespace>**
-**oc get catalogsource <resource-name>operators -n <namespace>**
-**oc get catalogsource <resource-name>marketplace -n <namespace>**
+**Listar catalog source redhat-operators**
 
 ```bash
 oc get catalogsource redhat-operators -n openshift-marketplace
+```
+
+**Listar catalog source certified-operators**
+
+```bash
 oc get catalogsource certified-operators -n openshift-marketplace
+```
+
+**Listar catalog source community-operators**
+
+```bash
 oc get catalogsource community-operators -n openshift-marketplace
+```
+
+**Listar catalog source redhat-marketplace**
+
+```bash
 oc get catalogsource redhat-marketplace -n openshift-marketplace
 ```
 
@@ -184,10 +202,15 @@ spec:
 EOF
 ```
 
-**6. Verificar instalação**
+**6. Verificar instalação - CSV**
 
 ```bash ignore-test
 oc get csv -n <operator-namespace>
+```
+
+**6. Verificar instalação - Pods**
+
+```bash ignore-test
 oc get pods -n <operator-namespace>
 ```
 
@@ -216,10 +239,15 @@ spec:
 EOF
 ```
 
-**Verificar**
+**Verificar CSV**
 
 ```bash
 oc get csv -n openshift-operators-redhat
+```
+
+**Verificar pods**
+
+```bash
 oc get pods -n openshift-operators-redhat
 ```
 
@@ -365,10 +393,14 @@ EOF
 ```
 
 **Verificar CR**
-**oc describe elasticsearch elasticsearch -n <namespace>**
 
 ```bash ignore-test
 oc get elasticsearch -n openshift-logging
+```
+
+**Descrever CR**
+
+```bash ignore-test
 oc describe elasticsearch elasticsearch -n openshift-logging
 ```
 
@@ -543,6 +575,11 @@ oc delete subscription <name> -n <namespace>
 
 ```bash
 oc get catalogsource -n openshift-marketplace
+```
+
+**Verificar pods do marketplace**
+
+```bash
 oc get pods -n openshift-marketplace
 ```
 
@@ -552,19 +589,27 @@ oc get pods -n openshift-marketplace
 oc get packagemanifest <operator> -n openshift-marketplace
 ```
 
-**Verificar install plan**
+**Listar installplans**
 
 ```bash ignore-test
 oc get installplan -n <namespace>
+```
+
+**Descrever installplan**
+
+```bash ignore-test
 oc describe installplan <plan> -n <namespace>
 ```
 
-**Exibir logs do pod especificado**
-
-**oc logs -n <namespace> deployment/catalog-operator**
+**Logs do OLM operator**
 
 ```bash
 oc logs -n openshift-operator-lifecycle-manager deployment/olm-operator
+```
+
+**Logs do catalog operator**
+
+```bash
 oc logs -n openshift-operator-lifecycle-manager deployment/catalog-operator
 ```
 
@@ -605,18 +650,28 @@ oc get events --field-selector involvedObject.name=<cr-name>
 oc auth can-i create pods --as=system:serviceaccount:<namespace>:<sa>
 ```
 
-**Ver service account do operator**
+**Ver nome da service account do operator**
 
 ```bash ignore-test
 oc get deployment <operator> -n <namespace> -o jsonpath='{.spec.template.spec.serviceAccountName}'
+```
+
+**Descrever service account**
+
+```bash ignore-test
 oc describe sa <sa-name> -n <namespace>
 ```
 
 ### Remover Operator
-**1. Deletar todos os CRs criados**
+**1. Listar todos os CRs criados**
 
 ```bash ignore-test
 oc get <cr-type> -A
+```
+
+**1. Deletar CR**
+
+```bash ignore-test
 oc delete <cr-type> <name> -n <namespace>
 ```
 
@@ -664,4 +719,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

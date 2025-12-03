@@ -285,12 +285,15 @@ oc auth can-i create deployments
 oc auth can-i create deployments -n development
 ```
 
-**Verificar se usuário tem permissão para executar ação específica**
-
-**oc auth can-i get secrets -n <namespace>**
+**Verificar se posso deletar pods**
 
 ```bash
 oc auth can-i delete pods -n development
+```
+
+**Verificar se posso obter secrets**
+
+```bash
 oc auth can-i get secrets -n development
 ```
 
@@ -335,4 +338,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

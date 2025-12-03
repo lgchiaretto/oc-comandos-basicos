@@ -122,10 +122,15 @@ spec:
 EOF
 ```
 
-**Monitorar**
+**Verificar status do job paralelo**
 
 ```bash ignore-test
 oc get job parallel-job
+```
+
+**Listar pods do job paralelo**
+
+```bash ignore-test
 oc get pods -l job-name=parallel-job
 ```
 
@@ -188,6 +193,11 @@ EOF
 
 ```bash
 oc get cronjobs
+```
+
+**Listar cronjobs (forma abreviada)**
+
+```bash
 oc get cj
 ```
 
@@ -432,4 +442,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

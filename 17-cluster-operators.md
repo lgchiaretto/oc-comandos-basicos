@@ -22,6 +22,11 @@ Este documento contém comandos para gerenciar e diagnosticar Cluster Operators 
 
 ```bash
 oc get clusteroperators
+```
+
+**Listar status de todos os cluster operators (forma abreviada)**
+
+```bash
 oc get co
 ```
 
@@ -521,4 +526,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

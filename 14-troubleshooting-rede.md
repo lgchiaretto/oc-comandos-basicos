@@ -26,10 +26,15 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 oc get pod my-pod -o jsonpath='{.status.podIP}'
 ```
 
-**Testar conectividade entre pods**
+**Testar conectividade entre pods com ping**
 
 ```bash ignore-test
 oc exec my-pod -- ping <ip-pod-destino>
+```
+
+**Testar conectividade entre pods com curl**
+
+```bash ignore-test
 oc exec my-pod -- curl <ip-pod-destino>:<porta>
 ```
 
@@ -142,17 +147,27 @@ oc get endpoints test-app
 oc get endpoints test-app -o jsonpath='{.subsets[*].addresses[*].ip}'
 ```
 
-**Exibir service "test-app" em formato JSON**
+**Exibir selector do service em formato JSON**
 
 ```bash ignore-test
 oc get svc test-app -o jsonpath='{.spec.selector}'
+```
+
+**Listar pods que correspondem ao selector do service**
+
+```bash ignore-test
 oc get pods --selector=<label-do-service>
 ```
 
-**Exibir detalhes completos do service filtrando por seletores**
+**Exibir selector do service usando describe**
 
 ```bash
 oc describe svc test-app | grep Selector
+```
+
+**Listar pods mostrando todas as labels**
+
+```bash
 oc get pods --show-labels
 ```
 
@@ -251,10 +266,15 @@ oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
 oc get network.config.openshift.io cluster -o yaml
 ```
 
-**Pods de rede**
+**Pods de rede (SDN)**
 
 ```bash
 oc get pods -n openshift-sdn
+```
+
+**Pods de rede (OVN)**
+
+```bash
 oc get pods -n openshift-ovn-kubernetes
 ```
 
@@ -332,12 +352,16 @@ oc get pods -n openshift-dns
 oc logs -n openshift-dns <dns-pod-name>
 ```
 
-**Executar comando dentro do pod especificado**
+**Testar resolução DNS do kubernetes**
 
 ```bash ignore-test
 oc exec my-pod -- nslookup kubernetes.default
+```
+
+**Testar resolução DNS de um service**
+
+```bash ignore-test
 oc exec my-pod -- nslookup <service-name>
-oc exec my-pod -- nslookup <service-name>.<namespace>.svc.cluster.local
 ```
 
 **Executar comando dentro do pod especificado**
@@ -458,4 +482,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

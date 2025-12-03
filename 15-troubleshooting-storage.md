@@ -151,6 +151,11 @@ oc get sc ocs-storagecluster-ceph-rbd -o jsonpath='{.provisioner}'
 
 ```bash
 oc get storageclass
+```
+
+**Listar StorageClasses (forma abreviada)**
+
+```bash
 oc get sc
 ```
 
@@ -184,6 +189,11 @@ oc get sc <resource-name> -o yaml
 
 ```bash
 oc get csidrivers
+```
+
+**Ver CSI nodes**
+
+```bash
 oc get csinodes
 ```
 
@@ -245,12 +255,15 @@ oc get pvc test-app -o jsonpath='{.spec.accessModes}'
 oc get pv <pv-name> -o jsonpath='{.spec.accessModes}'
 ```
 
-**Exibir persistent volume claim "test-app" em formato JSON**
-
-**oc get pod <resource-name>pod -o jsonpath='{.spec.nodeName}'**
+**Exibir nome do volume vinculado ao PVC**
 
 ```bash
 oc get pvc test-app -o jsonpath='{.spec.volumeName}'
+```
+
+**Exibir o node onde o pod está executando**
+
+```bash
 oc get pod my-pod -o jsonpath='{.spec.nodeName}'
 ```
 
@@ -481,4 +494,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

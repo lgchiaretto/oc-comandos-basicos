@@ -302,6 +302,6 @@ Para mais informações sobre os testes, consulte [`scripts/README.md`](scripts/
 
 ---
 
-**Última atualização**: Novembro 2025  
+**Última atualização**: Dezembro 2025  
 **Versão do OpenShift**: 4.19  
 **Compatível com**: OpenShift 4.x

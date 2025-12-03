@@ -54,10 +54,15 @@ oc adm top nodes
 oc get node <node-name> -o jsonpath='{.status.nodeInfo.kubeletVersion}'
 ```
 
-**Listar nodes filtrados por label**
+**Listar nodes master**
 
 ```bash
 oc get nodes -l node-role.kubernetes.io/master
+```
+
+**Listar nodes worker**
+
+```bash
 oc get nodes -l node-role.kubernetes.io/worker
 ```
 
@@ -181,6 +186,11 @@ oc debug node/<node-name> -- chroot /host <comando>
 
 ```bash
 oc get machineconfigs
+```
+
+**Listar MachineConfigs (forma abreviada)**
+
+```bash
 oc get mc
 ```
 
@@ -207,6 +217,11 @@ oc get mc | grep rendered
 
 ```bash
 oc get machineconfigpools
+```
+
+**Listar MachineConfigPools (forma abreviada)**
+
+```bash
 oc get mcp
 ```
 
@@ -503,4 +518,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

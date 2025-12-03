@@ -453,12 +453,15 @@ oc set probe deployment/test-app --liveness -- cat /tmp/healthy
 oc set probe deployment/test-app --liveness --open-tcp=8080 --timeout-seconds=1
 ```
 
-**Remover probe**
-
-**oc set probe <resource-name>/test-app --readiness --remove**
+**Remover liveness probe**
 
 ```bash
 oc set probe deployment/test-app --liveness --remove
+```
+
+**Remover readiness probe**
+
+```bash
 oc set probe deployment/test-app --readiness --remove
 ```
 
@@ -561,4 +564,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025

@@ -122,6 +122,11 @@ oc rollout history deployment/test-app --revision=3
 
 ```bash
 oc get replicasets
+```
+
+**Listar todos os ReplicaSets do namespace (forma abreviada)**
+
+```bash
 oc get rs
 ```
 
@@ -162,4 +167,4 @@ Consulte a documentação oficial do OpenShift 4.19 da Red Hat:
 
 ---
 
-**Última atualização**: Novembro 2025
+**Última atualização**: Dezembro 2025
