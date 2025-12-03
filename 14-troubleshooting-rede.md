@@ -20,7 +20,7 @@ Este documento contém comandos para diagnosticar problemas de rede no OpenShift
 ## Diagnóstico Básico
 
 ### Conectividade de Pod
-**Exibir endereço IP do pod**
+**Obter endereço IP interno do pod**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.podIP}'
@@ -50,13 +50,13 @@ oc exec my-pod -- curl <nome-service>:<porta>
 oc exec my-pod -- nslookup <nome-service>
 ```
 
-**Executar comando dentro do pod especificado**
+**Ver tabela de rotas de rede dentro do pod**
 
 ```bash
 oc exec my-pod -- ip route
 ```
 
-**Executar comando dentro do pod especificado**
+**Ver interfaces de rede dentro do pod**
 
 ```bash
 oc exec my-pod -- ip addr
@@ -231,7 +231,7 @@ oc get pods -n openshift-ingress
 oc logs -n openshift-ingress -l app=router
 ```
 
-**Exibir ingresses.config.openshift.io em formato JSON**
+**Obter domínio base do cluster (ex: apps.cluster.example.com)**
 
 ```bash
 oc get ingresses.config.openshift.io cluster -o jsonpath='{.spec.domain}'
@@ -254,7 +254,7 @@ oc describe ingresscontroller default -n openshift-ingress-operator
 ## SDN/OVN
 
 ### Verificar Rede do Cluster
-**Exibir network.config.openshift.io em formato JSON**
+**Verificar tipo de rede do cluster (OVNKubernetes ou OpenShiftSDN)**
 
 ```bash
 oc get network.config.openshift.io cluster -o jsonpath='{.spec.networkType}'
@@ -364,7 +364,7 @@ oc exec my-pod -- nslookup kubernetes.default
 oc exec my-pod -- nslookup <service-name>
 ```
 
-**Executar comando dentro do pod especificado**
+**Verificar configuração DNS do pod (nameservers)**
 
 ```bash
 oc exec my-pod -- cat /etc/resolv.conf

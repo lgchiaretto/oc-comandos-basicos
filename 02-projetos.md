@@ -166,13 +166,13 @@ oc patch namespace development -p '{"metadata":{"labels":{"tier":"frontend"}}}'
 oc delete project development
 ```
 
-**Deletar o projeto especificado**
+**Deletar projeto aguardando a remoção completa de todos os recursos**
 
 ```bash ignore-test
 oc delete project development --wait=true
 ```
 
-**Deletar o projeto especificado**
+**Deletar múltiplos projetos de uma vez**
 
 ```bash ignore-test
 oc delete project development production
@@ -185,7 +185,7 @@ oc delete project development production
 ## Node Selectors
 
 ### Criar Projeto com Node Selector
-**Criar projeto com node selector para ambiente**
+**Criar projeto com node selector para direcionar pods a nodes de produção**
 
 ```bash ignore-test
 oc new-project <nome> --node-selector='env=prd'
@@ -376,7 +376,7 @@ oc get networkpolicy
 oc status
 ```
 
-**Exibir status com sugestões de ações**
+**Exibir status com sugestões de problemas e ações corretivas**
 
 ```bash
 oc status --suggest
@@ -406,7 +406,7 @@ oc get projects -o jsonpath='{.items[?(@.status.phase=="Terminating")].metadata.
 ```
 
 ### Análise de Projetos
-**Contar total de projetos**
+**Contar número total de projetos no cluster**
 
 ```bash
 oc get projects --no-headers | wc -l

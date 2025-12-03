@@ -255,7 +255,7 @@ oc describe mcp worker
 oc get mcp
 ```
 
-**Ver qual MC está sendo aplicado**
+**Ver MachineConfig atualmente aplicado no pool worker**
 
 ```bash
 oc get mcp worker -o jsonpath='{.status.configuration.name}'
@@ -476,25 +476,25 @@ oc delete machine <machine-name> -n openshift-machine-api
 oc get node <node-name> -o json | jq '.status.conditions'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes que NÃO estão Ready (com problemas)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="Ready" and .status!="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes com pressão de disco (disco cheio)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="DiskPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes com pressão de memória (memória baixa)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="MemoryPressure" and .status=="True")) | .metadata.name'
 ```
 
-**Exibir nodes em formato JSON completo**
+**Listar nodes com pressão de PIDs (muitos processos)**
 
 ```bash
 oc get nodes -o json | jq -r '.items[] | select(.status.conditions[] | select(.type=="PIDPressure" and .status=="True")) | .metadata.name'

@@ -17,7 +17,7 @@ Este documento contém comandos para gerenciar Jobs e CronJobs no OpenShift.
 ## Jobs
 
 ### Criar Jobs
-**Criar novo Job para execução única de tarefa**
+**Criar Job simples para execução única**
 
 ```bash
 oc create job test-app-job --image=quay.io/chiaretto/netshoot -- echo "Hello World"
@@ -160,7 +160,7 @@ EOF
 ##  CronJobs
 
 ### Criar CronJobs
-**Criar novo Job para execução única de tarefa**
+**Criar CronJob que executa a cada 5 minutos**
 
 ```bash
 oc create cronjob test-app-job --image=quay.io/chiaretto/netshoot --schedule="*/5 * * * *" -- echo "Hello every 5 minutes"
@@ -366,7 +366,7 @@ oc logs $LAST_JOB
 ```
 
 ### Jobs Travados
-**Exibir jobs em formato JSON completo**
+**Listar jobs que ainda estão em execução (possivelmente travados)**
 
 ```bash
 oc get jobs -o json | jq -r '.items[] | select(.status.active > 0) | "\(.metadata.name) - \(.metadata.creationTimestamp)"'

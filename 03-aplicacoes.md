@@ -128,7 +128,7 @@ oc new-app . --name=test-app
 oc get all
 ```
 
-**Listar recurso filtrados por label**
+**Listar todos os recursos associados a uma aplicação por label**
 
 ```bash
 oc get all -l app=test-app
@@ -202,7 +202,7 @@ oc expose service test-app
 oc expose service test-app --hostname=app.example.com
 ```
 
-**Criar route com terminação TLS edge (TLS terminado no router)**
+**Criar route segura com TLS terminado no router (edge)**
 
 ```bash
 oc create route edge --service=test-app
@@ -256,13 +256,13 @@ oc set image deployment/test-app container1=image1:tag container2=image2:tag
 ```
 
 ### Patch de Deployment
-**Aplicar merge patch ao recurso (mescla alterações)**
+**Escalar deployment para 3 réplicas usando merge patch**
 
 ```bash
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"replicas":3}}'
 ```
 
-**Aplicar merge patch ao recurso (mescla alterações)**
+**Atualizar imagem do container usando merge patch**
 
 ```bash
 oc patch deployment test-app -n development --type=merge -p '{"spec":{"template":{"spec":{"containers":[{"name":"httpd","image":"httpd:latest"}]}}}}'
@@ -308,7 +308,7 @@ oc auth can-i get secrets -n development
 oc wait --for=condition=available deployment/test-app
 ```
 
-**Aguardar deployment ficar disponível**
+**Aguardar deployment ficar disponível com timeout de 60 segundos**
 
 ```bash
 oc wait --for=condition=available --timeout=60s deployment/test-app

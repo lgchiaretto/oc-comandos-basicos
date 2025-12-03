@@ -56,25 +56,25 @@ oc get pod test-app -o jsonpath='{.spec.containers[*].name}'
 ```
 
 ### Filtros e Condições
-**Listar nomes de podss em estado Running**
+**Filtrar e listar apenas pods em estado Running**
 
 ```bash
 oc get pods -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}'
 ```
 
-**Listar podss que reiniciaram pelo menos uma vez**
+**Listar pods que tiveram pelo menos 1 restart**
 
 ```bash
 oc get pods -o jsonpath='{.items[?(@.status.containerStatuses[0].restartCount>0)].metadata.name}'
 ```
 
-**Exibir nodes usando JSONPath customizado**
+**Listar nodes com status Ready**
 
 ```bash
 oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status=="True")]}{.metadata.name}{"\n"}{end}'
 ```
 
-**Exibir nodes usando JSONPath customizado**
+**Listar nodes que NÃO estão Ready**
 
 ```bash
 oc get nodes -o jsonpath='{range .items[?(@.status.conditions[-1:].status!="True")]}{.metadata.name}{"\n"}{end}'
@@ -230,7 +230,7 @@ oc get pods -o json | jq -r '.items[] | "\(.metadata.name) \(.status.phase)"'
 oc get pods -o json | jq '[.items[] | {name: .metadata.name, phase: .status.phase}]'
 ```
 
-**Exibir pods em formato JSON completo**
+**Contar número total de pods**
 
 ```bash
 oc get pods -o json | jq '.items | length'
@@ -242,7 +242,7 @@ oc get pods -o json | jq '.items | length'
 oc get pods -A -o json | jq -r 'group_by(.metadata.namespace) | .[] | "\(.[0].metadata.namespace): \(length) pods"'
 ```
 
-**Exibir pods em formato JSON completo**
+**Ordenar pods por data de criação usando jq**
 
 ```bash
 oc get pods -o json | jq '.items | sort_by(.metadata.creationTimestamp)'

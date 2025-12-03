@@ -55,7 +55,7 @@ oc logs -f bc/s2i-chiaretto
 ```
 
 ### Triggers
-**Adicionar trigger de GitHub**
+**Adicionar trigger para builds automáticos via webhook do GitHub**
 
 ```bash
 oc set triggers bc/s2i-chiaretto --from-github
@@ -67,7 +67,7 @@ oc set triggers bc/s2i-chiaretto --from-github
 oc set triggers bc/s2i-chiaretto --from-webhook
 ```
 
-**Remover triggers**
+**Remover todos os triggers do BuildConfig**
 
 ```bash
 oc set triggers bc/s2i-chiaretto --remove-all
@@ -84,7 +84,7 @@ oc describe bc s2i-chiaretto | grep Triggered
 ## Builds
 
 ### Executar e Monitorar
-**Iniciar novo build**
+**Iniciar novo build manualmente**
 
 ```bash
 oc start-build s2i-chiaretto
@@ -210,7 +210,7 @@ oc get is
 oc describe is s2i-chiaretto
 ```
 
-**Exibir imagestream "s2i-chiaretto" em formato JSON**
+**Listar todas as tags disponíveis de um ImageStream**
 
 ```bash
 oc get is s2i-chiaretto -o jsonpath='{.spec.tags[*].name}'

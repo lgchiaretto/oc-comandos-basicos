@@ -133,7 +133,7 @@ oc patch deployment test-app --type merge -p '
 ```
 
 #### JSON Patch
-**Aplicar modificação parcial ao recurso usando patch**
+**JSON Patch: substituir valor em path específico**
 
 ```bash
 oc patch deployment test-app --type json -p='[{"op":"replace","path":"/spec/replicas","value":5}]'
@@ -155,7 +155,7 @@ oc patch deployment test-app --type json -p='[
 oc patch deployment test-app --type merge -p '{"spec":{"replicas":3}}'
 ```
 
-**Aplicar modificação parcial ao recurso usando patch**
+**Remover annotation definindo como null**
 
 ```bash
 oc patch deployment test-app --type merge -p '{"metadata":{"annotations":{"old-annotation":null}}}'
@@ -379,13 +379,13 @@ oc set env deployment/test-app --from=secret/<secret-name>
 oc set env deployment/test-app KEY --from=configmap/<cm-name> --keys=specific-key
 ```
 
-**Definir/atualizar variáveis de ambiente no recurso**
+**Remover variável de ambiente (sufixo '-' após o nome)**
 
 ```bash
 oc set env deployment/test-app KEY-
 ```
 
-**Definir/atualizar variáveis de ambiente no recurso**
+**Listar todas as variáveis de ambiente do deployment**
 
 ```bash
 oc set env deployment/test-app --list
@@ -429,13 +429,13 @@ oc set volume deployment/test-app
 ```
 
 ### Set Probe
-**Liveness probe**
+**Configurar liveness probe HTTP com delay inicial de 30s**
 
 ```bash
 oc set probe deployment/test-app --liveness --get-url=http://:8080/health --initial-delay-seconds=30
 ```
 
-**Readiness probe**
+**Configurar readiness probe HTTP com intervalo de 10s**
 
 ```bash
 oc set probe deployment/test-app --readiness --get-url=http://:8080/ready --period-seconds=10

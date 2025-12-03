@@ -55,19 +55,19 @@ oc get csr <csr-name> -o jsonpath='{.spec.request}' | base64 -d | openssl req -t
 oc adm certificate approve <csr-name>
 ```
 
-**Aprovar Certificate Signing Request (CSR)**
+**Aprovar TODOS os CSRs pendentes (usar com cuidado!)**
 
 ```bash ignore-test
 oc get csr -o name | xargs oc adm certificate approve
 ```
 
-**Exibir certificate signing request em formato JSON completo**
+**Aprovar apenas CSRs sem status (pendentes)**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.status == {} ) | .metadata.name' | xargs oc adm certificate approve
 ```
 
-**Exibir certificate signing request em formato JSON completo**
+**Aprovar apenas CSRs de nodes worker**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | select(.spec.username | contains("system:node:worker")) | select(.status == {}) | .metadata.name' | xargs oc adm certificate approve
@@ -99,7 +99,7 @@ oc get csr
 oc get csr --sort-by='.metadata.creationTimestamp'
 ```
 
-**Exibir certificate signing request em formato JSON completo**
+**Contar CSRs por status (Approved, Denied, Pending)**
 
 ```bash ignore-test
 oc get csr -o json | jq -r '.items[] | .status | keys[0] // "Pending"' | sort | uniq -c

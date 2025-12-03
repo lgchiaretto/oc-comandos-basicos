@@ -48,7 +48,7 @@ oc logs my-pod --tail=100
 oc logs my-pod --since=1h
 ```
 
-**Exibir logs a partir de uma data/hora específica**
+**Exibir logs a partir de data/hora específica (formato RFC3339)**
 
 ```bash
 oc logs my-pod --since-time=2025-01-01T00:00:00Z
@@ -72,7 +72,7 @@ oc logs my-pod -p
 oc logs deployment/test-app
 ```
 
-**Exibir logs do pod especificado**
+**Exibir logs com timestamps em cada linha**
 
 ```bash
 oc logs my-pod --timestamps
@@ -132,7 +132,7 @@ oc get events -A
 oc get events --field-selector involvedObject.name=my-pod
 ```
 
-**Listar eventos filtrados por campo específico**
+**Listar apenas eventos de tipo Warning (avisos/erros)**
 
 ```bash
 oc get events --field-selector type=Warning
@@ -155,7 +155,7 @@ oc get events
 ## Métricas e Top
 
 ### Uso de Recursos
-**Top nodes (CPU e memória)**
+**Exibir uso de CPU e memória dos nodes**
 
 ```bash
 oc adm top nodes

@@ -55,7 +55,7 @@ oc auth can-i delete projects
 oc auth can-i get pods --as=<usuario>
 ```
 
-**Verificar se usuário tem permissão para executar ação específica**
+**Listar todas as permissões do usuário atual**
 
 ```bash
 oc auth can-i --list
@@ -121,7 +121,7 @@ oc get clusterrole view -o yaml
 oc describe clusterrole <nome-da-role>
 ```
 
-**Exibir detalhes completos do recurso filtrando por Policyrule**
+**Ver permissões detalhadas da role admin**
 
 ```bash
 oc describe clusterrole admin | grep -A 50 PolicyRule
@@ -361,13 +361,13 @@ oc describe scc restricted | grep Users
 **Exemplos comuns e use com moderação**
 
 
-**Adicionar SCC anyuid a service account**
+**Permitir que service account execute como qualquer UID (anyuid)**
 
 ```bash
 oc adm policy add-scc-to-user anyuid system:serviceaccount:development:test-app
 ```
 
-**Adicionar SCC privileged a service account**
+**Conceder acesso privilegiado à service account (use com cuidado!)**
 
 ```bash
 oc adm policy add-scc-to-user privileged system:serviceaccount:development:test-app
@@ -438,7 +438,7 @@ grep <username> /var/log/openshift-apiserver/audit.log
 oc get oauth cluster -o yaml
 ```
 
-**Exibir oauth usando JSONPath customizado**
+**Ver provedores de identidade configurados (LDAP, HTPasswd, etc.)**
 
 ```bash
 oc get oauth cluster -o jsonpath='{.spec.identityProviders}'

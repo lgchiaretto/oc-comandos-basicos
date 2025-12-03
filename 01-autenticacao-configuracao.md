@@ -99,22 +99,22 @@ oc logout && rm -f ~/.kube/config
 oc api-resources
 ```
 
-**Filtrar por verbo**
+**Filtrar recursos por verbos permitidos (list, get, create, delete, etc.)**
 
 ```bash
 oc api-resources --verbs=list,get
 ```
 
-**Filtrar por grupo de API**
+**Filtrar recursos pelo grupo de API (apps, networking.k8s.io, etc.)**
 
 ```bash
 oc api-resources --api-group=apps
 ```
 
-**Ver recursos com alias**
+**Listar recursos mostrando seus nomes curtos (aliases)**
 
 ```bash
-oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
+oc get api-resources | grep -E '^(NAME|pod|deploy|svc)'
 ```
 
 ### Listar API Versions
@@ -124,13 +124,13 @@ oc api-resources | grep -E '^(NAME|pod|deploy|svc)'
 oc api-versions
 ```
 
-**Filtrar saída filtrando por Apps**
+**Filtrar versões de API do grupo apps (ex: apps/v1)**
 
 ```bash
 oc api-versions | grep apps
 ```
 
-**Ver versões do core**
+**Listar apenas versões do core API (v1, sem grupo)**
 
 ```bash
 oc api-versions | grep -v "/"
@@ -151,7 +151,7 @@ oc version
 oc cluster-info
 ```
 
-**Ver informações do servidor**
+**Dump completo do estado do cluster para debug (gera muita saída)**
 
 ```bash
 oc cluster-info dump
@@ -164,7 +164,7 @@ oc cluster-info dump
 oc config view
 ```
 
-**Exibir configuração com credenciais (cuidado!)**
+**Exibir configuração completa incluindo tokens e certificados (CUIDADO: dados sensíveis!)**
 
 ```bash
 oc config view --raw

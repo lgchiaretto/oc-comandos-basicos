@@ -24,7 +24,7 @@ Este documento contém comandos para diagnosticar problemas com pods no OpenShif
 oc get pods -A
 ```
 
-**Listar pods de todos os namespaces do cluster**
+**Listar pods com problemas (não estão Running) em todo o cluster**
 
 ```bash
 oc get pods -A --field-selector=status.phase!=Running
@@ -139,7 +139,7 @@ oc describe pod my-pod | grep -i "exit code"
 oc get pod my-pod -o yaml | grep -A 10 livenessProbe
 ```
 
-**Desabilitar liveness probe temporariamente**
+**Remover liveness probe temporariamente para debug**
 
 ```bash
 oc set probe deployment/test-app --liveness --remove
@@ -188,7 +188,7 @@ oc get nodes
 oc get pod my-pod -o yaml | grep nodeSelector
 ```
 
-**Exibir detalhes completos do node filtrando por taints**
+**Verificar taints dos nodes (podem impedir agendamento)**
 
 ```bash
 oc describe nodes | grep Taints
@@ -207,19 +207,19 @@ oc get pod my-pod -o jsonpath='{.spec.containers[0].resources.limits.memory}'
 oc adm top pod my-pod
 ```
 
-**Definir/atualizar requests e limits de recursos**
+**Aumentar limite de memória para evitar OOMKilled**
 
 ```bash
 oc set resources deployment/test-app --limits=memory=2Gi
 ```
 
-**Exibir número de reinicializações do container principal**
+**Ver quantas vezes o container foi reiniciado**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].restartCount}'
 ```
 
-**Exibir motivo da última terminação do container**
+**Ver motivo da última falha do container (OOMKilled, Error, etc.)**
 
 ```bash
 oc get pod my-pod -o jsonpath='{.status.containerStatuses[0].lastState.terminated.reason}'

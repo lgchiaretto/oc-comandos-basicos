@@ -110,13 +110,13 @@ oc expose service test-app --path=/api
 oc create route edge test-app --service=test-app
 ```
 
-**Criar route passthrough (TLS vai direto ao pod)**
+**Criar route passthrough (TLS end-to-end, terminado no pod)**
 
 ```bash ignore-test
 oc create route passthrough test-app --service=test-app
 ```
 
-**Criar route reencrypt (TLS terminado e re-encriptado)**
+**Criar route reencrypt (TLS terminado no router e re-encriptado até o pod)**
 
 ```bash ignore-test
 oc create route reencrypt test-app --service=test-app
@@ -140,7 +140,7 @@ oc get routes
 oc describe route test-app
 ```
 
-**Exibir route "test-app" em formato JSON**
+**Extrair apenas o hostname da route**
 
 ```bash
 oc get route test-app -o jsonpath='{.spec.host}'

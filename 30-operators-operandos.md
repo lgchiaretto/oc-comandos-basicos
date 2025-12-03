@@ -103,7 +103,7 @@ oc describe catalogsource redhat-operators -n openshift-marketplace
 oc get catalogsource redhat-operators -n openshift-marketplace -o jsonpath='{.spec.image}'
 ```
 
-**Listar recurso com colunas customizadas**
+**Ver status de conexão dos catalog sources**
 
 ```bash
 oc get catalogsource -n openshift-marketplace -o custom-columns=NAME:.metadata.name,STATUS:.status.connectionState.lastObservedState
@@ -140,7 +140,7 @@ oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpa
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.channels[?(@.name=="stable")].currentCSV}'
 ```
 
-**Exibir recurso "local-storage-operator" em formato JSON**
+**Ver canal padrão do operator**
 
 ```bash
 oc get packagemanifest local-storage-operator -n openshift-marketplace -o jsonpath='{.status.defaultChannel}'
@@ -601,13 +601,13 @@ oc get installplan -n <namespace>
 oc describe installplan <plan> -n <namespace>
 ```
 
-**Logs do OLM operator**
+**Ver logs do OLM operator (erros de instalação)**
 
 ```bash
 oc logs -n openshift-operator-lifecycle-manager deployment/olm-operator
 ```
 
-**Logs do catalog operator**
+**Ver logs do catalog operator (problemas com catalogs)**
 
 ```bash
 oc logs -n openshift-operator-lifecycle-manager deployment/catalog-operator

@@ -41,13 +41,13 @@ oc describe pv <nome-do-pv>
 oc get pv <nome-do-pv> -o yaml
 ```
 
-**Listar nomes de persistent volumes em estado Available**
+**Listar PVs disponíveis para binding (não vinculados)**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Available")].metadata.name}'
 ```
 
-**Listar nomes de persistent volumes em estado Bound (vinculados)**
+**Listar PVs já vinculados a PVCs**
 
 ```bash
 oc get pv -o jsonpath='{.items[?(@.status.phase=="Bound")].metadata.name}'
@@ -155,7 +155,7 @@ oc get sc -o json | jq -r '.items[] | select(.metadata.annotations."storageclass
 ## Volumes em Pods
 
 ### Tipos de Volumes
-**EmptyDir**
+**Adicionar volume emptyDir (temporário, perdido ao reiniciar pod)**
 
 ```bash
 oc set volume deployment/test-app --add --name=emptydir --type=emptyDir --mount-path=/emptydir
@@ -173,7 +173,7 @@ oc set volume deployment/test-app --add --name=host --type=hostPath --path=/data
 oc set volume deployment/test-app
 ```
 
-**Exibir detalhes completos do pod filtrando por Volumes**
+**Ver volumes montados em um pod**
 
 ```bash
 oc describe pod my-pod | grep -A 5 Volumes

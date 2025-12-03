@@ -63,7 +63,7 @@ oc apply -f pod.yaml
 oc delete pod my-pod
 ```
 
-**Deletar recurso forçadamente (sem período de espera)**
+**Forçar deleção imediata do pod (sem grace period)**
 
 ```bash ignore-test
 oc delete pod my-pod --grace-period=0 --force
@@ -112,7 +112,7 @@ oc get pods -l app=test-app
 oc get pods -n development
 ```
 
-**Listar pods com colunas customizadas**
+**Listar pods com colunas personalizadas (nome, status e IP)**
 
 ```bash
 oc get pods -o custom-columns=NAME:.metadata.name,STATUS:.status.phase,IP:.status.podIP
@@ -202,7 +202,7 @@ oc cp my-pod:<caminho-no-pod> <arquivo-local>
 oc cp /local/dir my-pod:/container/dir
 ```
 
-**Sincronizar diretórios entre máquina local e pod (requer rsync no pod)**
+**Sincronizar diretórios bidirecionalmente (requer rsync instalado no pod)**
 
 ```bash ignore-test
 oc rsync /local/dir my-pod:/container/dir
@@ -229,7 +229,7 @@ oc rollout restart deployment/test-app
 oc delete pod my-pod
 ```
 
-**Escalar deployment para zero (parar todos os pods)**
+**Parar todos os pods do deployment (escalar para zero)**
 
 ```bash
 oc scale deployment test-app --replicas=0
@@ -244,7 +244,7 @@ oc scale deployment test-app --replicas=2
 ## Debug e Troubleshooting
 
 ### Debug Interativo
-**Criar cópia de pod para debug interativo**
+**Criar cópia do pod para debug sem probes e com shell interativo**
 
 ```bash ignore-test
 oc debug pod/my-pod
@@ -256,7 +256,7 @@ oc debug pod/my-pod
 oc debug pod/my-pod-debug --image=quay.io/chiaretto/netshoot
 ```
 
-**Criar pod temporário interativo (removido ao sair)**
+**Criar pod temporário para testes (removido automaticamente ao sair)**
 
 ```bash
 oc run debug-pod --image=quay.io/chiaretto/netshoot -it --rm --restart=Never -- hostname
@@ -328,7 +328,7 @@ oc logs my-pod --previous
 oc logs my-pod --tail=<numero>
 ```
 
-**Exibir logs a partir de um período de tempo**
+**Exibir logs da última hora**
 
 ```bash ignore-test
 oc logs my-pod --since=1h
