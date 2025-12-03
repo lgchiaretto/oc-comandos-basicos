@@ -83,7 +83,7 @@ oc new-app mysql -e MYSQL_USER=user -e MYSQL_PASSWORD=pass
 ```
 
 ### A partir de Template
-**Listar templates disponíveis no namespace openshift**
+**Listar templates disponíveis no namespace OpenShift**
 
 ```bash
 oc get templates -n openshift
